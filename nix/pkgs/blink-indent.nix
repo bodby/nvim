@@ -1,10 +1,10 @@
 {
   lib,
-  buildVimPlugin,
+  vimUtils,
   fetchFromGitHub,
 }:
 
-buildVimPlugin {
+vimUtils.buildVimPlugin {
   pname = "blink.indent";
   version = "395770f";
 

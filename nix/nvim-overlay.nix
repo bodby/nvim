@@ -1,8 +1,11 @@
-{ inputs, name, ... }:
+{ inputs, pkgs, ... }:
 final: prev:
 let
-  pkgs = inputs.nixpkgs.legacyPackages.${final.system};
-  nvimPackages = import ./nvim-pkgs.nix { inherit pkgs inputs; };
+  # pkgs = inputs.nixpkgs.legacyPackages.${final.system};
+  nvimPackages = import ./nvim-pkgs.nix {
+    inherit pkgs inputs;
+    system = final.system;
+  };
 
   mkNeovimConfig =
     with pkgs.lib;
@@ -118,7 +121,7 @@ let
     });
 in
 {
-  ${name} = mkNeovimConfig {
+  microwave-nvim = mkNeovimConfig {
     plugins = nvimPackages.plugins;
     # extraPackages = nvimPackages.packages;
   };

@@ -1,10 +1,10 @@
 {
   lib,
-  buildVimPlugin,
+  vimUtils,
   fetchFromGitHub,
 }:
 
-buildVimPlugin {
+vimUtils.buildVimPlugin {
   pname = "blink.compat";
   version = "1.0.2";
 

@@ -1,12 +1,12 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, system, ... }:
 
 let
   # Custom plugins not available in nixpkgs.
   customPkgs = [
-    # pkgs.blink-indent
-    # pkgs.blink-compat
-    # pkgs.fine-cmdline
-    inputs.blink-cmp.packages.${pkgs.system}.default
+    pkgs.blink-indent
+    pkgs.blink-compat
+    pkgs.fine-cmdline
+    inputs.blink-cmp.packages.${system}.blink-cmp
   ];
 in
 {
