@@ -24,7 +24,6 @@
         "x86_64-darwin"
         "aarch64-darwin"
       ];
-
       # nvim-overlay = import ./nix/nvim-overlay.nix { inherit inputs; };
     in
     {
@@ -42,8 +41,8 @@
               (import ./nix/nvim-overlay.nix { inherit inputs pkgs; })
             ];
           };
-        in rec
-        {
+        in
+        rec {
           default = nvim;
           nvim = pkgs.microwave-nvim;
         }
