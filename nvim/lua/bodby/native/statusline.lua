@@ -42,9 +42,7 @@ function M.setup()
 
   vim.api.nvim_create_autocmd({ "InsertEnter", "CmdwinLeave", "CmdlineLeave", "TextYankPost" }, {
     callback = function(_)
-      vim.schedule(function()
-        vim.cmd "redrawstatus"
-      end)
+      vim.cmd "redrawstatus"
     end
   })
 end
