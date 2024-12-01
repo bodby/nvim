@@ -38,6 +38,8 @@ M = {
 }
 
 function M.setup()
+  vim.opt.statusline = "%!v:lua.require('bodby.native.statusline').active()"
+
   vim.api.nvim_create_autocmd({ "InsertEnter", "CmdwinLeave", "CmdlineLeave", "TextYankPost" }, {
     callback = function(_)
       vim.cmd "redrawstatus"
