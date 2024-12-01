@@ -18,6 +18,7 @@ o.number = true
 o.relativenumber = true
 
 o.wrap = true
+o.hlsearch = false
 
 o.conceallevel = 2
 o.concealcursor = ""

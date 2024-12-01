@@ -1,11 +1,4 @@
-local o = vim.opt
-
-require("bodby.native.statusline").setup({
-  use_icons = false,
-  mode_padding = true,
-  pos_padding = false,
-  always_show_diagnostics = false
-})
-
-require("bodby.native.statuscolumn").setup()
+vim.opt.statusline = "%!v:lua.require('bodby.native.statusline').active()"
+-- require("bodby.native.statusline").setup()
+-- require "bodby.native.statuscolumn"
 -- require "bodby.nvim.winbar"
