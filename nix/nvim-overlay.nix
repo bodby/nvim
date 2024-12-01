@@ -19,7 +19,6 @@ let
       vimAlias ? false,
     }:
     let
-      # lib
       inherit (pkgs) stdenv;
       # Used by vimUtils.makeNeovimConfig.
       defaultPlugin = {
