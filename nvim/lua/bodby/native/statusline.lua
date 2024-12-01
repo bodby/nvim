@@ -13,26 +13,26 @@ M = {
     hints_and_info = "%#StatusLineMisc#"
   },
   modes = {
-    ["n"] = "N",
-    ["no"] = "N",
-    ["v"] = "V",
-    ["V"] = "V",
-    [""] = "V",
-    ["s"] = "S",
-    ["S"] = "S",
-    [""] = "S",
-    ["i"] = "I",
-    ["ic"] = "I",
-    ["R"] = "R",
-    ["Rv"] = "R",
-    ["c"] = "C",
-    ["cv"] = "E",
-    ["ce"] = "E",
-    ["r"] = "P",
-    ["rm"] = "M",
-    ["r?"] = "?",
-    ["!"]  = "T",
-    ["t"]  = "T"
+    ["n"] = "RW",
+    ["no"] = "RO",
+    ["v"] = "**",
+    ["V"] = "**",
+    [""] = "**",
+    ["s"] = "SE",
+    ["S"] = "SL",
+    [""] = "SB",
+    ["i"] = "**",
+    ["ic"] = "**",
+    ["R"] = "**",
+    ["Rv"] = "**",
+    ["c"] = "CM",
+    ["cv"] = "EX",
+    ["ce"] = "EX",
+    ["r"] = "PR",
+    ["rm"] = "MR",
+    ["r?"] = "??",
+    ["!"]  = "VT",
+    ["t"]  = "VT"
   },
   modified_char = "'"
 }
@@ -57,7 +57,7 @@ M.mode = function()
   if cur_mode ~= nil then
     return M.col.mode .. " " .. cur_mode .. " "
   else
-    return M.col.mode .. " ? "
+    return M.col.mode .. " ?? "
   end
 end
 
@@ -93,7 +93,7 @@ end
 -- Shows current line and column.
 M.pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return M.col.pos .. row .. ":" .. col
+  return M.col.pos .. row .. ":" .. col .. " "
 end
 
 -- Errors, warnings, and hints and info (in one number).

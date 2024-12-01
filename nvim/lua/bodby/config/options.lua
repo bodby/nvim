@@ -16,6 +16,7 @@ o.cmdheight = 0
 
 o.number = true
 o.relativenumber = true
+o.cursorline = true
 
 o.wrap = true
 o.hlsearch = false
