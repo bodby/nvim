@@ -29,7 +29,7 @@ require("blink.cmp").setup({
     },
 
     list = {
-      max_items = 400,
+      max_items = 200,
       selection = "preselect",
       cycle = {
         from_bottom = true,
@@ -55,10 +55,11 @@ require("blink.cmp").setup({
       draw = {
         -- "label" or "none"
         align_to_component = "label",
-        padding = 0,
+        padding = 1,
         gap = 0,
 
-        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
+        -- { "kind_icon" },
+        columns = { { "label", "label_description", gap = 1 } },
         -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
 
         --- ellipsis: Whether to add an ellipsis when truncating the text.
@@ -92,7 +93,7 @@ require("blink.cmp").setup({
           label = {
             ellipsis = true,
             width = {
-              max = 60,
+              max = 24,
               fill = true
             },
             text = function(context)
