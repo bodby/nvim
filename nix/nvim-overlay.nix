@@ -53,11 +53,13 @@ let
         '';
       };
 
+      # TODO: Add all parsers to a single "parsers" dir so the RTP doesn't become huge.
       initLua =
         ''
           vim.loader.enable()
           vim.opt.rtp:prepend "${nvimRtp}/lua"
           vim.opt.rtp:prepend "${nvimRtp}/colors"
+          vim.opt.rtp:prepend "${concatStringsSep "," (map (p: p + "/bin") (filter (x: x != null) nvimPackages.parsers))}"
         ''
         + (builtins.readFile ../nvim/init.lua)
         + ''
