@@ -14,13 +14,15 @@ end
 
 M.active = function()
   return table.concat({
-    M.line_nr()
+    " ",
+    M.line_nr(),
+    " "
   })
 end
 
 -- Used in the dashboard.
 M.inactive = function()
-
+  return ""
 end
 
 return M
