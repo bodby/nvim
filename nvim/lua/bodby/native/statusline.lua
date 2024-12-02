@@ -68,7 +68,7 @@ M.mode = function()
 end
 
 -- Shows total LOC in file.
--- function M.loc()
+-- M.loc = function()
 --   return M.col.pos .. vim.fn.line "$"
 -- end
 
