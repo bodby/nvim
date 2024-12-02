@@ -44,8 +44,6 @@ let
         buildPhase = ''
           mkdir -p $out/lua
           mkdir -p $out/colors
-          # Added to the RTP after sourcing because of nvim-treesitter.
-          # mkdir -p $out/after
         '';
 
         installPhase = ''
