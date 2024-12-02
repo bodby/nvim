@@ -3,6 +3,7 @@ local M = {
     default = "%#StatusLine#",
     mode = "%#StatusLineMode#",
     pos = "%#StatusLinePos#",
+    git = "%#StatusLineGit#",
     macro = "%#StatusLineMacro#",
     file = "%#StatusLineFile#",
     modified = "%#StatusLineMod#",
@@ -88,7 +89,21 @@ end
 -- Shows no. of lines added, modified, and removed.
 -- Formatted as (+L ~L -L).
 M.git_info = function()
-  return M.col.git .. vim.b.gitsigns_status .. " "
+  local lines = (vim.b.gitsigns_status ~= nil and vim.b.gitsigns_status or "")
+  local branch = (vim.b.gitsigns_head ~= nil and vim.b.gitsigns_head or "")
+
+  if branch ~= "" and lines ~= "" then
+    lines = " " .. lines
+  end
+
+  local left_parenthesis = ""
+  local right_parenthesis = ""
+  if lines ~= "" or branch ~= "" then
+    left_parenthesis = "("
+    right_parenthesis = ")"
+  end
+
+  return M.col.git .. left_parenthesis .. branch .. lines .. right_parenthesis .. " "
 end
 
 -- Shows macro register if recording.
