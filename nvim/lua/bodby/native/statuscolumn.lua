@@ -22,3 +22,5 @@ end
 M.inactive = function()
 
 end
+
+return M
