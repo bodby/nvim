@@ -83,7 +83,7 @@ let
 
       extraMakeWrapperArgs =
         (optionalString isCustomAppName ''--set NVIM_APPNAME "${appName}"'')
-        + (optionalString (extraPackages != [ ]) ''--suffix PATH ":" "${makeBinPath.extraPackages}"'');
+        + (optionalString (extraPackages != [ ]) ''--suffix PATH ":" "${makeBinPath extraPackages}"'');
 
       extraLuaPackages' = extraLuaPackages nvim-unwrapped.lua.pkgs;
 
