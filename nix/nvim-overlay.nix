@@ -121,7 +121,7 @@ let
     });
 in
 {
-  microwave-nvim = mkNeovimConfig {
+  nvim-btw = mkNeovimConfig {
     plugins = nvimPackages.plugins;
     extraPackages = nvimPackages.packages;
   };

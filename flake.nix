@@ -4,11 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # Plugins.
     blink-cmp = {
       url = "github:Saghen/blink.cmp";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.fenix.url = "github:K900/fenix/patch-2";
+      inputs.fenix.url = "github:Defelo/fenix/staging";
     };
   };
 
@@ -45,7 +44,7 @@
         in
         rec {
           default = nvim;
-          nvim = pkgs.microwave-nvim;
+          nvim = pkgs.nvim-btw;
         }
       );
       # overlays.default = nvim-overlay;

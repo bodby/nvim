@@ -32,4 +32,6 @@ in
       gitsigns-nvim
     ]
     ++ customPkgs;
+
+  packages = [ ];
 }

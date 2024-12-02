@@ -28,16 +28,16 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1732608853,
-        "narHash": "sha256-2sN0bEwlFH5CJh7digY8KvczQaIMj5jvpMrEZdG88m8=",
-        "owner": "K900",
+        "lastModified": 1732981482,
+        "narHash": "sha256-mwxaSCU4NljZeMBOzDfjEev4Br7ZhGiHh77Cs/NrIEg=",
+        "owner": "Defelo",
         "repo": "fenix",
-        "rev": "b8b1f5c7d92848ac8358d35cd44b749b4e99ebb2",
+        "rev": "cc65a4c69dd719ae5405bf7054674520262f748b",
         "type": "github"
       },
       "original": {
-        "owner": "K900",
-        "ref": "patch-2",
+        "owner": "Defelo",
+        "ref": "staging",
         "repo": "fenix",
         "type": "github"
       }
