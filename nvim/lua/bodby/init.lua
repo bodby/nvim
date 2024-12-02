@@ -41,6 +41,6 @@ require "bodby.plugins.telescope-nvim"
 -- The order of the plugin names matters.
 lazy_load({
   "blink-cmp",
-  "blink-indent",
+  -- "blink-indent",
   "gitsigns-nvim"
 }, "BufEnter")

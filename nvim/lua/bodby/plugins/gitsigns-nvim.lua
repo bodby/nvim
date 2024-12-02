@@ -23,7 +23,7 @@ require("gitsigns").setup({
   linehl = false,
   word_diff = false,
   auto_attach = true,
-  update_debounce = 500
+  update_debounce = 250
 })
 
 map("n", "<Leader>g", function()
