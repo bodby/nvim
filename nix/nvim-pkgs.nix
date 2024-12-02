@@ -32,5 +32,5 @@ in
     ]
     ++ customPkgs;
 
-  packages = [ ];
+  packages = [ pkgs.ripgrep ];
 }
