@@ -87,9 +87,9 @@ end
 
 -- Shows no. of lines added, modified, and removed.
 -- Formatted as (+L ~L -L).
--- function M.git_info()
--- return M.col.git .. vim.b.gitsigns_status .. " "
--- end
+M.git_info = function()
+  return M.col.git .. vim.b.gitsigns_status .. " "
+end
 
 -- Shows macro register if recording.
 M.macro = function()
@@ -131,7 +131,7 @@ M.active = function()
     M.col.default,
     " ",
     M.file(),
-    -- git_info(),
+    M.git_info(),
     M.macro(),
     M.col.default,
     -- Right align.
