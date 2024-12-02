@@ -64,7 +64,7 @@ let
         + ''
           vim.opt.rtp:prepend "${nvimRtp}/after"
           vim.opt.rtp:prepend "${
-            concatStringsSep "," (map (p: p + "/bin") (filter (x: x != null) nvimPackages.parsers))
+            concatMapStringsSep "," (p: p + "/bin") nvimPackages.parsers
           }"
         '';
 
