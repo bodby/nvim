@@ -209,7 +209,6 @@ require("blink.cmp").setup({
         module = "blink.cmp.sources.buffer",
         fallback_for = { "lsp" },
       },
-      -- See blink-compat.lua (unless it doesn't exist, in which case -- oops).
       obsidian = {
         name = "cmp_obsidian",
         module = "blink.compat.source",

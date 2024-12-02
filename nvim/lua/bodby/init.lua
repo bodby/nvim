@@ -41,5 +41,6 @@ require "bodby.plugins.telescope-nvim"
 lazy_load({
   "blink-cmp",
   -- "blink-indent",
-  "gitsigns-nvim"
+  "gitsigns-nvim",
+  "nvim-lspconfig"
 }, "BufEnter")
