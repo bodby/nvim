@@ -1,7 +1,7 @@
 require "bodby.config.options"
 require "bodby.config.autocmds"
 
--- vim.cmd.colorscheme "degraded"
+vim.cmd.colorscheme "degraded"
 
 vim.g.mapleader = " "
 

@@ -42,9 +42,8 @@ let
         src = ../nvim;
 
         buildPhase = ''
-          mkdir -p $out/nvim
+          # mkdir -p $out/nvim
           mkdir -p $out/lua
-          mkdir -p $out/after
           mkdir -p $out/colors
           rm init.lua
         '';
@@ -63,7 +62,9 @@ let
             rm -r colors
           fi
 
-          if [ -n "$(ls -A)" ]; then cp -r -- * $out/nvim; fi
+          # if [ -n "$(ls -A)" ]; then
+          #   cp -r -- * $out/nvim
+          # fi
         '';
       };
 
@@ -75,7 +76,7 @@ let
         ''
         + (builtins.readFile ../nvim/init.lua)
         + ''
-          vim.opt.rtp:prepend "${nvimRtp}/nvim"
+          -- vim.opt.rtp:prepend "${nvimRtp}/nvim"
           vim.opt.rtp:prepend "${nvimRtp}/after"
         '';
 
