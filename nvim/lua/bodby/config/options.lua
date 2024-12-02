@@ -18,6 +18,7 @@ o.number = true
 o.relativenumber = true
 o.cursorline = true
 o.numberwidth = 1
+o.signcolumn = "yes"
 
 o.wrap = true
 o.hlsearch = false

@@ -1,1 +1,25 @@
-require("gitsigns").setup()
+require("gitsigns").setup({
+  signs = {
+    add = { text = "│" },
+    change = { text = "│" },
+    delete = { text = "│" },
+    topdelete = { text = "│" },
+    changeddelete = { text = "│" },
+    untracked = { text = "│" },
+  },
+  signs_staged = {
+    add = { text = "│" },
+    change = { text = "│" },
+    delete = { text = "│" },
+    topdelete = { text = "│" },
+    changeddelete = { text = "│" },
+    untracked = { text = "│" },
+  },
+  signs_staged_enable = true,
+  signcolumn = true,
+  numhl = false,
+  linehl = false,
+  word_diff = false,
+  auto_attach = true,
+  update_debounce = 50,
+})
