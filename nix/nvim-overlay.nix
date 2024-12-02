@@ -54,6 +54,7 @@ let
       };
 
       # TODO: Add all parsers to a single "parsers" dir so the runtimepath doesn't become huge.
+      #       2024-12-02: I just switched to nvim-treesitter.
       initLua =
         ''
           vim.loader.enable()
@@ -63,7 +64,7 @@ let
         + (builtins.readFile ../nvim/init.lua)
         + ''
           vim.opt.rtp:prepend "${nvimRtp}/after"
-          vim.opt.rtp:prepend "${concatMapStringsSep "," (p: p + "/bin") nvimPackages.parsers}"
+          -- vim.opt.rtp:prepend "''${concatMapStringsSep "," (p: p + "/bin") nvimPackages.parsers}"
         '';
 
       isCustomAppName = appName != null && appName != "nvim" && appName != "";

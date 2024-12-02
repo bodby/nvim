@@ -18,7 +18,8 @@ in
   plugins =
     with pkgs.vimPlugins;
     [
-      # nvim-treesitter.withAllGrammars
+      nvim-treesitter.withAllGrammars
+      nvim-treesitter-parsers.latex
       telescope-nvim
       # blink-cmp
       markview-nvim
@@ -30,29 +31,6 @@ in
       gitsigns-nvim
     ]
     ++ customPkgs;
-
-  parsers = with pkgs.vimPlugins.nvim-treesitter-parsers; [
-    lua
-    nix
-    markdown
-    markdown_inline
-    latex
-    cpp
-    c
-    ocaml
-    rust
-    zig
-    haskell
-    glsl
-    python
-    html
-    css
-    rasi
-    jsonc
-    json
-    toml
-    yaml
-  ];
 
   packages = with pkgs; [
     ripgrep

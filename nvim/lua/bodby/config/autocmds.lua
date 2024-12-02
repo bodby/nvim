@@ -1,11 +1,11 @@
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  callback = function()
-    if vim.bo.filetype ~= "alpha" then
-      pcall(vim.treesitter.start)
-    end
-  end
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "*",
+--   callback = function()
+--     if vim.bo.filetype ~= "alpha" then
+--       pcall(vim.treesitter.start)
+--     end
+--   end
+-- })
 
 -- Hide cursor in dashboard. Not UIEnter because I could run ':Alpha'.
 -- vim.api.nvim_create_autocmd("BufEnter", {

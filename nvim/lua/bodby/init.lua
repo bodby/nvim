@@ -37,6 +37,7 @@ end
 -- Loaded on startup.
 require "bodby.plugins.alpha-nvim"
 require "bodby.plugins.telescope-nvim"
+require "bodby.plugins.nvim-treesitter"
 
 lazy_load({
   "blink-cmp",

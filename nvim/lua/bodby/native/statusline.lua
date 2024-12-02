@@ -106,11 +106,11 @@ M.git_info = function()
   local right_parenthesis = ""
   if branch ~= M.col.git.branch or lines ~= M.col.git.lines then
     left_parenthesis = "("
-    right_parenthesis = ")"
+    right_parenthesis = ") "
   end
 
   return M.col.syntax .. left_parenthesis .. branch .. lines
-    .. M.col.syntax .. right_parenthesis .. " "
+    .. M.col.syntax .. right_parenthesis
 end
 
 -- Shows macro register if recording.
