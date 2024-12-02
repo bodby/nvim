@@ -7,5 +7,9 @@ vim.schedule(function()
   require "bodby.config.mappings"
 end)
 
-require "bodby.native"
+vim.api.nvim_create_augroup("status", {})
+
+require("bodby.native.statusline").setup()
+require("bodby.native.statuscolumn").setup()
+-- require("bodby.native.winbar").setup()
 -- require "bodby.plugins"
