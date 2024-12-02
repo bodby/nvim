@@ -96,7 +96,7 @@ M.git_info = function()
   local lines = M.col.git.lines .. (vim.b.gitsigns_status ~= nil and vim.b.gitsigns_status or "")
   local branch = M.col.git.branch .. (vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head or "")
 
-  if branch ~= "" and lines ~= "" then
+  if branch ~= M.col.git.branch and lines ~= M.col.git.lines then
     lines = " " .. lines
   end
 
