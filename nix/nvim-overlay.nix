@@ -42,29 +42,16 @@ let
         src = ../nvim;
 
         buildPhase = ''
-          # mkdir -p $out/nvim
           mkdir -p $out/lua
           mkdir -p $out/colors
-          rm init.lua
+          # Added to the RTP after sourcing because of nvim-treesitter.
+          # mkdir -p $out/after
         '';
 
         installPhase = ''
           cp -r lua $out/lua
-          rm -r lua
-
-          if [ -d "after" ]; then
-            cp -r after $out/after
-            rm -r after
-          fi
-
-          if [ -d "colors" ]; then
-            cp -r colors $out/colors
-            rm -r colors
-          fi
-
-          # if [ -n "$(ls -A)" ]; then
-          #   cp -r -- * $out/nvim
-          # fi
+          cp -r after $out/after
+          cp -r colors $out/colors
         '';
       };
 
@@ -76,7 +63,6 @@ let
         ''
         + (builtins.readFile ../nvim/init.lua)
         + ''
-          -- vim.opt.rtp:prepend "${nvimRtp}/nvim"
           vim.opt.rtp:prepend "${nvimRtp}/after"
         '';
 
