@@ -8,7 +8,7 @@
 let
   # Custom plugins in nix/pkgs/.
   customPkgs = [
-    pkgs.blink-indent
+    # pkgs.blink-indent
     pkgs.blink-compat
     # pkgs.fine-cmdline
     inputs.blink-cmp.packages.${system}.blink-cmp

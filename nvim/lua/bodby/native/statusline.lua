@@ -139,9 +139,20 @@ M.diagnostics = function()
     count[i] = vim.tbl_count(vim.diagnostic.get(0, { serverity = level }))
   end
 
-  local errors = M.col.errors .. count["errors"] .. " "
-  local warnings = M.col.warnings .. count["warnings"] .. " "
-  local hints_and_info = M.col.hints_and_info .. (count["hints"] + count["info"]) .. " "
+  local errors = ""
+  if count["errors"] ~= 0 then
+    errors = M.col.errors .. count["errors"] .. " "
+  end
+
+  local warnings = ""
+  if count["warnings"] ~= 0 then
+    warnings = M.col.errors .. count["warnings"] .. " "
+  end
+
+  local hints_and_info = ""
+  if count["hints"] ~= 0 or count["info"] ~= 0 then
+    hints_and_info = M.col.hints_and_info .. (count["hints"] + count["info"]) .. " "
+  end
 
   return errors .. warnings .. hints_and_info
 end
