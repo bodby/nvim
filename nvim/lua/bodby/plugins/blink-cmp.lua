@@ -56,9 +56,9 @@ require("blink.cmp").setup({
         -- "label" or "none"
         align_to_component = "label",
         padding = 0,
-        gap = 1,
+        gap = 0,
 
-        columns = { { "kind_icon", gap = 1 }, { "label", "label_description", gap = 1 } },
+        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
         -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
 
         --- ellipsis: Whether to add an ellipsis when truncating the text.
@@ -69,7 +69,7 @@ require("blink.cmp").setup({
           kind_icon = {
             ellipsis = false,
             text = function(context)
-              return context.icon_gap .. context.kind_icon .. context.icon_gap
+              return " " .. context.kind_icon .. context.icon_gap
             end,
             highlight = function(context)
               -- return require("blink.cmp.completion.windows.render.tailwind").get_hl(context)
@@ -90,6 +90,7 @@ require("blink.cmp").setup({
           },
 
           label = {
+            ellipsis = true,
             width = {
               max = 60,
               fill = true
@@ -111,15 +112,16 @@ require("blink.cmp").setup({
                 })
               end
 
-              for _, i in ipairs(context.label_matched_indices) do
-                table.insert(highlights, { i, i + 1, group = "BlinkCmpLabelMatch" })
-              end
+              -- for _, i in ipairs(context.label_matched_indices) do
+              --   table.insert(highlights, { i, i + 1, group = "BlinkCmpLabelMatch" })
+              -- end
 
               return highlights
             end
           },
 
           label_description = {
+            ellipsis = true,
             width = { max = 30 },
             text = function(context)
               return context.label_description
