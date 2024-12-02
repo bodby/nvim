@@ -33,7 +33,8 @@ local function lazy_load(plugins, event)
 end
 
 -- Loaded on startup.
--- require "bodby.plugins.alpha"
+require "bodby.plugins.alpha-nvim"
+require "bodby.plugins.telescope-nvim"
 
 -- The order of the plugin names matters.
 lazy_load({

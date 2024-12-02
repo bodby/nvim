@@ -1,25 +1,24 @@
 -- Plugin mappings can be found in their respective file.
 local map = vim.keymap.set
-
 local M = {}
 
 vim.g.mapleader = " "
 
-map("v", "<leader>p", [["_dP]])
-map("v", "<leader>P", [["_dP]])
+map("v", "<Leader>p", [["_dP]])
+map("v", "<Leader>P", [["_dP]])
 
-map({ "n", "v" }, "<leader>d", [["_d]])
-map({ "n", "v" }, "<leader>D", [["_D]])
-map({ "n", "v" }, "<leader>c", [["_c]])
-map({ "n", "v" }, "<leader>C", [["_C]])
-map({ "n", "v" }, "<leader>x", [["_x]])
-map({ "n", "v" }, "<leader>X", [["_X]])
-map({ "n", "v" }, "<leader>s", [["_s]])
-map({ "n", "v" }, "<leader>S", [["_S]])
+map({ "n", "v" }, "<Leader>d", [["_d]])
+map({ "n", "v" }, "<Leader>D", [["_D]])
+map({ "n", "v" }, "<Leader>c", [["_c]])
+map({ "n", "v" }, "<Leader>C", [["_C]])
+map({ "n", "v" }, "<Leader>x", [["_x]])
+map({ "n", "v" }, "<Leader>X", [["_X]])
+map({ "n", "v" }, "<Leader>s", [["_s]])
+map({ "n", "v" }, "<Leader>S", [["_S]])
 
 -- Yank to system clipboard.
-map({ "n", "v" }, "<leader>y", [["+y]])
-map({ "n", "v" }, "<leader>Y", [["+Y]])
+map({ "n", "v" }, "<Leader>y", [["+y]])
+map({ "n", "v" }, "<Leader>Y", [["+Y]])
 
 function M.setup_lsp_mappings(opts)
   map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)

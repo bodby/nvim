@@ -5,7 +5,6 @@ require("blink.cmp").setup({
     preset = "default",
     ["<Tab>"] = { "select_and_accept", "fallback" }
   },
-
   snippets = {
     expand = function(snippet)
       vim.snippet.expand(snippet)
@@ -17,7 +16,6 @@ require("blink.cmp").setup({
       vim.snippet.jump(direction)
     end
   },
-
   completion = {
     keyword = { range = "prefix" },
     trigger = {
@@ -27,7 +25,6 @@ require("blink.cmp").setup({
       show_on_insert_on_trigger_character = true,
       show_on_x_blocked_trigger_characters = { "'", '"', '(' }
     },
-
     list = {
       max_items = 200,
       selection = "preselect",
@@ -36,12 +33,10 @@ require("blink.cmp").setup({
         from_top = true
       }
     },
-
     accept = {
       create_undo_point = true,
       auto_brackets = { enabled = true }
     },
-
     menu = {
       enabled = true,
       min_width = 15,
@@ -57,7 +52,6 @@ require("blink.cmp").setup({
         align_to_component = "label",
         padding = 1,
         gap = 0,
-
         -- { "kind_icon" },
         columns = { { "label", "label_description", gap = 1 } },
         -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
@@ -78,7 +72,6 @@ require("blink.cmp").setup({
               return "BlinkCmpKind" -- .. context.kind
             end
           },
-
           kind = {
             ellipsis = false,
             width = { fill = true },
@@ -89,7 +82,6 @@ require("blink.cmp").setup({
               return "BlinkCmpKind" .. context.kind
             end
           },
-
           label = {
             ellipsis = true,
             width = {
@@ -120,7 +112,6 @@ require("blink.cmp").setup({
               return highlights
             end
           },
-
           label_description = {
             ellipsis = true,
             width = { max = 30 },
@@ -153,7 +144,6 @@ require("blink.cmp").setup({
     },
     ghost_text = { enabled = false }
   },
-
   fuzzy = {
     use_typo_resistance = false,
     use_frecency = true,
@@ -168,7 +158,6 @@ require("blink.cmp").setup({
       force_system_triple = nil
     }
   },
-
   sources = {
     completion = {
       enabled_providers = { "lsp", "path", "snippets", "buffer" },
@@ -238,11 +227,9 @@ require("blink.cmp").setup({
       }
     }
   },
-
   appearance = {
     highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
     use_nvim_cmp_as_default = false,
-
     -- Adjusts spacing to ensure icons are aligned.
     -- "mono" or "normal".
     nerd_font_variant = "normal",
