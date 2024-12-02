@@ -41,8 +41,6 @@ let
         name = "nvim-rtp";
         src = ../nvim;
 
-        buildInputs = nvimPackages.parsers;
-
         buildPhase = ''
           mkdir -p $out/lua
           mkdir -p $out/colors
