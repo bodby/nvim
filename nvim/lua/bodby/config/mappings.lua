@@ -2,8 +2,6 @@
 local map = vim.keymap.set
 local M = {}
 
-vim.g.mapleader = " "
-
 map("v", "<Leader>p", [["_dP]])
 map("v", "<Leader>P", [["_dP]])
 

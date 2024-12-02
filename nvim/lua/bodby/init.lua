@@ -3,6 +3,8 @@ require "bodby.config.autocmds"
 
 vim.cmd.colorscheme "degraded"
 
+vim.g.mapleader = " "
+
 vim.schedule(function()
   require "bodby.config.mappings"
 end)
