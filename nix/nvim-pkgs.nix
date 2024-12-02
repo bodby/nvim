@@ -43,6 +43,15 @@ in
     rust
     zig
     haskell
+    glsl
+    python
+    html
+    css
+    rasi
+    jsonc
+    json
+    toml
+    yaml
   ];
 
   packages = with pkgs; [

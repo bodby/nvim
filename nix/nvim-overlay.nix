@@ -63,9 +63,7 @@ let
         + (builtins.readFile ../nvim/init.lua)
         + ''
           vim.opt.rtp:prepend "${nvimRtp}/after"
-          vim.opt.rtp:prepend "${
-            concatMapStringsSep "," (p: p + "/bin") nvimPackages.parsers
-          }"
+          vim.opt.rtp:prepend "${concatMapStringsSep "," (p: p + "/bin") nvimPackages.parsers}"
         '';
 
       isCustomAppName = appName != null && appName != "nvim" && appName != "";
