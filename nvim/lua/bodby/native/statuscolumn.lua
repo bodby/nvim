@@ -18,6 +18,7 @@ end
 
 M.active = function()
   return table.concat({
+    " ",
     M.sign(),
     M.line_nr(),
     " "

@@ -29,8 +29,8 @@ local M = {
     ["r"] = "PR",
     ["rm"] = "MR",
     ["r?"] = "??",
-    ["!"]  = "VT",
-    ["t"]  = "VT"
+    ["!"] = "VT",
+    ["t"] = "VT"
   },
   modified_char = "'"
 }
@@ -99,7 +99,7 @@ end
 -- Shows current line and column.
 M.pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return M.col.pos .. row .. ":" .. col .. " "
+  return M.col.pos .. row .. ":" .. col
 end
 
 -- Errors, warnings, and hints and info (in one number).
