@@ -84,7 +84,7 @@ map("n", "<Leader>fg", function()
     disable_coordinates = true
   })
 end)
-utils.map("v", "<leader>fg", function()
+map("v", "<leader>fg", function()
   local themes = require("telescope.themes")
 
   require("telescope.builtin").grep_string({

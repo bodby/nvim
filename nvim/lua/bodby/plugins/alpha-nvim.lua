@@ -84,17 +84,15 @@ local shortcuts = {
 }
 
 require("alpha").setup({
-  config = {
-    layout = {
-      { type = "padding", val = header_margin },
-      header,
-      { type = "padding", val = 2 },
-      shortcuts,
-      footer
-    },
-    opts = {
-      margin = 8,
-      noautocmd = false
-    }
+  layout = {
+    { type = "padding", val = header_margin },
+    header,
+    { type = "padding", val = 2 },
+    shortcuts,
+    footer
+  },
+  opts = {
+    margin = 8,
+    noautocmd = false
   }
 })
