@@ -146,7 +146,7 @@ M.diagnostics = function()
 
   local warnings = ""
   if count["warnings"] ~= 0 then
-    warnings = M.col.errors .. count["warnings"] .. " "
+    warnings = M.col.warnings .. count["warnings"] .. " "
   end
 
   local hints_and_info = ""
