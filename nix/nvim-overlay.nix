@@ -1,7 +1,6 @@
 { inputs, pkgs, ... }:
 final: prev:
 let
-  # pkgs = inputs.nixpkgs.legacyPackages.${final.system};
   nvimPackages = import ./nvim-pkgs.nix {
     inherit pkgs inputs;
     system = final.system;
@@ -20,7 +19,6 @@ let
     }:
     let
       inherit (pkgs) stdenv;
-      # Used by vimUtils.makeNeovimConfig.
       defaultPlugin = {
         plugin = null;
         config = null;
@@ -44,11 +42,10 @@ let
         src = ../nvim;
 
         buildPhase = ''
-          mkdir -p $out/nvim
+          # mkdir -p $out/nvim
           mkdir -p $out/lua
           mkdir -p $out/after
           mkdir -p $out/colors
-          # ???
           rm init.lua
         '';
 
@@ -66,7 +63,7 @@ let
             rm -r colors
           fi
 
-          if [ -n "$(ls -A)" ]; then cp -r -- * $out/nvim; fi
+          # if [ -n "$(ls -A)" ]; then cp -r -- * $out/nvim; fi
         '';
       };
 
@@ -78,20 +75,18 @@ let
         ''
         + (builtins.readFile ../nvim/init.lua)
         + ''
-          vim.opt.rtp:prepend "${nvimRtp}/nvim"
+          -- vim.opt.rtp:prepend "${nvimRtp}/nvim"
           vim.opt.rtp:prepend "${nvimRtp}/after"
         '';
 
       isCustomAppName = appName != null && appName != "nvim" && appName != "";
 
-      # Custom bin name and extra packages (not Lua packages). Passed to `make`.
       extraMakeWrapperArgs =
         (optionalString isCustomAppName ''--set NVIM_APPNAME "${appName}"'')
         + (optionalString (extraPackages != [ ]) ''--suffix PATH ":" "${makeBinPath.extraPackages}"'');
 
       extraLuaPackages' = extraLuaPackages nvim-unwrapped.lua.pkgs;
 
-      # Lua packages and Lua C packages. Passed to `make`.
       extraLuaWrapperArgs =
         optionalString (extraLuaPackages' != [ ])
           ''--suffix LUA_PATH ";" "${concatMapStringsSep ";" luaPackages.getLuaPath extraLuaPackages'}"'';
@@ -100,13 +95,11 @@ let
         optionalString (extraLuaPackages' != [ ])
           ''--suffix LUA_CPATH ";" "${concatMapStringsSep ";" luaPackages.getLuaCPath extraLuaPackages'}"'';
 
-      # Where is the wrapNeovimUnstable package?
       nvim-wrapped = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
         nvimConfig
         // {
           luaRcContent = initLua;
           wrapperArgs =
-            # I WROTE ARG AND NOT ARGS. AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.
             escapeShellArgs nvimConfig.wrapperArgs
             + " "
             + extraMakeWrapperArgs
@@ -130,6 +123,6 @@ in
 {
   microwave-nvim = mkNeovimConfig {
     plugins = nvimPackages.plugins;
-    # extraPackages = nvimPackages.packages;
+    extraPackages = nvimPackages.packages;
   };
 }
