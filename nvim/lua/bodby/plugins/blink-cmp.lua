@@ -69,7 +69,7 @@ require("blink.cmp").setup({
           kind_icon = {
             ellipsis = false,
             text = function(context)
-              return context.kind_icon .. context.icon_gap
+              return context.icon_gap .. context.kind_icon .. context.icon_gap
             end,
             highlight = function(context)
               -- return require("blink.cmp.completion.windows.render.tailwind").get_hl(context)

@@ -25,7 +25,7 @@ local function lazy_load(plugins, event)
       for _, plugin in pairs(plugins) do
         require ("bodby.plugins." .. plugin)
       end
-      vim.api.nvim_clear_autocmd({
+      vim.api.nvim_clear_autocmds({
         group = augroup
       })
     end
