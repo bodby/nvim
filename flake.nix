@@ -7,7 +7,6 @@
     blink-cmp = {
       url = "github:Saghen/blink.cmp";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.fenix.url = "github:Defelo/fenix/staging";
     };
   };
 
