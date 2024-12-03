@@ -1,5 +1,5 @@
 -- Vertically center logo.
-local top_margin = 0.35
+local top_margin = 0.3
 local header_margin = vim.fn.max({
   2, vim.fn.floor(vim.fn.winheight(0) * top_margin)
 })
