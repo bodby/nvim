@@ -1,9 +1,9 @@
+-- Vertically center logo.
 local top_margin = 0.35
 local header_margin = vim.fn.max({
   2, vim.fn.floor(vim.fn.winheight(0) * top_margin)
 })
 
--- Components.
 local header = {
   type = "text",
   opts = {
@@ -39,12 +39,13 @@ local function button(shortcut, text, cmd)
   local opts = {
     position = "center",
     shortcut = shortcut,
-    cursor = 16,
+    cursor = 0,
     width = 48,
     shrink_margin = true,
     align_shortcut = "right",
     hl = {
-      { "DashboardDesc", 0, -1 }
+      { "DashboardButton", 0, 2 },
+      { "DashboardDesc", 2, -1 }
     },
     hl_shortcut = "DashboardKey",
     keymap = {
@@ -66,7 +67,7 @@ local function button(shortcut, text, cmd)
 
   return {
     type = "button",
-    val = text,
+    val = "* " .. text,
     on_press = on_press,
     opts = opts
   }

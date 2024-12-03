@@ -13,6 +13,7 @@ vim.api.nvim_create_augroup("status", {})
 
 require("bodby.native.statusline").setup()
 require("bodby.native.statuscolumn").setup()
+require "bodby.native.commentstring"
 -- require("bodby.native.winbar").setup()
 
 -- Calls 'require' on every plugin in table when the event fires.
