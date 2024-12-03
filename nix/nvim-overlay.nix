@@ -37,6 +37,7 @@ let
         plugins = mappedPlugins;
       };
 
+      # TODO: Add all parsers to a single "parsers" dir so the runtimepath doesn't become huge.
       nvimRtp = stdenv.mkDerivation {
         name = "nvim-rtp";
         src = ../nvim;
