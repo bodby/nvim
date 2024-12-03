@@ -23,7 +23,7 @@
         "aarch64-darwin"
       ];
 
-    # nvim-overlay = import ./nix/nvim-overlay.nix { inherit inputs; };
+      # nvim-overlay = import ./nix/nvim-overlay.nix { inherit inputs; };
     in
     {
       formatter = nixpkgs.lib.genAttrs systems (

@@ -53,8 +53,6 @@ let
         '';
       };
 
-      # TODO: Add all parsers to a single "parsers" dir so the runtimepath doesn't become huge.
-      #       2024-12-02: I just switched to nvim-treesitter.
       initLua =
         ''
           vim.loader.enable()
