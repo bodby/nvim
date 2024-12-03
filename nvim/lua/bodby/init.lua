@@ -37,10 +37,10 @@ end
 require "bodby.plugins.alpha-nvim"
 require "bodby.plugins.telescope-nvim"
 require "bodby.plugins.nvim-treesitter"
+require "bodby.plugins.nvim-lspconfig"
 
 lazy_load({
   "blink-cmp",
   -- "blink-indent",
-  "gitsigns-nvim",
-  "nvim-lspconfig"
+  "gitsigns-nvim"
 }, "BufEnter")
