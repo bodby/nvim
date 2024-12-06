@@ -8,12 +8,32 @@ local M = {
 }
 
 function M.setup()
-  vim.opt.winbar = "%!v:lua.require('bodby.native.winbar').active()"
+  -- vim.wo.winbar = "%!v:lua.require('bodby.native.winbar').active()"
+
+  vim.api.nvim_create_autocmd({
+    "BufWinEnter",
+    "WinEnter"
+  }, {
+    callback = function(event)
+      local windows = vim.fn.win_findbuf(event.buf)
+
+      for _, window in ipairs(windows) do
+        M.init(window)
+      end
+    end
+  })
 end
 
-M.file = function()
+function M.init(window)
+  vim.wo[window].winbar = "%!v:lua.require('bodby.native.winbar').active(" .. window .. ")"
+end
+
+M.file = function(window)
   local modified = ""
-  if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
+  -- if vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(window), "modified") then
+  --   modified = M.col.modified .. M.modified_char
+  -- end
+  if vim.bo[vim.api.nvim_win_get_buf(window)].modified == true then
     modified = M.col.modified .. M.modified_char
   end
 
@@ -28,14 +48,18 @@ M.loc = function()
   return M.col.loc .. "%L"
 end
 
-M.active = function()
-  if vim.bo.filetype == "alpha" or vim.bo.filetype == "TelescopePrompt" then
+M.active = function(window)
+  local buf = vim.api.nvim_win_get_buf(window)
+
+  if vim.bo[buf].filetype == "alpha"
+  or vim.bo[buf].filetype == "TelescopePrompt"
+  or vim.bo[buf].filetype == "BlinkCmp" then
     return ""
   end
 
   return table.concat({
     " ",
-    M.file(),
+    M.file(window),
     "%=",
     M.loc(),
     " "
