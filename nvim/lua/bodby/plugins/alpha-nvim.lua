@@ -35,7 +35,7 @@ local footer = {
   }
 }
 
-local function button(shortcut, text, cmd)
+local function button(shortcut, text, action)
   local opts = {
     position = "center",
     shortcut = shortcut,
@@ -51,7 +51,7 @@ local function button(shortcut, text, cmd)
     keymap = {
       "n",
       shortcut,
-      cmd,
+      action,
       {
         noremap = true,
         silent = true,
@@ -61,8 +61,9 @@ local function button(shortcut, text, cmd)
   }
 
   local function on_press()
-    local keys = vim.api.nvim_replace_termcodes(cmd, true, false, true)
-    vim.api.nvim_feedkeys(keys, "t", false)
+    -- local keys = vim.api.nvim_replace_termcodes(cmd, true, false, true)
+    -- vim.api.nvim_feedkeys(keys, "t", false)
+    action()
   end
 
   return {
@@ -76,10 +77,22 @@ end
 local shortcuts = {
   type = "group",
   val = {
-    button("e", "New file", ":enew<CR>"),
-    button("f", "Find file", ":Telescope find_files<CR>"),
-    button("r", "Recent file", ":Telescope oldfiles<CR>"),
-    button("q", "Quit", ":qa<CR>")
+    button("e", "New file", function()
+      vim.cmd "enew"
+    end),
+    button("f", "Find file", function()
+      require("telescope.builtin").find_files({
+        prompt_title = false
+      })
+    end),
+    button("r", "Recent file", function()
+      require("telescope.builtin").oldfiles({
+        prompt_title = false
+      })
+    end),
+    button("q", "Quit", function()
+      vim.cmd "qa"
+    end)
   },
   opts = { spacing = 1 }
 }
