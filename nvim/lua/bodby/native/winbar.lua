@@ -1,6 +1,6 @@
 local M = {
   col = {
-    file = "%#WinBar#",
+    file = "%##",
     modified = "%#WinBarMod#",
     loc = "%#WinBarLOC#"
   },
