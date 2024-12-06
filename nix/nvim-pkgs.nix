@@ -21,7 +21,6 @@ in
       nvim-treesitter.withAllGrammars
       nvim-treesitter-parsers.latex
       telescope-nvim
-      # blink-cmp
       markview-nvim
       obsidian-nvim
       nvim-lspconfig

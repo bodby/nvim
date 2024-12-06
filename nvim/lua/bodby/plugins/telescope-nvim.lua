@@ -1,46 +1,6 @@
 local telescope = require "telescope"
 local map = vim.keymap.set
 
-map("n", "<Leader>ff", function()
-  local themes = require "telescope.themes"
-
-  require("telescope.builtin").find_files({
-    prompt_title = "",
-  })
-end)
-map("n", "<Leader>fr", function()
-  local themes = require("telescope.themes")
-
-  require("telescope.builtin").oldfiles({
-    prompt_title = ""
-  })
-end)
-map("n", "<Leader>fb", function()
-  local themes = require("telescope.themes")
-
-  require("telescope.builtin").buffers({
-    prompt_title = ""
-  })
-end)
-map("n", "<Leader>fg", function()
-  local themes = require("telescope.themes")
-
-  require("telescope.builtin").live_grep({
-    prompt_title = "",
-    grep_open_files = false,
-    disable_coordinates = true
-  })
-end)
-map("v", "<leader>fg", function()
-  local themes = require("telescope.themes")
-
-  require("telescope.builtin").grep_string({
-    prompt_title = "",
-    grep_open_files = false,
-    disable_coordinates = true
-  })
-end)
-
 telescope.setup({
   defaults = {
     mappings = {
@@ -93,3 +53,37 @@ telescope.setup({
 })
 
 telescope.load_extension "zf-native"
+
+map("n", "<Leader>ff", function()
+  require("telescope.builtin").find_files({
+    prompt_title = "",
+  })
+end)
+
+map("n", "<Leader>fr", function()
+  require("telescope.builtin").oldfiles({
+    prompt_title = ""
+  })
+end)
+
+map("n", "<Leader>fb", function()
+  require("telescope.builtin").buffers({
+    prompt_title = ""
+  })
+end)
+
+map("n", "<Leader>fg", function()
+  require("telescope.builtin").live_grep({
+    prompt_title = "",
+    grep_open_files = false,
+    disable_coordinates = true
+  })
+end)
+
+map("v", "<leader>fg", function()
+  require("telescope.builtin").grep_string({
+    prompt_title = "",
+    grep_open_files = false,
+    disable_coordinates = true
+  })
+end)
