@@ -33,6 +33,10 @@ M.sign = function()
 end
 
 M.line_nr = function()
+  if vim.bo.number == false then
+    return ""
+  end
+
   if vim.v.relnum == 0 then
     return "%=" .. vim.v.lnum
   else

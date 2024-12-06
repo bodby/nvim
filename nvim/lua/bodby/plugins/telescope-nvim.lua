@@ -7,30 +7,35 @@ telescope.setup({
       i = {
         ["<C-n>"] = "move_selection_next",
         ["<C-p>"] = "move_selection_previous",
-        ["<Tab>"] = "toggle_selection",
+        -- ["<Tab>"] = "toggle_selection",
         ["<CR>"] = "select_default",
         ["<Esc>"] = "close"
       }
     },
-    scroll_strategy = "cycle",
-    prompt_prefix = "",
+    prompt_prefix = "> ",
     entry_prefix = " ",
     selection_caret = " ",
     hl_result_eol = true,
-    multi_icon = " *",
-    border = false,
-    borderchars = { "", "", "", "", "", "", "", "" },
+    multi_icon = "+",
+    border = true,
+    borderchars = {
+      prompt = { "▄", "█", "▄", "█", "▄", "▄", "█", "█" },
+      results = { "▀", "│", "─", "│", "▀", "▀", "╯", "╰" }
+    },
     preview = {
       hide_on_startup = true
     },
-    results_title = "",
-    prompt_title = "",
-    layout_strategy = "bottom_pane",
+    get_status_text = function(_)
+      return ""
+    end,
+    results_title = false,
+    prompt_title = false,
+    layout_strategy = "center",
     sorting_strategy = "ascending",
     layout_config = {
       height = 16, -- vim.o.lines.
-      width = nil, -- vim.o.columns - 2.
-      prompt_position = "bottom",
+      width = 0.4, -- vim.o.columns - 2.
+      prompt_position = "top",
       -- preview_height = 0.6,
     }
   },
@@ -56,25 +61,25 @@ telescope.load_extension "zf-native"
 
 map("n", "<Leader>ff", function()
   require("telescope.builtin").find_files({
-    prompt_title = "",
+    prompt_title = false
   })
 end)
 
 map("n", "<Leader>fr", function()
   require("telescope.builtin").oldfiles({
-    prompt_title = ""
+    prompt_title = false
   })
 end)
 
 map("n", "<Leader>fb", function()
   require("telescope.builtin").buffers({
-    prompt_title = ""
+    prompt_title = false
   })
 end)
 
 map("n", "<Leader>fg", function()
   require("telescope.builtin").live_grep({
-    prompt_title = "",
+    prompt_title = false,
     grep_open_files = false,
     disable_coordinates = true
   })
@@ -82,7 +87,7 @@ end)
 
 map("v", "<leader>fg", function()
   require("telescope.builtin").grep_string({
-    prompt_title = "",
+    prompt_title = false,
     grep_open_files = false,
     disable_coordinates = true
   })

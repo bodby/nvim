@@ -22,6 +22,8 @@ o.signcolumn = "yes"
 
 o.wrap = true
 o.hlsearch = false
+o.ignorecase = true
+o.smartcase = true
 
 o.conceallevel = 2
 o.concealcursor = ""
