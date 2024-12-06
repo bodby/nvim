@@ -105,9 +105,9 @@ require("blink.cmp").setup({
                 })
               end
 
-              -- for _, i in ipairs(context.label_matched_indices) do
-              --   table.insert(highlights, { i, i + 1, group = "BlinkCmpLabelMatch" })
-              -- end
+              for _, i in ipairs(context.label_matched_indices) do
+                table.insert(highlights, { i, i + 1, group = "BlinkCmpLabelMatch" })
+              end
 
               return highlights
             end
