@@ -1,6 +1,6 @@
 local M = {
   col = {
-    file = "%#WinBarFile#",
+    file = "%#WinBar#",
     modified = "%#WinBarMod#",
     loc = "%#WinBarLOC#"
   },
@@ -14,21 +14,25 @@ end
 M.file = function()
   local modified = ""
   if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
-    modified = M.modified_char
+    modified = M.col.modified .. M.modified_char
   end
 
   -- if vim.fn.expand "%t" == "" or vim.fn.expand "%t" == "[No Name]" then
   --   return "New file" .. modified .. " "
   -- else
-  return "%t" .. modified .. " "
+  return M.col.file .. "%t" .. modified .. " "
   -- end
 end
 
 M.loc = function()
-  return "%L"
+  return M.col.loc .. "%L"
 end
 
 M.active = function()
+  if vim.bo.filetype == "alpha" or vim.bo.filetype == "TelescopePrompt" then
+    return ""
+  end
+
   return table.concat({
     " ",
     M.file(),
