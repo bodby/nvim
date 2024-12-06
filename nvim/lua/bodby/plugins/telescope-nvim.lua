@@ -20,7 +20,7 @@ telescope.setup({
     border = true,
     borderchars = {
       prompt = { "▄", "█", "▄", "█", "▄", "▄", "█", "█" },
-      results = { "▀", "│", "─", "│", "▀", "▀", "╯", "╰" }
+      results = { "▀", "█", "▀", "█", "█", "█", "▀", "▀" }
     },
     preview = {
       hide_on_startup = true
