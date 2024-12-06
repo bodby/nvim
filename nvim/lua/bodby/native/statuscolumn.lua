@@ -11,21 +11,13 @@ function M.setup()
     callback = function()
       vim.schedule(function()
         if vim.bo.filetype == "alpha" then
-          require("bodby.native.statuscolumn").disable()
+          vim.opt.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').inactive()"
         else
-          require("bodby.native.statuscolumn").enable()
+          vim.opt.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
         end
       end)
     end
   })
-end
-
-function M.enable()
-  vim.opt.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
-end
-
-function M.disable()
-  vim.opt.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').inactive()"
 end
 
 M.sign = function()

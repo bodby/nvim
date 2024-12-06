@@ -14,7 +14,7 @@ vim.api.nvim_create_augroup("status", {})
 require("bodby.native.statusline").setup()
 require("bodby.native.statuscolumn").setup()
 require "bodby.native.commentstring"
--- require("bodby.native.winbar").setup()
+require("bodby.native.winbar").setup()
 
 local function lazy_load(plugins, event)
   local augroup = "lazy" .. event:lower()

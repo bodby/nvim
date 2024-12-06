@@ -84,7 +84,7 @@ M.file = function()
   end
 
   if vim.fn.expand "%<%f" == "" then
-    return M.col.file .. vim.env.USER .. modified .. " "
+    return M.col.file .. "@" .. vim.env.USER .. modified .. " "
   else
     return M.col.file .. "%<%f" .. modified .. " "
   end
