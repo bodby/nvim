@@ -15,11 +15,13 @@ function M.setup()
     "WinEnter"
   }, {
     callback = function(event)
-      local windows = vim.fn.win_findbuf(event.buf)
+      vim.schedule(function()
+        local windows = vim.fn.win_findbuf(event.buf)
 
-      for _, window in ipairs(windows) do
-        M.init(window)
-      end
+        for _, window in ipairs(windows) do
+          M.init(window)
+        end
+      end)
     end
   })
 end
@@ -33,7 +35,7 @@ M.file = function(window)
   -- if vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(window), "modified") then
   --   modified = M.col.modified .. M.modified_char
   -- end
-  if vim.bo[vim.api.nvim_win_get_buf(window)].modified == true then
+  if vim.bo.modified == true then
     modified = M.col.modified .. M.modified_char
   end
 
@@ -49,11 +51,9 @@ M.loc = function()
 end
 
 M.active = function(window)
-  local buf = vim.api.nvim_win_get_buf(window)
-
-  if vim.bo[buf].filetype == "alpha"
-  or vim.bo[buf].filetype == "TelescopePrompt"
-  or vim.bo[buf].filetype == "BlinkCmp" then
+  if vim.bo.filetype == "alpha"
+  or vim.bo.filetype == "TelescopePrompt"
+  or vim.bo.filetype == "BlinkCmp" then
     return ""
   end
 

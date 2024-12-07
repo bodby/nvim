@@ -19,8 +19,8 @@ telescope.setup({
     multi_icon = "+",
     border = true,
     borderchars = {
-      prompt = { "▄", "█", "▄", "█", "▄", "▄", "█", "█" },
-      results = { "▀", "█", "▀", "█", "█", "█", "▀", "▀" }
+      prompt = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
+      results = { "▄", "█", "█", "█", "▄", "▄", "█", "█" }
     },
     preview = {
       hide_on_startup = true
