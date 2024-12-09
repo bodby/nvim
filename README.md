@@ -10,10 +10,8 @@ nix run 'github:bodby/nvim-cfg'
 
 ## Screenshots
 
-Font used is IBM Plex Mono.
+Font used is a custom build of Iosevka that I don't have on GitHub (yet).
 
-![Dashboard using alpha.nvim](.github/images/17-58-33-2024-12-03.png)
+![Dashboard using alpha.nvim](.github/images/18-47-20-2024-12-09.png)
 
-![Git gutter using gitsigns.nvim](.github/images/17-59-36-2024-12-03.png)
-
-![Multiple windows and blink.cmp autocomplete menu](.github/images/18-01-40-2024-12-03.png)
+![Multiple windows and blink.cmp autocomplete menu](.github/images/18-47-09-2024-12-09.png)
