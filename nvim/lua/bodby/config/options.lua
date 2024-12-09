@@ -30,7 +30,11 @@ o.concealcursor = ""
 
 o.list = true
 o.listchars:append({ trail = "_" })
-o.fillchars:append({ eob = " " })
+o.fillchars:append({
+  eob = " "
+  -- stl = "─",
+  -- wbr = "─"
+})
 
 o.laststatus = 3
 o.shortmess = "oOstTWIcCFSqc"

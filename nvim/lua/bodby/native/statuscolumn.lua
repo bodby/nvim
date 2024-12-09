@@ -2,6 +2,20 @@ local M = {}
 
 function M.setup()
   vim.opt.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
+
+  vim.api.nvim_create_autocmd({
+    "WinEnter",
+    "BufEnter"
+  }, {
+    group = "status",
+    callback = function()
+      if not vim.wo.number then
+        vim.wo.statuscolumn = ""
+      else
+        vim.wo.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
+      end
+    end
+  })
 end
 
 M.sign = function()
@@ -17,7 +31,7 @@ M.line_nr = function()
 end
 
 M.active = function()
-  if vim.wo.number == false then
+  if not vim.wo.number then
     return ""
   end
 
