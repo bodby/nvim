@@ -20,7 +20,9 @@ telescope.setup({
     border = true,
     borderchars = {
       prompt = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
-      results = { "▄", "█", "█", "█", "▄", "▄", "█", "█" }
+      results = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
+      -- results = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
     },
     preview = {
       hide_on_startup = true
@@ -30,12 +32,13 @@ telescope.setup({
     end,
     results_title = false,
     prompt_title = false,
-    layout_strategy = "center",
-    sorting_strategy = "ascending",
+    dynamic_preview_title = true,
+    layout_strategy = "horizontal",
+    sorting_strategy = "descending",
     layout_config = {
-      height = 16, -- vim.o.lines.
-      width = 0.4, -- vim.o.columns - 2.
-      prompt_position = "top"
+      height = 0.8, -- vim.o.lines.
+      width = 0.8, -- vim.o.columns - 2.
+      prompt_position = "bottom"
       -- preview_height = 0.6,
     }
   },

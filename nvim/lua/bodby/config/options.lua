@@ -28,6 +28,8 @@ o.smartcase = true
 o.conceallevel = 2
 o.concealcursor = ""
 
+o.guicursor = "a:Cursor/Cursor"
+
 o.list = true
 o.listchars:append({ trail = "_" })
 o.fillchars:append({

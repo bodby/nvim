@@ -41,6 +41,7 @@ require("blink.cmp").setup({
       enabled = true,
       min_width = 15,
       max_height = 16,
+      -- border = { "▄", "▄", "▄", "█", "▀", "▀", "▀", "█" },
       border = "none",
       winblend = 0,
       winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
