@@ -1,18 +1,17 @@
 local M = {}
 
 function M.setup()
-  vim.opt.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
+  vim.wo.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
 
   vim.api.nvim_create_autocmd({
-    "WinEnter",
-    "BufEnter"
+    "BufWinEnter",
   }, {
     group = "status",
-    callback = function()
-      if not vim.wo.number then
-        vim.wo.statuscolumn = ""
-      else
-        vim.wo.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
+    callback = function(event)
+      local windows = vim.fn.win_findbuf(event.buf);
+
+      for _, window in ipairs(windows) do
+        vim.wo[window].statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active(" .. window .. ")"
       end
     end
   })
@@ -23,6 +22,13 @@ M.sign = function()
 end
 
 M.line_nr = function()
+  -- Wrapped and virtual line numbers.
+  if vim.v.virtnum > 0 then
+    return "%=+"
+  elseif vim.v.virtnum < 0 then
+    return "%=-"
+  end
+
   if vim.v.relnum == 0 then
     return "%=" .. vim.v.lnum
   else
@@ -30,8 +36,8 @@ M.line_nr = function()
   end
 end
 
-M.active = function()
-  if not vim.wo.number then
+M.active = function(window)
+  if not vim.wo[window].number or not vim.wo[window].relativenumber then
     return ""
   end
 
