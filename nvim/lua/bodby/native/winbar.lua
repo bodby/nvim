@@ -1,6 +1,5 @@
 local M = {
   col = {
-    file = "%##",
     loc = "%#WinBarLOC#"
   },
   modified_char = "'"
@@ -11,7 +10,7 @@ function M.setup()
 end
 
 M.file = function()
-  return M.col.file .. "%t "
+  return "%t"
 end
 
 M.loc = function()
@@ -20,8 +19,7 @@ end
 
 M.active = function()
   return table.concat({
-    " ",
-    M.file(),
+    " %t",
     "%=",
     M.loc(),
     " "

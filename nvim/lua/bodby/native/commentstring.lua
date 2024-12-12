@@ -1,10 +1,13 @@
-local prefixes = {
+-- Default commentstrings don't have spaces after the comment characters. :(
+local filetypes = {
   lua = "-- %s",
   zig = "// %s",
   cpp = "// %s",
   c = "// %s",
   kdl = "// %s",
   rasi = "// %s",
+  json = "// %s",
+  jsonc = "// %s",
   ocaml = "(* %s *)",
   rust = "// %s",
   html = "<!-- %s -->",
@@ -12,10 +15,9 @@ local prefixes = {
 }
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
   callback = function()
-    if prefixes[vim.bo.filetype] ~= nil then
-      vim.bo.commentstring = prefixes[vim.bo.filetype]
+    if filetypes[vim.bo.filetype] ~= nil then
+      vim.bo.commentstring = filetypes[vim.bo.filetype]
     end
   end
 })

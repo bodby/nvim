@@ -72,11 +72,6 @@ M.mode = function()
   end
 end
 
--- Shows total LOC in file.
--- M.loc = function()
---   return M.col.pos .. vim.fn.line "$"
--- end
-
 M.file = function()
   local modified = ""
   if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
@@ -90,8 +85,8 @@ M.file = function()
   end
 end
 
--- Shows no. of lines added, modified, and removed.
--- Formatted as (+L ~L -L).
+-- Shows Git branch as well as no. of lines added, modified, and removed.
+-- Formatted as (#branch +L ~L -L).
 M.git_info = function()
   local lines = M.col.git.lines
     .. (vim.b.gitsigns_status ~= nil and vim.b.gitsigns_status or "")
@@ -134,7 +129,6 @@ M.diagnostics = function()
     info = "Info"
   }
 
-  -- Populate count table with diagnostic numbers.
   for i, v in pairs(levels) do
     count[i] = vim.tbl_count(vim.diagnostic.get(0, { serverity = level }))
   end
@@ -167,10 +161,8 @@ M.active = function()
     M.git_info(),
     M.macro(),
     M.col.default,
-    -- Right align.
     "%=",
     M.diagnostics(),
-    -- loc(),
     M.pos()
   })
 end

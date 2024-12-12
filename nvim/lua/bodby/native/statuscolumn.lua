@@ -35,7 +35,7 @@ end
 
 M.active = function(window)
   -- HACK: Checking for validity before actually checking options.
-  --       This shouldn't be the case, but if I don't do this then deleting windows throws an error.
+  --       If I don't do this then deleting windows throws an error.
   if vim.api.nvim_win_is_valid(window) then
     if not vim.wo[window].number or not vim.wo[window].relativenumber then
       return ""
@@ -43,7 +43,6 @@ M.active = function(window)
   end
 
   return table.concat({
-    -- Sign column.
     " %s",
     M.line_nr(),
     " "
