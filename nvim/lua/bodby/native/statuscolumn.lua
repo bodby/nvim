@@ -1,6 +1,7 @@
 local M = {}
 
 function M.setup()
+  -- For dashboard or first file opened.
   vim.wo.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
 
   vim.api.nvim_create_autocmd({
@@ -11,15 +12,14 @@ function M.setup()
       local windows = vim.fn.win_findbuf(event.buf);
 
       for _, window in ipairs(windows) do
-        if vim.api.nvim_win_is_valid(window) then
-          vim.wo[window].statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active(" .. window .. ")"
-        end
+        vim.wo[window].statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active(" .. window .. ")"
       end
     end
   })
 end
 
 M.line_nr = function()
+  -- Wrapped lines and virtual lines.
   if vim.v.virtnum > 0 then
     return "%=+"
   elseif vim.v.virtnum < 0 then
@@ -34,11 +34,16 @@ M.line_nr = function()
 end
 
 M.active = function(window)
-  if not vim.wo[window].number or not vim.wo[window].relativenumber then
-    return ""
+  -- HACK: Checking for validity before actually checking options.
+  --       This shouldn't be the case, but if I don't do this then deleting windows throws an error.
+  if vim.api.nvim_win_is_valid(window) then
+    if not vim.wo[window].number or not vim.wo[window].relativenumber then
+      return ""
+    end
   end
 
   return table.concat({
+    -- Sign column.
     " %s",
     M.line_nr(),
     " "
