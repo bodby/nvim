@@ -4,25 +4,22 @@ function M.setup()
   vim.wo.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
 
   vim.api.nvim_create_autocmd({
-    "BufWinEnter",
+    "BufEnter",
   }, {
     group = "status",
     callback = function(event)
       local windows = vim.fn.win_findbuf(event.buf);
 
       for _, window in ipairs(windows) do
-        vim.wo[window].statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active(" .. window .. ")"
+        if vim.api.nvim_win_is_valid(window) then
+          vim.wo[window].statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active(" .. window .. ")"
+        end
       end
     end
   })
 end
 
-M.sign = function()
-  return "%s"
-end
-
 M.line_nr = function()
-  -- Wrapped and virtual line numbers.
   if vim.v.virtnum > 0 then
     return "%=+"
   elseif vim.v.virtnum < 0 then
@@ -42,8 +39,7 @@ M.active = function(window)
   end
 
   return table.concat({
-    " ",
-    M.sign(),
+    " %s",
     M.line_nr(),
     " "
   })
