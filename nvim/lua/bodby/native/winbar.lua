@@ -25,6 +25,7 @@ function M.setup()
       vim.schedule(function()
         local windows = vim.fn.win_findbuf(event.buf);
         for _, window in pairs(windows) do
+          -- Does Lua not have matching/mapping? Surely there must be a better way to do this.
           for _, ft in pairs(blocked_filetypes) do
             if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == ft then
               return
@@ -65,7 +66,7 @@ end
 M.active = function(window)
   if vim.api.nvim_win_is_valid(window) then
     if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == "alpha" then
-      return ""
+      return " Hello world"
     end
   end
 

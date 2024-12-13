@@ -1,3 +1,5 @@
+vim.cmd "redraw"
+
 require "bodby.config.options"
 require "bodby.config.autocmds"
 
