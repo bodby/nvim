@@ -16,8 +16,6 @@ require("bodby.native.statuscolumn").setup()
 require "bodby.native.commentstring"
 require("bodby.native.winbar").setup()
 
-vim.cmd "redraw"
-
 local function lazy_load(plugins, event)
   local augroup = "lazy" .. event:lower()
   vim.api.nvim_create_augroup(augroup, {})
