@@ -80,16 +80,26 @@ local shortcuts = {
     button("e", "New file", function()
       vim.cmd "enew"
     end),
+
     button("f", "Find file", function()
       require("telescope.builtin").find_files({
         prompt_title = false
       })
     end),
+
     button("r", "Recent file", function()
       require("telescope.builtin").oldfiles({
         prompt_title = false
       })
     end),
+
+    button("v", "Open vault", function()
+      vim.cmd "cd ~/vault"
+      require("telescope.builtin").find_files({
+        prompt_title = false
+      })
+    end),
+
     button("q", "Quit", function()
       vim.cmd "qa"
     end)
