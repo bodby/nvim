@@ -12,6 +12,12 @@ nix run 'github:bodby/nvim-cfg'
 
 Font used is a custom build of Iosevka that I don't have on GitHub (yet).
 
-![Dashboard using alpha.nvim](.github/images/18-47-20-2024-12-09.png)
+![Dashboard](.github/images/13-12-2024-05-33-39.png)
 
-![Multiple windows and blink.cmp autocomplete menu](.github/images/18-47-09-2024-12-09.png)
+![Dashboard file finder](.github/images/13-12-2024-05-33-55.png)
+
+![Autocomplete menu](.github/images/13-12-2024-05-36-27.png)
+
+![Git diff signs and statusline Git info](.github/images/13-12-2024-05-37-08.png)
+
+![Nix file](.github/images/13-12-2024-05-37-38.png)
