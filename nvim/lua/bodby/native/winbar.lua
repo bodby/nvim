@@ -5,12 +5,12 @@ local colors = {
   modified = "%#WinBarMod#"
 }
 
-local blocked_filetypes = {
-  "TelescopePrompt",
-  "blink-cmp-menu",
-  "blink-cmp-documentation",
-  "blink-cmp-signature"
-}
+-- local blocked_filetypes = {
+--   "TelescopePrompt",
+--   "blink-cmp-menu",
+--   "blink-cmp-documentation",
+--   "blink-cmp-signature"
+-- }
 
 function M.setup()
   vim.wo.winbar = "%!v:lua.require('bodby.native.winbar').active(0)"
@@ -21,19 +21,24 @@ function M.setup()
   }, {
     group = "status",
     callback = function(event)
-      vim.schedule(function()
-        local windows = vim.fn.win_findbuf(event.buf);
-        for _, window in pairs(windows) do
-          -- Does Lua not have matching/mapping? Surely there must be a better way to do this.
-          for _, ft in pairs(blocked_filetypes) do
-            if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == ft then
-              return
-            end
-          end
+      -- local windows = vim.fn.win_findbuf(event.buf);
+      local windows = vim.api.nvim_tabpage_list_wins(0);
 
-          vim.wo[window].winbar = "%!v:lua.require('bodby.native.winbar').active(" .. window .. ")"
+      for _, window in pairs(windows) do
+        -- Does Lua not have matching/mapping? Surely there must be a better way to do this.
+        -- for _, ft in pairs(blocked_filetypes) do
+        --   if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == ft then
+        --     return
+        --   end
+        -- end
+
+        -- Don't apply to floating windows.
+        if vim.api.nvim_win_get_config(window).relative ~= "" then
+          return
         end
-      end)
+
+        vim.wo[window].winbar = "%!v:lua.require('bodby.native.winbar').active(" .. window .. ")"
+      end
     end
   })
 end
@@ -41,6 +46,7 @@ end
 file = function(window)
   local mod_suffix = ""
   local filename = ""
+
   if vim.api.nvim_win_is_valid(window) then
     local buffer = vim.api.nvim_win_get_buf(window)
 
