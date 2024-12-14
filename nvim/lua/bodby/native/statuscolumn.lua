@@ -18,7 +18,7 @@ function M.setup()
   })
 end
 
-M.line_nr = function()
+line_nr = function()
   -- Wrapped lines and virtual lines.
   if vim.v.virtnum > 0 then
     return "%=+"
@@ -44,7 +44,7 @@ M.active = function(window)
 
   return table.concat({
     " %s",
-    M.line_nr(),
+    line_nr(),
     " "
   })
 end

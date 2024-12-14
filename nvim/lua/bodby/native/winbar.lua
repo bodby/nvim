@@ -1,9 +1,8 @@
-local M = {
-  col = {
-    loc = "%#WinBarLOC#",
-    modified = "%#WinBarMod#"
-  },
-  modified_char = "'",
+local M = {}
+
+local colors = {
+  loc = "%#WinBarLOC#",
+  modified = "%#WinBarMod#"
 }
 
 local blocked_filetypes = {
@@ -39,7 +38,7 @@ function M.setup()
   })
 end
 
-M.file = function(window)
+file = function(window)
   local mod_suffix = ""
   local filename = ""
   if vim.api.nvim_win_is_valid(window) then
@@ -52,29 +51,29 @@ M.file = function(window)
     end
 
     if vim.bo[buffer].modified then
-      mod_suffix = M.col.modified .. M.modified_char
+      mod_suffix = colors.modified .. "'"
     end
   end
 
   return filename .. mod_suffix
 end
 
-M.loc = function()
-  return M.col.loc .. "%L"
+loc = function()
+  return colors.loc .. "%L"
 end
 
 M.active = function(window)
   if vim.api.nvim_win_is_valid(window) then
     if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == "alpha" then
-      return " Hello world"
+      return " AAAAAAAAAAA"
     end
   end
 
   return table.concat({
     " ",
-    M.file(window),
+    file(window),
     "%=",
-    M.loc(),
+    loc(),
     " "
   })
 end
