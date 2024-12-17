@@ -26,6 +26,7 @@ in
       nvim-lspconfig
       nabla-nvim
       telescope-zf-native-nvim
+      material-nvim
       alpha-nvim
       gitsigns-nvim
     ]
