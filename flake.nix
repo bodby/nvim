@@ -4,10 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    blink-cmp = {
-      url = "github:Saghen/blink.cmp";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    blink-cmp.url = "github:Saghen/blink.cmp";
+    blink-cmp.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -22,8 +20,6 @@
         "x86_64-darwin"
         "aarch64-darwin"
       ];
-
-      # nvim-overlay = import ./nix/nvim-overlay.nix { inherit inputs; };
     in
     {
       formatter = nixpkgs.lib.genAttrs systems (
@@ -37,7 +33,7 @@
             inherit system;
             overlays = [
               (import ./nix/pkgs)
-              (import ./nix/nvim-overlay.nix { inherit inputs pkgs; })
+              (import ./nix/package.nix { inherit inputs pkgs; })
             ];
           };
         in
@@ -46,6 +42,5 @@
           nvim = pkgs.nvim-btw;
         }
       );
-      # overlays.default = nvim-overlay;
     };
 }
