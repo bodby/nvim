@@ -6,7 +6,7 @@ local header = {
   type = "text",
   opts = {
     position = "center",
-    hl = "DashboardLogo"
+    hl = "DashboardHeader"
   },
   val = {
     "           ▄ ▄                   ",
@@ -27,10 +27,7 @@ local footer = {
     position = "center",
     hl = "DashboardFooter"
   },
-  val = {
-    '"This quote is often falsely attributed to Mark Twain"',
-    "- Mark Twain"
-  }
+  val = "Sent from my iPhone"
 }
 
 local button = function(shortcut, text, action)
