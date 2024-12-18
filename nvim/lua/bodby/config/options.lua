@@ -1,67 +1,48 @@
-local o = vim.opt
+local opt = vim.opt
 local g = vim.g
 
-local signs = {
-  Error = "x",
-  Warn = "!",
-  Hint = "?",
-  Info = "i"
-}
+opt.pumheight = 16
+opt.scrolloff = 12
+opt.showmode = false
+opt.cmdheight = 0
 
--- Visual
-o.pumheight = 16
-o.scrolloff = 12
-o.showmode = false
-o.cmdheight = 0
+opt.number = true
+opt.relativenumber = true
+opt.cursorline = true
+opt.numberwidth = 1
+opt.signcolumn = "yes"
 
-o.number = true
-o.relativenumber = true
-o.cursorline = true
-o.numberwidth = 1
-o.signcolumn = "yes"
+opt.wrap = true
+opt.hlsearch = false
+opt.ignorecase = true
+opt.smartcase = true
 
-o.wrap = true
-o.hlsearch = false
-o.ignorecase = true
-o.smartcase = true
+opt.conceallevel = 2
+opt.concealcursor = ""
 
-o.conceallevel = 2
-o.concealcursor = ""
+opt.guicursor = "a:Cursor/Cursor"
 
-o.guicursor = "a:Cursor/Cursor"
-
-o.list = true
-o.listchars:append({ trail = "_" })
-o.fillchars:append({
+opt.list = true
+opt.listchars:append({ trail = "_" })
+opt.fillchars:append({
   eob = " "
   -- stl = "─",
   -- wbr = "─"
 })
 
-o.laststatus = 3
-o.shortmess = "oOstTWIcCFSqc"
+opt.laststatus = 3
+opt.shortmess = "oOstTWIcCFSqc"
 
--- LSP statuscolumn icons.
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, {
-    text = icon,
-    texthl = hl,
-    numhl = hl
-  })
-end
+opt.mouse = ""
 
--- Functional.
-o.mouse = ""
+opt.confirm = true
+opt.undofile = true
+opt.undolevels = 10000
 
-o.confirm = true
-o.undofile = true
-o.undolevels = 10000
-
-o.expandtab = true
-o.shiftwidth = 2
-o.tabstop = 2
-o.softtabstop = 2
+opt.expandtab = true
+opt.shiftwidth = 2
+opt.tabstop = 2
+opt.softtabstop = 2
 
 g.markdown_recommended_style = 0
 

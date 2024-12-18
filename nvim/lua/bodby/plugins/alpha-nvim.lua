@@ -1,7 +1,5 @@
--- Vertically center logo.
-local top_margin = 0.3
 local header_margin = vim.fn.max({
-  2, vim.fn.floor(vim.fn.winheight(0) * top_margin)
+  2, vim.fn.floor(vim.fn.winheight(0) * 0.3)
 })
 
 local header = {
@@ -35,7 +33,7 @@ local footer = {
   }
 }
 
-local function button(shortcut, text, action)
+local button = function(shortcut, text, action)
   local opts = {
     position = "center",
     shortcut = shortcut,
@@ -115,6 +113,7 @@ require("alpha").setup({
     shortcuts,
     footer
   },
+
   opts = {
     margin = 8,
     noautocmd = false

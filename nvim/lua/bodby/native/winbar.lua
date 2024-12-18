@@ -21,7 +21,6 @@ function M.setup()
   }, {
     group = "status",
     callback = function(event)
-      -- local windows = vim.fn.win_findbuf(event.buf);
       local windows = vim.api.nvim_tabpage_list_wins(0);
 
       for _, window in pairs(windows) do
@@ -32,7 +31,6 @@ function M.setup()
         --   end
         -- end
 
-        -- Don't apply to floating windows.
         if vim.api.nvim_win_get_config(window).relative ~= "" then
           return
         end
@@ -71,6 +69,7 @@ end
 M.active = function(window)
   if vim.api.nvim_win_is_valid(window) then
     if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == "alpha" then
+      -- TODO: Show actually useful information in the dashboard winbar.
       return " AAAAAAAAAAA"
     end
   end

@@ -36,8 +36,8 @@ telescope.setup({
     layout_strategy = "horizontal",
     sorting_strategy = "descending",
     layout_config = {
-      height = 0.8, -- vim.o.lines.
-      width = 0.8, -- vim.o.columns - 2.
+      height = 0.6, -- vim.o.lines.
+      width = 0.6, -- vim.o.columns - 2.
       prompt_position = "bottom"
       -- preview_height = 0.6,
     }

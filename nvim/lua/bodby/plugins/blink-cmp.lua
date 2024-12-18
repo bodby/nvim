@@ -53,14 +53,11 @@ require("blink.cmp").setup({
         align_to_component = "label",
         padding = 1,
         gap = 0,
+
         -- { "kind_icon" },
         columns = { { "label", "label_description", gap = 1 } },
         -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
 
-        --- ellipsis: Whether to add an ellipsis when truncating the text.
-        --- width: Controls the min (int), max (int), and fill (bool) behavior of the component.
-        --- text (function): Called for each item.
-        --- highlight (function): Called only when the line appears on screen.
         components = {
           kind_icon = {
             ellipsis = false,
@@ -177,6 +174,7 @@ require("blink.cmp").setup({
         score_offset = 0,
         override = nil
       },
+
       path = {
         name = "Path",
         module = "blink.cmp.sources.path",
@@ -190,6 +188,7 @@ require("blink.cmp").setup({
           show_hidden_files_by_default = true
         }
       },
+
       snippets = {
         name = "Snippets",
         module = "blink.cmp.sources.snippets",
@@ -205,11 +204,13 @@ require("blink.cmp").setup({
           end
         }
       },
+
       buffer = {
         name = "Buffer",
         module = "blink.cmp.sources.buffer",
         fallback_for = { "lsp" },
       },
+
       obsidian = {
         name = "cmp_obsidian",
         module = "blink.compat.source",
@@ -227,6 +228,7 @@ require("blink.cmp").setup({
       }
     }
   },
+
   appearance = {
     highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
     use_nvim_cmp_as_default = false,

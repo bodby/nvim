@@ -5,8 +5,24 @@ vim.cmd.colorscheme "degraded"
 
 vim.g.mapleader = " "
 
--- Why does NvChad defer this?
+-- Why does NvChad defer mappings?
 vim.schedule(function()
+  local lsp_signs = {
+    Error = "x",
+    Warn = "!",
+    Hint = "?",
+    Info = "i"
+  }
+
+  for type, sign in pairs(lsp_signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, {
+      text = sign,
+      texthl = hl,
+      numhl = hl
+    })
+  end
+
   require "bodby.config.mappings"
 
   vim.api.nvim_create_autocmd("LspAttach", {

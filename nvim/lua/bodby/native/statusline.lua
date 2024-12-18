@@ -62,6 +62,7 @@ function M.setup()
   })
 end
 
+-- Shows the current mode.
 stl_mode = function()
   local cur_mode = modes[vim.api.nvim_get_mode().mode]
 
@@ -72,6 +73,7 @@ stl_mode = function()
   end
 end
 
+-- Shows the current file and a modified symbol.
 stl_file = function()
   local modified = ""
   if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
@@ -85,8 +87,7 @@ stl_file = function()
   end
 end
 
--- Shows Git branch as well as no. of lines added, modified, and removed.
--- Formatted as (#branch +L ~L -L).
+-- The (#branch +L ~L -L) in the stl.
 stl_git_info = function()
   local lines = colors.git.lines
     .. (vim.b.gitsigns_status ~= nil and vim.b.gitsigns_status or "")

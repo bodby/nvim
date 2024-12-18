@@ -1,22 +1,14 @@
 local cmp_caps = require("blink.cmp").get_lsp_capabilities()
 local lspconfig = require "lspconfig"
 
-lspconfig.clangd.setup({
-  capabilities = cmp_caps
-})
+local servers = {
+  "clangd",
+  "nixd",
+  "ocamllsp",
+  "rust_analyzer",
+  "mesonlsp"
+}
 
-lspconfig.nixd.setup({
-  capabilities = cmp_caps
-})
-
-lspconfig.ocamllsp.setup({
-  capabilities = cmp_caps
-})
-
-lspconfig.rust_analyzer.setup({
-  capabilities = cmp_caps
-})
-
-lspconfig.mesonlsp.setup({
-  capabilities = cmp_caps
-})
+for _, server in pairs(servers) do
+  lspconfig[server].setup({ capabilities = cmp_caps })
+end
