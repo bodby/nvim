@@ -9,6 +9,7 @@ let
   customPkgs = [
     # pkgs.blink-indent
     pkgs.blink-compat
+    pkgs.degraded-nvim
     inputs.blink-cmp.packages.${system}.blink-cmp
   ];
 in
@@ -19,12 +20,12 @@ in
       nvim-treesitter.withAllGrammars
       nvim-treesitter-parsers.latex
       telescope-nvim
-      markview-nvim
+      # markview-nvim
       obsidian-nvim
       nvim-lspconfig
       nabla-nvim
       telescope-zf-native-nvim
-      material-nvim
+      # material-nvim
       alpha-nvim
       gitsigns-nvim
     ]

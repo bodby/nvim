@@ -1,6 +1,6 @@
 require "bodby.config.options"
 
--- require "bodby.plugins.degraded"
+-- require("bodby.plugins.degraded").setup()
 vim.cmd.colorscheme "degraded"
 
 vim.g.mapleader = " "
