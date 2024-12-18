@@ -11,8 +11,8 @@ vimUtils.buildVimPlugin {
   src = fetchFromGitHub {
     owner = "Saghen";
     repo = "blink.compat";
-    rev = "669a4b0d31a2a3c2ff38959e7885644ea0299e8e";
-    sha256 = "sha256-vIv4dxoXiakunYHIr7X4acqjBRWBO/wAgTCZeXYdgx4=";
+    rev = "73249d35c8737b614bed64c2f33277387035f8ec";
+    sha256 = "sha256-QW5QG7nqdHdyOodac06Cnq8/WKfbg3YyX/yPh87ENJQ=";
   };
 
   meta = {

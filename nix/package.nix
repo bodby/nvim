@@ -7,7 +7,6 @@ let
   };
 
   mkNeovimConfig =
-    with pkgs.lib;
     {
       appName ? null,
       nvim-unwrapped ? pkgs.neovim-unwrapped,
@@ -17,6 +16,7 @@ let
       viAlias ? false,
       vimAlias ? false,
     }:
+    with pkgs.lib;
     let
       inherit (pkgs) stdenv;
       defaultPlugin = {
@@ -104,6 +104,7 @@ let
         + optionalString isCustomAppName ''
           mv $out/bin/nvim $out/bin/${escapeShellArgs appName}
         '';
+
       meta.mainProgram = if isCustomAppName then appName else prev.meta.mainProgram;
     });
 in
