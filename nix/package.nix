@@ -45,13 +45,18 @@ let
 
         buildPhase = ''
           mkdir -p $out/lua
-          mkdir -p $out/colors
+          if [ -d "colors" ]; then
+            mkdir -p $out/colors
+          fi
         '';
 
         installPhase = ''
           cp -r lua $out/lua
           cp -r after $out/after
-          cp -r colors $out/colors
+
+          if [ -d "colors" ]; then
+            cp -r colors $out/colors
+          fi
         '';
       };
 

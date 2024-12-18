@@ -1,5 +1,4 @@
 require("blink.cmp").setup({
-  blocked_filetypes = { "alpha" },
   signature = { enabled = false },
   keymap = {
     preset = "default",
@@ -143,11 +142,10 @@ require("blink.cmp").setup({
     ghost_text = { enabled = false }
   },
   fuzzy = {
-    use_typo_resistance = false,
+    use_typo_resistance = true,
     use_frecency = true,
     use_proximity = true,
-    max_items = 200,
-    sorts = { "label", "kind", "score" },
+    sorts = { "score", "sort_text" },
 
     prebuilt_binaries = {
       -- If false, manually build the fuzzy binary dependencies by running `cargo build --release`.
@@ -157,9 +155,9 @@ require("blink.cmp").setup({
     }
   },
   sources = {
-    completion = {
-      enabled_providers = { "lsp", "path", "snippets", "buffer" },
-    },
+    default = { "lsp", "path", "snippets", "buffer" },
+    cmdline = { },
+
     providers = {
       lsp = {
         name = "LSP",
@@ -170,7 +168,7 @@ require("blink.cmp").setup({
         should_show_items = true,
         max_items = nil,
         min_keyword_length = 0,
-        fallback_for = {},
+        fallbacks = { "buffer" },
         score_offset = 0,
         override = nil
       },
@@ -197,8 +195,8 @@ require("blink.cmp").setup({
           friendly_snippets = true,
           search_paths = { vim.fn.stdpath('config') .. '/snippets' },
           global_snippets = { 'all' },
-          extended_filetypes = {},
-          ignored_filetypes = {},
+          extended_filetypes = { },
+          ignored_filetypes = { },
           get_filetype = function(context)
             return vim.bo.filetype
           end
@@ -208,7 +206,6 @@ require("blink.cmp").setup({
       buffer = {
         name = "Buffer",
         module = "blink.cmp.sources.buffer",
-        fallback_for = { "lsp" },
       },
 
       obsidian = {
@@ -222,7 +219,7 @@ require("blink.cmp").setup({
         should_show_items = true,
         max_items = nil,
         min_keyword_length = 0,
-        fallback_for = {},
+        fallbacks = { "buffer" },
         score_offset = 0,
         override = nil
       }
