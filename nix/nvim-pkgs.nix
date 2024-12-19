@@ -21,19 +21,21 @@ in
       nvim-treesitter-parsers.latex
       telescope-nvim
       # markview-nvim
-      obsidian-nvim
+      # nabla-nvim
+      # obsidian-nvim
       nvim-lspconfig
-      nabla-nvim
       telescope-zf-native-nvim
       # material-nvim
       alpha-nvim
       gitsigns-nvim
+      haskell-tools-nvim
     ]
     ++ customPkgs;
 
   packages = with pkgs; [
     ripgrep
     nixd
+    ghc
     haskell-language-server
   ];
 }
