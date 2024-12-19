@@ -22,12 +22,7 @@ function M.setup_lsp_mappings(opts)
   map("n", "grn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
   map("n", "gra", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
 
-  if vim.bo[opts.buffer].filetype ~= "haskell" then
-    map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-  else
-    local ht = require "haskell-tools"
-    map("n", "K", ht.hoogle.hoogle_signature, opts)
-  end
+  map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
 
   map("n", "<C-w>d", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
 
