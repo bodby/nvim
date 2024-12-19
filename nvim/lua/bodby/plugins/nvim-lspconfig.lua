@@ -6,7 +6,8 @@ local servers = {
   "nixd",
   "ocamllsp",
   "rust_analyzer",
-  "mesonlsp"
+  "mesonlsp",
+  "hls"
 }
 
 for _, server in pairs(servers) do

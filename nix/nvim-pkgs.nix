@@ -34,5 +34,6 @@ in
   packages = with pkgs; [
     ripgrep
     nixd
+    haskell-language-server
   ];
 }
