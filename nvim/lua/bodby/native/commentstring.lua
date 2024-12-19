@@ -2,7 +2,7 @@
 local filetypes = {
   lua = "-- %s",
   cabal = "-- %s",
-  haskell = "-- %s",
+  -- haskell = "-- %s",
   zig = "// %s",
   cpp = "// %s",
   c = "// %s",
