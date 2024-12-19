@@ -21,11 +21,12 @@ in
       nvim-treesitter-parsers.latex
       telescope-nvim
       # markview-nvim
-      # nabla-nvim
-      # obsidian-nvim
+      render-markdown-nvim
+      nabla-nvim
+      obsidian-nvim
       nvim-lspconfig
       telescope-zf-native-nvim
-      # material-nvim
+      material-nvim
       alpha-nvim
       gitsigns-nvim
     ]
@@ -36,5 +37,6 @@ in
     nixd
     ghc
     haskell-language-server
+    ormolu
   ];
 }

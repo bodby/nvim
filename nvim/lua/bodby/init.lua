@@ -39,12 +39,13 @@ require("bodby.native.statuscolumn").setup()
 require("bodby.native.winbar").setup()
 require "bodby.native.commentstring"
 
-local function lazy_load(plugins, event)
+local function lazy_load(plugins, event, pattern)
   local augroup = "lazy" .. event:lower()
 
   vim.api.nvim_create_augroup(augroup, {})
   vim.api.nvim_create_autocmd(event, {
     group = augroup,
+    pattern = pattern,
     callback = function()
       for _, plugin in pairs(plugins) do
         require("bodby.plugins." .. plugin)
@@ -66,4 +67,8 @@ lazy_load({
   "blink-cmp",
   -- "blink-indent",
   "gitsigns-nvim"
-}, "BufEnter")
+}, "BufEnter", "*")
+
+lazy_load({
+  "render-markdown"
+}, "FileType", "*.md")

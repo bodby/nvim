@@ -1,5 +1,4 @@
 local telescope = require "telescope"
-local map = vim.keymap.set
 
 telescope.setup({
   defaults = {
@@ -61,6 +60,8 @@ telescope.setup({
 })
 
 telescope.load_extension "zf-native"
+
+local map = vim.keymap.set
 
 map("n", "<Leader>ff", function()
   require("telescope.builtin").find_files({

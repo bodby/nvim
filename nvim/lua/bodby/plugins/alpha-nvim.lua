@@ -6,7 +6,7 @@ local header = {
   type = "text",
   opts = {
     position = "center",
-    hl = "DashboardHeader"
+    hl = "AlphaHeader"
   },
   val = {
     "           ▄ ▄                   ",
@@ -25,7 +25,7 @@ local footer = {
   type = "text",
   opts = {
     position = "center",
-    hl = "DashboardFooter"
+    hl = "AlphaFooter"
   },
   val = "Sent from my iPhone"
 }
@@ -39,10 +39,10 @@ local button = function(shortcut, text, action)
     shrink_margin = true,
     align_shortcut = "right",
     hl = {
-      { "DashboardButton", 0, 2 },
-      { "DashboardDesc", 2, -1 }
+      { "AlphaButtons", 0, 2 },
+      { "AlphaHeaderLabel", 2, -1 }
     },
-    hl_shortcut = "DashboardKey",
+    hl_shortcut = "AlphaShortcut",
     keymap = {
       "n",
       shortcut,
