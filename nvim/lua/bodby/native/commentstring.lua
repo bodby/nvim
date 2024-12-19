@@ -1,6 +1,8 @@
 -- Default commentstrings don't have spaces after the comment characters. :(
 local filetypes = {
   lua = "-- %s",
+  cabal = "-- %s",
+  haskell = "-- %s",
   zig = "// %s",
   cpp = "// %s",
   c = "// %s",
