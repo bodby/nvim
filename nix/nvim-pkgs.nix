@@ -28,7 +28,6 @@ in
       # material-nvim
       alpha-nvim
       gitsigns-nvim
-      haskell-tools-nvim
     ]
     ++ customPkgs;
 
