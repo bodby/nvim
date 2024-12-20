@@ -14,8 +14,8 @@ plugin.setup({
     }
   },
 
-  render_modes = { "n", "c", "t" },
-  anti_conceal = { enabled = false },
+  render_modes = true,
+  anti_conceal = { enabled = true },
 
   latex = { enabled = false },
 
@@ -29,9 +29,11 @@ plugin.setup({
 
     width = "block",
 
-    backgrounds = { },
-    paragraph = { enable = false }
+    backgrounds = { "Title" },
+    foregrounds = { "Title" },
   },
+
+  paragraph = { enable = false },
 
   code = {
     enabled = true,
@@ -62,7 +64,38 @@ plugin.setup({
   quote = {
     enabled = true,
     icon = "│"
-  }
+  },
+
+  callout = {
+    note = {
+      rendered = "NOTE:",
+      highlight = "Todo"
+    }
+  },
+
+  pipe_table = {
+    enabled = true,
+    preset = "none",
+    alignment_indicator = "┅",
+    head = "WinSeparator",
+    row = "WinSeparator",
+    filler = "RenderMarkdownTableFill"
+  },
+
+  link = {
+    enabled = true,
+    footnote = {
+      superscript = true
+    },
+    image = "",
+    email = "",
+    hyperlink = "",
+    wiki = { icon = "" },
+    custom = { }
+  },
+
+  inline_highlight = { enabled = false },
+  html = { enabled = false },
 })
 
 local map = vim.keymap.set

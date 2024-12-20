@@ -7,3 +7,18 @@ require("nvim-treesitter.configs").setup({
   incremental_selection = { enable = false },
   indent = { enable = false }
 })
+
+local del = vim.api.nvim_del_user_command
+
+del "TSInstall"
+del "TSInstallFromGrammar"
+del "TSInstallSync"
+del "TSUpdate"
+del "TSUpdateSync"
+del "TSUninstall"
+del "TSModuleInfo"
+del "TSInstallInfo"
+del "TSConfigInfo"
+-- ?
+del "TSEditQuery"
+del "TSEditQueryUserAfter"

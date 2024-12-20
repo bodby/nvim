@@ -1,4 +1,5 @@
 ;; extends
 
-(atx_heading) @markup.heading
-  (#set! "priority" 110)
+; (atx_heading
+;   (inline)) @markup.heading
+;   (#set! "priority" 1000)

@@ -155,7 +155,8 @@ require("blink.cmp").setup({
     }
   },
   sources = {
-    default = { "lsp", "path", "snippets", "buffer", "markdown" },
+    -- "markdown"
+    default = { "lsp", "path", "snippets", "buffer" },
     cmdline = { },
 
     providers = {
@@ -206,12 +207,14 @@ require("blink.cmp").setup({
       buffer = {
         name = "Buffer",
         module = "blink.cmp.sources.buffer",
+        fallbacks = { }
       },
 
       markdown = {
         name = "RenderMarkdown",
         module = "render-markdown.integ.blink",
-        enabled = true
+        enabled = true,
+        fallbacks = { "buffer" }
       },
 
       obsidian = {
