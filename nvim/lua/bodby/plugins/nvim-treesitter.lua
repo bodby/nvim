@@ -10,15 +10,17 @@ require("nvim-treesitter.configs").setup({
 
 local del = vim.api.nvim_del_user_command
 
-del "TSInstall"
-del "TSInstallFromGrammar"
-del "TSInstallSync"
-del "TSUpdate"
-del "TSUpdateSync"
-del "TSUninstall"
-del "TSModuleInfo"
-del "TSInstallInfo"
-del "TSConfigInfo"
--- ?
-del "TSEditQuery"
-del "TSEditQueryUserAfter"
+vim.schedule(function()
+  del "TSInstall"
+  del "TSInstallFromGrammar"
+  del "TSInstallSync"
+  del "TSUpdate"
+  del "TSUpdateSync"
+  del "TSUninstall"
+  del "TSModuleInfo"
+  del "TSInstallInfo"
+  del "TSConfigInfo"
+  -- ?
+  del "TSEditQuery"
+  del "TSEditQueryUserAfter"
+end)
