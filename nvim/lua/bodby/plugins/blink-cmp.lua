@@ -54,14 +54,14 @@ require("blink.cmp").setup({
         gap = 0,
 
         -- { "kind_icon" },
-        columns = { { "label", "label_description", gap = 1 } },
+        columns = { { "kind_icon" }, { "label", "label_description", gap = 1, padding = 1 } },
         -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
 
         components = {
           kind_icon = {
             ellipsis = false,
             text = function(context)
-              return " " .. context.kind_icon .. context.icon_gap
+              return context.kind_icon .. context.icon_gap
             end,
             highlight = function(context)
               -- return require("blink.cmp.completion.windows.render.tailwind").get_hl(context)
@@ -120,6 +120,7 @@ require("blink.cmp").setup({
         }
       }
     },
+
     documentation = {
       auto_show = false,
       auto_show_delay_ms = 500,
@@ -155,16 +156,39 @@ require("blink.cmp").setup({
     }
   },
   sources = {
-    -- "markdown"
-    default = { "lsp", "path", "snippets", "buffer" },
+    -- "markdown" and "snippets".
+    default = { "buffer", "lsp", "path", "markdown" },
     cmdline = { },
 
     providers = {
+      buffer = {
+        name = "Buffer",
+        module = "blink.cmp.sources.buffer",
+        opts = {
+          get_bufnrs = function()
+            return vim.iter(vim.api.nvim_list_wins())
+              :map(function(win) return vim.api.nvim_win_get_buf(win) end)
+              :filter(function(buf) return vim.bo[buf].buftype ~= 'nofile' end)
+              :totable()
+          end
+        }
+      },
+
       lsp = {
         name = "LSP",
         module = "blink.cmp.sources.lsp",
 
+        transform_items = function(_, items)
+          return vim.tbl_filter(
+            function(item)
+              return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
+            end,
+            items)
+        end,
+
         enabled = true,
+        async = false,
+        timeout_ms = 2000,
         transform_items = nil,
         should_show_items = true,
         max_items = nil,
@@ -178,11 +202,12 @@ require("blink.cmp").setup({
         name = "Path",
         module = "blink.cmp.sources.path",
         score_offset = 3,
+        fallbacks = { "buffer" },
         opts = {
           trailing_slash = false,
           label_trailing_slash = true,
           get_cwd = function(context)
-            return vim.fn.expand(('#%d:p:h'):format(context.bufnr))
+            return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
           end,
           show_hidden_files_by_default = true
         }
@@ -198,16 +223,10 @@ require("blink.cmp").setup({
           global_snippets = { 'all' },
           extended_filetypes = { },
           ignored_filetypes = { },
-          get_filetype = function(context)
+          get_filetype = function(_)
             return vim.bo.filetype
           end
         }
-      },
-
-      buffer = {
-        name = "Buffer",
-        module = "blink.cmp.sources.buffer",
-        fallbacks = { }
       },
 
       markdown = {
@@ -236,42 +255,42 @@ require("blink.cmp").setup({
   },
 
   appearance = {
-    highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
+    highlight_ns = vim.api.nvim_create_namespace "blink_cmp",
     use_nvim_cmp_as_default = false,
     -- Adjusts spacing to ensure icons are aligned.
     -- "mono" or "normal".
     nerd_font_variant = "normal",
     kind_icons = {
-      Text = "󰉿",
-      Method = "󰊕",
-      Function = "󰊕",
-      Constructor = "󰒓",
+      Text = "b",
+      Method = "f",
+      Function = "f",
+      Constructor = "c",
 
-      Field = "󰜢",
-      Variable = "󰆦",
-      Property = "󰖷",
+      Field = "f",
+      Variable = "v",
+      Property = "p",
 
-      Class = "󱡠",
-      Interface = "󱡠",
-      Struct = "󱡠",
-      Module = "󰅩",
+      Class = "c",
+      Interface = "i",
+      Struct = "s",
+      Module = "m",
 
-      Unit = "󰪚",
-      Value = "󰦨",
-      Enum = "󰦨",
-      EnumMember = "󰦨",
+      Unit = "u",
+      Value = "v",
+      Enum = "e",
+      EnumMember = "e",
 
-      Keyword = "󰻾",
-      Constant = "󰏿",
+      Keyword = "k",
+      Constant = "k",
 
-      Snippet = "󱄽",
-      Color = "󰏘",
-      File = "󰈔",
-      Reference = "󰬲",
-      Folder = "󰉋",
-      Event = "󱐋",
-      Operator = "󰪚",
-      TypeParameter = "󰬛",
+      Snippet = "s",
+      Color = "c",
+      File = "f",
+      Reference = "r",
+      Folder = "d",
+      Event = "e",
+      Operator = "o",
+      TypeParameter = "t"
     }
   }
 })

@@ -117,5 +117,7 @@ in
   nvim-btw = mkNeovimConfig {
     plugins = nvimPackages.plugins;
     extraPackages = nvimPackages.packages;
+    viAlias = true;
+    vimAlias = true;
   };
 }
