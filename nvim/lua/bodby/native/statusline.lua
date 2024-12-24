@@ -1,27 +1,27 @@
 local M = {}
 
-local modes = {
-  ["n"] = "NO",
-  ["no"] = "RO",
-  ["v"] = "VI",
-  ["V"] = "VL",
-  [""] = "VB",
-  ["s"] = "SE",
-  ["S"] = "SL",
-  [""] = "SB",
-  ["i"] = "IN",
-  ["ic"] = "IN",
-  ["R"] = "RE",
-  ["Rv"] = "RE",
-  ["c"] = "CM",
-  ["cv"] = "EX",
-  ["ce"] = "EX",
-  ["r"] = "PR",
-  ["rm"] = "MR",
-  ["r?"] = "??",
-  ["!"] = "VT",
-  ["t"] = "VT"
-}
+local modes =
+  { ["n"]  = "NO"
+  , ["no"] = "RO"
+  , ["v"]  = "VI"
+  , ["V"]  = "VL"
+  , [""] = "VB"
+  , ["s"]  = "SE"
+  , ["S"]  = "SL"
+  , [""] = "SB"
+  , ["i"]  = "IN"
+  , ["ic"] = "IN"
+  , ["R"]  = "RE"
+  , ["Rv"] = "RE"
+  , ["c"]  = "CM"
+  , ["cv"] = "EX"
+  , ["ce"] = "EX"
+  , ["r"]  = "PR"
+  , ["rm"] = "MR"
+  , ["r?"] = "??"
+  , ["!"]  = "VT"
+  , ["t"]  = "VT"
+  }
 
 local colors = {
   mode = "%#StatusLineMode#",

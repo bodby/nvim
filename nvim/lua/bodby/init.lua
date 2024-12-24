@@ -9,17 +9,17 @@ vim.g.mapleader = " "
 vim.schedule(function()
   local lsp_signs = {
     Error = "x",
-    Warn = "!",
-    Hint = "?",
-    Info = "i"
+    Warn  = "!",
+    Hint  = "?",
+    Info  = "i"
   }
 
   for type, sign in pairs(lsp_signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, {
-      text = sign,
+      text   = sign,
       texthl = hl,
-      numhl = hl
+      numhl  = hl
     })
   end
 
@@ -44,8 +44,8 @@ local function lazy_load(plugins, event, pattern)
 
   vim.api.nvim_create_augroup(augroup, {})
   vim.api.nvim_create_autocmd(event, {
-    group = augroup,
-    pattern = pattern,
+    group    = augroup,
+    pattern  = pattern,
     callback = function()
       for _, plugin in pairs(plugins) do
         require("bodby.plugins." .. plugin)
