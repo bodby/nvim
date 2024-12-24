@@ -3,16 +3,17 @@ require("blink.indent").setup({
   blocked = {
     filetypes = { "alpha" }
   },
+
   static = {
-    enabled = false,
-    char = "│",
-    priority = 1,
+    enabled    = false,
+    char       = "│",
+    priority   = 1,
     highlights = { "BlinkIndent" }
   },
   scope = {
-    enabled = true,
-    char = "│",
-    priority = 1024,
-    highlights = { "BlinkIndentCur" },
+    enabled    = true,
+    char       = "│",
+    priority   = 1024,
+    highlights = { "BlinkIndentCur" }
   }
 })

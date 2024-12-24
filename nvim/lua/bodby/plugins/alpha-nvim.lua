@@ -4,10 +4,6 @@ local header_margin = vim.fn.max({
 
 local header = {
   type = "text",
-  opts = {
-    position = "center",
-    hl = "AlphaHeader"
-  },
   val = {
     "           ▄ ▄                   ",
     "       ▄   ▄▄▄     ▄ ▄▄▄ ▄ ▄     ",
@@ -18,28 +14,34 @@ local header = {
     "▄ █ █▄█ █▄█ █ █ █▄█ █ █▄█ ▄▄▄ █ █",
     "█▄█ ▄ █▄▄█▄▄█ █ ▄▄█ █ ▄ █ █▄█▄█ █",
     "    █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ █▄█▄▄▄█    "
+  },
+
+  opts = {
+    position = "center",
+    hl       = "AlphaHeader"
   }
 }
 
 local footer = {
   type = "text",
+  val  = "Sent from my iPhone",
+
   opts = {
     position = "center",
-    hl = "AlphaFooter"
-  },
-  val = "Sent from my iPhone"
+    hl       = "AlphaFooter"
+  }
 }
 
 local button = function(shortcut, text, action)
   local opts = {
-    position = "center",
-    shortcut = shortcut,
-    cursor = 0,
-    width = 48,
-    shrink_margin = true,
+    position       = "center",
+    shortcut       = shortcut,
+    cursor         = 0,
+    width          = 48,
+    shrink_margin  = true,
     align_shortcut = "right",
     hl = {
-      { "AlphaButtons", 0, 2 },
+      { "AlphaButtons",     0,  2 },
       { "AlphaHeaderLabel", 2, -1 }
     },
     hl_shortcut = "AlphaShortcut",
@@ -49,8 +51,8 @@ local button = function(shortcut, text, action)
       action,
       {
         noremap = true,
-        silent = true,
-        nowait = true
+        silent  = true,
+        nowait  = true
       }
     }
   }
@@ -62,10 +64,10 @@ local button = function(shortcut, text, action)
   end
 
   return {
-    type = "button",
-    val = "* " .. text,
+    type     = "button",
+    val      = "* " .. text,
+    opts     = opts
     on_press = on_press,
-    opts = opts
   }
 end
 
@@ -99,6 +101,7 @@ local shortcuts = {
       vim.cmd "qa"
     end)
   },
+
   opts = { spacing = 1 }
 }
 
@@ -112,7 +115,7 @@ require("alpha").setup({
   },
 
   opts = {
-    margin = 8,
+    margin    = 8,
     noautocmd = false
   }
 })

@@ -32,7 +32,7 @@ vim.schedule(function()
   })
 end)
 
-vim.api.nvim_create_augroup("status", {})
+vim.api.nvim_create_augroup("status", { })
 
 require("bodby.native.statusline").setup()
 require("bodby.native.statuscolumn").setup()
@@ -42,7 +42,7 @@ require "bodby.native.commentstring"
 local function lazy_load(plugins, event, pattern)
   local augroup = "lazy" .. event:lower() .. pattern
 
-  vim.api.nvim_create_augroup(augroup, {})
+  vim.api.nvim_create_augroup(augroup, { })
   vim.api.nvim_create_autocmd(event, {
     group    = augroup,
     pattern  = pattern,

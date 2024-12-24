@@ -1,4 +1,4 @@
-local M = {}
+local M = { }
 
 function M.setup()
   -- For dashboard or first file opened.
@@ -7,7 +7,7 @@ function M.setup()
   vim.api.nvim_create_autocmd({
     "BufEnter",
   }, {
-    group = "status",
+    group    = "status",
     callback = function(event)
       local windows = vim.fn.win_findbuf(event.buf);
 

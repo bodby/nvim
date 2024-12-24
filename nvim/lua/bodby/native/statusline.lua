@@ -1,42 +1,43 @@
-local M = {}
+local M = { }
 
-local modes =
-  { ["n"]  = "NO"
-  , ["no"] = "RO"
-  , ["v"]  = "VI"
-  , ["V"]  = "VL"
-  , [""] = "VB"
-  , ["s"]  = "SE"
-  , ["S"]  = "SL"
-  , [""] = "SB"
-  , ["i"]  = "IN"
-  , ["ic"] = "IN"
-  , ["R"]  = "RE"
-  , ["Rv"] = "RE"
-  , ["c"]  = "CM"
-  , ["cv"] = "EX"
-  , ["ce"] = "EX"
-  , ["r"]  = "PR"
-  , ["rm"] = "MR"
-  , ["r?"] = "??"
-  , ["!"]  = "VT"
-  , ["t"]  = "VT"
-  }
+local modes = {
+  ["n"]  = "NO",
+  ["no"] = "RO",
+  ["v"]  = "VI",
+  ["V"]  = "VL",
+  [""] = "VB",
+  ["s"]  = "SE",
+  ["S"]  = "SL",
+  [""] = "SB",
+  ["i"]  = "IN",
+  ["ic"] = "IN",
+  ["R"]  = "RE",
+  ["Rv"] = "RE",
+  ["c"]  = "CM",
+  ["cv"] = "EX",
+  ["ce"] = "EX",
+  ["r"]  = "PR",
+  ["rm"] = "MR",
+  ["r?"] = "??",
+  ["!"]  = "VT",
+  ["t"]  = "VT"
+}
 
 local colors = {
-  mode = "%#StatusLineMode#",
-  pos = "%#StatusLinePos#",
-  syntax = "%#StatusLineSyntax#",
+  mode           = "%#StatusLineMode#",
+  pos            = "%#StatusLinePos#",
+  syntax         = "%#StatusLineSyntax#",
+  macro          = "%#StatusLineMacro#",
+  file           = "%#StatusLineFile#",
+  modified       = "%#StatusLineMod#",
+  errors         = "%#StatusLineError#",
+  warnings       = "%#StatusLineWarn#",
+  hints_and_info = "%#StatusLineMisc#",
+
   git = {
     branch = "%#StatusLineGitBranch#",
-    lines = "%#StatusLineGitLines#"
-  },
-  macro = "%#StatusLineMacro#",
-  file = "%#StatusLineFile#",
-  modified = "%#StatusLineMod#",
-  errors = "%#StatusLineError#",
-  warnings = "%#StatusLineWarn#",
-  hints_and_info = "%#StatusLineMisc#"
+    lines  = "%#StatusLineGitLines#"
+  }
 }
 
 function M.setup()
@@ -53,7 +54,7 @@ function M.setup()
     "CmdlineChanged",
     "TextYankPost"
   }, {
-    group = "status",
+    group    = "status",
     callback = function(_)
       vim.schedule(function()
         vim.cmd "redrawstatus"
@@ -89,7 +90,7 @@ end
 
 -- The (#branch +L ~L -L) in the stl.
 stl_git_info = function()
-  local lines = colors.git.lines
+  local lines  = colors.git.lines
     .. (vim.b.gitsigns_status ~= nil and vim.b.gitsigns_status or "")
   local branch = colors.git.branch
     .. (vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head or "")
@@ -98,10 +99,10 @@ stl_git_info = function()
     lines = " " .. lines
   end
 
-  local left_parenthesis = ""
+  local left_parenthesis  = ""
   local right_parenthesis = ""
   if branch ~= colors.git.branch or lines ~= colors.git.lines then
-    left_parenthesis = "("
+    left_parenthesis  = "("
     right_parenthesis = ") "
   end
 
@@ -122,12 +123,12 @@ end
 
 -- Errors, warnings, and hints and info (in one number).
 stl_diagnostics = function()
-  local count = {}
+  local count = { }
   local levels = {
-    errors = "Error",
+    errors   = "Error",
     warnings = "Warn",
-    hints = "Hint",
-    info = "Info"
+    hints    = "Hint",
+    info     = "Info"
   }
 
   for i, v in pairs(levels) do

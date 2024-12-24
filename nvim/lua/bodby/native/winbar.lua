@@ -1,7 +1,7 @@
-local M = {}
+local M = { }
 
 local colors = {
-  loc = "%#WinBarLOC#",
+  loc      = "%#WinBarLOC#",
   modified = "%#WinBarMod#"
 }
 
@@ -19,7 +19,7 @@ function M.setup()
     "WinEnter",
     "BufEnter"
   }, {
-    group = "status",
+    group    = "status",
     callback = function(event)
       local windows = vim.api.nvim_tabpage_list_wins(0);
 
@@ -43,7 +43,7 @@ end
 
 file = function(window)
   local mod_suffix = ""
-  local filename = ""
+  local filename   = ""
 
   if vim.api.nvim_win_is_valid(window) then
     local buffer = vim.api.nvim_win_get_buf(window)

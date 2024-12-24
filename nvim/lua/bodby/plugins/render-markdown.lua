@@ -1,11 +1,11 @@
 local plugin = require "render-markdown"
 
 plugin.setup({
-  preset = "obsidian",
+  preset     = "obsidian",
   injections = {
     gitcommit = {
       enabled = true,
-      query = [[
+      query   = [[
         ((message) @injection.content
           (#set! injection.combined)
           (#set! injection.include-children)
@@ -14,90 +14,78 @@ plugin.setup({
     }
   },
 
-  render_modes = true,
-  anti_conceal = { enabled = true },
-
-  latex = { enabled = false },
+  render_modes     = true,
+  anti_conceal     = { enabled = true },
+  latex            = { enabled = false },
+  paragraph        = { enable = false },
+  bullet           = { enabled = false },
+  inline_highlight = { enabled = false },
+  html             = { enabled = false }
 
   heading = {
-    enabled = true,
-    sign = true,
-
-    position = "inline",
-    icons = { "" },
-    signs = { "1", "2", "3", "4", "5", "6" },
-
-    width = "block",
-
+    enabled     = true,
+    sign        = true,
+    position    = "inline",
+    icons       = { "" },
+    signs       = { "1", "2", "3", "4", "5", "6" },
+    width       = "block",
     backgrounds = { "Title" },
     foregrounds = { "Title" },
   },
 
-  paragraph = { enable = false },
-
   code = {
-    enabled = true,
-    sign = false,
-    style = "normal",
-
-    width = "block",
-    left_pad = 2,
+    enabled   = true,
+    sign      = false,
+    style     = "normal",
+    width     = "block",
+    left_pad  = 2,
     right_pad = 2,
-    border = "thick"
+    border    = "thick"
   },
 
   dash = {
     enabled = true,
-    icon = "─",
-    width = "full"
+    icon    = "─",
+    width   = "full"
   },
 
-  bullet = { enabled = false },
-
   checkbox = {
-    enabled = true,
+    enabled   = true,
     unchecked = { icon = "( )" },
-    checked = { icon = "(X)" },
-    custom = { }
+    checked   = { icon = "(X)" },
+    custom    = { }
   },
 
   quote = {
     enabled = true,
-    icon = "│"
+    icon    = "│"
   },
 
   callout = {
     note = {
-      rendered = "NOTE:",
+      rendered  = "NOTE:",
       highlight = "Todo"
     }
   },
 
   pipe_table = {
-    enabled = true,
-    preset = "none",
+    enabled             = true,
+    preset              = "none",
     alignment_indicator = "┅",
-    head = "WinSeparator",
-    row = "WinSeparator",
-    filler = "RenderMarkdownTableFill"
+    head                = "WinSeparator",
+    row                 = "WinSeparator",
+    filler              = "RenderMarkdownTableFill"
   },
 
   link = {
-    enabled = true,
-    footnote = {
-      superscript = true
-    },
-    image = "",
-    email = "",
+    enabled   = true,
+    footnote  = { superscript = true },
+    image     = "",
+    email     = "",
     hyperlink = "",
-    wiki = { icon = "" },
-    custom = { }
-  },
-
-  inline_highlight = { enabled = false },
-  html = { enabled = false },
+    wiki      = { icon = "" },
+    custom    = { }
+  }
 })
 
-local map = vim.keymap.set
-
-map("n", "<Leader>m", plugin.toggle)
+vim.keymap.set("n", "<Leader>m", plugin.toggle)
