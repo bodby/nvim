@@ -20,7 +20,7 @@ plugin.setup({
   paragraph        = { enable = false },
   bullet           = { enabled = false },
   inline_highlight = { enabled = false },
-  html             = { enabled = false }
+  html             = { enabled = false },
 
   heading = {
     enabled     = true,
