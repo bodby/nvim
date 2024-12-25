@@ -66,8 +66,8 @@ local button = function(shortcut, text, action)
   return {
     type     = "button",
     val      = "* " .. text,
-    opts     = opts
-    on_press = on_press,
+    opts     = opts,
+    on_press = on_press
   }
 end
 
