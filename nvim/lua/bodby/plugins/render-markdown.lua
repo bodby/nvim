@@ -17,7 +17,7 @@ plugin.setup({
   render_modes     = true,
   anti_conceal     = { enabled = true },
   latex            = { enabled = false },
-  paragraph        = { enable = false },
+  paragraph        = { enabled = false },
   bullet           = { enabled = false },
   inline_highlight = { enabled = false },
   html             = { enabled = false },
