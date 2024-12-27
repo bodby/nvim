@@ -27,9 +27,17 @@ in
       nvim-lspconfig
       telescope-zf-native-nvim
       material-nvim
-      monokai-pro-nvim
-      oxocarbon-nvim
+      onedark-nvim
+      edge
+      tokyonight-nvim
+      melange-nvim
+      poimandres-nvim
+      doom-one-nvim
+      neon
+      boo-colorscheme-nvim
+      embark-vim
       alpha-nvim
+      falcon
       gitsigns-nvim
     ]
     ++ customPkgs;
