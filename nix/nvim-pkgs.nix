@@ -27,6 +27,8 @@ in
       nvim-lspconfig
       telescope-zf-native-nvim
       material-nvim
+      monokai-pro-nvim
+      oxocarbon-nvim
       alpha-nvim
       gitsigns-nvim
     ]
@@ -37,6 +39,5 @@ in
     nixd
     ghc
     haskell-language-server
-    ormolu
   ];
 }
