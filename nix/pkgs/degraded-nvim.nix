@@ -6,13 +6,13 @@
 
 vimUtils.buildVimPlugin {
   pname = "degraded-nvim";
-  version = "47fa02b";
+  version = "1694833";
 
   src = fetchFromGitHub {
     owner = "bodby";
     repo = "degraded.nvim";
-    rev = "47fa02b810a312742ee1c23c50b5fee7bffc4bcd";
-    sha256 = "sha256-FWPegUYetFX6vMPHZMkzrh53k37OFRJm4ydp6C3Re+E=";
+    rev = "1694833ea3b1039c9fa2a446e7c54db16e97d347";
+    sha256 = "sha256-O9FWzJHE9WMoqeHH1Wa9VhukG+EW5R7tnLlQbryed40=";
   };
 
   meta = {
