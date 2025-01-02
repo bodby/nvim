@@ -47,7 +47,6 @@ in
       # obsidian-nvim
       alpha-nvim
       # material-nvim
-      eyeliner-nvim
       gitsigns-nvim
     ]
     ++ customPkgs;
