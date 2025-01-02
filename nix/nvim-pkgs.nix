@@ -20,6 +20,7 @@ in
     [
       nvim-lspconfig
       (nvim-treesitter.withPlugins (p: with p; [
+        comment
         bash
         c
         cpp
