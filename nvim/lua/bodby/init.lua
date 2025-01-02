@@ -66,7 +66,7 @@ require "bodby.plugins.nvim-lspconfig"
 lazy_load({
   "blink-cmp",
   -- "blink-indent",
-  "gitsigns-nvim"
+  "gitsigns-nvim",
   "eyeliner-nvim"
 }, "BufEnter", "*")
 
