@@ -49,6 +49,7 @@ in
       alpha-nvim
       # material-nvim
       gitsigns-nvim
+      smartcolumn-nvim
     ]
     ++ customPkgs;
 
