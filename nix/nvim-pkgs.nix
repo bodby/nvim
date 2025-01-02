@@ -18,17 +18,36 @@ in
   plugins =
     with pkgs.vimPlugins;
     [
-      nvim-treesitter.withAllGrammars
-      nvim-treesitter-parsers.latex
+      nvim-lspconfig
+      (nvim-treesitter.withPlugins (p: with p; [
+        bash
+        c
+        cpp
+        jsonc
+        json
+        toml
+        yaml
+        hyprlang
+        haskell
+        markdown
+        markdown_inline
+        zig
+        lua
+        python
+        nix
+        html
+        css
+      ]))
       telescope-nvim
+      telescope-zf-native-nvim
       # markview-nvim
       render-markdown-nvim
       # nabla-nvim
+      # nvim-treesitter-parsers.latex
       # obsidian-nvim
-      nvim-lspconfig
-      telescope-zf-native-nvim
-      # material-nvim
       alpha-nvim
+      # material-nvim
+      eyeliner-nvim
       gitsigns-nvim
     ]
     ++ customPkgs;

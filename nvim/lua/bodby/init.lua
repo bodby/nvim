@@ -67,6 +67,7 @@ lazy_load({
   "blink-cmp",
   -- "blink-indent",
   "gitsigns-nvim"
+  "eyeliner-nvim"
 }, "BufEnter", "*")
 
 lazy_load({
