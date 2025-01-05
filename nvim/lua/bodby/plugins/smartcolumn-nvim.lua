@@ -6,7 +6,8 @@ require("smartcolumn").setup({
   disabled_filetypes = {
     "help",
     "text",
-    "alpha"
+    "alpha",
+    "bash"
   },
 
   custom_colorcolumn = {
