@@ -70,7 +70,7 @@ M.active = function(window)
   if vim.api.nvim_win_is_valid(window) then
     if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == "alpha" then
       -- TODO: Show actually useful information in the dashboard winbar.
-      return " AAAAAAAAAAAlpha %##"
+      return " AAAAAAAAAAAlpha " .. colors.fill
     end
   end
 
