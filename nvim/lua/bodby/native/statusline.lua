@@ -82,9 +82,9 @@ stl_file = function()
   end
 
   if vim.fn.expand "%<%f" == "" then
-    return colors.file .. "@" .. vim.env.USER .. modified .. " "
+    return colors.file .. " @" .. vim.env.USER .. modified .. " "
   else
-    return colors.file .. "%<%f" .. modified .. " "
+    return colors.file .. " %<%f" .. modified .. " "
   end
 end
 
@@ -102,8 +102,8 @@ stl_git_info = function()
   local left_parenthesis  = ""
   local right_parenthesis = ""
   if branch ~= colors.git.branch or lines ~= colors.git.lines then
-    left_parenthesis  = "("
-    right_parenthesis = ") "
+    left_parenthesis  = " "
+    right_parenthesis = " "
   end
 
   return colors.syntax .. left_parenthesis .. branch .. lines
@@ -115,10 +115,11 @@ stl_macro = function()
   return colors.macro .. vim.fn.reg_recording()
 end
 
--- Shows current line and column.
+-- Shows current line and column as well as percentage of whole file.
 stl_pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return colors.pos .. row .. ":" .. col
+  return colors.pos .. " " .. row .. ":" .. col .. " "
+    .. "%## " .. colors.mode .. " %p%% "
 end
 
 -- Errors, warnings, and hints and info (in one number).

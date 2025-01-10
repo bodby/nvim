@@ -2,7 +2,8 @@ local M = { }
 
 local colors = {
   loc      = "%#WinBarLOC#",
-  modified = "%#WinBarMod#"
+  modified = "%#WinBarMod#",
+  fill     = "%#WinBarFill#"
 }
 
 -- local blocked_filetypes = {
@@ -24,18 +25,15 @@ function M.setup()
       local windows = vim.api.nvim_tabpage_list_wins(0);
 
       for _, window in pairs(windows) do
-        -- Does Lua not have matching/mapping? Surely there must be a better way to do this.
         -- for _, ft in pairs(blocked_filetypes) do
         --   if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == ft then
         --     return
         --   end
         -- end
 
-        if vim.api.nvim_win_get_config(window).relative ~= "" then
-          return
+        if not vim.api.nvim_win_get_config(window).relative ~= "" then
+          vim.wo[window].winbar = "%!v:lua.require('bodby.native.winbar').active(" .. window .. ")"
         end
-
-        vim.wo[window].winbar = "%!v:lua.require('bodby.native.winbar').active(" .. window .. ")"
       end
     end
   })
@@ -59,7 +57,7 @@ file = function(window)
     end
   end
 
-  return filename .. mod_suffix
+  return "%##" .. filename .. mod_suffix .. " " .. colors.fill
 end
 
 loc = function()
@@ -70,15 +68,15 @@ M.active = function(window)
   if vim.api.nvim_win_is_valid(window) then
     if vim.bo[vim.api.nvim_win_get_buf(window)].filetype == "alpha" then
       -- TODO: Show actually useful information in the dashboard winbar.
-      return " AAAAAAAAAAA"
+      return "AAAAAAAAAAA"
     end
   end
 
   return table.concat({
     " ",
     file(window),
-    "%=",
     loc(),
+    "%=",
     " "
   })
 end
