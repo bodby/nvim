@@ -31,9 +31,11 @@ function M.setup()
         --   end
         -- end
 
-        if not vim.api.nvim_win_get_config(window).relative ~= "" then
-          vim.wo[window].winbar = "%!v:lua.require('bodby.native.winbar').active(" .. window .. ")"
+        if vim.api.nvim_win_get_config(window).relative ~= "" then
+          return
         end
+
+        vim.wo[window].winbar = "%!v:lua.require('bodby.native.winbar').active(" .. window .. ")"
       end
     end
   })
