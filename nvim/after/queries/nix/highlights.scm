@@ -15,4 +15,4 @@
 
 (variable_expression
   name: (identifier) @namespace.builtin
-    (#any-of? @namespace.builtin "nixpkgs" "builtins"))
+    (#any-of? @namespace.builtin "nixpkgs" "builtins" "lib" "pkgs"))
