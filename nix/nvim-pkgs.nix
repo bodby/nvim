@@ -53,10 +53,11 @@ in
     ]
     ++ customPkgs;
 
+  # TODO: Should LSPs be a part of dev shells?
+  #       Would make this a lot more portable.
   packages = with pkgs; [
     ripgrep
     nixd
-    ghc
     haskell-language-server
   ];
 }
