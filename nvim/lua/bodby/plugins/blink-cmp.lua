@@ -31,7 +31,7 @@ require("blink.cmp").setup({
 
     list = {
       max_items = 200,
-      selection = "preselect",
+      selection = { preselect = true },
       cycle = {
         from_bottom = true,
         from_top    = true
@@ -52,9 +52,8 @@ require("blink.cmp").setup({
       scrollbar          = false,
       direction_priority = { "s", "n" },
       draw = {
-        align_to_component = "label",
-        padding            = 1,
-        gap                = 0,
+        padding = 1,
+        gap     = 0,
 
         columns = {
           { "kind_icon" },
@@ -69,7 +68,7 @@ require("blink.cmp").setup({
               return context.kind_icon .. context.icon_gap
             end,
 
-            highlight = function(_)
+            highlight = function(context)
               return "BlinkCmpKind" -- .. context.kind
             end
           },
@@ -263,10 +262,10 @@ require("blink.cmp").setup({
       Method        = "f",
       Function      = "f",
       Constructor   = "c",
-      Field         = "f",
+      Field         = "v",
       Variable      = "v",
       Property      = "p",
-      Class         = "c",
+      Class         = "t",
       Interface     = "i",
       Struct        = "s",
       Module        = "m",
@@ -279,7 +278,7 @@ require("blink.cmp").setup({
       Snippet       = "s",
       Color         = "c",
       File          = "f",
-      Reference     = "r",
+      Reference     = "&",
       Folder        = "d",
       Event         = "e",
       Operator      = "o",

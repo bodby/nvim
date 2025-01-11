@@ -4,8 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    blink-cmp.url = "github:Saghen/blink.cmp";
-    blink-cmp.inputs.nixpkgs.follows = "nixpkgs";
+    # blink-cmp.url = "github:Saghen/blink.cmp";
+    # blink-cmp.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

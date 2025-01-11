@@ -92,21 +92,21 @@ end
 -- TODO: This requires gitsigns.nvim. I should probably write this as a standalone function using
 --       only Git commands.
 stl_git_info = function()
-  local branch = vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head or ""
+  local branch = vim.b.gitsigns_head ~= nil and " #" .. vim.b.gitsigns_head or ""
 
   local lines = colors.git.lines
-    .. (vim.b.gitsigns_status ~= nil and vim.b.gitsigns_status or "")
+    .. (vim.b.gitsigns_status ~= nil and " " .. vim.b.gitsigns_status or "")
 
-  if branch ~= colors.git.branch and lines ~= colors.git.lines then
-    lines = " " .. lines
-  end
-
-  return colors.git.branch .. " " .. branch .. lines
+  return colors.git.branch .. branch .. lines .. " "
 end
 
 -- Shows macro register if recording.
 stl_macro = function()
-  return colors.macro .. " " .. vim.fn.reg_recording()
+  if vim.fn.reg_recording() ~= "" then
+    return colors.macro .. "@" .. vim.fn.reg_recording()
+  else
+    return ""
+  end
 end
 
 -- Shows current line and column as well as percentage of whole file.

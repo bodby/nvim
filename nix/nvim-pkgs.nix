@@ -1,7 +1,5 @@
 {
-  inputs,
   pkgs,
-  system,
   ...
 }:
 
@@ -10,11 +8,11 @@ let
     # pkgs.blink-indent
     pkgs.blink-compat
     pkgs.degraded-nvim
-    inputs.blink-cmp.packages.${system}.blink-cmp
+    # inputs.blink-cmp.packages.${system}.blink-cmp
   ];
 in
 {
-  # TODO: Commented-out plugins.
+  # TODO: Configure commented plugins.
   plugins =
     with pkgs.vimPlugins;
     [
@@ -41,9 +39,11 @@ in
       ]))
       telescope-nvim
       telescope-zf-native-nvim
+      blink-cmp
       # markview-nvim
       render-markdown-nvim
       # nabla-nvim
+      # Needed for nabla-nvim.
       # nvim-treesitter-parsers.latex
       # obsidian-nvim
       alpha-nvim
@@ -53,11 +53,9 @@ in
     ]
     ++ customPkgs;
 
-  # TODO: Should LSPs be a part of dev shells?
-  #       Would make this a lot more portable.
+  # NOTE: Other LSPs should be in devShells.
   packages = with pkgs; [
     ripgrep
     nixd
-    haskell-language-server
   ];
 }
