@@ -9,11 +9,11 @@
 (apply_expression
   function: [
     (select_expression
-      (attrpath
+      attrpath: (attrpath
         .
-        (identifier) @function.call .))
+        attr: (identifier) @function.call .))
     (select_expression
-      (attrpath
+      attrpath: (attrpath
         (_)
-        (identifier) @function.call))
+        attr: (identifier) @function.call))
   ])

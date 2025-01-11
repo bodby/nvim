@@ -19,6 +19,7 @@ let
     with pkgs.lib;
     let
       inherit (pkgs) stdenv;
+
       defaultPlugin = {
         plugin = null;
         config = null;
@@ -26,15 +27,13 @@ let
         runtime = { };
       };
 
-      mappedPlugins = map (x: defaultPlugin // (if x ? plugin then x else { plugin = x; })) plugins;
-
       nvimConfig = pkgs.neovimUtils.makeNeovimConfig {
         inherit viAlias vimAlias;
         extraPython3Packages = p: [ ];
         withPython3 = false;
         withRuby = false;
         withNodeJs = false;
-        plugins = mappedPlugins;
+        plugins = map (x: defaultPlugin // (if x ? plugin then x else { plugin = x; })) plugins;
       };
 
       # TODO: Add all parsers to a single "parsers" dir so the runtimepath doesn't become huge.
