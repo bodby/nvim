@@ -1,10 +1,5 @@
 ;; extends
 
-; TODO: Only if this is used as the first attr, i.e. nixpkgs. and not just every instance of
-;       nixpkgs.
-((identifier) @namespace.builtin
-  (#any-of? @namespace.builtin "builtins" "nixpkgs"))
-
 ; This took way too long.
 (apply_expression
   function: [
@@ -17,3 +12,7 @@
         (_)
         attr: (identifier) @function.call))
   ])
+
+(variable_expression
+  name: (identifier) @namespace.builtin
+    (#any-of? @namespace.builtin "nixpkgs" "builtins"))
