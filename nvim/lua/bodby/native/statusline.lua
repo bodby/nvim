@@ -89,30 +89,24 @@ stl_file = function()
 end
 
 -- The (#branch +L ~L -L) in the stl.
+-- TODO: This requires gitsigns.nvim. I should probably write this as a standalone function using
+--       only Git commands.
 stl_git_info = function()
-  local lines  = colors.git.lines
+  local branch = vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head or ""
+
+  local lines = colors.git.lines
     .. (vim.b.gitsigns_status ~= nil and vim.b.gitsigns_status or "")
-  local branch = colors.git.branch
-    .. (vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head or "")
 
   if branch ~= colors.git.branch and lines ~= colors.git.lines then
     lines = " " .. lines
   end
 
-  local left_parenthesis  = ""
-  local right_parenthesis = ""
-  if branch ~= colors.git.branch or lines ~= colors.git.lines then
-    left_parenthesis  = " "
-    right_parenthesis = " "
-  end
-
-  return colors.syntax .. left_parenthesis .. branch .. lines
-    .. colors.syntax .. right_parenthesis
+  return colors.git.branch .. " " .. branch .. lines
 end
 
 -- Shows macro register if recording.
 stl_macro = function()
-  return colors.macro .. vim.fn.reg_recording()
+  return colors.macro .. " " .. vim.fn.reg_recording()
 end
 
 -- Shows current line and column as well as percentage of whole file.

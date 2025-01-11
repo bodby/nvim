@@ -60,16 +60,15 @@ let
         '';
       };
 
-      initLua =
-        ''
-          vim.loader.enable()
-          vim.opt.rtp:prepend "${nvimRtp}/lua"
-          vim.opt.rtp:prepend "${nvimRtp}/colors"
-        ''
-        + (builtins.readFile ../nvim/init.lua)
-        + ''
-          vim.opt.rtp:prepend "${nvimRtp}/after"
-        '';
+      initLua = /* lua */ ''
+        vim.loader.enable()
+        vim.opt.rtp:prepend "${nvimRtp}/lua"
+        vim.opt.rtp:prepend "${nvimRtp}/colors"
+
+        ${builtins.readFile ../nvim/init.lua}
+
+        vim.opt.rtp:prepend "${nvimRtp}/after"
+      '';
 
       isCustomAppName = appName != null && appName != "nvim" && appName != "";
 
@@ -106,7 +105,7 @@ let
     nvim-wrapped.overrideAttrs (prev: {
       buildPhase =
         prev.buildPhase
-        + optionalString isCustomAppName ''
+        + optionalString isCustomAppName /* bash */ ''
           mv $out/bin/nvim $out/bin/${escapeShellArgs appName}
         '';
 
