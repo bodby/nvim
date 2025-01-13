@@ -1,3 +1,4 @@
+-- NOTE: 'else if' is not the same as 'elseif'.
 local M = { }
 
 local modes = {
@@ -82,9 +83,9 @@ stl_file = function()
   end
 
   if vim.fn.expand "%<%f" == "" then
-    return colors.file .. " @" .. vim.env.USER .. modified .. " "
+    return colors.file .. " @" .. vim.env.USER .. modified .. " %## "
   else
-    return colors.file .. " %<%f" .. modified .. " "
+    return colors.file .. " %<%f" .. modified .. " %## "
   end
 end
 
@@ -92,12 +93,12 @@ end
 -- TODO: This requires gitsigns.nvim. I should probably write this as a standalone function using
 --       only Git commands.
 stl_git_info = function()
-  local branch = vim.b.gitsigns_head ~= nil and " #" .. vim.b.gitsigns_head or ""
+  local branch = (vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head .. " " or "")
 
-  local lines = colors.git.lines
-    .. (vim.b.gitsigns_status ~= nil and " " .. vim.b.gitsigns_status or "")
+  local status = (vim.b.gitsigns_status ~= "" and vim.b.gitsigns_status ~= nil
+    and vim.b.gitsigns_status .. " " or "")
 
-  return colors.git.branch .. branch .. lines .. " "
+  return colors.git.branch .. branch .. colors.git.lines .. status
 end
 
 -- Shows macro register if recording.
