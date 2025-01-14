@@ -3,7 +3,7 @@ final: prev:
 let
   nvimPackages = import ./nvim-pkgs.nix {
     inherit pkgs inputs;
-    system = final.system;
+    inherit (final) system;
   };
 
   mkNeovimConfig =
