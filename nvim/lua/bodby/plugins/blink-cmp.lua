@@ -2,7 +2,12 @@ require("blink.cmp").setup({
   signature = { enabled = false },
   keymap = {
     preset    = "default",
-    ["<Tab>"] = { "select_and_accept", "fallback" }
+    ["<Tab>"] = { "select_and_accept", "fallback" },
+    ['<C-space>'] = {
+      function(cmp)
+        cmp.show({ providers = { "buffer" } })
+      end
+    }
   },
   snippets = {
     expand = function(snippet)
@@ -22,16 +27,24 @@ require("blink.cmp").setup({
     ghost_text = { enabled = false },
 
     trigger = {
-      show_in_snippet                      = true,
-      show_on_blocked_trigger_characters   = { " ", "\n", "\t" },
-      show_on_accept_on_trigger_character  = true,
+      prefetch_on_insert = true,
+      show_in_snippet    = true,
+
+      show_on_blocked_trigger_characters = function()
+        if vim.api.nvim_get_mode().mode == 'c' then
+          return { }
+        else
+          return { " ", "\n", "\t" }
+        end
+      end,
+
       show_on_insert_on_trigger_character  = true,
       show_on_x_blocked_trigger_characters = { "'", '"', "(" }
     },
 
     list = {
       max_items = 200,
-      selection = { preselect = true },
+      selection = { preselect = true, auto_insert = true },
       cycle = {
         from_bottom = true,
         from_top    = true
@@ -39,18 +52,21 @@ require("blink.cmp").setup({
     },
     accept = {
       create_undo_point = true,
-      auto_brackets     = { enabled = true }
+      auto_brackets     = { enabled = false }
     },
+
     menu = {
       enabled            = true,
-      min_width          = 15,
+      min_width          = 1,
       max_height         = 16,
-      border             = "none",
+      border             = "rounded",
       winblend           = 0,
       winhighlight       = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
       scrolloff          = 3,
       scrollbar          = false,
       direction_priority = { "s", "n" },
+      auto_show          = true,
+
       draw = {
         padding = 1,
         gap     = 0,
@@ -73,7 +89,7 @@ require("blink.cmp").setup({
             end
           },
           label = {
-            ellipsis = true,
+            ellipsis = false,
 
             width = {
               max  = 24,
@@ -162,7 +178,7 @@ require("blink.cmp").setup({
 
   sources = {
     default = { "buffer", "lsp", "path", "snippets", "markdown" },
-    cmdline = { },
+    -- cmdline = { },
 
     providers = {
       buffer = {
@@ -184,11 +200,13 @@ require("blink.cmp").setup({
         module = "blink.cmp.sources.lsp",
 
         transform_items = function(_, items)
-          return vim.tbl_filter(
-            function(item)
-              return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
-            end,
-            items)
+          return vim.tbl_filter(function(item)
+            local types = require "blink.cmp.types"
+
+            return item.kind ~= types.CompletionItemKind.Text
+              and item.kind ~= types.CompletionItemKind.Snippet
+          end,
+          items)
         end,
 
         enabled            = true,

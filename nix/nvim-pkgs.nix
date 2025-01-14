@@ -50,6 +50,7 @@ in
       # material-nvim
       gitsigns-nvim
       smartcolumn-nvim
+      virt-column-nvim
     ]
     ++ customPkgs;
 

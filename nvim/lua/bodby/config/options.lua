@@ -1,5 +1,5 @@
 vim.opt.pumheight      = 16
-vim.opt.scrolloff      = 12
+vim.opt.scrolloff      = 8
 vim.opt.showmode       = false
 vim.opt.cmdheight      = 0
 vim.opt.number         = true
@@ -11,6 +11,9 @@ vim.opt.wrap           = true
 vim.opt.hlsearch       = false
 vim.opt.ignorecase     = true
 vim.opt.smartcase      = true
+vim.opt.spelllang      = "en"
+vim.opt.spell          = true
+vim.opt.spellsuggest   = "best, 9"
 vim.opt.conceallevel   = 2
 vim.opt.concealcursor  = ""
 vim.opt.guicursor      = "a:Cursor/Cursor"
@@ -26,7 +29,18 @@ vim.opt.shiftwidth     = 2
 vim.opt.tabstop        = 2
 vim.opt.softtabstop    = 2
 
-vim.opt.fillchars:append({ eob = " " })
+vim.opt.fillchars:append({
+  eob = " ",
+  stl = "─",
+  wbr = "─",
+  horiz = " ",
+  horizup = "│",
+  horizdown = "│",
+  vert = "│",
+  vertleft = "│",
+  vertright = "│",
+  verthoriz = "│"
+})
 vim.opt.listchars:append({
   trail = "_",
   tab   = ">-"

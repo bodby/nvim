@@ -12,13 +12,37 @@ function M.setup()
       local windows = vim.fn.win_findbuf(event.buf);
 
       for _, window in ipairs(windows) do
-        vim.wo[window].statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active(" .. window .. ")"
+        vim.wo[window].statuscolumn =
+          "%!v:lua.require('bodby.native.statuscolumn').active(" .. window .. ")"
       end
     end
   })
 end
 
 line_nr = function()
+  -- https://github.com/mawkler/hml.nvim/blob/main/lua/hml/init.lua
+  local top       = vim.fn.line "w0"
+  local bottom    = vim.fn.line "w$"
+  local middle    = math.floor((bottom - top) / 2 + top)
+
+  local stc_H = top + vim.wo.scrolloff
+  if top == 1 then
+    stc_H = 1
+  elseif stc_H > middle then
+    stc_H = math.max(H, vim.wo.scrolloff)
+  end
+
+  local stc_M = math.max(middle, stc_H)
+
+  local stc_L = bottom - vim.wo.scrolloff
+  if bottom >= vim.fn.line "$" then
+    stc_L = vim.fn.line "$"
+  elseif stc_L < middle then
+    stc_L = middle
+  end
+
+  local cur_line = vim.fn.line "."
+
   -- Wrapped lines and virtual lines.
   if vim.v.virtnum > 0 then
     return "%=+"
@@ -28,9 +52,17 @@ line_nr = function()
 
   if vim.v.relnum == 0 then
     return "%=" .. vim.v.lnum
-  else
-    return "%=" .. vim.v.relnum
   end
+
+  if vim.v.lnum == stc_H then
+    return "%=%#LineNrSpecial#H"
+  elseif vim.v.lnum == stc_M then
+    return "%=%#LineNrSpecial#M"
+  elseif vim.v.lnum == stc_L then
+    return "%=%#LineNrSpecial#L"
+  end
+
+  return "%=" .. vim.v.relnum
 end
 
 M.active = function(window)

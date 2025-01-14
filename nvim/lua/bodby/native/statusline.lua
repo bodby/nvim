@@ -83,9 +83,9 @@ stl_file = function()
   end
 
   if vim.fn.expand "%<%f" == "" then
-    return colors.file .. " @" .. vim.env.USER .. modified .. " %## "
+    return colors.file .. "@" .. vim.env.USER .. modified .. "%#StatusLine# "
   else
-    return colors.file .. " %<%f" .. modified .. " %## "
+    return colors.file .. "%<%f" .. modified .. "%#StatusLine# "
   end
 end
 
@@ -104,7 +104,7 @@ end
 -- Shows macro register if recording.
 stl_macro = function()
   if vim.fn.reg_recording() ~= "" then
-    return colors.macro .. "@" .. vim.fn.reg_recording()
+    return colors.macro .. "@" .. vim.fn.reg_recording() .. " "
   else
     return ""
   end
@@ -113,8 +113,7 @@ end
 -- Shows current line and column as well as percentage of whole file.
 stl_pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return colors.pos .. " " .. row .. ":" .. col .. " "
-    .. "%## " .. colors.mode .. " %p%% "
+  return colors.pos .. row .. ":" .. col .. "%#StatusLine# " .. colors.mode .. " %p%% "
 end
 
 -- Errors, warnings, and hints and info (in one number).
@@ -146,18 +145,18 @@ stl_diagnostics = function()
     hints_and_info = colors.hints_and_info .. (count["hints"] + count["info"]) .. " "
   end
 
-  return errors .. warnings .. hints_and_info
+  return " " .. errors .. warnings .. hints_and_info
 end
 
 M.active = function()
   return table.concat({
     stl_mode(),
-    "%##",
+    "%#StatusLine#",
     " ",
     stl_file(),
     stl_git_info(),
     stl_macro(),
-    "%=",
+    "%#StatusLine#%=",
     stl_diagnostics(),
     stl_pos()
   })

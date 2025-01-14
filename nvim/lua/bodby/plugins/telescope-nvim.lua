@@ -11,7 +11,7 @@ plugin.setup({
         ["<Esc>"] = "close"
       }
     },
-    prompt_prefix   = "> ",
+    prompt_prefix   = " ",
     entry_prefix    = " ",
     selection_caret = " ",
     hl_result_eol   = true,
@@ -20,10 +20,11 @@ plugin.setup({
     preview         = { hide_on_startup = true },
 
     borderchars = {
-      prompt = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
-      results = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
-      -- results = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-      preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
+      -- prompt = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
+      -- results = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
+      results = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+      prompt = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+      -- preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
     },
     get_status_text = function(_)
       return ""

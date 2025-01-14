@@ -63,7 +63,7 @@ file = function(window)
 end
 
 loc = function()
-  return colors.loc .. "%L"
+  return colors.loc .. " %L"
 end
 
 M.active = function(window)

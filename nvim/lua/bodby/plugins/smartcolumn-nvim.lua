@@ -6,12 +6,25 @@ require("smartcolumn").setup({
   disabled_filetypes = {
     "help",
     "text",
-    "alpha",
-    "bash"
+    "alpha"
   },
 
   custom_colorcolumn = {
     markdown = "80",
     nix      = "100"
+  }
+})
+
+require("virt-column").setup({
+  enabled = true,
+  char    = "│",
+  -- virtcolumn = "80",
+  highlight = "ColorColumn",
+  exclude = {
+    filetypes = {
+      "alpha",
+      "TelescopePrompt",
+      "TelescopeResults"
+    }
   }
 })
