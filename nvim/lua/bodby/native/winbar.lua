@@ -62,8 +62,15 @@ file = function(window)
   return "%##" .. filename .. mod_suffix .. " " .. colors.fill
 end
 
-loc = function()
-  return colors.loc .. " %L"
+loc = function(window)
+  local buffer = vim.api.nvim_win_get_buf(window)
+  local lcount = vim.fn.getbufinfo(buffer)[1].linecount
+
+  if lcount ~= nil then
+    return colors.loc .. " " .. lcount
+  else
+    return ""
+  end
 end
 
 M.active = function(window)
@@ -78,7 +85,7 @@ M.active = function(window)
     " ",
     file(window),
     "%=",
-    loc(),
+    loc(window),
     " "
   })
 end

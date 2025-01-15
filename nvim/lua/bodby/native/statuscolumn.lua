@@ -5,13 +5,18 @@ function M.setup()
   vim.wo.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
 
   vim.api.nvim_create_autocmd({
+    "WinEnter",
     "BufEnter",
   }, {
     group    = "status",
     callback = function(event)
-      local windows = vim.fn.win_findbuf(event.buf);
+      local windows = vim.api.nvim_tabpage_list_wins(0);
 
       for _, window in ipairs(windows) do
+        if vim.api.nvim_win_get_config(window).relative ~= "" then
+          return
+        end
+
         vim.wo[window].statuscolumn =
           "%!v:lua.require('bodby.native.statuscolumn').active(" .. window .. ")"
       end
@@ -19,26 +24,29 @@ function M.setup()
   })
 end
 
-line_nr = function()
+line_nr = function(window)
   -- https://github.com/mawkler/hml.nvim/blob/main/lua/hml/init.lua
-  local top    = vim.fn.line "w0"
-  local bottom = vim.fn.line "w$"
+  local top    = vim.fn.getwininfo(window)[1].topline
+  local bottom = vim.fn.getwininfo(window)[1].botline
   local middle = math.floor((bottom - top) / 2 + top)
 
-  local stc_H = top + vim.wo.scrolloff
+  local scrolloff = vim.wo[window].scrolloff
+  local buf       = vim.api.nvim_win_get_buf(window)
+
+  local h = top + scrolloff
   if top == 1 then
-    stc_H = 1
-  elseif stc_H > middle then
-    stc_H = math.max(H, vim.wo.scrolloff)
+    h = 1
+  elseif h > middle then
+    h = math.max(h, scrolloff)
   end
 
-  local stc_M = math.max(middle, stc_H)
+  local m = math.max(middle, h)
 
-  local stc_L = bottom - vim.wo.scrolloff
-  if bottom >= vim.fn.line "$" then
-    stc_L = vim.fn.line "$"
-  elseif stc_L < middle then
-    stc_L = middle
+  local l = bottom - scrolloff
+  if bottom >= vim.fn.getbufinfo(buf)[1].linecount then
+    l = vim.fn.line "$"
+  elseif l < middle then
+    l = middle
   end
 
   local cur_line = vim.fn.line "."
@@ -54,11 +62,11 @@ line_nr = function()
     return "%=" .. vim.v.lnum
   end
 
-  if vim.v.lnum == stc_H then
+  if vim.v.lnum == h then
     return "%=%#LineNrSpecial#H"
-  elseif vim.v.lnum == stc_M then
+  elseif vim.v.lnum == m then
     return "%=%#LineNrSpecial#M"
-  elseif vim.v.lnum == stc_L then
+  elseif vim.v.lnum == l then
     return "%=%#LineNrSpecial#L"
   end
 
@@ -76,7 +84,7 @@ M.active = function(window)
 
   return table.concat({
     " %s",
-    line_nr(),
+    line_nr(window),
     " "
   })
 end
