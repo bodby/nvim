@@ -19,5 +19,6 @@ require("virt-column").setup({
   enabled = true,
   char    = "│",
   -- virtcolumn = "80",
+  highlight = "VirtColumn",
   exclude   = { }
 })
