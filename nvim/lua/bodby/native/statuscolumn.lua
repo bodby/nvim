@@ -21,9 +21,9 @@ end
 
 line_nr = function()
   -- https://github.com/mawkler/hml.nvim/blob/main/lua/hml/init.lua
-  local top       = vim.fn.line "w0"
-  local bottom    = vim.fn.line "w$"
-  local middle    = math.floor((bottom - top) / 2 + top)
+  local top    = vim.fn.line "w0"
+  local bottom = vim.fn.line "w$"
+  local middle = math.floor((bottom - top) / 2 + top)
 
   local stc_H = top + vim.wo.scrolloff
   if top == 1 then
