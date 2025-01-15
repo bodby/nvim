@@ -1,7 +1,7 @@
 require("smartcolumn").setup({
-  colorcolumn        = "100",
-  scope              = "window",
-  editorconfig       = true,
+  colorcolumn  = "100",
+  scope        = "window",
+  editorconfig = true,
 
   disabled_filetypes = {
     "help",
@@ -19,12 +19,5 @@ require("virt-column").setup({
   enabled = true,
   char    = "│",
   -- virtcolumn = "80",
-  highlight = "ColorColumn",
-  exclude = {
-    filetypes = {
-      "alpha",
-      "TelescopePrompt",
-      "TelescopeResults"
-    }
-  }
+  exclude   = { }
 })
