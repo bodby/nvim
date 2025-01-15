@@ -12,7 +12,7 @@ function M.setup()
     callback = function(event)
       local windows = vim.api.nvim_tabpage_list_wins(0);
 
-      for _, window in ipairs(windows) do
+      for _, window in pairs(windows) do
         if vim.api.nvim_win_get_config(window).relative ~= "" then
           return
         end
