@@ -86,7 +86,9 @@ M.active = function(window)
     " ── ",
     file(window),
     "%=",
-    loc(window)
+    loc(window),
+    colors.fill,
+    " ── ",
   })
 end
 
