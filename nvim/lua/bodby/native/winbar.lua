@@ -82,11 +82,11 @@ M.active = function(window)
   end
 
   return table.concat({
-    " ",
+    colors.fill,
+    " ── ",
     file(window),
     "%=",
-    loc(window),
-    " "
+    loc(window)
   })
 end
 

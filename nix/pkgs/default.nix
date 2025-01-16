@@ -1,6 +1,7 @@
-final: prev: {
-  blink-indent = prev.callPackage ./blink-indent.nix { };
-  blink-compat = prev.callPackage ./blink-compat.nix { };
-  fine-cmdline = prev.callPackage ./fine-cmdline.nix { };
-  degraded-nvim = prev.callPackage ./degraded-nvim.nix { };
+final: prev: with prev; {
+  blink-indent = callPackage ./blink-indent.nix { };
+  blink-compat = callPackage ./blink-compat.nix { };
+  fine-cmdline = callPackage ./fine-cmdline.nix { };
+  degraded-nvim = callPackage ./degraded-nvim.nix { };
+  blink-cmp-spell = callPackage ./blink-cmp-spell.nix { };
 }

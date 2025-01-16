@@ -151,8 +151,7 @@ end
 M.active = function()
   return table.concat({
     stl_mode(),
-    "%#StatusLine#",
-    " ",
+    "%#StatusLine# ",
     stl_file(),
     stl_git_info(),
     stl_macro(),

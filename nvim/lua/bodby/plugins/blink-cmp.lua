@@ -3,11 +3,28 @@ require("blink.cmp").setup({
   keymap = {
     preset    = "default",
     ["<Tab>"] = { "select_and_accept", "fallback" },
-    ['<C-space>'] = {
+    -- NOTE: To use, you do have to be in the middle of a word.
+    --       You can't use this to autocomplete words, unfortunately.
+    --       Only suggest different words.
+    ["<C-space>"] = {
       function(cmp)
-        cmp.show({ providers = { "buffer" } })
+        cmp.show({ providers = { "spell" } })
       end
-    }
+    },
+    ["<C-n>"] = {
+      function(cmp)
+        cmp.show()
+        vim.schedule(function() cmp.select_next() end)
+      end
+      -- "select_next"
+    },
+    ["<C-p>"] = {
+      function(cmp)
+        cmp.show()
+        vim.schedule(function() cmp.select_prev() end)
+      end
+      -- "select_prev"
+    },
   },
   snippets = {
     expand = function(snippet)
@@ -23,7 +40,7 @@ require("blink.cmp").setup({
     end
   },
   completion = {
-    keyword    = { range = "prefix" },
+    keyword    = { range = "full" },
     ghost_text = { enabled = false },
 
     trigger = {
@@ -105,9 +122,7 @@ require("blink.cmp").setup({
                 {
                   0,
                   #context.label,
-                  group = context.deprecated
-                          and "BlinkCmpLabelDeprecated"
-                          or  "BlinkCmpLabel"
+                  group = context.deprecated and "BlinkCmpLabelDeprecated" or "BlinkCmpLabel"
                 },
               }
 
@@ -147,13 +162,12 @@ require("blink.cmp").setup({
       treesitter_highlighting = true,
 
       window = {
-        min_width    = 10,
-        max_width    = 60,
-        max_height   = 20,
-        border       = "padded",
-        winblend     = 0,
-        winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
-        scrollbar    = false,
+        min_width  = 10,
+        max_width  = 60,
+        max_height = 20,
+        border     = "padded",
+        winblend   = 0,
+        scrollbar  = false,
 
         direction_priority = {
           menu_north = { "e", "w", "n", "s" },
@@ -167,7 +181,8 @@ require("blink.cmp").setup({
     use_typo_resistance = true,
     use_frecency        = true,
     use_proximity       = true,
-    sorts               = { "score", "sort_text" },
+
+    sorts = { "score", "sort_text", "label" },
 
     prebuilt_binaries = {
       download            = false,
@@ -177,7 +192,8 @@ require("blink.cmp").setup({
   },
 
   sources = {
-    default = { "buffer", "lsp", "path", "snippets", "markdown" },
+    -- "mardown"
+    default = { "spell", "buffer", "lsp", "path", "snippets" },
     -- cmdline = { },
 
     providers = {
@@ -192,7 +208,9 @@ require("blink.cmp").setup({
               :filter(function(buf) return vim.bo[buf].buftype ~= "nofile" end)
               :totable()
           end
-        }
+        },
+
+        fallbacks = { "spell" }
       },
 
       lsp = {
@@ -261,12 +279,36 @@ require("blink.cmp").setup({
         score_offset = -3
       },
 
-      markdown = {
-        name      = "RenderMarkdown",
-        module    = "render-markdown.integ.blink",
-        enabled   = true,
-        fallbacks = { "buffer" }
+      spell = {
+        name   = "Spell",
+        module = "blink-cmp-spell",
+
+        opts = {
+          max_entries = 8,
+
+          -- enable_in_context = function() return true end
+          -- Only enable in @spell TS captures.
+          enable_in_context = function()
+            for _, hl in pairs(vim.treesitter.get_captures_at_cursor(0)) do
+              if hl == "spell" then
+                return true
+              end
+            end
+
+            return false
+          end
+        },
+
+        enabled      = true,
+        score_offset = 3
       }
+
+      -- markdown = {
+      --   name      = "RenderMarkdown",
+      --   module    = "render-markdown.integ.blink",
+      --   enabled   = true,
+      --   fallbacks = { "buffer" }
+      -- }
     }
   },
 

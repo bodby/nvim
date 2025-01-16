@@ -4,10 +4,11 @@
 }:
 
 let
-  customPkgs = [
-    # pkgs.blink-indent
-    pkgs.blink-compat
-    pkgs.degraded-nvim
+  customPkgs = with pkgs; [
+    # blink-indent
+    blink-compat
+    degraded-nvim
+    blink-cmp-spell
     # inputs.blink-cmp.packages.${system}.blink-cmp
   ];
 in
@@ -48,6 +49,7 @@ in
       # obsidian-nvim
       alpha-nvim
       # material-nvim
+      # TODO: Don't need this; I only use it for my statusline.
       gitsigns-nvim
       smartcolumn-nvim
       virt-column-nvim

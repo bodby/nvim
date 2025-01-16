@@ -31,7 +31,7 @@ line_nr = function(window)
   local middle = math.floor((bottom - top) / 2 + top)
 
   local scrolloff = vim.wo[window].scrolloff
-  local buf       = vim.api.nvim_win_get_buf(window)
+  local buffer    = vim.api.nvim_win_get_buf(window)
 
   local h = top + scrolloff
   if top == 1 then
@@ -43,8 +43,8 @@ line_nr = function(window)
   local m = math.max(middle, h)
 
   local l = bottom - scrolloff
-  if bottom >= vim.fn.getbufinfo(buf)[1].linecount then
-    l = vim.fn.line "$"
+  if bottom >= vim.fn.getbufinfo(buffer)[1].linecount then
+    l = vim.fn.getbufinfo(buffer)[1].linecount
   elseif l < middle then
     l = middle
   end
