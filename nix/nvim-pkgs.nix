@@ -32,6 +32,8 @@ in
         markdown
         markdown_inline
         zig
+        rust
+        ocaml
         lua
         python
         nix
