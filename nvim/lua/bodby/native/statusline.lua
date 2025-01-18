@@ -62,6 +62,28 @@ function M.setup()
       end)
     end
   })
+
+  if vim.g.neovide then
+    vim.api.nvim_create_autocmd({
+      "CmdwinEnter",
+      "CmdlineEnter",
+    }, {
+      group    = "status",
+      callback = function(_)
+        vim.opt.statusline = ""
+      end
+    })
+
+    vim.api.nvim_create_autocmd({
+      "CmdwinLeave",
+      "CmdlineLeave",
+    }, {
+      group    = "status",
+      callback = function(_)
+        vim.opt.statusline = "%!v:lua.require('bodby.native.statusline').active()"
+      end
+    })
+  end
 end
 
 -- Shows the current mode.

@@ -43,7 +43,7 @@ vim.opt.fillchars:append({
 })
 vim.opt.listchars:append({
   trail = "_",
-  tab   = ">-"
+  tab   = "> "
 })
 
 vim.g.markdown_recommended_style = 0
@@ -56,3 +56,37 @@ vim.g.loaded_node_provider       = 0
 vim.g.loaded_ruby_provider       = 0
 vim.g.loaded_perl_provider       = 0
 vim.g.loaded_python3_provider    = 0
+
+if vim.g.neovide then
+  vim.opt.guifont   = "JetBrains Mono:h13.5"
+  vim.opt.linespace = 3
+
+  vim.g.neovide_cursor_unfocused_outline_width = 0
+
+  vim.g.neovide_padding_top    = 24
+  vim.g.neovide_padding_bottom = 24
+  vim.g.neovide_padding_right  = 24
+  vim.g.neovide_padding_left   = 24
+
+  vim.g.neovide_transparency           = 0.85
+  vim.g.neovide_normal_opacity         = 1.0
+  vim.g.neovide_floating_blur_amount_x = 32
+  vim.g.neovide_floating_blur_amount_y = 32
+
+  -- TODO: Should I?
+  vim.g.neovide_floating_shadow        = true
+  vim.g.neovide_floating_z_height      = 1
+  vim.g.neovide_light_angle_degrees    = 45
+  vim.g.neovide_light_radius           = 2
+  vim.g.neovide_floating_corner_radius = 0.4
+  vim.g.experimental_layer_grouping    = false
+
+  vim.g.neovide_position_animation_length     = 0
+  vim.g.neovide_scroll_animation_length       = 0
+  vim.g.neovide_cursor_animation_length       = 0
+  vim.g.neovide_cursor_trail_size             = 0
+  vim.g.neovide_cursor_animate_in_insert_mode = false
+  vim.g.neovide_cursor_animate_command_line   = false
+
+  vim.g.neovide_no_idle = false
+end
