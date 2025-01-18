@@ -14,14 +14,18 @@ vim.keymap.set({ "n", "v" }, "<Leader>S", [["_S]])
 vim.keymap.set({ "n", "v" }, "<Leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<Leader>Y", [["+Y]])
 
+-- Helix uses Ctrl+C to comment.
+-- I can still use 'gcj' and 'gck', etc. for multiple lines.
+vim.keymap.set({ "n", "v" }, "<C-c>", "<Cmd>normal gcc<CR>")
+
 function M.setup_lsp_mappings(opts)
-  vim.keymap.set("n", "gd",     "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-  vim.keymap.set("n", "grn",    "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-  vim.keymap.set("n", "gra",    "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-  vim.keymap.set("n", "K",      "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-  vim.keymap.set("n", "<C-w>d", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
-  vim.keymap.set("n", "]d",     "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
-  vim.keymap.set("n", "[d",     "<cmd>lua vim.diagnostic.goto_prev()<cr>", opts)
+  vim.keymap.set("n", "gd",     "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  vim.keymap.set("n", "grn",    "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+  vim.keymap.set("n", "gra",    "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  vim.keymap.set("n", "K",      "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  vim.keymap.set("n", "<C-w>d", "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
+  vim.keymap.set("n", "]d",     "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+  vim.keymap.set("n", "[d",     "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 end
 
 return M
