@@ -40,7 +40,7 @@ require("blink.cmp").setup({
     end
   },
   completion = {
-    keyword    = { range = "full" },
+    keyword    = { range = "prefix" },
     ghost_text = { enabled = false },
 
     trigger = {
