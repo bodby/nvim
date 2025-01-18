@@ -58,7 +58,7 @@ vim.g.loaded_perl_provider       = 0
 vim.g.loaded_python3_provider    = 0
 
 if vim.g.neovide then
-  vim.opt.guifont   = "JetBrains Mono:h13.5"
+  -- vim.opt.guifont   = "JetBrains Mono:h13.5"
   vim.opt.linespace = 3
 
   vim.g.neovide_cursor_unfocused_outline_width = 0
@@ -70,15 +70,14 @@ if vim.g.neovide then
 
   vim.g.neovide_transparency           = 0.85
   vim.g.neovide_normal_opacity         = 1.0
-  vim.g.neovide_floating_blur_amount_x = 32
-  vim.g.neovide_floating_blur_amount_y = 32
+  vim.g.neovide_floating_blur_amount_x = 8192
+  vim.g.neovide_floating_blur_amount_y = 8192
 
-  -- TODO: Should I?
-  vim.g.neovide_floating_shadow        = true
-  vim.g.neovide_floating_z_height      = 1
+  vim.g.neovide_floating_shadow        = false
+  vim.g.neovide_floating_z_height      = 10
   vim.g.neovide_light_angle_degrees    = 45
   vim.g.neovide_light_radius           = 2
-  vim.g.neovide_floating_corner_radius = 0.4
+  vim.g.neovide_floating_corner_radius = 0
   vim.g.experimental_layer_grouping    = false
 
   vim.g.neovide_position_animation_length     = 0

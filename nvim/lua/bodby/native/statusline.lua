@@ -70,7 +70,7 @@ function M.setup()
     }, {
       group    = "status",
       callback = function(_)
-        vim.opt.statusline = ""
+        vim.opt.statusline = " "
       end
     })
 
