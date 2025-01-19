@@ -2,4 +2,4 @@
 
 ; (atx_heading
 ;   (inline)) @markup.heading
-;   (#set! "priority" 1000)
+;   (#set! "priority" 101)

@@ -40,6 +40,7 @@
         rec {
           default = nvim;
           nvim = pkgs.nvim-btw;
+          # TODO: Shell script to add to RTP without needing to recompile Neovim.
         }
       );
     };

@@ -14,6 +14,11 @@ vim.keymap.set({ "n", "v" }, "<Leader>S", [["_S]])
 vim.keymap.set({ "n", "v" }, "<Leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<Leader>Y", [["+Y]])
 
+-- System clipboard.
+-- You can use this insert using 'Ctrl+O' -> 'Space p/P'
+vim.keymap.set("n", "<Leader>p", [["+p]])
+vim.keymap.set("n", "<Leader>P", [["+P]])
+
 -- Helix uses Ctrl+C to comment.
 -- I can still use 'gcj' and 'gck', etc. for multiple lines.
 vim.keymap.set({ "n", "v" }, "<C-c>", "<Cmd>normal gcc<CR>")

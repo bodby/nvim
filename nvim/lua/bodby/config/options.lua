@@ -41,6 +41,7 @@ vim.opt.fillchars:append({
   vertright = "│",
   verthoriz = "│"
 })
+
 vim.opt.listchars:append({
   trail = "_",
   tab   = "> "

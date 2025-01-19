@@ -53,7 +53,7 @@ line_nr = function(window)
 
   -- Wrapped lines and virtual lines.
   if vim.v.virtnum > 0 then
-    return "%=+"
+    return "%#LineNrWrapped#%=│"
   elseif vim.v.virtnum < 0 then
     return "%=-"
   end
