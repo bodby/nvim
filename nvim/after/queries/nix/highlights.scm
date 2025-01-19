@@ -16,3 +16,15 @@
 (variable_expression
   name: (identifier) @namespace.builtin
     (#any-of? @namespace.builtin "nixpkgs" "builtins" "lib" "pkgs"))
+
+; FIXME: Is "priority" needed?
+((binding
+  attrpath: (attrpath
+    attr: (identifier) @variable)
+  expression: (attrset_expression
+    (binding_set
+      (binding
+        attrpath: (attrpath
+        attr: (identifier)))
+      (_)))
+  ))
