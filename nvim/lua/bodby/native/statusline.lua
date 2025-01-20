@@ -152,9 +152,14 @@ stl_diagnostics = function()
     warnings = colors.warnings .. count[2] .. " "
   end
 
+  local hints = 0
+  local info  = 0
+  if count[3] ~= nil then hints = hints + 1 end
+  if count[4] ~= nil then info = info + 1 end
+
   local hints_and_info = ""
-  if count[3] ~= nil or count[4] ~= nil then
-    hints_and_info = colors.hints_and_info .. (count[3] + count[4]) .. " "
+  if hints ~= 0 or info ~= 0 then
+    hints_and_info = colors.hints_and_info .. hints + info .. " "
   end
 
   return " " .. errors .. warnings .. hints_and_info
