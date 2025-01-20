@@ -140,31 +140,21 @@ end
 
 -- Errors, warnings, and hints and info (in one number).
 stl_diagnostics = function()
-  local count = { }
-  local levels = {
-    errors   = "Error",
-    warnings = "Warn",
-    hints    = "Hint",
-    info     = "Info"
-  }
-
-  for i, v in pairs(levels) do
-    count[i] = vim.tbl_count(vim.diagnostic.get(0, { serverity = level }))
-  end
+  local count = vim.diagnostic.count(0)
 
   local errors = ""
-  if count["errors"] ~= 0 then
-    errors = colors.errors .. count["errors"] .. " "
+  if count[1] ~= nil then
+    errors = colors.errors .. count[1] .. " "
   end
 
   local warnings = ""
-  if count["warnings"] ~= 0 then
-    warnings = colors.warnings .. count["warnings"] .. " "
+  if count[2] ~= nil then
+    warnings = colors.warnings .. count[2] .. " "
   end
 
   local hints_and_info = ""
-  if count["hints"] ~= 0 or count["info"] ~= 0 then
-    hints_and_info = colors.hints_and_info .. (count["hints"] + count["info"]) .. " "
+  if count[3] ~= nil or count[4] ~= nil then
+    hints_and_info = colors.hints_and_info .. (count[3] + count[4]) .. " "
   end
 
   return " " .. errors .. warnings .. hints_and_info
