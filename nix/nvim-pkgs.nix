@@ -8,7 +8,7 @@ let
     # blink-indent
     blink-compat
     degraded-nvim
-    blink-cmp-spell
+    # blink-cmp-spell
     # inputs.blink-cmp.packages.${system}.blink-cmp
   ];
 in

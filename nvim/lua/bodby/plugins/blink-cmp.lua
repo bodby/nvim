@@ -3,12 +3,9 @@ require("blink.cmp").setup({
   keymap = {
     preset    = "default",
     ["<Tab>"] = { "select_and_accept", "fallback" },
-    -- NOTE: To use, you do have to be in the middle of a word.
-    --       You can't use this to autocomplete words, unfortunately.
-    --       Only suggest different words.
     ["<C-space>"] = {
       function(cmp)
-        cmp.show({ providers = { "spell" } })
+        cmp.show({ providers = { "buffer" } })
       end
     },
     ["<C-n>"] = {
@@ -41,7 +38,7 @@ require("blink.cmp").setup({
   },
   completion = {
     keyword    = { range = "prefix" },
-    ghost_text = { enabled = false },
+    ghost_text = { enabled = true },
 
     trigger = {
       prefetch_on_insert = true,
@@ -78,11 +75,14 @@ require("blink.cmp").setup({
       max_height         = 16,
       border             = "rounded",
       winblend           = 0,
-      winhighlight       = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
       scrolloff          = 3,
       scrollbar          = false,
       direction_priority = { "s", "n" },
-      auto_show          = true,
+
+      -- Only show in cmdline.
+      auto_show = function(ctx)
+        return ctx.mode == "cmdline" or vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
+      end,
 
       draw = {
         padding = 1,
@@ -192,8 +192,8 @@ require("blink.cmp").setup({
   },
 
   sources = {
-    -- "mardown"
-    default = { "spell", "buffer", "lsp", "path", "snippets" },
+    -- "markdown", "spell"
+    default = { "buffer", "lsp", "path", "snippets" },
     -- cmdline = { },
 
     providers = {
@@ -209,8 +209,6 @@ require("blink.cmp").setup({
               :totable()
           end
         },
-
-        fallbacks = { "spell" }
       },
 
       lsp = {
@@ -279,29 +277,29 @@ require("blink.cmp").setup({
         score_offset = -3
       },
 
-      spell = {
-        name   = "Spell",
-        module = "blink-cmp-spell",
-
-        opts = {
-          max_entries = 8,
-
-          -- enable_in_context = function() return true end
-          -- Only enable in @spell TS captures.
-          enable_in_context = function()
-            for _, hl in pairs(vim.treesitter.get_captures_at_cursor(0)) do
-              if hl == "spell" then
-                return true
-              end
-            end
-
-            return false
-          end
-        },
-
-        enabled      = true,
-        score_offset = 3
-      }
+      -- spell = {
+      --   name   = "Spell",
+      --   module = "blink-cmp-spell",
+      --
+      --   opts = {
+      --     max_entries = 8,
+      --
+      --     -- enable_in_context = function() return true end
+      --     -- Only enable in @spell TS captures.
+      --     enable_in_context = function()
+      --       for _, hl in pairs(vim.treesitter.get_captures_at_cursor(0)) do
+      --         if hl == "spell" then
+      --           return true
+      --         end
+      --       end
+      --
+      --       return false
+      --     end
+      --   },
+      --
+      --   enabled      = true,
+      --   score_offset = 3
+      -- }
 
       -- markdown = {
       --   name      = "RenderMarkdown",
