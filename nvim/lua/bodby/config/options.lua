@@ -35,7 +35,7 @@ vim.opt.fillchars:append({
   wbr = "─",
   horiz = " ",
   horizup = "│",
-  horizdown = "│",
+  horizdown = " ",
   vert = "│",
   vertleft = "│",
   vertright = "│",
