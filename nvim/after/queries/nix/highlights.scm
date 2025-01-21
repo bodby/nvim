@@ -1,6 +1,6 @@
 ;; extends
 
-; TODO: PR this as this has been updated and is like 2 lines shorter.
+; TODO: PR this.
 (apply_expression
   function: (select_expression
     attrpath: [
@@ -13,8 +13,8 @@
     ]))
 
 (variable_expression
-  name: (identifier) @namespace.builtin
-    (#any-of? @namespace.builtin "nixpkgs" "builtins" "lib" "pkgs"))
+  name: (identifier) @module.builtin
+    (#any-of? @module.builtin "nixpkgs" "builtins" "lib" "pkgs"))
 
 ; FIXME: Think there's an easier way to do this.
 (binding
