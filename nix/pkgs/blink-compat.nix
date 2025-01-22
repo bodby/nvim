@@ -6,13 +6,13 @@
 
 vimUtils.buildVimPlugin {
   pname = "blink.compat";
-  version = "1.0.2";
+  version = "2.2.0";
 
   src = fetchFromGitHub {
     owner = "Saghen";
     repo = "blink.compat";
-    rev = "73249d35c8737b614bed64c2f33277387035f8ec";
-    sha256 = "sha256-QW5QG7nqdHdyOodac06Cnq8/WKfbg3YyX/yPh87ENJQ=";
+    rev = "d375d838042dbef34114139839fdda16b2485d63";
+    sha256 = "sha256-tFdkIkj8Lq+zBhF7mlh7emfpp0qs8GrinJbFWBJn+uE=";
   };
 
   meta = {

@@ -156,6 +156,7 @@ local shortcuts = {
       })
     end),
 
+    -- FIXME: Only add this button if vim.fn.isdirectory "/home/bodby/vault" ~= 0.
     button("v", "Vault", function()
       require("telescope.builtin").find_files({
         cwd          = "~/vault",
