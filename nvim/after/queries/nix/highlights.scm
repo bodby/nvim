@@ -5,7 +5,7 @@
 (apply_expression
   function: (select_expression
     attrpath: (attrpath
-      attr: (identifier) @function.call .))
+      attr: (identifier) @function.call .)))
 
 (variable_expression
   name: (identifier) @module.builtin
