@@ -5,7 +5,8 @@
 
 let
   customPkgs = with pkgs; [
-    blink-indent
+    # FIXME: Update blink-indent and blink-compat.
+    # blink-indent
     blink-compat
     degraded-nvim
     # blink-cmp-spell
