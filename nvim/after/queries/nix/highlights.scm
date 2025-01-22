@@ -1,7 +1,5 @@
 ;; extends
 
-; FIXME: See if this works. See functions inside attrs inside attrs,
-; e.g. pkgs.hello.world.aaa { };
 (apply_expression
   function: (select_expression
     attrpath: (attrpath
