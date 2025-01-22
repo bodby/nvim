@@ -5,7 +5,7 @@
 
 let
   customPkgs = with pkgs; [
-    # blink-indent
+    blink-indent
     blink-compat
     degraded-nvim
     # blink-cmp-spell
@@ -50,7 +50,7 @@ in
       # nvim-treesitter-parsers.latex
       # obsidian-nvim
       alpha-nvim
-      # material-nvim
+
       # TODO: Don't need this; I only use it for my statusline.
       gitsigns-nvim
       smartcolumn-nvim

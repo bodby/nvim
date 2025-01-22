@@ -26,6 +26,7 @@
         system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
       );
 
+      # TODO: Use mkNeovim function here instead of in package.nix to make customization easier.
       packages = nixpkgs.lib.genAttrs systems (
         system:
         let
