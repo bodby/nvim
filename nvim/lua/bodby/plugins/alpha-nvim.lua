@@ -3,20 +3,16 @@ local pickers       = require "telescope.pickers"
 local entry_display = require "telescope.pickers.entry_display"
 local actions       = require "telescope.actions"
 local action_state  = require "telescope.actions.state"
-local themes        = require "telescope.themes"
+local sorters       = require "telescope.sorters"
 
 local displayer = function(entry)
-  entry_display.create({
-    separator = ":",
+  return entry_display.create({
+    separator = "",
     items = {
       { width = 20 },
       { remaining = true }
     }
-  })({
-    entry.name,
-    { entry.value, "Comment" },
-    "EEEEE"
-  })
+  })({ entry.name, { entry.value, "Comment" } })
 end
 
 local project_entry = function(entry)
@@ -29,7 +25,6 @@ local project_entry = function(entry)
     ordinal = 1
   }
 end
-
 local header_margin = vim.fn.max({
   2, vim.fn.floor(vim.fn.winheight(0) * 0.385)
 })
@@ -104,9 +99,9 @@ local button = function(shortcut, text, action)
   }
 end
 
-local project_button = function()
+local project_button = function(project_dir)
   -- TODO: Don't hardcode /home/bodby and expand ~.
-  if vim.fn.isdirectory "/home/bodby/dev" ~= 0 then
+  if vim.fn.isdirectory(project_dir) ~= 0 then
     return button("p", "Projects", function()
       local entries = { }
 
@@ -114,25 +109,37 @@ local project_button = function()
         table.insert(entries, proj)
       end
 
-      picker = pickers.new({
-        prompt_title = "Projects",
-        finder = finders.new_table(themes.get_dropdown(), {
+      pickers.new({
+        results_title = "Projects",
+        sorter = sorters.get_fuzzy_file(),
+        finder = finders.new_table({
           results = entries,
-          entry_maker = project_entry,
+          -- FIXME: WHY DOES THIS BREAK?
+          -- entry_maker = project_entry
+        }),
+        attach_mappings = function(_, map)
+          map("i", "<CR>", function(bufnr)
+            local selection = action_state.get_selected_entry()
+            actions.close(bufnr)
+            vim.fn.chdir(vim.fs.joinpath("~/dev", selection.value))
+            vim.cmd "AlphaRedraw"
+          end)
 
-          attach_mappings = function(_, map)
-            actions.select_default:replace(function(bufnr)
-              local selection = action_state.get_selected_entry()
-              actions.close(bufnr)
-              vim.cmd "echo AAAAA"
-              vim.fn.chdir(selection.value)
-            end)
-            return true
-          end
-        })
+          return true
+        end
+      }):find()
+    end)
+  end
+end
+
+local vault_button = function()
+  if vim.fn.isdirectory "/home/bodby/vault" ~= 0 then
+    return button("v", "Vault", function()
+      require("telescope.builtin").find_files({
+        cwd          = "~/vault",
+        search_dirs  = { "lists", "notes" },
+        prompt_title = false
       })
-
-      picker:find()
     end)
   end
 end
@@ -156,16 +163,9 @@ local shortcuts = {
       })
     end),
 
-    -- FIXME: Only add this button if vim.fn.isdirectory "/home/bodby/vault" ~= 0.
-    button("v", "Vault", function()
-      require("telescope.builtin").find_files({
-        cwd          = "~/vault",
-        search_dirs  = { "lists", "notes" },
-        prompt_title = false
-      })
-    end),
+    vault_button(),
 
-    project_button(),
+    project_button("/home/bodby/dev"),
 
     button("q", "Quit", function()
       vim.cmd "qa"
@@ -176,7 +176,6 @@ local shortcuts = {
 }
 
 -- I opted to go with Telescope to be able to cd into any directory in ~/dev.
--- It works really nicely for my use case.
 -- local projects = function(max_entries)
 --   return {
 --     type = "group",
@@ -202,14 +201,25 @@ local shortcuts = {
 --   }
 -- end
 
+local current_dir = {
+  type = "text",
+  val = function()
+    return vim.fn.getcwd()
+  end,
+  opts = {
+    position = "center",
+    hl       = "AlphaHeaderLabel"
+  }
+}
+
 require("alpha").setup({
   layout = {
     { type = "padding", val = header_margin },
     header,
     { type = "padding", val = 1 },
     shortcuts,
-    -- { type = "padding", val = 1 },
-    -- projects(4),
+    current_dir,
+    { type = "padding", val = 1 },
     footer
   },
 

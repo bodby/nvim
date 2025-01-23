@@ -1,11 +1,14 @@
 local plugin     = require "telescope"
 local strategies = require "telescope.pickers.layout_strategies"
 
+-- Telescope has documentation worse than Nix.
+-- Lua was not designed for this much code.
 strategies.horizontal_alt = function(picker, max_columns, max_lines, layout_config)
   local layout = strategies.horizontal(picker, max_columns, max_lines, layout_config)
 
   -- Why do I have to create a custom layout to get rid of the preview title?
-  layout.preview.title = ""
+  -- FIXME: Open issue because 'layout.preview.title' breaks project pickers.
+  -- layout.preview.title = ""
   layout.prompt.title  = ""
   layout.results.title = ""
 
@@ -22,6 +25,8 @@ plugin.setup({
       i = {
         ["<C-n>"] = "move_selection_next",
         ["<C-p>"] = "move_selection_previous",
+        ["<C-u>"] = "preview_scrolling_up",
+        ["<C-d>"] = "preview_scrolling_down",
         -- ["<Tab>"] = "toggle_selection",
         ["<CR>"]  = "select_default",
         ["<Esc>"] = "close"
@@ -54,7 +59,7 @@ plugin.setup({
 
     results_title         = false,
     prompt_title          = false,
-    dynamic_preview_title = false,
+    dynamic_preview_title = true,
     layout_strategy       = "horizontal_alt",
     sorting_strategy      = "descending",
     layout_config = {
