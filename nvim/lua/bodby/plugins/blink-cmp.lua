@@ -73,7 +73,7 @@ require("blink.cmp").setup({
       enabled            = true,
       min_width          = 1,
       max_height         = 16,
-      border             = "rounded",
+      border             = "none",
       winblend           = 0,
       scrolloff          = 3,
       scrollbar          = false,

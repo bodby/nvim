@@ -14,6 +14,11 @@ strategies.horizontal_alt = function(picker, max_columns, max_lines, layout_conf
 
   -- layout.results.borderchars = { "─", "│", "─", "│", "╭", "╮", "┤", "├" }
   -- layout.results.line   = layout.results.line
+  -- layout.results.width = layout.results.width - 1
+  -- layout.prompt.width  = layout.prompt.width - 1
+  -- layout.results.height = layout.results.height + 1
+
+  -- layout.results.line   = layout.results.line
   -- layout.results.height = layout.results.height + 1
 
   return layout
@@ -45,12 +50,13 @@ plugin.setup({
     },
 
     borderchars = {
-      -- prompt = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
+      -- prompt  = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
       -- results = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
-      results = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-      prompt = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-      preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
-      -- preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
+      -- preview = { "█", "█", "▀", "█", "█", "█", "▀", "▀" }
+
+      prompt  = { "█", "█", "█", "█", "█", "█", "█", "█" },
+      results = { "█", "█", "█", "█", "█", "█", "█", "█" },
+      preview = { "█", "█", "█", "█", "█", "█", "█", "█" }
     },
 
     get_status_text = function(_)

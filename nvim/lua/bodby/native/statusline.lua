@@ -87,7 +87,7 @@ function M.setup()
 end
 
 -- Shows the current mode.
-stl_mode = function()
+local stl_mode = function()
   local cur_mode = modes[vim.api.nvim_get_mode().mode]
 
   if cur_mode ~= nil then
@@ -98,7 +98,7 @@ stl_mode = function()
 end
 
 -- Shows the current file and a modified symbol.
-stl_file = function()
+local stl_file = function()
   local modified = ""
   if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
     modified = colors.modified .. "'"
@@ -114,7 +114,7 @@ end
 -- The (#branch +L ~L -L) in the stl.
 -- TODO: This requires gitsigns.nvim. I should probably write this as a standalone function using
 --       only Git commands.
-stl_git_info = function()
+local stl_git_info = function()
   local branch = (vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head .. " " or "")
 
   local status = (vim.b.gitsigns_status ~= "" and vim.b.gitsigns_status ~= nil
@@ -124,22 +124,18 @@ stl_git_info = function()
 end
 
 -- Shows macro register if recording.
-stl_macro = function()
-  if vim.fn.reg_recording() ~= "" then
-    return colors.macro .. "@" .. vim.fn.reg_recording() .. " "
-  else
-    return ""
-  end
+local stl_macro = function()
+  return colors.macro .. vim.fn.reg_recording() .. " "
 end
 
 -- Shows current line and column as well as percentage of whole file.
-stl_pos = function()
+local stl_pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   return colors.pos .. row .. ":" .. col .. "%#StatusLine# " .. colors.mode .. " %p%% "
 end
 
 -- Errors, warnings, and hints and info (in one number).
-stl_diagnostics = function()
+local stl_diagnostics = function()
   local count = vim.diagnostic.count(0)
 
   local errors = ""

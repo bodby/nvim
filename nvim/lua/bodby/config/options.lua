@@ -19,6 +19,7 @@ vim.opt.concealcursor  = ""
 vim.opt.guicursor      = "a:Cursor/Cursor"
 vim.opt.list           = true
 vim.opt.laststatus     = 3
+vim.opt.showtabline    = 2
 vim.opt.shortmess      = "oOstTWIcCFSqc"
 vim.opt.mouse          = ""
 vim.opt.confirm        = true
@@ -30,16 +31,16 @@ vim.opt.tabstop        = 2
 vim.opt.softtabstop    = 2
 
 vim.opt.fillchars:append({
-  eob = " ",
-  stl = "─",
-  wbr = "─",
-  horiz = " ",
-  horizup = "│",
-  horizdown = " ",
-  vert = "│",
-  vertleft = "│",
-  vertright = "│",
-  verthoriz = "│"
+  eob       = " ",
+  stl       = " ",
+  wbr       = " ",
+  -- horiz     = " ",
+  -- horizup   = " ",
+  -- horizdown = " ",
+  -- vert      = " ",
+  -- vertleft  = " ",
+  -- vertright = " ",
+  -- verthoriz = " "
 })
 
 vim.opt.listchars:append({
@@ -73,7 +74,7 @@ if vim.g.neovide then
   vim.g.neovide_padding_right  = 24
   vim.g.neovide_padding_left   = 24
 
-  vim.g.neovide_transparency           = 0.85
+  vim.g.neovide_transparency           = 1.0
   vim.g.neovide_normal_opacity         = 1.0
   vim.g.neovide_floating_blur_amount_x = 8192
   vim.g.neovide_floating_blur_amount_y = 8192

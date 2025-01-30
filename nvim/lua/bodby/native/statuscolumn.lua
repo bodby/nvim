@@ -24,7 +24,7 @@ function M.setup()
   })
 end
 
-line_nr = function(window)
+local line_nr = function(window)
   -- https://github.com/mawkler/hml.nvim/blob/main/lua/hml/init.lua
   local top    = vim.fn.getwininfo(window)[1].topline
   local bottom = vim.fn.getwininfo(window)[1].botline
@@ -53,6 +53,9 @@ line_nr = function(window)
 
   -- Wrapped lines and virtual lines.
   if vim.v.virtnum > 0 then
+    if vim.v.relnum == 0 then
+      return "%#CursorLineNrWrapped#%=│"
+    end
     return "%#LineNrWrapped#%=│"
   elseif vim.v.virtnum < 0 then
     return "%=-"

@@ -41,7 +41,7 @@ function M.setup()
   })
 end
 
-file = function(window)
+local file = function(window)
   local mod_suffix = ""
   local filename   = ""
 
@@ -62,7 +62,7 @@ file = function(window)
   return "%##" .. filename .. mod_suffix .. " " .. colors.fill
 end
 
-loc = function(window)
+local loc = function(window)
   local buffer = vim.api.nvim_win_get_buf(window)
   local lcount = vim.fn.getbufinfo(buffer)[1].linecount
 
@@ -82,13 +82,9 @@ M.active = function(window)
   end
 
   return table.concat({
-    colors.fill,
-    " ── ",
     file(window),
     "%=",
-    loc(window),
-    colors.fill,
-    " ── ",
+    loc(window)
   })
 end
 

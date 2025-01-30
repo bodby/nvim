@@ -36,7 +36,8 @@ vim.api.nvim_create_augroup("status", { })
 
 require("bodby.native.statusline").setup()
 require("bodby.native.statuscolumn").setup()
-require("bodby.native.winbar").setup()
+-- require("bodby.native.winbar").setup()
+require("bodby.native.tabline").setup()
 require "bodby.native.commentstring"
 
 local function lazy_load(plugins, event, pattern)
@@ -62,6 +63,7 @@ require "bodby.plugins.alpha-nvim"
 require "bodby.plugins.telescope-nvim"
 require "bodby.plugins.nvim-treesitter"
 require "bodby.plugins.nvim-lspconfig"
+require "bodby.plugins.nvim-align"
 
 lazy_load({
   "blink-cmp",
