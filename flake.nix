@@ -27,8 +27,7 @@
       );
 
       # TODO: Use mkNeovim function here instead of in package.nix to make customization easier.
-      packages = nixpkgs.lib.genAttrs systems (
-        system:
+      packages = nixpkgs.lib.genAttrs systems (system:
         let
           pkgs = import nixpkgs {
             inherit system;
@@ -37,12 +36,41 @@
               (import ./nix/package.nix { inherit inputs pkgs; })
             ];
           };
+
+          bashScript =
+            {
+              name,
+              content,
+              deps,
+            }:
+            let
+              script = (pkgs.writeShellScriptBin name content).overrideAttrs (
+                finalAttrs: {
+                  buildCommand = "${finalAttrs.buildCommand}\n patchShebangs $out";
+                });
+            in
+            pkgs.symlinkJoin {
+              inherit name;
+              paths = deps ++ [ script ];
+              buildInputs = [ pkgs.makeWrapper ];
+              postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
+            };
+
         in
         rec {
           default = nvim;
           nvim = pkgs.nvim-btw;
-          # TODO: Shell script to add to RTP without needing to recompile Neovim?
-          #       That sounds impure though.
+
+          gui = bashScript {
+            name = "neovide";
+            content = ''
+              neovide --neovim-bin ${pkgs.nvim-btw}
+            '';
+            deps = with pkgs; [
+              neovide
+              nvim-btw
+            ];
+          };
         }
       );
     };

@@ -38,7 +38,9 @@ end
 
 -- NOTE: Nativate tabs using 'gt' and 'gT'. To go to an indexed tab, use '<number>gt'.
 local function gen_tab(id, is_active, padding)
-  local index = vim.api.nvim_tabpage_get_number(id)
+  -- local index = vim.api.nvim_tabpage_get_number(id)
+  local count = #vim.api.nvim_tabpage_list_wins(id)
+
   -- Or use vim.fn.fnamemodify(buffer_fname, ":t")
   local window = vim.api.nvim_tabpage_get_win(id)
   local buffer = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(window))
@@ -48,11 +50,11 @@ local function gen_tab(id, is_active, padding)
     file = "New file"
   end
 
-  file = pad(file, padding)
+  -- file = pad(file, padding)
   if is_active then
-    return colors.index .. " " .. index .. " " .. colors.active .. file .. " "
+    return colors.index .. " " .. count .. " " .. colors.active .. file .. " "
   else
-    return colors.index_inactive .. " " .. index .. " "  .. colors.default .. file .. " "
+    return colors.index_inactive .. " " .. count .. " "  .. colors.default .. file .. " "
   end
 end
 

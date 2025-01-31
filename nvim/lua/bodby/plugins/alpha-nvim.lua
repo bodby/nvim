@@ -4,6 +4,7 @@ local entry_display = require "telescope.pickers.entry_display"
 local actions       = require "telescope.actions"
 local action_state  = require "telescope.actions.state"
 local sorters       = require "telescope.sorters"
+local strategies    = require "telescope.pickers.layout_strategies"
 
 local displayer = function(entry)
   return entry_display.create({
@@ -99,6 +100,29 @@ local button = function(shortcut, text, action)
   }
 end
 
+strategies.project_picker = function(picker, max_columns, max_lines, layout_config)
+  local layout = strategies.vertical(picker, max_columns, max_lines, layout_config)
+
+  layout.prompt.title  = ""
+  layout.results.title = ""
+
+  layout.prompt.line = layout.prompt.line + 1
+
+  return layout
+end
+
+local title_picker_fix = function(opts)
+  return vim.tbl_deep_extend("force", {
+    theme           = "project_picker",
+    layout_strategy = "project_picker",
+
+    layout_config = {
+      height = 0.4,
+      width  = 0.4
+    }
+  }, opts)
+end
+
 local project_button = function(project_dir)
   -- TODO: Don't hardcode /home/bodby and expand ~.
   if vim.fn.isdirectory(project_dir) ~= 0 then
@@ -109,8 +133,7 @@ local project_button = function(project_dir)
         table.insert(entries, proj)
       end
 
-      pickers.new({
-        results_title = "Projects",
+      pickers.new(title_picker_fix({
         sorter = sorters.get_fuzzy_file(),
         finder = finders.new_table({
           results = entries,
@@ -127,7 +150,7 @@ local project_button = function(project_dir)
 
           return true
         end
-      }):find()
+      })):find()
     end)
   end
 end

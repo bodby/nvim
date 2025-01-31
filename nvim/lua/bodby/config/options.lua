@@ -60,7 +60,9 @@ vim.g.loaded_perl_provider       = 0
 vim.g.loaded_python3_provider    = 0
 
 if vim.g.neovide then
-  -- vim.opt.guifont   = "JetBrains Mono:h13.5"
+  -- https://github.com/neovide/neovide/issues/2491
+  -- vim.opt.guifont = "JetBrains Mono:h13.5"
+
   if vim.fn.hostname() == "scout" then
     vim.opt.linespace = 5
   else
@@ -69,10 +71,10 @@ if vim.g.neovide then
 
   vim.g.neovide_cursor_unfocused_outline_width = 0
 
-  vim.g.neovide_padding_top    = 24
-  vim.g.neovide_padding_bottom = 24
-  vim.g.neovide_padding_right  = 24
-  vim.g.neovide_padding_left   = 24
+  vim.g.neovide_padding_top    = 0
+  vim.g.neovide_padding_bottom = 0
+  vim.g.neovide_padding_right  = 0
+  vim.g.neovide_padding_left   = 0
 
   vim.g.neovide_transparency           = 1.0
   vim.g.neovide_normal_opacity         = 1.0

@@ -34,13 +34,14 @@ plugin.setup({
   },
 
   code = {
-    enabled   = true,
-    sign      = false,
-    style     = "normal",
-    width     = "block",
-    left_pad  = 2,
-    right_pad = 2,
-    border    = "thick"
+    enabled    = true,
+    sign       = false,
+    style      = "normal",
+    width      = "block",
+    left_pad   = 2,
+    right_pad  = 2,
+    inline_pad = 1,
+    border     = "thick"
   },
 
   dash = {

@@ -1,7 +1,6 @@
 require "bodby.config.options"
 
--- require("bodby.plugins.degraded").setup()
-vim.cmd.colorscheme "degraded"
+vim.cmd.colorscheme "dark"
 
 vim.g.mapleader = " "
 
@@ -59,8 +58,8 @@ local function lazy_load(plugins, event, pattern)
   })
 end
 
-require "bodby.plugins.alpha-nvim"
 require "bodby.plugins.telescope-nvim"
+require "bodby.plugins.alpha-nvim"
 require "bodby.plugins.nvim-treesitter"
 require "bodby.plugins.nvim-lspconfig"
 require "bodby.plugins.nvim-align"

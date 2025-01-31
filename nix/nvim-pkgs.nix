@@ -5,14 +5,9 @@
 
 let
   customPkgs = with pkgs; [
-    # FIXME: Update blink-indent and blink-compat.
-    # blink-indent
-    blink-compat
-    degraded-nvim
-    github-nvim-theme
+    # degraded-nvim
     nvim-align
     # blink-cmp-spell
-    # inputs.blink-cmp.packages.${system}.blink-cmp
   ];
 in
 {
@@ -42,17 +37,20 @@ in
         nix
         html
         css
+        javascript
       ]))
+
       telescope-nvim
       telescope-zf-native-nvim
       blink-cmp
-      # markview-nvim
+      blink-compat
       render-markdown-nvim
+      alpha-nvim
+
       # nabla-nvim
       # Needed for nabla-nvim.
       # nvim-treesitter-parsers.latex
       # obsidian-nvim
-      alpha-nvim
 
       # TODO: Don't need this; I only use it for my statusline.
       gitsigns-nvim
