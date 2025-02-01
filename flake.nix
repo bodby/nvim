@@ -69,6 +69,7 @@
             deps = with pkgs; [
               neovide
               nvim-btw
+              jetbrains-mono
             ];
           };
         }
