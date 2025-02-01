@@ -1,9 +1,15 @@
 # About
 
-My Neovim configuration, available as a Nix flake. Based off of [kickstart-nix.nvim](https://github.com/nix-community/kickstart-nix.nvim).
+My Neovim configuration packaged as a standalone Nix flake, based off of [kickstart-nix.nvim](https://github.com/nix-community/kickstart-nix.nvim).
 
-To test it out without installing, run:
+## Quick start
+
+You need [Nix](https://nixos.org/nix) to be able to run this.
 
 ```bash
-nix run 'github:bodby/nvim-cfg'
+# TUI
+nix run 'github:bodby/nvim-btw'
+
+# Neovide wrapper
+nix run 'github:bodby/nvim-btw#gui'
 ```
