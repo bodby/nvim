@@ -9,18 +9,23 @@
   name: (identifier) @module.builtin
     (#any-of? @module.builtin "nixpkgs" "builtins" "lib" "pkgs"))
 
-; FIXME: Think there's an easier way to do this.
 (binding
   attrpath: (attrpath
     attr: (identifier) @variable)
   expression: (attrset_expression
     (binding_set
-      binding: [
-        (binding
-          attrpath: (attrpath
-            attr: (identifier)))
-        (inherit
-          attrs: (inherited_attrs))
-      ]
+      binding: (binding
+        attrpath: (attrpath
+          attr: (identifier)))
+      (_)
+    )))
+
+(binding
+  attrpath: (attrpath
+    attr: (identifier) @variable)
+  expression: (attrset_expression
+    (binding_set
+      binding: (inherit
+        attrs: (inherited_attrs))
       (_)
     )))

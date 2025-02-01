@@ -73,4 +73,4 @@ lazy_load({
 
 lazy_load({
   "render-markdown"
-}, "BufEnter", "*.md")
+}, "FileType", "markdown")

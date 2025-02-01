@@ -1,21 +1,9 @@
 local plugin     = require "telescope"
 local strategies = require "telescope.pickers.layout_strategies"
 
--- Telescope has worse documentation than Nix.
-strategies.no_titles = function(picker, max_columns, max_lines, layout_config)
+strategies.flex_margins = function(picker, max_columns, max_lines, layout_config)
   local layout = strategies.flex(picker, max_columns, max_lines, layout_config)
 
-  -- Why do I have to create a custom layout to get rid of the preview title?
-  -- FIXME: Open issue because 'layout.preview.title' breaks project pickers.
-  layout.preview.title = ""
-  layout.prompt.title  = ""
-  layout.results.title = ""
-
-  -- layout.results.line   = layout.results.line
-  -- layout.results.height = layout.results.height + 1
-  -- layout.results.width = layout.results.width - 1
-  -- layout.prompt.width  = layout.prompt.width - 1
-  -- layout.preview.width = layout.preview.width - 1
   layout.preview.col   = layout.preview.col + 1
   layout.preview.width = layout.preview.width - 2
   layout.preview.height = layout.preview.height - 1
@@ -39,8 +27,6 @@ plugin.setup({
         ["<C-p>"]     = "move_selection_previous",
         ["<C-u>"]     = "preview_scrolling_up",
         ["<C-d>"]     = "preview_scrolling_down",
-        -- FIXME: This also breaks if the preview title is blank.
-        -- ["<C-Space>"] = require("telescope.actions.layout").toggle_preview,
         ["<CR>"]      = "select_default",
         ["<Esc>"]     = "close"
       }
@@ -59,33 +45,32 @@ plugin.setup({
     },
 
     borderchars = {
-      -- https://github.com/neovide/neovide/issues/2491
       prompt  = { " ", " ", " ", " ", " ", " ", " ", " " },
       results = { " ", " ", " ", " ", " ", " ", " ", " " },
       preview = { " ", " ", " ", " ", " ", " ", " ", " " },
+
+      -- https://github.com/neovide/neovide/issues/2491
       -- prompt  = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
       -- results = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
       -- preview = { "▄", "█", "▀", "█", "▄", "▄", "▀", "▀" },
-
-      -- results = { "█", "█", "█", "█", "█", "█", "█", "█" },
-      -- preview = { "█", "█", "█", "█", "█", "█", "█", "█" }
     },
 
     get_status_text = function(_)
       return ""
     end,
 
-    results_title         = false,
-    prompt_title          = false,
-    dynamic_preview_title = false,
-    layout_strategy       = "no_titles",
-    sorting_strategy      = "descending",
+    results_title    = "",
+    prompt_title     = "",
+    preview_title    = "",
+    layout_strategy  = "flex_margins",
+    sorting_strategy = "descending",
+
     layout_config = {
       height          = 0.8,
       width           = 0.8,
       prompt_position = "bottom",
 
-      horizontal = { preview_width = 0.6 }
+      horizontal = { preview_width = 0.55 }
     }
   },
 
@@ -111,34 +96,39 @@ plugin.load_extension "zf-native"
 
 vim.keymap.set("n", "<Leader>ff", function()
   require("telescope.builtin").find_files({
-    prompt_title = false
+    prompt_title  = "",
+    preview_title = ""
   })
 end)
 
--- vim.keymap.set("n", "<Leader>fv", function()
---   require("telescope.builtin").find_files({
---     cwd          = "~/vault",
---     search_dirs  = { "lists", "notes" },
---     prompt_title = false
---   })
--- end)
+vim.keymap.set("n", "<Leader>fv", function()
+  require("telescope.builtin").find_files({
+    prompt_title  = "",
+    preview_title = "",
+    cwd           = "~/vault",
+    search_dirs   = { "lists", "notes" }
+  })
+end)
 
 vim.keymap.set("n", "<Leader>fr", function()
   require("telescope.builtin").oldfiles({
-    prompt_title = false
+    prompt_title  = "",
+    preview_title = ""
   })
 end)
 
 vim.keymap.set("n", "<Leader>fb", function()
   require("telescope.builtin").buffers({
-    prompt_title = false,
-    bufnr_width  = 4
+    prompt_title  = "",
+    preview_title = "",
+    bufnr_width   = 4
   })
 end)
 
 vim.keymap.set("n", "<Leader>fg", function()
   require("telescope.builtin").live_grep({
-    prompt_title        = false,
+    prompt_title        = "",
+    preview_title       = "",
     grep_open_files     = false,
     disable_coordinates = true
   })
@@ -146,7 +136,8 @@ end)
 
 vim.keymap.set("v", "<leader>fg", function()
   require("telescope.builtin").grep_string({
-    prompt_title        = false,
+    prompt_title        = "",
+    preview_title       = "",
     grep_open_files     = false,
     disable_coordinates = true
   })

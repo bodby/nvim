@@ -42,17 +42,14 @@
           # FIXME: Don't use an overlay.
           nvim = pkgs.nvim-btw;
 
-          # FIXME: See if 'writeShellApplication' works here instead.
           gui = pkgs.writeShellApplication {
             name = "neovide-btw";
-            # FIXME: JB Mono here?
             runtimeInputs = with pkgs; [
               neovide
               nvim-btw
-              jetbrains-mono
             ];
             text = ''
-              neovide --neovim-bin ${pkgs.nvim-btw}/bin/nvim
+              neovide --no-multigrid --fork --no-tabs --neovim-bin ${pkgs.nvim-btw}/bin/nvim
             '';
           };
         }

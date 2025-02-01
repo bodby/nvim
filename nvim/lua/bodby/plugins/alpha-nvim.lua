@@ -134,6 +134,9 @@ local project_button = function(project_dir)
       end
 
       pickers.new(title_picker_fix({
+        prompt_title  = "",
+        preview_title = "",
+
         sorter = sorters.get_fuzzy_file(),
         finder = finders.new_table({
           results = entries,
@@ -159,9 +162,10 @@ local vault_button = function()
   if vim.fn.isdirectory "/home/bodby/vault" ~= 0 then
     return button("v", "Vault", function()
       require("telescope.builtin").find_files({
-        cwd          = "~/vault",
-        search_dirs  = { "lists", "notes" },
-        prompt_title = false
+        prompt_title  = "",
+        preview_title = "",
+        cwd           = "~/vault",
+        search_dirs   = { "lists", "notes" }
       })
     end)
   end
@@ -176,13 +180,15 @@ local shortcuts = {
 
     button("f", "Find files", function()
       require("telescope.builtin").find_files({
-        prompt_title = false
+        prompt_title  = "",
+        preview_title = ""
       })
     end),
 
     button("r", "Recent", function()
       require("telescope.builtin").oldfiles({
-        prompt_title = false
+        prompt_title  = "",
+        preview_title = ""
       })
     end),
 
@@ -198,7 +204,6 @@ local shortcuts = {
   opts = { spacing = 1 }
 }
 
--- I opted to go with Telescope to be able to cd into any directory in ~/dev.
 -- local projects = function(max_entries)
 --   return {
 --     type = "group",

@@ -102,7 +102,7 @@ require("blink.cmp").setup({
             end,
 
             highlight = function(context)
-              return "BlinkCmpKind" -- .. context.kind
+              return "BlinkCmpKind" .. context.kind
             end
           },
           label = {
@@ -339,7 +339,7 @@ require("blink.cmp").setup({
       Reference     = "&",
       Folder        = "d",
       Event         = "e",
-      Operator      = "o",
+      Operator      = ":",
       TypeParameter = "t"
     }
   }

@@ -4,8 +4,8 @@ local colors = {
   gray3 = "#0c1018",
 
   white1 = "#d8deef",
-  white2 = "#aab6c5",
-  white3 = "#5c7084",
+  white2 = "#a7b3c3",
+  white3 = "#5c6f84",
 
   purple = "#b282fa",
   blue   = "#809fff",
@@ -28,10 +28,37 @@ local hls = {
   ["AlphaHeader"]      = { fg = colors.white1, bold = true },
   ["AlphaFooter"]      = { fg = colors.white3, italic = true },
 
-  ["BlinkCmpMenu"]          = { fg = colors.white3, bg = colors.gray3 },
-  ["BlinkCmpKind"]          = { fg = colors.yellow },
-  ["BlinkCmpMenuSelection"] = { fg = colors.white1, bold = true },
-  ["BlinkCmpLabelMatch"]    = { bold = true },
+  ["BlinkCmpMenu"]              = { fg = colors.white3, bg = colors.gray3 },
+  ["BlinkCmpMenuSelection"]     = { fg = colors.white1, bold = true },
+  ["BlinkCmpLabelMatch"]        = { bold = true },
+  ["BlinkCmpKindText"]          = { fg = colors.green },
+  ["BlinkCmpKindMethod"]        = { fg = colors.blue },
+  ["BlinkCmpKindFunction"]      = { fg = colors.blue },
+  ["BlinkCmpKindConstructor"]   = { fg = colors.blue },
+  ["BlinkCmpKindField"]         = { fg = colors.white2 },
+  ["BlinkCmpKindVariable"]      = { fg = colors.white1 },
+  ["BlinkCmpKindProperty"]      = { fg = colors.white2 },
+  ["BlinkCmpKindClass"]         = { fg = colors.yellow },
+  -- TODO: Interface?
+  ["BlinkCmpKindInterface"]     = { fg = colors.yellow },
+  ["BlinkCmpKindStruct"]        = { fg = colors.yellow },
+  ["BlinkCmpKindModule"]        = { fg = colors.yellow },
+  ["BlinkCmpKindUnit"]          = { fg = colors.green },
+  ["BlinkCmpKindValue"]         = { fg = colors.green },
+  -- FIXME: Enum and EnumMember should be different.
+  ["BlinkCmpKindEnum"]          = { fg = colors.yellow },
+  ["BlinkCmpKindEnumMember"]    = { fg = colors.yellow },
+  ["BlinkCmpKindKeyword"]       = { fg = colors.purple },
+  ["BlinkCmpKindConstant"]      = { fg = colors.yellow },
+  ["BlinkCmpKindSnippet"]       = { fg = colors.cyan },
+  ["BlinkCmpKindColor"]         = { fg = colors.green },
+  ["BlinkCmpKindFile"]          = { fg = colors.white1 },
+  ["BlinkCmpKindReference"]     = { fg = colors.white1 },
+  ["BlinkCmpKindFolder"]        = { fg = colors.white2 },
+  -- TODO: vvv
+  ["BlinkCmpKindEvent"]         = { fg = colors.yellow },
+  ["BlinkCmpKindOperator"]      = { fg = colors.cyan },
+  ["BlinkCmpKindTypeParameter"] = { fg = colors.white2 },
 
   ["RenderMarkdownCode"]       = { bg = colors.gray3 },
   ["RenderMarkdownCodeInline"] = { fg = colors.purple, bg = colors.gray3 },
@@ -189,6 +216,7 @@ local hls = {
   ["@spell.markdown"] = { fg = colors.white2 },
   ["@markup.heading"] = { link = "Title" },
   ["@markup.link"]    = { fg = colors.white1 },
+  ["@markup.strong"]  = { fg = colors.white1, bold = true }
 }
 
 for hl, opts in pairs(hls) do
