@@ -59,6 +59,7 @@
           # FIXME: Don't use an overlay.
           nvim = pkgs.nvim-btw;
 
+          # FIXME: See if 'writeShellApplication' works here instead.
           gui = bashScript {
             name = "neovide-btw";
             text = ''
