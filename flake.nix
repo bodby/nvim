@@ -40,18 +40,15 @@
           bashScript =
             {
               name,
-              content,
-              deps,
+              text,
+              paths,
             }:
             let
-              script = (pkgs.writeShellScriptBin name content).overrideAttrs (
-                finalAttrs: {
-                  buildCommand = "${finalAttrs.buildCommand}\n patchShebangs $out";
-                });
+              paths' = paths ++ [ (pkgs.writeShellScriptBin name text) ];
             in
             pkgs.symlinkJoin {
               inherit name;
-              paths = deps ++ [ script ];
+              paths = paths';
               buildInputs = [ pkgs.makeWrapper ];
               postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
             };
@@ -59,14 +56,16 @@
         in
         rec {
           default = nvim;
+          # FIXME: Don't use an overlay.
           nvim = pkgs.nvim-btw;
 
           gui = bashScript {
-            name = "neovide";
-            content = ''
-              neovide --neovim-bin ${pkgs.nvim-btw}
+            name = "neovide-btw";
+            text = ''
+              ${pkgs.neovide}/bin/neovide --neovim-bin ${pkgs.nvim-btw}
             '';
-            deps = with pkgs; [
+            # FIXME: JB Mono works here?
+            paths = with pkgs; [
               neovide
               nvim-btw
               jetbrains-mono
