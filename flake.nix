@@ -36,23 +36,6 @@
               (import ./nix/package.nix { inherit inputs pkgs; })
             ];
           };
-
-          bashScript =
-            {
-              name,
-              text,
-              paths,
-            }:
-            let
-              paths' = paths ++ [ (pkgs.writeShellScriptBin name text) ];
-            in
-            pkgs.symlinkJoin {
-              inherit name;
-              paths = paths';
-              buildInputs = [ pkgs.makeWrapper ];
-              postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
-            };
-
         in
         rec {
           default = nvim;
@@ -60,17 +43,17 @@
           nvim = pkgs.nvim-btw;
 
           # FIXME: See if 'writeShellApplication' works here instead.
-          gui = bashScript {
+          gui = pkgs.writeShellApplication {
             name = "neovide-btw";
-            text = ''
-              ${pkgs.neovide}/bin/neovide --neovim-bin ${pkgs.nvim-btw}
-            '';
-            # FIXME: JB Mono works here?
-            paths = with pkgs; [
+            # FIXME: JB Mono here?
+            runtimeInputs = with pkgs; [
               neovide
               nvim-btw
               jetbrains-mono
             ];
+            text = ''
+              neovide --neovim-bin ${pkgs.nvim-btw}/bin/nvim
+            '';
           };
         }
       );
