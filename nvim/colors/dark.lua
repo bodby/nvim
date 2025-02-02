@@ -1,9 +1,9 @@
 local colors = {
-  gray1 = "#212632",
+  gray1 = "#212732",
   gray2 = "#131720",
   gray3 = "#0c1018",
 
-  white1 = "#d8deef",
+  white1 = "#d8e0ef",
   white2 = "#a7b3c3",
   white3 = "#5c6f84",
 
@@ -64,7 +64,9 @@ local hls = {
   ["RenderMarkdownCodeInline"] = { fg = colors.purple, bg = colors.gray3 },
   ["RenderMarkdownDash"]       = { link = "WinSeparator" },
 
-  ["VirtColumn"] = { fg = colors.gray1, bg = nil },
+  ["VirtColumn"]        = { fg = colors.gray1, bg = nil },
+  ["IndentLine"]        = { fg = colors.gray1 },
+  ["IndentLineCurrent"] = { fg = colors.gray1 },
 
   ["Added"]                = { fg = colors.green },
   ["Changed"]              = { fg = colors.yellow },
@@ -87,15 +89,21 @@ local hls = {
 
   -- TODO: Proper highlights for statusline.
   ["StatusLine"]          = { fg = colors.gray1, bg = colors.gray3 },
-  ["StatusLineMode"]      = { fg = colors.gray3, bg = colors.purple, bold = true },
+  ["StatusLineCyan"]      = { bg = colors.cyan },
+  ["StatusLinePurple"]    = { bg = colors.purple },
+  ["StatusLineRed"]       = { bg = colors.red },
+  ["StatusLineGreen"]     = { bg = colors.green },
+  ["StatusLineYellow"]    = { bg = colors.yellow },
+  ["StatusLineGray"]      = { bg = colors.white3 },
   ["StatusLinePos"]       = { fg = colors.white2, bg = colors.gray3 },
   ["StatusLineSyntax"]    = { fg = colors.white1, bg = colors.gray3 },
   ["StatusLineMacro"]     = { fg = colors.purple, bg = colors.gray3 },
   ["StatusLineFile"]      = { fg = colors.white2, bg = colors.gray3 },
+  ["StatusLineFileType"]  = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLineMod"]       = { fg = colors.white1, bg = colors.gray3 },
   ["StatusLineError"]     = { fg = colors.red, bg = colors.gray3 },
   ["StatusLineWarn"]      = { fg = colors.yellow, bg = colors.gray3 },
-  ["StatusLineMisc"]      = { fg = colors.blue, bg = colors.gray3 },
+  ["StatusLineMisc"]      = { fg = colors.purple, bg = colors.gray3 },
   ["StatusLineGitBranch"] = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLineGitLines"]  = { fg = colors.white2, bg = colors.gray3 },
 
@@ -112,12 +120,12 @@ local hls = {
   ["TabLineIndexNC"] = { fg = colors.white2, bg = colors.gray3 },
 
   ["DiagnosticError"]          = { fg = colors.red },
-  ["DiagnosticHint"]           = { fg = colors.blue },
-  ["DiagnosticInfo"]           = { fg = colors.blue },
+  ["DiagnosticHint"]           = { fg = colors.purple },
+  ["DiagnosticInfo"]           = { fg = colors.purple },
   ["DiagnosticOk"]             = { fg = colors.white3 },
   ["DiagnosticWarn"]           = { fg = colors.yellow },
-  ["DiagnosticUnderlineError"] = { sp = colors.purple, underline = true },
-  ["DiagnosticUnderlineHint"]  = { sp = colors.blue, underline = true },
+  ["DiagnosticUnderlineError"] = { sp = colors.red, underline = true },
+  ["DiagnosticUnderlineHint"]  = { sp = colors.purple, underline = true },
   ["DiagnosticUnderlineInfo"]  = { sp = colors.blue, underline = true },
   ["DiagnosticUnderlineOk"]    = { sp = colors.white3, underline = true },
   ["DiagnosticUnderlineWarn"]  = { sp = colors.yellow, underline = true },
@@ -222,3 +230,20 @@ local hls = {
 for hl, opts in pairs(hls) do
   vim.api.nvim_set_hl(0, hl, opts)
 end
+
+vim.g.terminal_color_0  = colors.gray3
+vim.g.terminal_color_1  = colors.red
+vim.g.terminal_color_2  = colors.green
+vim.g.terminal_color_3  = colors.yellow
+vim.g.terminal_color_4  = colors.blue
+vim.g.terminal_color_5  = colors.purple
+vim.g.terminal_color_6  = colors.cyan
+vim.g.terminal_color_7  = colors.white2
+vim.g.terminal_color_8  = colors.gray1
+vim.g.terminal_color_9  = colors.red
+vim.g.terminal_color_10 = colors.green
+vim.g.terminal_color_11 = colors.yellow
+vim.g.terminal_color_12 = colors.blue
+vim.g.terminal_color_13 = colors.purple
+vim.g.terminal_color_14 = colors.cyan
+vim.g.terminal_color_15 = colors.white1

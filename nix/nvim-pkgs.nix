@@ -7,6 +7,7 @@ let
   customPkgs = with pkgs; [
     # degraded-nvim
     nvim-align
+    # indentmini-nvim
     # blink-cmp-spell
   ];
 in
@@ -25,7 +26,6 @@ in
         json
         toml
         yaml
-        hyprlang
         haskell
         markdown
         markdown_inline

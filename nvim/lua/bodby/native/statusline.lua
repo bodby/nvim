@@ -1,35 +1,58 @@
 -- NOTE: 'else if' is not the same as 'elseif'.
 local M = { }
 
-local modes = {
-  ["n"]  = "NO",
-  ["no"] = "RO",
-  ["v"]  = "VI",
-  ["V"]  = "VL",
-  [""] = "VB",
-  ["s"]  = "SE",
-  ["S"]  = "SL",
-  [""] = "SB",
-  ["i"]  = "IN",
-  ["ic"] = "IN",
-  ["R"]  = "RE",
-  ["Rv"] = "RE",
-  ["c"]  = "CM",
-  ["cv"] = "EX",
-  ["ce"] = "EX",
-  ["r"]  = "PR",
-  ["rm"] = "MR",
-  ["r?"] = "??",
-  ["!"]  = "VT",
-  ["t"]  = "VT"
+-- local modes = {
+--   ["n"]  = "NO",
+--   ["no"] = "RO",
+--   ["v"]  = "VI",
+--   ["V"]  = "VL",
+--   [""] = "VB",
+--   ["s"]  = "SE",
+--   ["S"]  = "SL",
+--   [""] = "SB",
+--   ["i"]  = "IN",
+--   ["ic"] = "IN",
+--   ["R"]  = "RE",
+--   ["Rv"] = "RE",
+--   ["c"]  = "CM",
+--   ["cv"] = "EX",
+--   ["ce"] = "EX",
+--   ["r"]  = "PR",
+--   ["rm"] = "MR",
+--   ["r?"] = "??",
+--   ["!"]  = "VT",
+--   ["t"]  = "VT"
+-- }
+
+local mode_hls = {
+  ["n"]  = "Purple",
+  ["no"] = "Gray",
+  ["v"]  = "Green",
+  ["V"]  = "Green",
+  [""] = "Green",
+  ["s"]  = "Green",
+  ["S"]  = "Green",
+  [""] = "Green",
+  ["i"]  = "Cyan",
+  ["ic"] = "Cyan",
+  ["R"]  = "Red",
+  ["Rv"] = "Red",
+  ["c"]  = "Yellow",
+  ["cv"] = "Yellow",
+  ["ce"] = "Yellow",
+  ["r"]  = "Yellow",
+  ["rm"] = "Yellow",
+  ["r?"] = "Yellow",
+  ["!"]  = "Gray",
+  ["t"]  = "Gray"
 }
 
 local colors = {
-  mode           = "%#StatusLineMode#",
   pos            = "%#StatusLinePos#",
   syntax         = "%#StatusLineSyntax#",
   macro          = "%#StatusLineMacro#",
   file           = "%#StatusLineFile#",
+  filetype       = "%#StatusLineFileType#",
   modified       = "%#StatusLineMod#",
   errors         = "%#StatusLineError#",
   warnings       = "%#StatusLineWarn#",
@@ -39,6 +62,11 @@ local colors = {
     branch = "%#StatusLineGitBranch#",
     lines  = "%#StatusLineGitLines#"
   }
+}
+
+local blocked_fts = {
+  "alpha",
+  "TelescopePrompt"
 }
 
 function M.setup()
@@ -88,12 +116,12 @@ end
 
 -- Shows the current mode.
 local stl_mode = function()
-  local cur_mode = modes[vim.api.nvim_get_mode().mode]
+  local cur_mode = mode_hls[vim.api.nvim_get_mode().mode]
 
   if cur_mode ~= nil then
-    return colors.mode .. " " .. cur_mode .. " "
+    return "%#StatusLine" .. cur_mode .. "# "
   else
-    return colors.mode .. " ?? "
+    return "%#StatusLineGray# "
   end
 end
 
@@ -131,7 +159,7 @@ end
 -- Shows current line and column as well as percentage of whole file.
 local stl_pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return colors.pos .. row .. ":" .. col .. "%#StatusLine# " .. colors.mode .. " %p%% "
+  return colors.pos .. row .. ":" .. col .. " %p%% "
 end
 
 -- Errors, warnings, and hints and info (in one number).
@@ -161,6 +189,25 @@ local stl_diagnostics = function()
   return " " .. errors .. warnings .. hints_and_info
 end
 
+-- 3 billion download JS micro-dependency.
+local function elem(e, xs)
+  for _, v in ipairs(xs) do
+    if v == e then return true end
+  end
+  return false
+end
+
+local stl_filetype = function()
+  local ft = vim.bo.filetype
+
+  if elem(ft, blocked_fts) then
+    return ""
+  else
+    -- return colors.filetype .. ft:gsub("^%l", string.upper) .. " "
+    return colors.filetype .. ":" .. ft .. " "
+  end
+end
+
 M.active = function()
   return table.concat({
     stl_mode(),
@@ -170,7 +217,9 @@ M.active = function()
     stl_macro(),
     "%#StatusLine#%=",
     stl_diagnostics(),
-    stl_pos()
+    stl_filetype(),
+    stl_pos(),
+    stl_mode()
   })
 end
 

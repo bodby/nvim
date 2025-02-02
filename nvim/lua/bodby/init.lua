@@ -66,6 +66,7 @@ require "bodby.plugins.nvim-align"
 
 lazy_load({
   "blink-cmp",
+  -- "indentmini-nvim",
   -- "blink-indent",
   "gitsigns-nvim",
   "smartcolumn-nvim"
