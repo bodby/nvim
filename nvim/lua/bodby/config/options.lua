@@ -71,10 +71,10 @@ if vim.g.neovide then
 
   vim.g.neovide_cursor_unfocused_outline_width = 0
 
-  vim.g.neovide_padding_top    = 16
-  vim.g.neovide_padding_bottom = 16
-  vim.g.neovide_padding_right  = 16
-  vim.g.neovide_padding_left   = 16
+  vim.g.neovide_padding_top    = 24
+  vim.g.neovide_padding_bottom = 24
+  vim.g.neovide_padding_right  = 24
+  vim.g.neovide_padding_left   = 24
 
   vim.g.neovide_transparency           = 1.0
   vim.g.neovide_normal_opacity         = 1.0
