@@ -36,7 +36,7 @@ local function pad(str, max)
   return str .. padding
 end
 
--- NOTE: Nativate tabs using 'gt' and 'gT'. To go to an indexed tab, use '<number>gt'.
+-- NOTE: Navigate tabs using 'gt' and 'gT'. To go to an indexed tab, use '<number>gt'.
 local function gen_tab(id, is_active, padding)
   -- local index = vim.api.nvim_tabpage_get_number(id)
   local count = #vim.api.nvim_tabpage_list_wins(id)
