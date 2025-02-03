@@ -48,8 +48,9 @@
               neovide
               nvim-btw
             ];
+            # '--no-multigrid'
             text = ''
-              neovide --no-multigrid --fork --no-tabs --neovim-bin ${pkgs.nvim-btw}/bin/nvim
+              neovide --fork --no-tabs --neovim-bin ${pkgs.nvim-btw}/bin/nvim
             '';
           };
         }
