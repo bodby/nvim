@@ -38,11 +38,11 @@ if vim.g.neovide then
     vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.125
   end)
 
-  vim.keymap.set("n", "<C-->", function()
+  vim.keymap.set("n", "<C-_>", function()
     vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.125
   end)
 
-  vim.keymap.set("n", "<C-=>", function()
+  vim.keymap.set("n", "<C-)>", function()
     vim.g.neovide_scale_factor = 1.0
   end)
 end
