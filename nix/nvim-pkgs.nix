@@ -30,6 +30,7 @@ in
         markdown
         markdown_inline
         zig
+        meson
         rust
         ocaml
         lua
