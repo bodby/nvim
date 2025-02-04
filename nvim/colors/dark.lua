@@ -161,7 +161,7 @@ local hls = {
   ["LineNr"]              = { fg = colors.white3 },
   ["LineNrSpecial"]       = { fg = colors.white2 },
   ["LineNrWrapped"]       = { fg = colors.gray1 },
-  ["WinSeparator"]        = { fg = colors.gray1 },
+  ["WinSeparator"]        = { fg = colors.gray2 },
   ["ColorColumn"]         = { fg = colors.gray1, bg = nil },
   ["SignColumn"]          = { fg = colors.gray1 },
   ["CursorLine"]          = { bg = nil },
