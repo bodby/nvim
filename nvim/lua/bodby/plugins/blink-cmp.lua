@@ -178,9 +178,12 @@ require("blink.cmp").setup({
   },
 
   fuzzy = {
-    use_typo_resistance = true,
-    use_frecency        = true,
-    use_proximity       = true,
+    max_typos = function(keyword)
+      return math.floor(#keyword / 4)
+    end,
+
+    use_frecency  = true,
+    use_proximity = true,
 
     sorts = { "score", "sort_text", "label" },
 
