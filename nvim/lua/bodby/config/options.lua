@@ -12,7 +12,7 @@ vim.opt.hlsearch       = false
 vim.opt.ignorecase     = true
 vim.opt.smartcase      = true
 vim.opt.spelllang      = "en"
-vim.opt.spell          = true
+vim.opt.spell          = false
 vim.opt.spellsuggest   = "best"
 vim.opt.conceallevel   = 2
 vim.opt.concealcursor  = ""
@@ -31,16 +31,9 @@ vim.opt.tabstop        = 2
 vim.opt.softtabstop    = 2
 
 vim.opt.fillchars:append({
-  eob       = " ",
-  stl       = " ",
-  wbr       = " ",
-  -- horiz     = " ",
-  -- horizup   = " ",
-  -- horizdown = " ",
-  -- vert      = " ",
-  -- vertleft  = " ",
-  -- vertright = " ",
-  -- verthoriz = " "
+  eob = " ",
+  stl = " ",
+  wbr = " "
 })
 
 vim.opt.listchars:append({
