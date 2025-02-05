@@ -3,8 +3,8 @@ local colors = {
   gray2 = "#131720",
   gray3 = "#0e1119",
 
-  white1 = "#d8e0ef",
-  white2 = "#a7b0c3",
+  white1 = "#d4def3",
+  white2 = "#9fadc6",
   white3 = "#5c6984",
 
   purple = "#b282fa",
@@ -159,7 +159,7 @@ local hls = {
   ["Conceal"]             = { fg = colors.white3 },
   ["Cursor"]              = { fg = colors.gray3, bg = colors.cyan },
   ["LineNr"]              = { fg = colors.white3 },
-  ["LineNrSpecial"]       = { fg = colors.white2 },
+  ["LineNrSpecial"]       = { fg = colors.white2, bold = true },
   ["LineNrWrapped"]       = { fg = colors.gray1 },
   ["WinSeparator"]        = { fg = colors.gray2 },
   ["ColorColumn"]         = { fg = colors.gray1, bg = nil },
@@ -193,7 +193,7 @@ local hls = {
   ["String"]      = { fg = colors.green },
   ["Tag"]         = { fg = colors.blue },
   ["Todo"]        = { fg = colors.green },
-  ["Type"]        = { fg = colors.yellow },
+  ["Type"]        = { fg = colors.purple },
 
   ["@comment.warning"] = { fg = colors.yellow },
   ["@comment.error"]   = { fg = colors.purple },
