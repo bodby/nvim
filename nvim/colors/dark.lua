@@ -221,6 +221,9 @@ local hls = {
 
   ["@keyword.import.nix"] = { link = "@function.call" },
 
+  ["@tag.delimiter.html"] = { link = "Delimiter" },
+  ["@tag.attribute.html"] = { fg = colors.purple },
+
   ["@spell.markdown"] = { fg = colors.white2 },
   ["@markup.heading"] = { link = "Title" },
   ["@markup.link"]    = { fg = colors.white1 },
