@@ -7,6 +7,7 @@ let
   customPkgs = with pkgs; [
     # degraded-nvim
     nvim-align
+    hlargs-nvim
     # indentmini-nvim
     # blink-cmp-spell
   ];
@@ -34,6 +35,7 @@ in
         rust
         ocaml
         lua
+        luadoc
         python
         nix
         html
