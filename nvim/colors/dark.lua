@@ -211,9 +211,9 @@ local hls = {
   ["@constant"]            = { fg = colors.yellow },
   ["@constant.builtin"]    = { fg = colors.green },
   ["@constructor"]         = { fg = colors.blue },
-  ["@namespace"]           = { fg = colors.yellow },
-  ["@module"]              = { fg = colors.yellow },
-  ["@module.builtin"]      = { fg = colors.yellow },
+  ["@namespace"]           = { fg = colors.green },
+  ["@module"]              = { fg = colors.green },
+  ["@module.builtin"]      = { fg = colors.green },
 
   ["@keyword.vim"]        = { link = "String" },
   ["@function.macro.vim"] = { link = "String" },
