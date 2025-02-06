@@ -3,7 +3,7 @@ local colors = {
   gray2 = "#131720",
   gray3 = "#0e1119",
 
-  white1 = "#cddffa",
+  white1 = "#cddefa",
   white2 = "#9fadc6",
   white3 = "#5c6984",
 
