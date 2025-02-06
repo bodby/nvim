@@ -7,7 +7,7 @@ let
   customPkgs = with pkgs; [
     # degraded-nvim
     nvim-align
-    hlargs-nvim
+    # hlargs-nvim
     # indentmini-nvim
     # blink-cmp-spell
   ];
