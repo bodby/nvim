@@ -25,7 +25,6 @@ function M.setup()
 end
 
 local function pad(str, max)
-  if not str then return nil end
   if str:len() >= max then return str end
 
   local padding = ""

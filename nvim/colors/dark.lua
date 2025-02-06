@@ -3,7 +3,7 @@ local colors = {
   gray2 = "#131720",
   gray3 = "#0e1119",
 
-  white1 = "#d4def3",
+  white1 = "#cddffa",
   white2 = "#9fadc6",
   white3 = "#5c6984",
 
@@ -183,7 +183,7 @@ local hls = {
   ["Float"]       = { fg = colors.green },
   ["Function"]    = { fg = colors.blue },
   ["Identifier"]  = { fg = colors.white2 },
-  ["Keyword"]     = { fg = colors.purple },
+  ["Keyword"]     = { fg = colors.purple, bold = true },
   ["Label"]       = { fg = colors.green, bold = true },
   ["Number"]      = { fg = colors.green },
   ["Operator"]    = { fg = colors.cyan },

@@ -4,8 +4,8 @@ local strategies = require "telescope.pickers.layout_strategies"
 strategies.flex_margins = function(picker, max_columns, max_lines, layout_config)
   local layout = strategies.flex(picker, max_columns, max_lines, layout_config)
 
-  layout.preview.col   = layout.preview.col + 1
-  layout.preview.width = layout.preview.width - 2
+  layout.preview.col    = layout.preview.col + 1
+  layout.preview.width  = layout.preview.width - 2
   layout.preview.height = layout.preview.height - 1
 
   layout.results.col    = layout.results.col + 1
