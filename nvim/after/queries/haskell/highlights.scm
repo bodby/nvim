@@ -12,9 +12,18 @@
 ;     "]"
 ;   ] @punctuation.bracket)
 
-((signature)
+((signature
+   type: (function))
+  .
   (bind
     name: (variable) @function)
+  (#set! "priority" 101))
+
+((signature
+   type: (name))
+  .
+  (bind
+    name: (variable) @variable)
   (#set! "priority" 101))
 
 
