@@ -56,7 +56,7 @@ if vim.g.neovide then
   -- https://github.com/neovide/neovide/issues/2491
   -- vim.opt.guifont = "JetBrains Mono:h13.5"
 
-  vim.g.neovide_text_gamma    = 1.4
+  vim.g.neovide_text_gamma    = 1.1
   vim.g.neovide_text_contrast = 0.0
 
   if vim.fn.hostname() == "scout" then
