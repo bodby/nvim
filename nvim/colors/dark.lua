@@ -1,18 +1,18 @@
 local colors = {
-  gray1 = "#212732",
+  gray1 = "#1e232e",
   gray2 = "#131720",
   gray3 = "#0e1119",
 
-  white1 = "#cddefa",
+  white1 = "#ccddfb",
   white2 = "#9fadc6",
   white3 = "#5c6984",
 
-  purple = "#b282fa",
+  purple = "#b17dff",
   blue   = "#809fff",
   yellow = "#ffba6b",
-  green  = "#c4ef86",
-  red    = "#f75f7b",
-  cyan   = "#89d8ff"
+  green  = "#bbef86",
+  red    = "#f75f8d",
+  cyan   = "#89c8ff"
 }
 
 vim.cmd "highlight clear"
@@ -144,7 +144,7 @@ local hls = {
   ["WarningMsg"]          = { fg = colors.white2 },
   ["Exception"]           = { fg = colors.white2 },
   ["IncSearch"]           = { fg = colors.white1, bg = colors.gray1, bold = true },
-  ["MatchParen"]          = { fg = colors.green },
+  ["MatchParen"]          = { fg = colors.yellow, bold = true },
   ["Search"]              = { fg = colors.white1, bg = colors.gray1, bold = true },
   ["Substitute"]          = { fg = colors.white1, bg = colors.gray1, bold = true },
   ["Macro"]               = { fg = colors.purple },
@@ -162,7 +162,7 @@ local hls = {
   ["LineNr"]              = { fg = colors.white3 },
   ["LineNrSpecial"]       = { fg = colors.white2, bold = true },
   ["LineNrWrapped"]       = { fg = colors.gray1 },
-  ["WinSeparator"]        = { fg = colors.gray2 },
+  ["WinSeparator"]        = { fg = colors.gray3 },
   ["ColorColumn"]         = { fg = colors.gray1, bg = nil },
   ["SignColumn"]          = { fg = colors.gray1 },
   ["CursorLine"]          = { bg = nil },
@@ -179,12 +179,12 @@ local hls = {
   ["Character"]   = { fg = colors.green },
   ["Comment"]     = { fg = colors.white3, italic = true },
   ["Conditional"] = { fg = colors.purple },
-  ["Constant"]    = { fg = colors.green },
+  ["Constant"]    = { fg = colors.yellow },
   ["Delimiter"]   = { fg = colors.cyan },
   ["Float"]       = { fg = colors.green },
   ["Function"]    = { fg = colors.blue },
   ["Identifier"]  = { fg = colors.white2 },
-  ["Keyword"]     = { fg = colors.purple, bold = true },
+  ["Keyword"]     = { fg = colors.purple },
   ["Label"]       = { fg = colors.green, bold = true },
   ["Number"]      = { fg = colors.green },
   ["Operator"]    = { fg = colors.cyan },
@@ -211,10 +211,10 @@ local hls = {
   ["@keyword.return"]      = { fg = colors.blue },
   ["@punctuation.special"] = { fg = colors.cyan },
   ["@constant.builtin"]    = { fg = colors.green },
-  ["@constructor"]         = { fg = colors.blue, bold = true },
-  ["@namespace"]           = { fg = colors.green },
-  ["@module"]              = { fg = colors.green },
-  ["@module.builtin"]      = { fg = colors.green },
+  ["@constructor"]         = { fg = colors.yellow },
+  ["@namespace"]           = { fg = colors.yellow },
+  ["@module"]              = { fg = colors.yellow },
+  ["@module.builtin"]      = { fg = colors.yellow },
 
   ["@keyword.vim"]        = { link = "String" },
   ["@function.macro.vim"] = { link = "String" },
@@ -224,6 +224,8 @@ local hls = {
 
   ["@tag.delimiter.html"] = { link = "Delimiter" },
   ["@tag.attribute.html"] = { fg = colors.purple },
+
+  ["@constructor.ocaml"] = { link = "@punctuation.bracket" },
 
   ["@spell.markdown"] = { fg = colors.white2 },
   ["@markup.heading"] = { link = "Title" },
