@@ -24,6 +24,7 @@ function M.setup()
   })
 end
 
+-- The Most Efficient Padding Algorithm You Will Ever See.
 local function pad(str, max)
   if str:len() >= max then return str end
 

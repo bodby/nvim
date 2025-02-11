@@ -53,7 +53,7 @@ local colors = {
   macro          = "%#StatusLineMacro#",
   file           = "%#StatusLineFile#",
   filetype       = "%#StatusLineFileType#",
-  modified       = "%#StatusLineMod#",
+  newline        = "%#StatusLineNewLine#",
   errors         = "%#StatusLineError#",
   warnings       = "%#StatusLineWarn#",
   hints_and_info = "%#StatusLineMisc#",
@@ -129,13 +129,13 @@ end
 local stl_file = function()
   local modified = ""
   if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
-    modified = colors.modified .. "'"
+    modified = "'"
   end
 
   if vim.fn.expand "%<%f" == "" then
-    return colors.file .. "@" .. vim.env.USER .. modified .. "%#StatusLine# "
+    return colors.file .. " @" .. vim.env.USER .. modified .. " "
   else
-    return colors.file .. "%<%f" .. modified .. "%#StatusLine# "
+    return colors.file .. " %<%f" .. modified .. " "
   end
 end
 
@@ -153,7 +153,11 @@ end
 
 -- Shows macro register if recording.
 local stl_macro = function()
-  return colors.macro .. vim.fn.reg_recording() .. " "
+  if vim.fn.reg_recording() ~= "" then
+    return colors.macro .. vim.fn.reg_recording() .. " "
+  else
+    return "%#StatusLine#"
+  end
 end
 
 -- Shows current line and column as well as percentage of whole file.
@@ -198,20 +202,22 @@ local function elem(e, xs)
 end
 
 local stl_filetype = function()
-  local ft = vim.bo.filetype
+  local ft       = vim.bo.filetype
+  local newlines = vim.bo.fileformat
 
   if elem(ft, blocked_fts) then
-    return ""
+    return colors.filetype .. " "
+  elseif ft == "" then
+    return colors.filetype .. " :none " .. colors.newline .. newlines .. " "
   else
     -- return colors.filetype .. ft:gsub("^%l", string.upper) .. " "
-    return colors.filetype .. ":" .. ft .. " "
+    return colors.filetype .. " :" .. ft .. " " .. colors.newline .. newlines .. " "
   end
 end
 
 M.active = function()
   return table.concat({
     stl_mode(),
-    "%#StatusLine# ",
     stl_file(),
     stl_git_info(),
     stl_macro(),

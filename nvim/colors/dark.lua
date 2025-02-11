@@ -89,7 +89,7 @@ local hls = {
   ["TelescopeMultiSelection"] = { fg = colors.cyan },
 
   -- TODO: Proper highlights for statusline.
-  ["StatusLine"]          = { fg = colors.gray1, bg = colors.gray3 },
+  ["StatusLine"]          = { fg = colors.gray1, bg = colors.gray2 },
   ["StatusLineCyan"]      = { bg = colors.cyan },
   ["StatusLinePurple"]    = { bg = colors.purple },
   ["StatusLineRed"]       = { bg = colors.red },
@@ -101,7 +101,7 @@ local hls = {
   ["StatusLineMacro"]     = { fg = colors.purple, bg = colors.gray3 },
   ["StatusLineFile"]      = { fg = colors.white2, bg = colors.gray3 },
   ["StatusLineFileType"]  = { fg = colors.white1, bg = colors.gray3, bold = true },
-  ["StatusLineMod"]       = { fg = colors.white1, bg = colors.gray3 },
+  ["StatusLineNewLine"]   = { fg = colors.white2, bg = colors.gray3 },
   ["StatusLineError"]     = { fg = colors.red, bg = colors.gray3 },
   ["StatusLineWarn"]      = { fg = colors.yellow, bg = colors.gray3 },
   ["StatusLineMisc"]      = { fg = colors.purple, bg = colors.gray3 },
@@ -115,7 +115,7 @@ local hls = {
   -- ["WinBarMod"]  = { fg = colors.white1, bg = colors.gray3 },
 
   ["TabLine"]        = { fg = colors.white3, bg = colors.gray3 },
-  ["TabLineFill"]    = { fg = colors.white1, bg = colors.gray3, bold = true },
+  ["TabLineFill"]    = { fg = colors.white1, bg = colors.gray2 },
   ["TabLineSel"]     = { fg = colors.white1, bg = colors.gray2, bold = true },
   ["TabLineIndex"]   = { fg = colors.purple, bg = colors.gray2, bold = true },
   ["TabLineIndexNC"] = { fg = colors.white2, bg = colors.gray3 },
@@ -203,13 +203,14 @@ local hls = {
 
   ["@type.builtin"]        = { link = "Type" },
   ["@number"]              = { link = "Number" },
+  ["@property"]            = { fg = colors.white2 },
   ["@variable.member"]     = { fg = colors.white2 },
   ["@variable.parameter"]  = { fg = colors.white1 },
   ["@function.builtin"]    = { link = "Function" },
   ["@variable"]            = { fg = colors.white1 },
   ["@keyword.conditional"] = { link = "Conditional" },
   ["@keyword.return"]      = { fg = colors.blue },
-  ["@punctuation.special"] = { fg = colors.cyan },
+  ["@punctuation.special"] = { link = "Operator" },
   ["@constant.builtin"]    = { fg = colors.green },
   ["@constructor"]         = { fg = colors.yellow },
   ["@namespace"]           = { fg = colors.yellow },
