@@ -27,7 +27,7 @@ local project_entry = function(entry)
   }
 end
 local header_margin = vim.fn.max({
-  2, vim.fn.floor(vim.fn.winheight(0) * 0.385)
+  2, vim.fn.floor(vim.fn.winheight(0) * 0.4)
 })
 
 local header = {
