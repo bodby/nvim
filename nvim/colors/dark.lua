@@ -9,7 +9,7 @@ local colors = {
 
   purple = "#a87dff",
   blue   = "#809fff",
-  yellow = "#ffc16b",
+  yellow = "#ffbf6b",
   green  = "#bbef86",
   red    = "#f75f8d",
   cyan   = "#89c8ff"
