@@ -7,9 +7,9 @@ local colors = {
   white2 = "#9fadc6",
   white3 = "#5c6984",
 
-  purple = "#b17dff",
+  purple = "#a87dff",
   blue   = "#809fff",
-  yellow = "#ffba6b",
+  yellow = "#ffc16b",
   green  = "#bbef86",
   red    = "#f75f8d",
   cyan   = "#89c8ff"
@@ -211,6 +211,7 @@ local hls = {
   ["@keyword.conditional"] = { link = "Conditional" },
   ["@keyword.return"]      = { fg = colors.blue },
   ["@punctuation.special"] = { link = "Operator" },
+  ["@character.special"]   = { fg = colors.cyan },
   ["@constant.builtin"]    = { fg = colors.green },
   ["@constructor"]         = { fg = colors.yellow },
   ["@namespace"]           = { fg = colors.yellow },
