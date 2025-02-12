@@ -172,12 +172,12 @@ local stl_diagnostics = function()
 
   local errors = ""
   if count[1] ~= nil then
-    errors = colors.errors .. count[1] .. " "
+    errors = colors.errors .. " " .. count[1]
   end
 
   local warnings = ""
   if count[2] ~= nil then
-    warnings = colors.warnings .. count[2] .. " "
+    warnings = colors.warnings .. " " .. count[2]
   end
 
   local hints = 0
@@ -187,10 +187,10 @@ local stl_diagnostics = function()
 
   local hints_and_info = ""
   if hints ~= 0 or info ~= 0 then
-    hints_and_info = colors.hints_and_info .. hints + info .. " "
+    hints_and_info = colors.hints_and_info .. " " .. hints + info
   end
 
-  return " " .. errors .. warnings .. hints_and_info
+  return errors .. warnings .. hints_and_info .. colors.errors .. " "
 end
 
 -- 3 billion download JS micro-dependency.
@@ -206,12 +206,12 @@ local stl_filetype = function()
   local newlines = vim.bo.fileformat
 
   if elem(ft, blocked_fts) then
-    return colors.filetype .. " "
+    return colors.filetype .. ""
   elseif ft == "" then
-    return colors.filetype .. " :none " .. colors.newline .. newlines .. " "
+    return colors.filetype .. ":none " .. colors.newline .. newlines .. " "
   else
     -- return colors.filetype .. ft:gsub("^%l", string.upper) .. " "
-    return colors.filetype .. " :" .. ft .. " " .. colors.newline .. newlines .. " "
+    return colors.filetype .. ":" .. ft .. " " .. colors.newline .. newlines .. " "
   end
 end
 
