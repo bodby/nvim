@@ -1,28 +1,27 @@
 -- NOTE: 'else if' is not the same as 'elseif'.
 local M = { }
 
--- local modes = {
---   ["n"]  = "NO",
---   ["no"] = "RO",
---   ["v"]  = "VI",
---   ["V"]  = "VL",
---   [""] = "VB",
---   ["s"]  = "SE",
---   ["S"]  = "SL",
---   [""] = "SB",
---   ["i"]  = "IN",
---   ["ic"] = "IN",
---   ["R"]  = "RE",
---   ["Rv"] = "RE",
---   ["c"]  = "CM",
---   ["cv"] = "EX",
---   ["ce"] = "EX",
---   ["r"]  = "PR",
---   ["rm"] = "MR",
---   ["r?"] = "??",
---   ["!"]  = "VT",
---   ["t"]  = "VT"
--- }
+local modes = {
+  ["n"]  = "Normal",
+  ["no"] = "Normal",
+  ["v"]  = "Visual",
+  ["V"]  = "Visual",
+  [""] = "Visual",
+  ["s"]  = "Select",
+  ["S"]  = "Select",
+  [""] = "Select",
+  ["i"]  = "Insert",
+  ["ic"] = "Insert",
+  ["R"]  = "Replace",
+  ["Rv"] = "Replace",
+  ["c"]  = "Command",
+  ["cv"] = "Command",
+  ["r"]  = "Prompt",
+  ["rm"] = "Prompt",
+  ["r?"] = "Prompt",
+  ["!"]  = "Shell",
+  ["t"]  = "Shell"
+}
 
 local mode_hls = {
   ["n"]  = "Purple",
@@ -39,7 +38,6 @@ local mode_hls = {
   ["Rv"] = "Red",
   ["c"]  = "Yellow",
   ["cv"] = "Yellow",
-  ["ce"] = "Yellow",
   ["r"]  = "Yellow",
   ["rm"] = "Yellow",
   ["r?"] = "Yellow",
@@ -115,27 +113,56 @@ function M.setup()
 end
 
 -- Shows the current mode.
-local stl_mode = function()
-  local cur_mode = mode_hls[vim.api.nvim_get_mode().mode]
+local stl_mode = function(show_name)
+  -- TODO: Move both of these into a single table with a tuple.
+  local cur_mode = modes[vim.api.nvim_get_mode().mode]
+  local mode_hl  = mode_hls[vim.api.nvim_get_mode().mode]
 
-  if cur_mode ~= nil then
-    return "%#StatusLine" .. cur_mode .. "# "
+  if cur_mode then cur_mode = cur_mode:lower() end
+
+  if mode_hl ~= nil then
+    if show_name and cur_mode ~= nil then
+      return "%#StatusLine" .. mode_hl .. "# " .. "%#StatusLineMode# :" .. cur_mode .. " "
+    else
+      return "%#StatusLine" .. mode_hl .. "# "
+    end
   else
-    return "%#StatusLineGray# "
+    if show_name then
+      return "%#StatusLineGray# %#StatusLineMode# Limbo "
+    else
+      return "%#StatusLineGray# "
+    end
   end
 end
 
 -- Shows the current file and a modified symbol.
 local stl_file = function()
-  local modified = ""
-  if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
-    modified = "'"
-  end
+  -- FIXME: Check if vim.go.columns minus the (sum of all the lengths and the basename of the path)
+  -- is less than 0. If so, it means the filename does not fit.
+  -- Do the same with the full path (after fnamemodify), and not the basename.
+  if vim.go.columns >= 70 then
+    local spacing = "%#StatusLine# "
 
-  if vim.fn.expand "%<%f" == "" then
-    return colors.file .. " @" .. vim.env.USER .. modified .. " "
+    local modified = ""
+    if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
+      modified = "'"
+    end
+
+    -- local fname = vim.fn.expand "%<%f"
+    local fname = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+    if vim.go.columns <= 100 and fname ~= "" then
+      fname = vim.fs.basename(fname)
+    else
+      fname = vim.fn.fnamemodify(fname, ":.")
+    end
+
+    if fname ~= "" then
+      return colors.file .. " " .. fname .. modified .. " " .. spacing
+    else
+      return ""
+    end
   else
-    return colors.file .. " %<%f" .. modified .. " "
+    return ""
   end
 end
 
@@ -143,7 +170,7 @@ end
 -- TODO: This requires gitsigns.nvim. I should probably write this as a standalone function using
 --       only Git commands.
 local stl_git_info = function()
-  local branch = (vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head .. " " or "")
+  local branch = (vim.b.gitsigns_head ~= nil and " #" .. vim.b.gitsigns_head .. " " or "")
 
   local status = (vim.b.gitsigns_status ~= "" and vim.b.gitsigns_status ~= nil
     and vim.b.gitsigns_status .. " " or "")
@@ -154,7 +181,7 @@ end
 -- Shows macro register if recording.
 local stl_macro = function()
   if vim.fn.reg_recording() ~= "" then
-    return colors.macro .. vim.fn.reg_recording() .. " "
+    return colors.macro .. " " .. vim.fn.reg_recording() .. " "
   else
     return "%#StatusLine#"
   end
@@ -163,7 +190,7 @@ end
 -- Shows current line and column as well as percentage of whole file.
 local stl_pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return colors.pos .. row .. ":" .. col .. " %p%% "
+  return colors.pos .. " " .. row .. ":" .. col .. " %p%% "
 end
 
 -- Errors, warnings, and hints and info (in one number).
@@ -190,7 +217,13 @@ local stl_diagnostics = function()
     hints_and_info = colors.hints_and_info .. " " .. hints + info
   end
 
-  return errors .. warnings .. hints_and_info .. colors.errors .. " "
+  local spacing = ""
+  -- :(
+  if errors ~= "" or warnings ~= "" or hints_and_info ~= "" then
+    spacing = " "
+  end
+
+  return errors .. warnings .. hints_and_info .. colors.errors .. spacing
 end
 
 -- 3 billion download JS micro-dependency.
@@ -208,24 +241,30 @@ local stl_filetype = function()
   if elem(ft, blocked_fts) then
     return colors.filetype .. ""
   elseif ft == "" then
-    return colors.filetype .. ":none " .. colors.newline .. newlines .. " "
+    return colors.filetype .. " !none " .. colors.newline .. newlines .. " "
   else
     -- return colors.filetype .. ft:gsub("^%l", string.upper) .. " "
-    return colors.filetype .. ":" .. ft .. " " .. colors.newline .. newlines .. " "
+    return colors.filetype .. " !" .. ft .. " " .. colors.newline .. newlines .. " "
   end
 end
 
+local spacing = "%#StatusLine# "
+
 M.active = function()
   return table.concat({
-    stl_mode(),
+    stl_mode(true),
+    spacing,
     stl_file(),
     stl_git_info(),
+    spacing,
     stl_macro(),
     "%#StatusLine#%=",
     stl_diagnostics(),
+    spacing,
     stl_filetype(),
+    spacing,
     stl_pos(),
-    stl_mode()
+    stl_mode(false)
   })
 end
 
