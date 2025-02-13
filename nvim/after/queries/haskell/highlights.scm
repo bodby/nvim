@@ -34,6 +34,10 @@
     name: (variable) @variable
     (#eq? @_name @variable)))
 
+(decl/bind
+  name: (variable) @function
+  (#eq? @function "main"))
+
 (infix_id
   [
     (variable) @function.call
