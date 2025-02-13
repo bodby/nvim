@@ -12,7 +12,7 @@ local colors = {
   yellow = "#ffbf6b",
   green  = "#bbef86",
   red    = "#f75f8d",
-  cyan   = "#89c8ff"
+  cyan   = "#89c1ff"
 }
 
 vim.cmd "highlight clear"
