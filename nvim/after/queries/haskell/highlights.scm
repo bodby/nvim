@@ -27,6 +27,13 @@
     name: (variable) @function
     (#eq? @_name @function)))
 
+((decl/signature
+  name: (variable) @_name
+  type: (apply))
+  (bind
+    name: (variable) @variable
+    (#eq? @_name @variable)))
+
 (infix_id
   [
     (variable) @function.call
