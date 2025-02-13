@@ -12,19 +12,20 @@
 ;     "]"
 ;   ] @punctuation.bracket)
 
-((signature
-  type: (_))
-  .
+((decl/signature
+  name: (variable) @_name
+  type: (name))
   (bind
-    name: (variable) @variable)
-  (#set! "priority" 101))
+    name: (variable) @variable
+    (#eq? @_name @variable)))
 
-((signature
-  type: (function))
-  .
+((decl/signature
+  name: (variable) @_name
+  type: (context
+    type: (function)))
   (bind
-    name: (variable) @function)
-  (#set! "priority" 101))
+    name: (variable) @function
+    (#eq? @_name @function)))
 
 (infix_id
   [
