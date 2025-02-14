@@ -51,14 +51,15 @@ local line_nr = function(window)
 
   local cur_line = vim.fn.line "."
 
-  -- Wrapped lines and virtual lines.
+  -- Wrapped lines.
   if vim.v.virtnum > 0 then
     if vim.v.relnum == 0 then
       return "%#CursorLineNrWrapped#%=│"
     end
     return "%#LineNrWrapped#%=│"
   elseif vim.v.virtnum < 0 then
-    return "%=-"
+    -- Virtual lines.
+    return "%=│"
   end
 
   if vim.v.relnum == 0 then

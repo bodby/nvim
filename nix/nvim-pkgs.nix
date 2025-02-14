@@ -13,7 +13,7 @@ let
   ];
 in
 {
-  # TODO: Configure commented plugins.
+  # TODO: Obsidian.
   plugins =
     with pkgs.vimPlugins;
     [
@@ -32,6 +32,7 @@ in
         # cabal
         markdown
         markdown_inline
+        latex
         zig
         meson
         rust
@@ -52,11 +53,7 @@ in
       render-markdown-nvim
       alpha-nvim
 
-      # nabla-nvim
-      # Needed for nabla-nvim.
-      # nvim-treesitter-parsers.latex
       # obsidian-nvim
-
       # TODO: Don't need this; I only use it for my statusline.
       gitsigns-nvim
       smartcolumn-nvim

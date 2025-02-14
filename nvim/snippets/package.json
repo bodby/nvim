@@ -1,0 +1,8 @@
+{
+  "name": "snippets",
+  "contributes": {
+    "snippets": [
+      { "language": "latex", "path": "./latex.json" }
+    ]
+  }
+}
