@@ -28,6 +28,8 @@ in
         toml
         yaml
         haskell
+        # TODO: PR.
+        # cabal
         markdown
         markdown_inline
         zig

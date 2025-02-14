@@ -1,5 +1,7 @@
 ;; extends
 
+(cpp) @keyword.directive
+
 ; (type/unit
 ;   [
 ;     "("
@@ -14,7 +16,7 @@
 
 ((decl/signature
   name: (variable) @_name
-  type: (name))
+  type: (_))
   (bind
     name: (variable) @variable
     (#eq? @_name @variable)))
@@ -29,10 +31,35 @@
 
 ((decl/signature
   name: (variable) @_name
-  type: (apply))
+    type: (function))
   (bind
-    name: (variable) @variable
-    (#eq? @_name @variable)))
+    name: (variable) @function
+    (#eq? @_name @function)))
+
+; FIXME: I don't even know if this is needed.
+((decl/signature
+  name: (variable) @_name)
+  (function
+    name: (variable) @function
+    (#eq? @_name @function)
+    (#set! "priority" 101)))
+
+((decl/signature
+  name: (variable) @_name
+  type: (forall
+    (function)))
+  (bind
+    name: (variable) @function
+    (#eq? @_name @function)))
+
+((decl/signature
+  name: (variable) @_name
+  type: (forall
+    (context
+      (function))))
+  (bind
+    name: (variable) @function
+    (#eq? @_name @function)))
 
 (decl/bind
   name: (variable) @function

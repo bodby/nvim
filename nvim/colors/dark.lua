@@ -190,6 +190,7 @@ local hls = {
   ["Function"]    = { fg = colors.blue },
   ["Identifier"]  = { fg = colors.white2 },
   ["Keyword"]     = { fg = colors.purple },
+  ["PreProc"]     = { fg = colors.purple },
   ["Label"]       = { fg = colors.green, bold = true },
   ["Number"]      = { fg = colors.green },
   ["Operator"]    = { fg = colors.cyan },
