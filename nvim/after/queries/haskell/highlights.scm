@@ -61,6 +61,13 @@
     name: (variable) @function
     (#eq? @_name @function)))
 
+((decl/signature
+  name: (variable) @_name
+  type: (list))
+  (bind
+    name: (variable) @variable
+    (#eq? @_name @variable)))
+
 (decl/bind
   name: (variable) @function
   (#eq? @function "main"))
