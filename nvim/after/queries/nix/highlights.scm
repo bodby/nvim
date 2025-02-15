@@ -1,9 +1,11 @@
 ;; extends
 
-(apply_expression
-  function: (select_expression
-    attrpath: (attrpath
-      attr: (identifier) @function.call .)))
+function: (select_expression
+  attrpath: (attrpath
+    attr: (identifier) @function.call .))
+
+function: (_
+  name: (identifier) @function.call)
 
 (variable_expression
   name: (identifier) @module.builtin

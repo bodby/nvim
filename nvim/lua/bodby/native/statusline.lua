@@ -1,4 +1,5 @@
 -- NOTE: 'else if' is not the same as 'elseif'.
+-- TODO: Refactor this entire file because everything in it is ugly right now.
 local M = { }
 
 local modes = {
@@ -140,7 +141,9 @@ local stl_file = function()
   -- FIXME: Check if vim.go.columns minus the (sum of all the lengths and the basename of the path)
   -- is less than 0. If so, it means the filename does not fit.
   -- Do the same with the full path (after fnamemodify), and not the basename.
-  if vim.go.columns >= 70 then
+  local fname = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+
+  if vim.go.columns >= 70 and fname ~= "" then
     local spacing = "%#StatusLine# "
 
     local modified = ""
@@ -148,19 +151,13 @@ local stl_file = function()
       modified = "'"
     end
 
-    -- local fname = vim.fn.expand "%<%f"
-    local fname = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-    if vim.go.columns <= 100 and fname ~= "" then
+    if vim.go.columns <= 100 then
       fname = vim.fs.basename(fname)
     else
       fname = vim.fn.fnamemodify(fname, ":.")
     end
 
-    if fname ~= "" then
-      return colors.file .. " " .. fname .. modified .. " " .. spacing
-    else
-      return ""
-    end
+    return colors.file .. " " .. fname .. modified .. " " .. spacing
   else
     return ""
   end
@@ -170,12 +167,16 @@ end
 -- TODO: This requires gitsigns.nvim. I should probably write this as a standalone function using
 --       only Git commands.
 local stl_git_info = function()
-  local branch = (vim.b.gitsigns_head ~= nil and " #" .. vim.b.gitsigns_head .. " " or "")
+  local spacing = ""
 
+  local branch = (vim.b.gitsigns_head ~= nil and " #" .. vim.b.gitsigns_head .. " " or "")
   local status = (vim.b.gitsigns_status ~= "" and vim.b.gitsigns_status ~= nil
     and vim.b.gitsigns_status .. " " or "")
 
-  return colors.git.branch .. branch .. colors.git.lines .. status
+  if branch ~= "" or status ~= "" then
+    spacing = "%#StatusLine# "
+  end
+  return colors.git.branch .. branch .. colors.git.lines .. status .. spacing
 end
 
 -- Shows macro register if recording.
@@ -256,7 +257,6 @@ M.active = function()
     spacing,
     stl_file(),
     stl_git_info(),
-    spacing,
     stl_macro(),
     "%#StatusLine#%=",
     stl_diagnostics(),

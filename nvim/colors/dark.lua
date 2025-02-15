@@ -215,7 +215,6 @@ local hls = {
   ["@function.builtin"]    = { link = "Function" },
   ["@variable"]            = { fg = colors.white1 },
   ["@keyword.conditional"] = { link = "Conditional" },
-  ["@keyword.return"]      = { fg = colors.blue },
   ["@punctuation.special"] = { link = "Operator" },
   ["@character.special"]   = { fg = colors.cyan },
   ["@constant.builtin"]    = { fg = colors.green },
