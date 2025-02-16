@@ -33,6 +33,7 @@ in
         markdown
         markdown_inline
         latex
+        glsl
         zig
         meson
         rust

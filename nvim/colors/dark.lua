@@ -152,7 +152,7 @@ local hls = {
   ["MatchParen"]          = { fg = colors.yellow, bold = true },
   ["Search"]              = { fg = colors.white1, bg = colors.gray1, bold = true },
   ["Substitute"]          = { fg = colors.white1, bg = colors.gray1, bold = true },
-  ["Macro"]               = { fg = colors.purple },
+  ["Macro"]               = { fg = colors.blue },
   ["ModeMsg"]             = { fg = colors.white2 },
   ["MoreMsg"]             = { fg = colors.white1 },
   ["SpellBad"]            = { fg = colors.yellow },
@@ -237,7 +237,9 @@ local hls = {
   ["@spell.markdown"] = { fg = colors.white2 },
   ["@markup.heading"] = { link = "Title" },
   ["@markup.link"]    = { fg = colors.white1 },
-  ["@markup.strong"]  = { fg = colors.white1, bold = true }
+  ["@markup.strong"]  = { fg = colors.white1, bold = true },
+
+  ["@lsp.type.macro"] = { }
 }
 
 for hl, opts in pairs(hls) do
