@@ -129,7 +129,7 @@ local stl_mode = function(show_name)
     end
   else
     if show_name then
-      return "%#StatusLineGray# %#StatusLineMode# Limbo "
+      return "%#StatusLineGray# %#StatusLineMode# :limbo "
     else
       return "%#StatusLineGray# "
     end
