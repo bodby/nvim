@@ -9,10 +9,10 @@ local colors = {
 
   purple = "#a87dff",
   blue   = "#809fff",
-  yellow = "#ffbf6b",
+  yellow = "#ffb06b",
   green  = "#bbef86",
   red    = "#f75f8d",
-  cyan   = "#89b6ff"
+  cyan   = "#89baff"
 }
 
 vim.cmd "highlight clear"
@@ -183,14 +183,14 @@ local hls = {
   ["Boolean"]     = { fg = colors.green },
   ["Character"]   = { fg = colors.green },
   ["Comment"]     = { fg = colors.white3, italic = true },
-  ["Conditional"] = { fg = colors.purple, bold = true },
+  ["Conditional"] = { fg = colors.cyan },
   ["Constant"]    = { fg = colors.yellow },
   ["Delimiter"]   = { fg = colors.cyan },
   ["Float"]       = { fg = colors.green },
   ["Function"]    = { fg = colors.blue },
   ["Identifier"]  = { fg = colors.white2 },
-  ["Keyword"]     = { fg = colors.purple, bold = true },
-  ["Label"]       = { fg = colors.green,  bold = true },
+  ["Keyword"]     = { fg = colors.cyan },
+  ["Label"]       = { fg = colors.green },
   ["PreProc"]     = { fg = colors.purple },
   ["Number"]      = { fg = colors.green },
   ["Operator"]    = { fg = colors.cyan },
@@ -215,6 +215,7 @@ local hls = {
   ["@function.builtin"]    = { link = "Function" },
   ["@variable"]            = { fg = colors.white1 },
   ["@keyword.conditional"] = { link = "Conditional" },
+  ["@keyword.function"]    = { fg = colors.purple },
   ["@punctuation.special"] = { link = "Operator" },
   ["@character.special"]   = { fg = colors.cyan },
   ["@constant.builtin"]    = { fg = colors.green },
