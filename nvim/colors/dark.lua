@@ -183,7 +183,7 @@ local hls = {
   ["Boolean"]     = { fg = colors.green },
   ["Character"]   = { fg = colors.green },
   ["Comment"]     = { fg = colors.white3, italic = true },
-  ["Conditional"] = { fg = colors.cyan },
+  ["Conditional"] = { fg = colors.purple },
   ["Constant"]    = { fg = colors.yellow },
   ["Delimiter"]   = { fg = colors.cyan },
   ["Float"]       = { fg = colors.green },

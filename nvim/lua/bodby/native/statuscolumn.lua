@@ -87,7 +87,7 @@ M.active = function(window)
   end
 
   return table.concat({
-    " %s",
+    "%s",
     line_nr(window),
     " "
   })
