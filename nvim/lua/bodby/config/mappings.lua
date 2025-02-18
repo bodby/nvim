@@ -23,6 +23,16 @@ vim.keymap.set("n", "<Leader>P", [["+P]])
 -- I can still use 'gcj' and 'gck', etc. for multiple lines.
 vim.keymap.set({ "n", "v" }, "<C-c>", "<Cmd>normal gcc<CR>")
 
+-- Snippets.
+-- See ':h <expr>'. It inserts the result of the function rather than running it as a command.
+vim.keymap.set({ "n", "i", "v", "s" }, "<Tab>", function()
+  if vim.snippet.active({ direction = 1 }) then
+    return "<Cmd>lua vim.snippet.jump(1)<CR>"
+  else
+    return "<Tab>"
+  end
+end, { expr = true })
+
 function M.setup_lsp_mappings(opts)
   vim.keymap.set("n", "gd",     "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
   vim.keymap.set("n", "grn",    "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)

@@ -196,7 +196,7 @@ require("blink.cmp").setup({
 
   sources = {
     -- "markdown", "spell"
-    default = { "buffer", "lsp", "path", "snippets" },
+    default = { "snippets", "buffer", "lsp", "path" },
     -- cmdline = { },
 
     providers = {
@@ -265,7 +265,8 @@ require("blink.cmp").setup({
 
         opts = {
           friendly_snippets  = true,
-          search_paths       = { vim.fn.stdpath("config") .. "/snippets" },
+          -- search_paths       = { vim.fn.stdpath("config") .. "/snippets" },
+          search_paths       = { vim.g.root_path .. "/snippets" },
           global_snippets    = { "all" },
           extended_filetypes = { },
           ignored_filetypes  = { },
@@ -277,7 +278,7 @@ require("blink.cmp").setup({
 
         enabled      = true,
         fallbacks    = { "buffer" },
-        score_offset = -3
+        score_offset = 3
       },
 
       -- spell = {

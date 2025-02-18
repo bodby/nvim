@@ -1,13 +1,5 @@
 local lspconfig = require "lspconfig"
-local cmp_caps = require("blink.cmp").get_lsp_capabilities({
-  textDocument = {
-    completion = {
-      completionItem = {
-        snippetSupport = false
-      }
-    }
-  }
-})
+local cmp_caps  = require("blink.cmp").get_lsp_capabilities()
 
 local servers = {
   "clangd",

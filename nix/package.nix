@@ -44,29 +44,28 @@ let
 
         buildPhase = ''
           mkdir -p $out/lua
-          if [ -d "colors" ]; then
-            mkdir -p $out/colors
-          fi
+          mkdir -p $out/after
+          mkdir -p $out/snippets
+          mkdir -p $out/colors
         '';
 
         installPhase = ''
-          cp -r lua $out/lua
-          cp -r after $out/after
-
-          if [ -d "colors" ]; then
-            cp -r colors $out/colors
-          fi
+          cp -r lua after snippets colors $out
         '';
       };
 
       initLua = /* lua */ ''
         vim.loader.enable()
-        vim.opt.rtp:prepend "${nvimRtp}/lua"
-        vim.opt.rtp:prepend "${nvimRtp}/colors"
+        vim.opt.rtp:prepend "${nvimRtp}"
 
         ${builtins.readFile ../nvim/init.lua}
 
+        -- NOTE: I have to add this as a separate directory because normally 'queries/' and
+        --       'ftplugin/' are actually in the root of the config folder.
         vim.opt.rtp:prepend "${nvimRtp}/after"
+
+        -- Used for blink.cmp so it can find snippets.
+        vim.g.root_path = "${nvimRtp}"
       '';
 
       isCustomAppName = appName != null && appName != "nvim" && appName != "";

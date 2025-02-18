@@ -1,8 +1,8 @@
 {
-  "name": "snippets",
+  "name": "personal-snippets",
   "contributes": {
     "snippets": [
-      { "language": "latex", "path": "./latex.json" }
+      { "language": "tex", "path": "./latex.json" }
     ]
   }
 }
