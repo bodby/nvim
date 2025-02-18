@@ -145,9 +145,10 @@ local hls = {
   ["MsgArea"]             = { bg = colors.gray3 },
   ["Error"]               = { fg = colors.red },
   ["ErrorMsg"]            = { fg = colors.red },
-  ["Warning"]             = { fg = colors.white2 },
-  ["WarningMsg"]          = { fg = colors.white2 },
-  ["Exception"]           = { fg = colors.white2 },
+  ["Warning"]             = { fg = colors.yellow },
+  ["WarningMsg"]          = { fg = colors.yellow },
+  -- TODO: vvv
+  ["Exception"]           = { fg = colors.purple },
   ["IncSearch"]           = { fg = colors.white1, bg = colors.gray1, bold = true },
   ["MatchParen"]          = { fg = colors.yellow, bold = true },
   ["Search"]              = { fg = colors.white1, bg = colors.gray1, bold = true },
