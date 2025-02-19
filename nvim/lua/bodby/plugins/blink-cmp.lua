@@ -196,7 +196,16 @@ require("blink.cmp").setup({
 
   sources = {
     -- "markdown", "spell"
-    default = { "snippets", "buffer", "lsp", "path" },
+    default = function(context)
+      local status, node = pcall(vim.treesitter.get_node)
+      if success and node and vim.tbl_contains({
+        "comment", "line_comment", "block_comment"
+      }, node:type()) then
+        return { "buffer" }
+      else
+        return { "buffer", "snippets", "lsp", "path" }
+      end
+    end,
     -- cmdline = { },
 
     providers = {
@@ -212,6 +221,8 @@ require("blink.cmp").setup({
               :totable()
           end
         },
+
+        -- fallbacks = { "snippets" }
       },
 
       lsp = {
@@ -235,7 +246,7 @@ require("blink.cmp").setup({
         should_show_items  = true,
         max_items          = nil,
         min_keyword_length = 0,
-        fallbacks          = { "buffer" },
+        -- fallbacks          = { "buffer" },
         score_offset       = 0,
         override           = nil
       },
@@ -255,7 +266,7 @@ require("blink.cmp").setup({
         },
 
         enabled      = true,
-        fallbacks    = { "buffer" },
+        -- fallbacks    = { "buffer" },
         score_offset = 3
       },
 
@@ -266,6 +277,7 @@ require("blink.cmp").setup({
         opts = {
           friendly_snippets  = true,
           -- search_paths       = { vim.fn.stdpath("config") .. "/snippets" },
+          -- NOTE: 'root_path' is set by 'package.nix'.
           search_paths       = { vim.g.root_path .. "/snippets" },
           global_snippets    = { "all" },
           extended_filetypes = { },
@@ -273,11 +285,23 @@ require("blink.cmp").setup({
 
           get_filetype = function(_)
             return vim.bo.filetype
+          end,
+
+          transform_items = function(_, items)
+            return vim.tbl_filter(function(item)
+              local types = require "blink.cmp.types"
+
+              if vim.snippet.active({ direction = 1}) then
+                return false
+              end
+
+              return true
+            end,
+            items)
           end
         },
 
         enabled      = true,
-        fallbacks    = { "buffer" },
         score_offset = 3
       },
 

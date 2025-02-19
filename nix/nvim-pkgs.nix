@@ -19,6 +19,8 @@ in
     [
       nvim-lspconfig
       (nvim-treesitter.withPlugins (p: with p; [
+        # NOTE: Some of these are necessary because nvim-treesitter packages aren't the same as the
+        #       ones vendored with Neovim. I had to add 'query' to fix ':InspectTree'.
         comment
         bash
         c
@@ -33,6 +35,7 @@ in
         markdown
         markdown_inline
         latex
+        bibtex
         glsl
         zig
         meson
@@ -40,11 +43,14 @@ in
         ocaml
         lua
         luadoc
+        vim
+        vimdoc
         python
         nix
         html
         css
         javascript
+        query
       ]))
 
       telescope-nvim

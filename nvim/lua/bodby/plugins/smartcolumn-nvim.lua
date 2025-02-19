@@ -11,7 +11,9 @@ require("smartcolumn").setup({
 
   custom_colorcolumn = {
     markdown = "80",
-    nix      = "100"
+    nix      = "100",
+    latex    = "100",
+    tex      = "100"
   }
 })
 

@@ -1,0 +1,63 @@
+{
+  "let": {
+    "prefix": "let",
+    "body": "let ${1:identifier} = ${2:undefined}$0"
+  },
+  "module": {
+    "prefix": "module",
+    "body": [
+      "module ${1:Mod} (",
+      "\t\t${2:a}",
+      "\t${3:, ${4:b}}",
+      ") where",
+      "$0"
+    ]
+  },
+  "record": {
+    "prefix": [ "record", "datarecord" ],
+    "body": [
+      "data ${1:Type} = ${1:Type}",
+      "\t{ ${2:field} :: ${3:Type}",
+      "\t, ${4:field} :: ${5:Type}$0",
+      "\t} deriving (${7:Show, Eq})"
+    ]
+  },
+  "data": {
+    "prefix": "datainline",
+    "body": "data ${1:Type} = ${2:data}$0${3: deriving (Show, Eq)}"
+  },
+  "newtype": {
+    "prefix": "newtype",
+    "body": "newtype ${1:Type} = ${1:Type} ${2:Int}"
+  },
+  "function": {
+    "prefix": [ "definition", "variable", "function" ],
+    "body": [
+      "${1:f} :: ${2:a}${3: -> ${4:b}}",
+      "${1:f} ${5:x} = ${6:undefined}$0",
+      "${7:\twhere\n\t\t${8:identifier = ${9:value}}"
+    ]
+  },
+  "functionguard": {
+    "prefix": [ "functionguard", "guardedfunction" ],
+    "body": [
+      "${1:f} :: ${2:a}${3: -> ${4:b}}",
+      "${1:f} ${5:x}",
+      "\t| ${6:condition} = ${7:undefined}",
+      "\t| ${8:condition} = ${9:undefined}$0",
+      "${10:\twhere\n\t\t${11:identifier = ${11:value}}"
+    ]
+  },
+  "lambda": {
+    "prefix": [ "\\", "lambda" ],
+    "body": "\\${1:x} -> ${2:undefined}$0"
+  },
+  "lang": {
+    "prefix": [ "lang", "pragma" ],
+    "body": "{-# LANGUAGE ${1:Extension} #-}$0"
+  },
+  "get": {
+    "prefix": "get",
+    "body": "${1:identifier} <- ${2:undefined}$0"
+  }
+}
