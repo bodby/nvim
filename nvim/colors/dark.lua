@@ -162,7 +162,7 @@ local hls = {
   ["Question"]            = { fg = colors.white2 },
   ["SpecialKey"]          = { fg = colors.purple },
   ["Visual"]              = { bg = colors.gray1 },
-  ["SnippetTabstop"]      = { fg = colors.red },
+  ["SnippetTabstop"]      = { italic = true },
   ["Title"]               = { fg = colors.white1, bold = true },
   ["Conceal"]             = { fg = colors.white3 },
   ["Cursor"]              = { fg = colors.gray3, bg = colors.cyan },

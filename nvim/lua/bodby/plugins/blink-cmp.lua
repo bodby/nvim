@@ -285,19 +285,6 @@ require("blink.cmp").setup({
 
           get_filetype = function(_)
             return vim.bo.filetype
-          end,
-
-          transform_items = function(_, items)
-            return vim.tbl_filter(function(item)
-              local types = require "blink.cmp.types"
-
-              if vim.snippet.active({ direction = 1}) then
-                return false
-              end
-
-              return true
-            end,
-            items)
           end
         },
 

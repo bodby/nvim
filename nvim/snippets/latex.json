@@ -99,7 +99,7 @@
     ]
   },
   "smallmatrix": {
-    "prefix": "bsmallmatrix",
+    "prefix": [ "bsmallmatrix", "inline-matrix" ],
     "body": [
       "\\left(",
       "\t\\begin{smallmatrix}",
@@ -130,11 +130,11 @@
   },
   "overset": {
     "prefix": "overset",
-    "body": "\\overset{${1:label}}{${2:expr}}"
+    "body": "\\overset{${1:label}}{${2:expr}}$0"
   },
   "underset": {
     "prefix": "underset",
-    "body": "\\underset{${1:label}}{${2:expr}}"
+    "body": "\\underset{${1:label}}{${2:expr}}$0"
   },
 
   "bold": {
@@ -146,19 +146,19 @@
     "body": "\\textit{${1:text}}$0"
   },
   "teletype": {
-    "prefix": "teletype",
+    "prefix": [ "teletype", "monospace" ],
     "body": "\\texttt{${1:text}}$0"
   },
   "verb": {
-    "prefix": "verb",
+    "prefix": [ "verb", "pre" ],
     "body": "\\verb|${1:text}|$0"
   },
   "underbrace": {
     "prefix": "underbrace",
-    "body": "\\underbrace{${1:expr}}_{${2:label}}"
+    "body": "\\underbrace{${1:expr}}_{${2:label}}$0"
   },
   "overbrace": {
     "prefix": "overbrace",
-    "body": "\\overbrace{${1:expr}}^{${2:label}}"
+    "body": "\\overbrace{${1:expr}}^{${2:label}}$0"
   }
 }

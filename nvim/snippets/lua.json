@@ -1,7 +1,7 @@
 {
   "local": {
     "prefix": "local",
-    "body": "local ${1:x} = ${2:nil}$0"
+    "body": "local ${1:x} = $0"
   },
   "function": {
     "prefix": "function",
@@ -12,7 +12,7 @@
     ]
   },
   "lambda": {
-    "prefix": [ "lambda", "anonymousfunction" ],
+    "prefix": [ "lambda", "anonymous-function" ],
     "body": [
       "function($1)",
       "$0",
@@ -20,15 +20,15 @@
     ]
   },
   "pcall": {
-    "prefix": "localpcall",
+    "prefix": "pcall",
     "body": "local ${1:status}, ${2:value} = pcall(${3:command})$0"
   },
   "require": {
     "prefix": "require",
     "body": "require \"${1:path.to.module}\"$0"
   },
-  "localrequire": {
-    "prefix": "localrequire",
+  "local-require": {
+    "prefix": "local-require",
     "body": "local ${1:identifier} = require \"${2:path.to.module}\"$0"
   },
   "return": {
