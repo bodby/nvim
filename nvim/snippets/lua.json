@@ -1,4 +1,17 @@
 {
+  "class": {
+    "prefix": "class",
+    "body": [
+      "local M = { }",
+      "",
+      "function M.${1:new}($2)",
+      "\t$0",
+      "end",
+      "",
+      "return M"
+    ]
+  },
+
   "local": {
     "prefix": "local",
     "body": "local ${1:x} = $0"
