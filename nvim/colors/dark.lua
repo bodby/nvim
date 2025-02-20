@@ -1,11 +1,11 @@
 local colors = {
-  gray1 = "#21242b",
-  gray2 = "#13151b",
-  gray3 = "#0f1017",
+  gray1 = "#1e232e",
+  gray2 = "#131720",
+  gray3 = "#0e1119",
 
-  white1 = "#cdd7fa",
-  white2 = "#a3aac2",
-  white3 = "#595e73",
+  white1 = "#ccddfb",
+  white2 = "#9ca9c4",
+  white3 = "#545f78",
 
   purple = "#a87dff",
   blue   = "#809fff",

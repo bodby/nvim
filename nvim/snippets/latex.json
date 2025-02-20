@@ -58,7 +58,7 @@
   "equation": {
     "prefix": "equation",
     "body": [
-      "\\begin{equation}",
+      "\\begin{equation} \\tag{${1:2.12}}",
       "\t$0",
       "\\end{equation}"
     ]
@@ -66,9 +66,9 @@
   "align": {
     "prefix": "align",
     "body": [
-      "\\begin{align}",
-      "\t${1:y} &= ${2:2x}\\\\\\",
-      "\t&= ${3:x + x}",
+      "\\begin{align} \\tag{${1:2.12}}",
+      "\t${2:y} &= ${3:2x}\\\\\\",
+      "\t&= ${4:x + x}",
       "\\end{align}$0"
     ]
   },
