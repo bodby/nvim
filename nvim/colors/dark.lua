@@ -1,11 +1,11 @@
 local colors = {
-  gray1 = "#1e232e",
-  gray2 = "#131720",
-  gray3 = "#0e1119",
+  gray1 = "#21242b",
+  gray2 = "#13151b",
+  gray3 = "#0f1017",
 
-  white1 = "#ccddfb",
-  white2 = "#9fadc6",
-  white3 = "#5c6984",
+  white1 = "#cdd7fa",
+  white2 = "#a3aac2",
+  white3 = "#595e73",
 
   purple = "#a87dff",
   blue   = "#809fff",
@@ -118,7 +118,7 @@ local hls = {
   ["TabLine"]         = { fg = colors.white1, bg = colors.gray2 },
   ["TabLineSel"]      = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["TabLineInactive"] = { fg = colors.white3, bg = colors.gray3 },
-  ["TabLineIndex"]    = { fg = colors.purple, bg = colors.gray3, bold = true },
+  ["TabLineIndex"]    = { fg = colors.cyan,   bg = colors.gray3, bold = true },
   ["TabLineIndexNC"]  = { fg = colors.white2, bg = colors.gray3 },
   ["TabLineError"]    = { fg = colors.red,    bg = colors.gray3 },
   ["TabLineWarn"]     = { fg = colors.yellow, bg = colors.gray3 },

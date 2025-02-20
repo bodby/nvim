@@ -1,5 +1,5 @@
 require("indentmini").setup({
-  char         = "│",
+  char         = ".",
   only_current = false,
 
   exclude = {

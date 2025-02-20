@@ -17,7 +17,7 @@ require("gitsigns").setup({
   },
 
   signs_staged_enable = false,
-  signcolumn          = false,
+  signcolumn          = true,
   numhl               = false,
   linehl              = false,
   word_diff           = false,
@@ -27,7 +27,7 @@ require("gitsigns").setup({
 
 vim.keymap.set("n", "<Leader>g", function()
   require("gitsigns").toggle_deleted()
-  require("gitsigns").toggle_signs()
+  -- require("gitsigns").toggle_signs()
   -- Fixes the deleted line sometimes not disappearing.
   vim.cmd "redraw!"
 end)

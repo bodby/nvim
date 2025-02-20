@@ -71,18 +71,18 @@ let
       isCustomAppName = appName != null && appName != "nvim" && appName != "";
 
       extraMakeWrapperArgs =
-        (optionalString isCustomAppName ''--set NVIM_APPNAME "${appName}"'')
-        + (optionalString (extraPackages != [ ]) ''--suffix PATH ":" "${makeBinPath extraPackages}"'');
+        (optionalString isCustomAppName "--set NVIM_APPNAME '${appName}'")
+        + (optionalString (extraPackages != [ ]) "--suffix PATH ':' '${makeBinPath extraPackages}'");
 
       extraLuaPackages' = extraLuaPackages nvim-unwrapped.lua.pkgs;
 
       extraLuaWrapperArgs =
         optionalString (extraLuaPackages' != [ ])
-          ''--suffix LUA_PATH ";" "${concatMapStringsSep ";" luaPackages.getLuaPath extraLuaPackages'}"'';
+          "--suffix LUA_PATH ';' '${concatMapStringsSep ";" luaPackages.getLuaPath extraLuaPackages'}'";
 
       extraLuaCWrapperArgs =
         optionalString (extraLuaPackages' != [ ])
-          ''--suffix LUA_CPATH ";" "${concatMapStringsSep ";" luaPackages.getLuaCPath extraLuaPackages'}"'';
+          "--suffix LUA_CPATH ';' '${concatMapStringsSep ";" luaPackages.getLuaCPath extraLuaPackages'}'";
 
       nvim-wrapped = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
         nvimConfig
