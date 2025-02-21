@@ -99,7 +99,7 @@
     ]
   },
   "smallmatrix": {
-    "prefix": [ "bsmallmatrix", "inline-matrix" ],
+    "prefix": [ "smallmatrix", "bsmallmatrix", "inline-matrix" ],
     "body": [
       "\\left(",
       "\t\\begin{smallmatrix}",
