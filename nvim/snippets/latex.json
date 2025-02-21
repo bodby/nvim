@@ -42,17 +42,13 @@
   "paragraph": {
     "prefix": "paragraph",
     "body": [
-      "\\paragraph{${1:text}}",
-      "",
-      "\t$0"
+      "\\paragraph{${1:text}}$0",
     ]
   },
   "subparagraph": {
     "prefix": "subparagraph",
     "body": [
-      "\\subparagraph{${1:text}}",
-      "",
-      "\t$0"
+      "\\subparagraph{${1:text}}$0",
     ]
   },
   "equation": {
