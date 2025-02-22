@@ -59,7 +59,7 @@ local line_nr = function(window)
     return "%#LineNrWrapped#%=│"
   elseif vim.v.virtnum < 0 then
     -- Virtual lines.
-    return "%=│"
+    return "%#LineNrWrapped#%=│"
   end
 
   if vim.v.relnum == 0 then

@@ -3,9 +3,9 @@ local colors = {
   gray2 = "#131720",
   gray3 = "#0e1119",
 
-  white1 = "#ccddfb",
-  white2 = "#9ca9c4",
-  white3 = "#545f78",
+  white1 = "#ccdbfb",
+  white2 = "#99a7c2",
+  white3 = "#4e596f",
 
   purple = "#a87dff",
   blue   = "#809fff",
@@ -18,7 +18,6 @@ local colors = {
 vim.cmd "highlight clear"
 vim.cmd "syntax reset"
 
--- TODO: vvv
 vim.g.colors_name = "bodby"
 
 local hls = {
@@ -64,9 +63,9 @@ local hls = {
   ["RenderMarkdownCodeInline"] = { fg = colors.purple, bg = colors.gray3 },
   ["RenderMarkdownDash"]       = { link = "WinSeparator" },
 
-  ["VirtColumn"]        = { fg = colors.gray1, bg = nil },
-  ["IndentLine"]        = { fg = colors.gray1 },
-  ["IndentLineCurrent"] = { fg = colors.gray1 },
+  ["VirtColumn"] = { fg = colors.gray1, bg = nil },
+  -- ["IndentLine"]        = { fg = colors.gray1 },
+  -- ["IndentLineCurrent"] = { fg = colors.purple },
   -- ["Hlargs"]            = { fg = colors.green, italic = true },
 
   ["Added"]                = { fg = colors.green },
@@ -89,23 +88,32 @@ local hls = {
   ["TelescopeMultiSelection"] = { fg = colors.cyan },
 
   -- TODO: Proper highlights for statusline.
-  ["StatusLine"]          = { fg = colors.gray1, bg = colors.gray2 },
-  ["StatusLineCyan"]      = { bg = colors.cyan },
-  ["StatusLinePurple"]    = { bg = colors.purple },
-  ["StatusLineRed"]       = { bg = colors.red },
-  ["StatusLineGreen"]     = { bg = colors.green },
-  ["StatusLineYellow"]    = { bg = colors.yellow },
-  ["StatusLineGray"]      = { bg = colors.white3 },
-  ["StatusLineMode"]      = { fg = colors.white1, bg = colors.gray3, bold = true },
+  ["StatusLine"] = { fg = colors.gray1, bg = colors.gray3 },
+
+  -- Pain. Should probably make this auto-generated in the statusline file but whatever.
+  ["StatusLineCyanBG"]   = { bg = colors.cyan },
+  ["StatusLinePurpleBG"] = { bg = colors.purple },
+  ["StatusLineRedBG"]    = { bg = colors.red },
+  ["StatusLineGreenBG"]  = { bg = colors.green },
+  ["StatusLineYellowBG"] = { bg = colors.yellow },
+  ["StatusLineGrayBG"]   = { bg = colors.white3 },
+  ["StatusLineCyanFG"]   = { fg = colors.cyan, bg = colors.gray3, bold = true },
+  ["StatusLinePurpleFG"] = { fg = colors.purple, bg = colors.gray3, bold = true },
+  ["StatusLineRedFG"]    = { fg = colors.red, bg = colors.gray3, bold = true },
+  ["StatusLineGreenFG"]  = { fg = colors.green, bg = colors.gray3, bold = true },
+  ["StatusLineYellowFG"] = { fg = colors.yellow, bg = colors.gray3, bold = true },
+  ["StatusLineGrayFG"]   = { fg = colors.white3, bg = colors.gray3, bold = true },
+
   ["StatusLinePos"]       = { fg = colors.white2, bg = colors.gray3 },
   ["StatusLineSyntax"]    = { fg = colors.white1, bg = colors.gray3 },
   ["StatusLineMacro"]     = { fg = colors.purple, bg = colors.gray3, bold = true },
   ["StatusLineFile"]      = { fg = colors.white2, bg = colors.gray3 },
+  ["StatusLinePath"]      = { fg = colors.white3, bg = colors.gray3 },
   ["StatusLineFileType"]  = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLineNewLine"]   = { fg = colors.white2, bg = colors.gray3 },
-  ["StatusLineError"]     = { fg = colors.red,    bg = colors.gray3 },
-  ["StatusLineWarn"]      = { fg = colors.yellow, bg = colors.gray3 },
-  ["StatusLineMisc"]      = { fg = colors.purple, bg = colors.gray3 },
+  ["StatusLineError"]     = { fg = colors.red,    bg = colors.gray3, bold = true },
+  ["StatusLineWarn"]      = { fg = colors.yellow, bg = colors.gray3, bold = true },
+  ["StatusLineMisc"]      = { fg = colors.purple, bg = colors.gray3, bold = true },
   ["StatusLineGitBranch"] = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLineGitLines"]  = { fg = colors.white2, bg = colors.gray3 },
 
@@ -115,10 +123,10 @@ local hls = {
   -- ["WinBarLOC"]  = { fg = colors.white3, bg = colors.gray3 },
   -- ["WinBarMod"]  = { fg = colors.white1, bg = colors.gray3 },
 
-  ["TabLine"]         = { fg = colors.white1, bg = colors.gray2 },
-  ["TabLineSel"]      = { fg = colors.white1, bg = colors.gray3, bold = true },
+  ["TabLine"]         = { fg = colors.white1, bg = colors.gray3 },
+  ["TabLineSel"]      = { fg = colors.white1, bg = colors.gray2, bold = true },
   ["TabLineInactive"] = { fg = colors.white3, bg = colors.gray3 },
-  ["TabLineIndex"]    = { fg = colors.cyan,   bg = colors.gray3, bold = true },
+  ["TabLineIndex"]    = { fg = colors.cyan,   bg = colors.gray2, bold = true },
   ["TabLineIndexNC"]  = { fg = colors.white2, bg = colors.gray3 },
   ["TabLineError"]    = { fg = colors.red,    bg = colors.gray3 },
   ["TabLineWarn"]     = { fg = colors.yellow, bg = colors.gray3 },
@@ -168,12 +176,12 @@ local hls = {
   ["Cursor"]              = { fg = colors.gray3, bg = colors.cyan },
   ["LineNr"]              = { fg = colors.white3 },
   ["LineNrSpecial"]       = { fg = colors.white2, bold = true },
-  ["LineNrWrapped"]       = { fg = colors.gray1 },
+  ["LineNrWrapped"]       = { fg = colors.white3 },
   ["WinSeparator"]        = { fg = colors.gray3 },
-  ["ColorColumn"]         = { fg = colors.gray1, bg = nil },
+  ["ColorColumn"]         = { fg = colors.gray1 },
   ["SignColumn"]          = { fg = colors.gray1 },
-  ["CursorLine"]          = { bg = colors.gray3 },
-  ["CursorLineNr"]        = { fg = colors.white1, bg = nil, bold = true },
+  ["CursorLine"]          = { },
+  ["CursorLineNr"]        = { fg = colors.white1, bold = true },
   ["CursorLineSign"]      = { bg = nil },
   ["CursorLineNrWrapped"] = { fg = colors.gray1,  bg = nil },
   ["Pmenu"]               = { fg = colors.white3, bg = colors.gray2 },
@@ -185,13 +193,13 @@ local hls = {
   ["Boolean"]     = { fg = colors.green },
   ["Character"]   = { fg = colors.green },
   ["Comment"]     = { fg = colors.white3, italic = true },
-  ["Conditional"] = { fg = colors.purple },
+  ["Conditional"] = { fg = colors.purple, bold = true },
   ["Constant"]    = { fg = colors.yellow },
   ["Delimiter"]   = { fg = colors.cyan },
   ["Float"]       = { fg = colors.green },
   ["Function"]    = { fg = colors.blue },
   ["Identifier"]  = { fg = colors.white2 },
-  ["Keyword"]     = { fg = colors.cyan },
+  ["Keyword"]     = { fg = colors.cyan, bold = true },
   ["Label"]       = { fg = colors.green },
   ["PreProc"]     = { fg = colors.purple },
   ["Number"]      = { fg = colors.green },
@@ -217,7 +225,7 @@ local hls = {
   ["@function.builtin"]    = { link = "Function" },
   ["@variable"]            = { fg = colors.white1 },
   ["@keyword.conditional"] = { link = "Conditional" },
-  -- ["@keyword.function"]    = { fg = colors.purple },
+  ["@keyword.function"]    = { fg = colors.purple, bold = true },
   ["@punctuation.special"] = { link = "Operator" },
   ["@character.special"]   = { fg = colors.cyan },
   ["@constant.builtin"]    = { fg = colors.green },

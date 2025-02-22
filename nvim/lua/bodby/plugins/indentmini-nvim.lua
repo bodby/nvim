@@ -1,6 +1,6 @@
 require("indentmini").setup({
-  char         = ".",
-  only_current = false,
+  char         = "│",
+  only_current = true,
 
   exclude = {
     "alpha",

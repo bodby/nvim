@@ -27,7 +27,6 @@
     "prefix": "subsection",
     "body": [
       "\\subsection{${1:text}}",
-      "",
       "$0"
     ]
   },
@@ -35,19 +34,16 @@
     "prefix": "subsubsection",
     "body": [
       "\\subsubsection{${1:text}}",
-      "",
       "$0"
     ]
   },
   "paragraph": {
     "prefix": "paragraph",
-    "body": "\\paragraph{${1:text}}$0"
+    "body": "\\paragraph{${1:text}} $0"
   },
   "subparagraph": {
     "prefix": "subparagraph",
-    "body": [
-      "\\subparagraph{${1:text}}$0",
-    ]
+    "body": "\\subparagraph{${1:text}} $0"
   },
   "equation": {
     "prefix": "equation",

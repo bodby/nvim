@@ -88,7 +88,7 @@ M.active = function()
 
   local t = vim.api.nvim_tabpage_get_number
   for _, tab in pairs(tabs) do
-    rendered = rendered .. gen_tab(tab, t(0) == t(tab), 13) .. colors.default .. " "
+    rendered = rendered .. gen_tab(tab, t(0) == t(tab), 13)
   end
 
   -- TODO: Something on the right.

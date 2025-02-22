@@ -50,6 +50,7 @@ local colors = {
   pos            = "%#StatusLinePos#",
   syntax         = "%#StatusLineSyntax#",
   macro          = "%#StatusLineMacro#",
+  path           = "%#StatusLinePath#",
   file           = "%#StatusLineFile#",
   filetype       = "%#StatusLineFileType#",
   newline        = "%#StatusLineNewLine#",
@@ -121,17 +122,18 @@ local stl_mode = function(show_name)
 
   if cur_mode then cur_mode = cur_mode:lower() end
 
-  if mode_hl ~= nil then
-    if show_name and cur_mode ~= nil then
-      return "%#StatusLine" .. mode_hl .. "# " .. "%#StatusLineMode# :" .. cur_mode .. " "
+  if show_name then
+    if mode_hl ~= nil then
+      return "%#StatusLine" .. mode_hl .. "BG# " .. "%#StatusLine" .. mode_hl .. "FG# :"
+        .. cur_mode .. "%#StatusLine# "
     else
-      return "%#StatusLine" .. mode_hl .. "# "
+      return "%#StatusLineGrayBG# %#StatusLineGrayFG# :limbo%#StatusLine# "
     end
   else
-    if show_name then
-      return "%#StatusLineGray# %#StatusLineMode# :limbo "
+    if mode_hl ~= nil then
+      return "%#StatusLine" .. mode_hl .. "BG# "
     else
-      return "%#StatusLineGray# "
+      return "%#StatusLineGrayBG# "
     end
   end
 end
@@ -141,10 +143,18 @@ local stl_file = function()
   -- FIXME: Check if vim.go.columns minus the (sum of all the lengths and the basename of the path)
   -- is less than 0. If so, it means the filename does not fit.
   -- Do the same with the full path (after fnamemodify), and not the basename.
-  local fname = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+  local full = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+  local head = vim.fs.basename(vim.fn.fnamemodify(full, ":."))
+  local tail = vim.fs.dirname(vim.fn.fnamemodify(full, ":."))
 
-  if vim.go.columns >= 70 and fname ~= "" then
-    local spacing = "%#StatusLine# "
+  if tail ~= "." then
+    tail = tail .. "/"
+  else
+    tail = ""
+  end
+
+  if vim.go.columns >= 70 and head ~= "" then
+    -- local spacing = "%#StatusLine# "
 
     local modified = ""
     if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
@@ -152,12 +162,10 @@ local stl_file = function()
     end
 
     if vim.go.columns <= 100 then
-      fname = vim.fs.basename(fname)
+      return colors.file .. head .. modified .. " " -- .. spacing
     else
-      fname = vim.fn.fnamemodify(fname, ":.")
+      return colors.path .. tail .. colors.file .. head .. modified .. " " -- .. spacing
     end
-
-    return colors.file .. " " .. fname .. modified .. " " .. spacing
   else
     return ""
   end
@@ -167,22 +175,22 @@ end
 -- TODO: This requires gitsigns.nvim. I should probably write this as a standalone function using
 --       only Git commands.
 local stl_git_info = function()
-  local spacing = ""
+  -- local spacing = ""
 
-  local branch = (vim.b.gitsigns_head ~= nil and " #" .. vim.b.gitsigns_head .. " " or "")
+  local branch = (vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head .. " " or "")
   local status = (vim.b.gitsigns_status ~= "" and vim.b.gitsigns_status ~= nil
     and vim.b.gitsigns_status .. " " or "")
 
-  if branch ~= "" or status ~= "" then
-    spacing = "%#StatusLine# "
-  end
-  return colors.git.branch .. branch .. colors.git.lines .. status .. spacing
+  -- if branch ~= "" or status ~= "" then
+  --   spacing = "%#StatusLine# "
+  -- end
+  return colors.git.branch .. branch .. colors.git.lines .. status -- .. spacing
 end
 
 -- Shows macro register if recording.
 local stl_macro = function()
   if vim.fn.reg_recording() ~= "" then
-    return colors.macro .. " " .. vim.fn.reg_recording() .. " "
+    return colors.macro .. vim.fn.reg_recording()
   else
     return "%#StatusLine#"
   end
@@ -218,13 +226,13 @@ local stl_diagnostics = function()
     hints_and_info = colors.hints_and_info .. " " .. hints + info
   end
 
-  local spacing = ""
+  -- local spacing = ""
   -- :(
-  if errors ~= "" or warnings ~= "" or hints_and_info ~= "" then
-    spacing = " "
-  end
+  -- if errors ~= "" or warnings ~= "" or hints_and_info ~= "" then
+  --   spacing = " "
+  -- end
 
-  return errors .. warnings .. hints_and_info .. colors.errors .. spacing
+  return errors .. warnings .. hints_and_info .. colors.errors -- .. spacing
 end
 
 -- 3 billion download JS micro-dependency.
@@ -242,27 +250,27 @@ local stl_filetype = function()
   if elem(ft, blocked_fts) then
     return colors.filetype .. ""
   elseif ft == "" then
-    return colors.filetype .. " !none " .. colors.newline .. newlines .. " "
+    return colors.filetype .. " !none " .. colors.newline .. newlines
   else
     -- return colors.filetype .. ft:gsub("^%l", string.upper) .. " "
-    return colors.filetype .. " !" .. ft .. " " .. colors.newline .. newlines .. " "
+    return colors.filetype .. " !" .. ft .. " " .. colors.newline .. newlines
   end
 end
 
-local spacing = "%#StatusLine# "
+-- local spacing = "%#StatusLine# "
 
 M.active = function()
   return table.concat({
     stl_mode(true),
-    spacing,
+    -- spacing,
     stl_file(),
     stl_git_info(),
     stl_macro(),
     "%#StatusLine#%=",
     stl_diagnostics(),
-    spacing,
+    -- spacing,
     stl_filetype(),
-    spacing,
+    -- spacing,
     stl_pos(),
     stl_mode(false)
   })

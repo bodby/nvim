@@ -56,6 +56,14 @@
       "end"
     ]
   },
+  "else": {
+    "prefix": "else",
+    "body": [
+      "else",
+      "\t$0",
+      "end"
+    ]
+  },
   "elseif": {
     "prefix": [ "elseif", "elif" ],
     "body": [
