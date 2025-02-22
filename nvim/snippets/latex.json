@@ -41,9 +41,7 @@
   },
   "paragraph": {
     "prefix": "paragraph",
-    "body": [
-      "\\paragraph{${1:text}}$0",
-    ]
+    "body": "\\paragraph{${1:text}}$0"
   },
   "subparagraph": {
     "prefix": "subparagraph",
