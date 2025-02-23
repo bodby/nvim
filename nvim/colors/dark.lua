@@ -183,7 +183,7 @@ local hls = {
   ["CursorLine"]          = { },
   ["CursorLineNr"]        = { fg = colors.white1, bold = true },
   ["CursorLineSign"]      = { bg = nil },
-  ["CursorLineNrWrapped"] = { fg = colors.gray1,  bg = nil },
+  ["CursorLineNrWrapped"] = { fg = colors.white3, bg = nil },
   ["Pmenu"]               = { fg = colors.white3, bg = colors.gray2 },
   ["PmenuSbar"]           = { bg = colors.gray2 },
   ["PmenuThumb"]          = { bg = colors.gray1 },
