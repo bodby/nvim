@@ -11,6 +11,39 @@
       "return M"
     ]
   },
+  "schedule": {
+    "prefix": [ "schedule", "vim-schedule" ],
+    "body": [
+      "vim.schedule(function()",
+      "\t$0",
+      "end)"
+    ]
+  },
+  "autocmd": {
+    "prefix": [ "autocmd", "nvim-create-autocmd" ],
+    "body": [
+      "vim.api.nvim_create_autocmd({",
+      "\t\"${1:VimEnter}\"",
+      "}, {",
+      "\tgroup    = \"${2:augroup}\"",
+      "\tcallback = function(${3:event})",
+      "\t\t$0",
+      "\tend",
+      "})"
+    ]
+  },
+  "metatable": {
+    "prefix": [ "metatable", "setmetatable" ],
+    "body": [
+      "setmetatable({",
+      "\t$0",
+      "}, {",
+      "\t__index = function(self, k)",
+      "\t\treturn \"Invalid index\"",
+      "\tend",
+      "})"
+    ]
+  },
 
   "local": {
     "prefix": "local",
@@ -20,7 +53,7 @@
     "prefix": "function",
     "body": [
       "function ${1:f}($2)",
-      "$0",
+      "\t$0",
       "end"
     ]
   },
@@ -28,7 +61,7 @@
     "prefix": [ "lambda", "anonymous-function" ],
     "body": [
       "function($1)",
-      "$0",
+      "\t$0",
       "end"
     ]
   },

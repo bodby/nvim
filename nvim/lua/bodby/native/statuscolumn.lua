@@ -49,8 +49,6 @@ local line_nr = function(window)
     l = middle
   end
 
-  local cur_line = vim.fn.line "."
-
   -- Wrapped lines.
   if vim.v.virtnum > 0 then
     if vim.v.relnum == 0 then

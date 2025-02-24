@@ -1,8 +1,9 @@
 -- NOTE: 'else if' is not the same as 'elseif'.
--- TODO: Refactor this entire file because everything in it is ugly right now.
 local M = { }
 
-local modes = {
+local hl_reset = "%#StatusLine#"
+
+M.modes = setmetatable({
   ["n"]  = "Normal",
   ["no"] = "Normal",
   ["v"]  = "Visual",
@@ -22,57 +23,60 @@ local modes = {
   ["r?"] = "Prompt",
   ["!"]  = "Shell",
   ["t"]  = "Shell"
-}
+}, {
+  __index = function(_, _)
+    return "Limbo"
+  end
+})
 
-local mode_hls = {
-  ["n"]  = "Purple",
-  ["no"] = "Gray",
-  ["v"]  = "Green",
-  ["V"]  = "Green",
-  [""] = "Green",
-  ["s"]  = "Green",
-  ["S"]  = "Green",
-  [""] = "Green",
-  ["i"]  = "Cyan",
-  ["ic"] = "Cyan",
-  ["R"]  = "Red",
-  ["Rv"] = "Red",
-  ["c"]  = "Yellow",
-  ["cv"] = "Yellow",
-  ["r"]  = "Yellow",
-  ["rm"] = "Yellow",
-  ["r?"] = "Yellow",
-  ["!"]  = "Gray",
-  ["t"]  = "Gray"
-}
-
-local colors = {
-  pos            = "%#StatusLinePos#",
-  syntax         = "%#StatusLineSyntax#",
-  macro          = "%#StatusLineMacro#",
-  path           = "%#StatusLinePath#",
-  file           = "%#StatusLineFile#",
-  filetype       = "%#StatusLineFileType#",
-  newline        = "%#StatusLineNewLine#",
-  errors         = "%#StatusLineError#",
-  warnings       = "%#StatusLineWarn#",
-  hints_and_info = "%#StatusLineMisc#",
-
-  git = {
-    branch = "%#StatusLineGitBranch#",
-    lines  = "%#StatusLineGitLines#"
-  }
-}
-
-local blocked_fts = {
+M.blocked_fts = {
   "alpha",
   "TelescopePrompt"
 }
 
+M.colors = {
+  dir            = "Directory",
+  file           = "File",
+  git_branch     = "Branch",
+  git_delta      = "Delta",
+  macro          = "Macro",
+  error          = "Error",
+  warning        = "Warn",
+  -- Hints and info (diagnostics).
+  misc           = "Misc",
+  filetype       = "FileType",
+  -- Newline type (CRLF or LF).
+  newline        = "NewLine",
+  pos            = "Pos",
+  percentage     = "Percent"
+}
+
+--- 3 billion download JS micro-dependency.
+--- Checks if an element exists inside of an array.
+--- @generic T
+--- @param e T
+--- @param xs T[]
+--- @return bool
+local function elem(e, xs)
+  for _, v in ipairs(xs) do
+    if v == e then return true end
+  end
+  return false
+end
+
+---@param col string Color name
+---@return string Usable statusline highlight string surrounded by "%#...#"
+local function stl_hl(col)
+  return "%#StatusLine" .. col .. "#"
+end
+
+-- TODO: Take in an opts table.
 function M.setup()
+  -- FIXME: Make this work when 'laststatus' isn't 3.
+  vim.opt.laststatus = 3
   vim.opt.statusline = "%!v:lua.require('bodby.native.statusline').active()"
 
-  -- Don't hide the statusline on certain actions.
+  -- HACK: Don't hide the statusline on certain actions.
   vim.api.nvim_create_autocmd({
     "BufWritePost",
     "BufEnter",
@@ -94,7 +98,7 @@ function M.setup()
   if vim.g.neovide then
     vim.api.nvim_create_autocmd({
       "CmdwinEnter",
-      "CmdlineEnter",
+      "CmdlineEnter"
     }, {
       group    = "status",
       callback = function(_)
@@ -104,7 +108,7 @@ function M.setup()
 
     vim.api.nvim_create_autocmd({
       "CmdwinLeave",
-      "CmdlineLeave",
+      "CmdlineLeave"
     }, {
       group    = "status",
       callback = function(_)
@@ -114,165 +118,132 @@ function M.setup()
   end
 end
 
--- Shows the current mode.
-local stl_mode = function(show_name)
-  -- TODO: Move both of these into a single table with a tuple.
-  local cur_mode = modes[vim.api.nvim_get_mode().mode]
-  local mode_hl  = mode_hls[vim.api.nvim_get_mode().mode]
-
-  if cur_mode then cur_mode = cur_mode:lower() end
+--- Shows the current mode (optionally) as well as a colored block.
+--- @param show_name bool Whether to show the current mode name
+--- @return string
+local mode = function(show_name)
+  local current = M.modes[vim.api.nvim_get_mode().mode]
+  local fg_hl   = stl_hl(current .. "FG")
+  local bg_hl   = stl_hl(current .. "BG")
 
   if show_name then
-    if mode_hl ~= nil then
-      return "%#StatusLine" .. mode_hl .. "BG# " .. "%#StatusLine" .. mode_hl .. "FG# :"
-        .. cur_mode .. "%#StatusLine# "
-    else
-      return "%#StatusLineGrayBG# %#StatusLineGrayFG# :limbo%#StatusLine# "
-    end
+    -- TODO: Make the mode name casing a config option.
+    return bg_hl .. " " .. fg_hl .. " :" .. current:lower() .. hl_reset .. " "
   else
-    if mode_hl ~= nil then
-      return "%#StatusLine" .. mode_hl .. "BG# "
-    else
-      return "%#StatusLineGrayBG# "
-    end
+    return bg_hl .. " "
   end
 end
 
--- Shows the current file and a modified symbol.
-local stl_file = function()
-  -- FIXME: Check if vim.go.columns minus the (sum of all the lengths and the basename of the path)
-  -- is less than 0. If so, it means the filename does not fit.
-  -- Do the same with the full path (after fnamemodify), and not the basename.
-  local full = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-  local head = vim.fs.basename(vim.fn.fnamemodify(full, ":."))
-  local tail = vim.fs.dirname(vim.fn.fnamemodify(full, ":."))
+--- Shows the current file, directory, and a modified symbol.
+--- @return string
+local path = function()
+  -- TODO: Check if vim.go.columns minus the (sum of all the lengths plus the basename of the path)
+  --       is less than 0. If so, it means the filename does not fit.
+  --       Do the same with the full path (after fnamemodify), and not the basename.
+  --       Use the longest mode name length (6 letters) so it doesn't fluctuate between showing
+  --       and hiding the directory while you change modes.
+  --       Currently only have a hard cap of 70 columns (100) before I hide the filename (path).
 
-  if tail ~= "." then
-    tail = tail .. "/"
-  else
-    tail = ""
-  end
+  local buffer = vim.api.nvim_get_current_buf()
+  local full   = vim.api.nvim_buf_get_name(buffer)
+  local file   = vim.fn.fnamemodify(full, ":~:.:t")
+  local dir    = vim.fn.fnamemodify(full, ":~:.:h")
 
-  if vim.go.columns >= 70 and head ~= "" then
-    -- local spacing = "%#StatusLine# "
+  dir = (dir ~= "." and dir .. "/" or "")
 
-    local modified = ""
-    if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "modified") then
-      modified = "'"
-    end
+  -- TODO: Should I show something when there is no file attached to the buffer?
+  if vim.go.columns >= 70 and full ~= "" then
+    local modified = (vim.api.nvim_buf_get_option(buffer, "modified") and "'" or "")
+
+    local file_fmt = stl_hl(M.colors.file) .. file .. modified
 
     if vim.go.columns <= 100 then
-      return colors.file .. head .. modified .. " " -- .. spacing
+      return file_fmt .. " "
     else
-      return colors.path .. tail .. colors.file .. head .. modified .. " " -- .. spacing
+      return stl_hl(M.colors.dir) .. dir .. file_fmt .. " "
     end
   else
     return ""
   end
 end
 
--- The (#branch +L ~L -L) in the stl.
--- TODO: This requires gitsigns.nvim. I should probably write this as a standalone function using
---       only Git commands.
-local stl_git_info = function()
-  -- local spacing = ""
+--- Shows the branch and number of files added, changed, and modified.
+--- @return string
+local git_info = function()
+  -- TODO: This requires gitsigns.nvim. Should write this as a standalone function using
+  --       only Git commands.
 
-  local branch = (vim.b.gitsigns_head ~= nil and "#" .. vim.b.gitsigns_head .. " " or "")
+  local branch = (vim.b.gitsigns_head ~= nil
+    and "#" .. vim.b.gitsigns_head .. " " or "")
+
   local status = (vim.b.gitsigns_status ~= "" and vim.b.gitsigns_status ~= nil
     and vim.b.gitsigns_status .. " " or "")
 
-  -- if branch ~= "" or status ~= "" then
-  --   spacing = "%#StatusLine# "
-  -- end
-  return colors.git.branch .. branch .. colors.git.lines .. status -- .. spacing
+  return stl_hl(M.colors.git_branch) .. branch .. stl_hl(M.colors.git_delta) .. status
 end
 
--- Shows macro register if recording.
-local stl_macro = function()
-  if vim.fn.reg_recording() ~= "" then
-    return colors.macro .. vim.fn.reg_recording()
-  else
-    return "%#StatusLine#"
-  end
+--- Shows the macro register if recording.
+--- @return string
+local macro_reg = function()
+  local reg = vim.fn.reg_recording()
+  return (reg ~= "" and stl_hl(M.colors.macro) .. reg or hl_reset)
 end
 
--- Shows current line and column as well as percentage of whole file.
-local stl_pos = function()
+--- Shows current line and column as well as percentage of whole file.
+--- @return string
+local pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return colors.pos .. " " .. row .. ":" .. col .. " %p%% "
+  -- TODO: Use Lua to format the percentage instead of '%p'?
+  return
+    stl_hl(M.colors.pos) .. " " .. row .. ":" .. col .. stl_hl(M.colors.percentage) .. " %p%% "
 end
 
--- Errors, warnings, and hints and info (in one number).
-local stl_diagnostics = function()
+--- Errors, warnings, and hints and info.
+--- @return string
+local diagnostics = function()
   local count = vim.diagnostic.count(0)
+  local hints = (count[3] ~= nil and count[3] or 0)
+  local info  = (count[4] ~= nil and count[4] or 0)
 
-  local errors = ""
-  if count[1] ~= nil then
-    errors = colors.errors .. " " .. count[1]
-  end
+  local errors   = (count[1] ~= nil and stl_hl(M.colors.error) .. " " .. count[1] or "")
+  local warnings = (count[2] ~= nil and stl_hl(M.colors.warning) .. " " .. count[2] or "")
 
-  local warnings = ""
-  if count[2] ~= nil then
-    warnings = colors.warnings .. " " .. count[2]
-  end
+  local hints_and_info = (hints + info > 0 and stl_hl(M.colors.misc) .. " " .. hints + info or "")
 
-  local hints = 0
-  local info  = 0
-  if count[3] ~= nil then hints = hints + 1 end
-  if count[4] ~= nil then info = info + 1 end
-
-  local hints_and_info = ""
-  if hints ~= 0 or info ~= 0 then
-    hints_and_info = colors.hints_and_info .. " " .. hints + info
-  end
-
-  -- local spacing = ""
-  -- :(
-  -- if errors ~= "" or warnings ~= "" or hints_and_info ~= "" then
-  --   spacing = " "
-  -- end
-
-  return errors .. warnings .. hints_and_info .. colors.errors -- .. spacing
+  return errors .. warnings .. hints_and_info
 end
 
--- 3 billion download JS micro-dependency.
-local function elem(e, xs)
-  for _, v in ipairs(xs) do
-    if v == e then return true end
-  end
-  return false
-end
-
-local stl_filetype = function()
-  local ft       = vim.bo.filetype
+--- The filetype and type of line endings (CRLF or LF).
+--- @return string
+local filetype = function()
+  local filetype = vim.bo.filetype
   local newlines = vim.bo.fileformat
 
-  if elem(ft, blocked_fts) then
-    return colors.filetype .. ""
-  elseif ft == "" then
-    return colors.filetype .. " !none " .. colors.newline .. newlines
+  if elem(filetype, M.blocked_fts) then
+    return ""
+  elseif filetype == "" then
+    -- No filetype isn't blocked because I sometimes use temporary buffers.
+    return stl_hl(M.colors.filetype) .. " !none " .. stl_hl(M.colors.newline) .. newlines
   else
-    -- return colors.filetype .. ft:gsub("^%l", string.upper) .. " "
-    return colors.filetype .. " !" .. ft .. " " .. colors.newline .. newlines
+    -- TODO: Add a config option to make the first letter uppercase,
+    --       using 'filetype:gsub("^%l", string.upper)', or make the whole text uppercase.
+    return
+      stl_hl(M.colors.filetype) .. " !" .. filetype .. " " .. stl_hl(M.colors.newline) .. newlines
   end
 end
-
--- local spacing = "%#StatusLine# "
 
 M.active = function()
   return table.concat({
-    stl_mode(true),
-    -- spacing,
-    stl_file(),
-    stl_git_info(),
-    stl_macro(),
-    "%#StatusLine#%=",
-    stl_diagnostics(),
-    -- spacing,
-    stl_filetype(),
-    -- spacing,
-    stl_pos(),
-    stl_mode(false)
+    mode(true),
+    path(),
+    git_info(),
+    macro_reg(),
+    hl_reset,
+    "%=",
+    diagnostics(),
+    filetype(),
+    pos(),
+    mode(false)
   })
 end
 

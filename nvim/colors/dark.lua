@@ -20,6 +20,18 @@ vim.cmd "syntax reset"
 
 vim.g.colors_name = "bodby"
 
+local stl_hls = {
+  ["StatusLineNormal"]  = colors.cyan,
+  ["StatusLineVisual"]  = colors.green,
+  ["StatusLineSelect"]  = colors.green,
+  ["StatusLineInsert"]  = colors.purple,
+  ["StatusLineReplace"] = colors.red,
+  ["StatusLineCommand"] = colors.yellow,
+  ["StatusLinePrompt"]  = colors.white3,
+  ["StatusLineShell"]   = colors.white3,
+  ["StatusLineLimbo"]   = colors.white3
+}
+
 local hls = {
   ["AlphaButtons"]     = { fg = colors.cyan },
   ["AlphaHeaderLabel"] = { fg = colors.white2 },
@@ -65,7 +77,7 @@ local hls = {
 
   ["VirtColumn"] = { fg = colors.gray1, bg = nil },
   -- ["IndentLine"]        = { fg = colors.gray1 },
-  -- ["IndentLineCurrent"] = { fg = colors.purple },
+  -- ["IndentLineCurrent"] = { fg = colors.white3 },
   -- ["Hlargs"]            = { fg = colors.green, italic = true },
 
   ["Added"]                = { fg = colors.green },
@@ -87,35 +99,20 @@ local hls = {
   ["TelescopeSelection"]      = { fg = colors.white1, bold = true },
   ["TelescopeMultiSelection"] = { fg = colors.cyan },
 
-  -- TODO: Proper highlights for statusline.
-  ["StatusLine"] = { fg = colors.gray1, bg = colors.gray3 },
-
-  -- Pain. Should probably make this auto-generated in the statusline file but whatever.
-  ["StatusLineCyanBG"]   = { bg = colors.cyan },
-  ["StatusLinePurpleBG"] = { bg = colors.purple },
-  ["StatusLineRedBG"]    = { bg = colors.red },
-  ["StatusLineGreenBG"]  = { bg = colors.green },
-  ["StatusLineYellowBG"] = { bg = colors.yellow },
-  ["StatusLineGrayBG"]   = { bg = colors.white3 },
-  ["StatusLineCyanFG"]   = { fg = colors.cyan, bg = colors.gray3, bold = true },
-  ["StatusLinePurpleFG"] = { fg = colors.purple, bg = colors.gray3, bold = true },
-  ["StatusLineRedFG"]    = { fg = colors.red, bg = colors.gray3, bold = true },
-  ["StatusLineGreenFG"]  = { fg = colors.green, bg = colors.gray3, bold = true },
-  ["StatusLineYellowFG"] = { fg = colors.yellow, bg = colors.gray3, bold = true },
-  ["StatusLineGrayFG"]   = { fg = colors.white3, bg = colors.gray3, bold = true },
-
-  ["StatusLinePos"]       = { fg = colors.white2, bg = colors.gray3 },
-  ["StatusLineSyntax"]    = { fg = colors.white1, bg = colors.gray3 },
-  ["StatusLineMacro"]     = { fg = colors.purple, bg = colors.gray3, bold = true },
+  -- TODO: Highlights for statusline plugins?
+  ["StatusLine"]          = { fg = colors.gray1,  bg = colors.gray3 },
+  ["StatusLineDirectory"] = { fg = colors.white3, bg = colors.gray3 },
   ["StatusLineFile"]      = { fg = colors.white2, bg = colors.gray3 },
-  ["StatusLinePath"]      = { fg = colors.white3, bg = colors.gray3 },
-  ["StatusLineFileType"]  = { fg = colors.white1, bg = colors.gray3, bold = true },
-  ["StatusLineNewLine"]   = { fg = colors.white2, bg = colors.gray3 },
+  ["StatusLineBranch"]    = { fg = colors.white1, bg = colors.gray3, bold = true },
+  ["StatusLineDelta"]     = { fg = colors.white2, bg = colors.gray3 },
+  ["StatusLineMacro"]     = { fg = colors.purple, bg = colors.gray3, bold = true },
   ["StatusLineError"]     = { fg = colors.red,    bg = colors.gray3, bold = true },
   ["StatusLineWarn"]      = { fg = colors.yellow, bg = colors.gray3, bold = true },
   ["StatusLineMisc"]      = { fg = colors.purple, bg = colors.gray3, bold = true },
-  ["StatusLineGitBranch"] = { fg = colors.white1, bg = colors.gray3, bold = true },
-  ["StatusLineGitLines"]  = { fg = colors.white2, bg = colors.gray3 },
+  ["StatusLineFileType"]  = { fg = colors.white1, bg = colors.gray3, bold = true },
+  ["StatusLineNewLine"]   = { fg = colors.white2, bg = colors.gray3 },
+  ["StatusLinePos"]       = { fg = colors.white3, bg = colors.gray3 },
+  ["StatusLinePercent"]   = { fg = colors.white2, bg = colors.gray3 },
 
   -- ["WinBar"]     = { fg = colors.white1, bg = colors.gray3, bold = true },
   -- ["WinBarFill"] = { fg = colors.gray1,  bg = colors.gray3 },
@@ -123,7 +120,7 @@ local hls = {
   -- ["WinBarLOC"]  = { fg = colors.white3, bg = colors.gray3 },
   -- ["WinBarMod"]  = { fg = colors.white1, bg = colors.gray3 },
 
-  ["TabLine"]         = { fg = colors.white1, bg = colors.gray3 },
+  ["TabLine"]         = { fg = colors.white1, bg = colors.gray2 },
   ["TabLineSel"]      = { fg = colors.white1, bg = colors.gray2, bold = true },
   ["TabLineInactive"] = { fg = colors.white3, bg = colors.gray3 },
   ["TabLineIndex"]    = { fg = colors.cyan,   bg = colors.gray2, bold = true },
@@ -209,13 +206,17 @@ local hls = {
   ["Statement"]   = { fg = colors.white2 },
   ["String"]      = { fg = colors.green },
   ["Tag"]         = { fg = colors.blue },
-  ["Todo"]        = { fg = colors.green },
+  ["Todo"]        = { fg = colors.white2, bold = true },
   ["Type"]        = { fg = colors.purple },
 
-  ["@comment.warning"] = { fg = colors.white1, bold = true },
-  ["@comment.error"]   = { fg = colors.white1, bold = true },
-  ["@comment.todo"]    = { fg = colors.white1, bold = true },
-  ["@comment.note"]    = { fg = colors.white1, bold = true },
+  ["@comment.warning"] = { fg = colors.white2, bold = true },
+  ["@comment.error"]   = { fg = colors.white2, bold = true },
+  ["@comment.todo"]    = { fg = colors.white2, bold = true },
+  ["@comment.note"]    = { fg = colors.white2, bold = true },
+
+  -- Users, e.g.
+  -- TODO (@bodby): Something
+  ["@constant.comment"] = { fg = colors.blue },
 
   ["@type.builtin"]        = { link = "Type" },
   ["@number"]              = { link = "Number" },
@@ -226,6 +227,7 @@ local hls = {
   ["@variable"]            = { fg = colors.white1 },
   ["@keyword.conditional"] = { link = "Conditional" },
   ["@keyword.function"]    = { fg = colors.purple, bold = true },
+  ["@keyword.operator"]    = { fg = colors.cyan },
   ["@punctuation.special"] = { link = "Operator" },
   ["@character.special"]   = { fg = colors.cyan },
   ["@constant.builtin"]    = { fg = colors.green },
@@ -254,6 +256,11 @@ local hls = {
 
 for hl, opts in pairs(hls) do
   vim.api.nvim_set_hl(0, hl, opts)
+end
+
+for hl, col in pairs(stl_hls) do
+  vim.api.nvim_set_hl(0, hl .. "BG", { bg = col })
+  vim.api.nvim_set_hl(0, hl .. "FG", { fg = col, bg = colors.gray3, bold = true })
 end
 
 vim.g.terminal_color_0  = colors.gray3
