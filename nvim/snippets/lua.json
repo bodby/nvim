@@ -36,10 +36,10 @@
     "prefix": [ "metatable", "setmetatable" ],
     "body": [
       "setmetatable({",
-      "\t$0",
+      "\t$1",
       "}, {",
-      "\t__index = function(self, k)",
-      "\t\treturn \"Invalid index\"",
+      "\t__index = function(${2:self}, ${3:k})",
+      "\t\t$0",
       "\tend",
       "})"
     ]
