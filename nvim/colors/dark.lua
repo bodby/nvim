@@ -109,7 +109,7 @@ local hls = {
   ["StatusLineHint"]      = { fg = colors.purple, bg = colors.gray3, bold = true },
   ["StatusLineFileType"]  = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLineNewLine"]   = { fg = colors.white2, bg = colors.gray3 },
-  ["StatusLinePos"]       = { fg = colors.white3, bg = colors.gray3 },
+  ["StatusLinePos"]       = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLinePercent"]   = { fg = colors.white2, bg = colors.gray3 },
 
   -- ["WinBar"]     = { fg = colors.white1, bg = colors.gray3, bold = true },
