@@ -1,7 +1,10 @@
 -- NOTE: 'else if' is not the same as 'elseif'.
-local M = { }
 
-local hl_reset = "%#StatusLine#"
+--- @alias highlight string
+--- @alias module string
+--- @alias statusline string
+
+local M = { }
 
 M.modes = setmetatable({
   ["n"]  = "Normal",
@@ -42,14 +45,16 @@ M.colors = {
   macro          = "Macro",
   error          = "Error",
   warning        = "Warn",
-  -- Hints and info (diagnostics).
-  misc           = "Misc",
+  info           = "Info",
+  hint           = "Hint",
   filetype       = "FileType",
   -- Newline type (CRLF or LF).
   newline        = "NewLine",
   pos            = "Pos",
   percentage     = "Percent"
 }
+
+local hl_reset = "%#StatusLine#"
 
 --- 3 billion download JS micro-dependency.
 --- Checks if an element exists inside of an array.
@@ -64,8 +69,8 @@ local function elem(e, xs)
   return false
 end
 
----@param col string Color name
----@return string Usable statusline highlight string surrounded by "%#...#"
+--- @param col string Color name
+--- @return highlight Usable statusline highlight string surrounded by "%#...#"
 local function stl_hl(col)
   return "%#StatusLine" .. col .. "#"
 end
@@ -118,9 +123,9 @@ function M.setup()
   end
 end
 
---- Shows the current mode (optionally) as well as a colored block.
+--- Returns the current mode (optionally) as well as a colored block.
 --- @param show_name bool Whether to show the current mode name
---- @return string
+--- @return module
 local mode = function(show_name)
   local current = M.modes[vim.api.nvim_get_mode().mode]
   local fg_hl   = stl_hl(current .. "FG")
@@ -134,8 +139,8 @@ local mode = function(show_name)
   end
 end
 
---- Shows the current file, directory, and a modified symbol.
---- @return string
+--- The current file, directory, and a modification indicator.
+--- @return module
 local path = function()
   -- TODO: Check if vim.go.columns minus the (sum of all the lengths plus the basename of the path)
   --       is less than 0. If so, it means the filename does not fit.
@@ -149,11 +154,11 @@ local path = function()
   local file   = vim.fn.fnamemodify(full, ":~:.:t")
   local dir    = vim.fn.fnamemodify(full, ":~:.:h")
 
-  dir = (dir ~= "." and dir .. "/" or "")
+  dir = dir ~= "." and dir .. "/" or ""
 
   -- TODO: Should I show something when there is no file attached to the buffer?
   if vim.go.columns >= 70 and full ~= "" then
-    local modified = (vim.api.nvim_buf_get_option(buffer, "modified") and "'" or "")
+    local modified = vim.api.nvim_buf_get_option(buffer, "modified") and "'" or ""
 
     local file_fmt = stl_hl(M.colors.file) .. file .. modified
 
@@ -167,30 +172,29 @@ local path = function()
   end
 end
 
---- Shows the branch and number of files added, changed, and modified.
---- @return string
+--- The branch and number of files added, changed, and modified.
+--- @return module
 local git_info = function()
   -- TODO: This requires gitsigns.nvim. Should write this as a standalone function using
   --       only Git commands.
 
-  local branch = (vim.b.gitsigns_head ~= nil
-    and "#" .. vim.b.gitsigns_head .. " " or "")
+  local branch = vim.b.gitsigns_head ~= nil
+    and ("#" .. vim.b.gitsigns_head .. " ") or ""
 
-  local status = (vim.b.gitsigns_status ~= "" and vim.b.gitsigns_status ~= nil
-    and vim.b.gitsigns_status .. " " or "")
+  local status = vim.b.gitsigns_status ~= nil and (vim.b.gitsigns_status .. " ") or ""
 
   return stl_hl(M.colors.git_branch) .. branch .. stl_hl(M.colors.git_delta) .. status
 end
 
---- Shows the macro register if recording.
---- @return string
+--- The macro register if recording.
+--- @return module
 local macro_reg = function()
   local reg = vim.fn.reg_recording()
-  return (reg ~= "" and stl_hl(M.colors.macro) .. reg or hl_reset)
+  return reg ~= "" and stl_hl(M.colors.macro) .. reg or hl_reset
 end
 
---- Shows current line and column as well as percentage of whole file.
---- @return string
+--- Current line, column, and percentage of whole file.
+--- @return module
 local pos = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   -- TODO: Use Lua to format the percentage instead of '%p'?
@@ -199,22 +203,20 @@ local pos = function()
 end
 
 --- Errors, warnings, and hints and info.
---- @return string
+--- @return module
 local diagnostics = function()
   local count = vim.diagnostic.count(0)
-  local hints = (count[3] ~= nil and count[3] or 0)
-  local info  = (count[4] ~= nil and count[4] or 0)
 
-  local errors   = (count[1] ~= nil and stl_hl(M.colors.error) .. " " .. count[1] or "")
-  local warnings = (count[2] ~= nil and stl_hl(M.colors.warning) .. " " .. count[2] or "")
+  local errors   = count[1] ~= nil and (stl_hl(M.colors.error) .. " " .. count[1]) or ""
+  local warnings = count[2] ~= nil and (stl_hl(M.colors.warning) .. " " .. count[2]) or ""
+  local info     = count[3] ~= nil and (stl_hl(M.colors.info) .. " " .. count[3]) or ""
+  local hints    = count[4] ~= nil and (stl_hl(M.colors.hint) .. " " .. count[4]) or ""
 
-  local hints_and_info = (hints + info > 0 and stl_hl(M.colors.misc) .. " " .. hints + info or "")
-
-  return errors .. warnings .. hints_and_info
+  return errors .. warnings .. info .. hints
 end
 
 --- The filetype and type of line endings (CRLF or LF).
---- @return string
+--- @return module
 local filetype = function()
   local filetype = vim.bo.filetype
   local newlines = vim.bo.fileformat
@@ -232,6 +234,8 @@ local filetype = function()
   end
 end
 
+--- Actual statusline used in 'vim.opt.statusline'.
+--- @return statusline
 M.active = function()
   return table.concat({
     mode(true),

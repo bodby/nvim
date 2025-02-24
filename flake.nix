@@ -8,7 +8,6 @@
     # blink-cmp.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-
   outputs =
     {
       nixpkgs,

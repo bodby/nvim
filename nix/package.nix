@@ -36,8 +36,6 @@ let
         plugins = map (x: defaultPlugin // (if x ? plugin then x else { plugin = x; })) plugins;
       };
 
-      # TODO: Add all parsers to a single "parsers" dir so the runtimepath doesn't become huge.
-      #       Currently using nvim-treesitter so it doesn't matter, but I do want to get rid of it.
       nvimRtp = stdenv.mkDerivation {
         name = "nvim-rtp";
         src = ../nvim;

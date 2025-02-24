@@ -1,8 +1,21 @@
 local M = { }
 
+--- @alias highlight string
+--- @alias module string
+--- @alias statuscolumn string
+--- @alias windowID number
+--- @alias HPos number
+--- @alias MPos number
+--- @alias LPos number
+
+M.colors = {
+  wrapped = "Virt",
+  virtual = "Virt"
+}
+
+-- TODO: Take in an opts table.
 function M.setup()
-  -- For dashboard or first file opened.
-  vim.wo.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
+  -- vim.wo.statuscolumn = "%!v:lua.require('bodby.native.statuscolumn').active()"
 
   vim.api.nvim_create_autocmd({
     "WinEnter",
@@ -24,14 +37,25 @@ function M.setup()
   })
 end
 
-local line_nr = function(window)
-  -- https://github.com/mawkler/hml.nvim/blob/main/lua/hml/init.lua
+--- @param col string Color name
+--- @param cursor bool Whether to prepend "Cursor" to the highlight name
+--- @return highlight Usable statuscolumn highlight string surrounded by "%#...#"
+local function stc_hl(col, cursor)
+  local c = cursor and "Cursor" or ""
+  return "%#" .. c .. "LineNr" .. col .. "#"
+end
+
+--- The HML motion indicators.
+--- @see "https://github.com/mawkler/hml.nvim"
+--- @param window windowID
+--- @return (HPos, MPos, LPos)
+local hml = function(window)
+  local scrolloff = vim.wo[window].scrolloff
+  local buffer    = vim.api.nvim_win_get_buf(window)
+
   local top    = vim.fn.getwininfo(window)[1].topline
   local bottom = vim.fn.getwininfo(window)[1].botline
   local middle = math.floor((bottom - top) / 2 + top)
-
-  local scrolloff = vim.wo[window].scrolloff
-  local buffer    = vim.api.nvim_win_get_buf(window)
 
   local h = top + scrolloff
   if top == 1 then
@@ -40,8 +64,6 @@ local line_nr = function(window)
     h = math.max(h, scrolloff)
   end
 
-  local m = math.max(middle, h)
-
   local l = bottom - scrolloff
   if bottom >= vim.fn.getbufinfo(buffer)[1].linecount then
     l = vim.fn.getbufinfo(buffer)[1].linecount
@@ -49,15 +71,22 @@ local line_nr = function(window)
     l = middle
   end
 
-  -- Wrapped lines.
+  return h, math.max(middle, h), l
+end
+
+--- The relative/absolute line number along with HML indicators.
+--- @param window windowID
+--- @return module
+local line_nr = function(window)
+  local buffer = vim.api.nvim_win_get_buf(window)
+  local h, m, l = hml(window)
+
+  -- Negative when drawing virtual lines, zero when drawing normal lines, and positive when
+  -- drawing wrapped lines.
   if vim.v.virtnum > 0 then
-    if vim.v.relnum == 0 then
-      return "%#CursorLineNrWrapped#%=│"
-    end
-    return "%#LineNrWrapped#%=│"
+    return stc_hl("Wrapped", vim.v.relnum == 0) .. "%=│"
   elseif vim.v.virtnum < 0 then
-    -- Virtual lines.
-    return "%#LineNrWrapped#%=│"
+    return stc_hl("Wrapped", true) .. "%=│"
   end
 
   if vim.v.relnum == 0 then
@@ -65,19 +94,20 @@ local line_nr = function(window)
   end
 
   if vim.v.lnum == h then
-    return "%=%#LineNrSpecial#H"
+    return "%=" .. stc_hl("Special", false) .. "H"
   elseif vim.v.lnum == m then
-    return "%=%#LineNrSpecial#M"
+    return "%=" .. stc_hl("Special", false) .. "M"
   elseif vim.v.lnum == l then
-    return "%=%#LineNrSpecial#L"
+    return "%=" .. stc_hl("Special", false) .. "L"
   end
 
   return "%=" .. vim.v.relnum
 end
 
+--- Actual statuscolumn used in 'vim.wo[window].statuscolumn'.
+--- @param window windowID
+--- @return statuscolumn
 M.active = function(window)
-  -- HACK: Checking for validity before actually checking options.
-  --       If I don't do this then deleting windows throws an error.
   if vim.api.nvim_win_is_valid(window) then
     if not vim.wo[window].number or not vim.wo[window].relativenumber then
       return ""

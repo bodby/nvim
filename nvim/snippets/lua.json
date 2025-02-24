@@ -116,7 +116,7 @@
   "foreach": {
     "prefix": "foreach",
     "body": [
-      "for ${1:i} in pairs(${2:table}) do",
+      "for ${1:i}, ${2:v} in ipairs(${3:tbl}) do",
       "\t$0",
       "end"
     ]
