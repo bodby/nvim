@@ -10,6 +10,7 @@ local M = { }
 --        Entry diagnostic highlights are broken right now.
 M.colors = {
   tab     = "Entry",
+  index   = "Index",
   count   = "Count",
   error   = "Error",
   warning = "Warn",
@@ -135,6 +136,13 @@ local diagnostics = function()
   return spacing .. errors .. warnings .. hints .. info .. spacing
 end
 
+--- Show the current tab index.
+--- I just needed something to always be visible on the right.
+--- @return module
+local index = function()
+  return tabl_hl(M.colors.index) .. " " .. vim.api.nvim_tabpage_get_number(0) .. " "
+end
+
 --- Actual tabline used in 'vim.opt.tabline'.
 --- @return tabline
 M.active = function()
@@ -148,7 +156,7 @@ M.active = function()
     rendered = rendered .. gen_tab(tab, t(0) == t(tab))
   end
 
-  return rendered .. hl_reset .. "%=" .. diagnostics()
+  return rendered .. hl_reset .. "%=" .. diagnostics() .. index()
 end
 
 return M

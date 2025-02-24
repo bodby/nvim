@@ -121,6 +121,7 @@ local hls = {
   ["TabLine"]        = { fg = colors.white1, bg = colors.gray3 },
   ["TabLineEntry"]   = { fg = colors.white1, bg = colors.gray2, bold = true },
   ["TabLineEntryNC"] = { fg = colors.white3, bg = colors.gray3 },
+  ["TabLineIndex"]   = { fg = colors.cyan,   bg = colors.gray2, bold = true },
   ["TabLineCount"]   = { fg = colors.cyan,   bg = colors.gray2, bold = true },
   ["TabLineCountNC"] = { fg = colors.white2, bg = colors.gray3 },
   ["TabLineError"]   = { fg = colors.red,    bg = colors.gray2, bold = true },
