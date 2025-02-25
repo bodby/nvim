@@ -74,7 +74,6 @@ local function diagnostic_hl(windows, current)
   return ""
 end
 
-
 -- TODO: Take in an opts table.
 function M.setup()
   vim.opt.tabline = "%!v:lua.require('bodby.native.tabline').active()"
@@ -85,8 +84,6 @@ end
 ---@param current boolean
 ---@return module
 local function gen_tab(tab, current)
-  -- NOTE: Navigate tabs using 'gt' and 'gT'. To go to an indexed tab, use '<number>gt'.
-
   local windows = vim.api.nvim_tabpage_list_wins(tab)
 
   local valid = 0

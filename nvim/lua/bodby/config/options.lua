@@ -29,16 +29,25 @@ vim.opt.expandtab      = true
 vim.opt.shiftwidth     = 2
 vim.opt.tabstop        = 2
 vim.opt.softtabstop    = 2
+vim.opt.foldenable     = true
+vim.opt.foldmethod     = "expr"
+vim.opt.foldexpr       = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel      = 99
+-- If this isn't blank then I lose syntax colors.
+vim.opt.foldtext       = ""
+vim.opt.foldnestmax    = 4
 
 vim.opt.fillchars:append({
-  eob = " ",
-  stl = " ",
-  wbr = " "
+  eob  = " ",
+  stl  = " ",
+  wbr  = " ",
+  fold = " "
 })
 
 vim.opt.listchars:append({
   trail = "_",
-  tab   = "> "
+  tab   = "> ",
+  -- space = "·"
 })
 
 vim.g.markdown_recommended_style = 0

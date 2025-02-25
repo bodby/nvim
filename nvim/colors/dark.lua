@@ -195,6 +195,7 @@ local hls = {
   ["PmenuThumb"]          = { bg = colors.gray1 },
   ["PmenuSel"]            = { fg = colors.white1, bold = true },
   ["NonText"]             = { fg = colors.white3 },
+  ["Folded"]              = { fg = colors.white2, bg = colors.gray1 },
 
   ["Boolean"]     = { fg = colors.green },
   ["Character"]   = { fg = colors.green },
