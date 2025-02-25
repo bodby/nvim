@@ -9,6 +9,7 @@ local M = { }
 M.colors = {
   tab   = "Entry",
   index = "Index",
+  loc   = "LineCount",
   count = "Count",
   error = "Error",
   warn  = "Warn",
@@ -42,26 +43,34 @@ end
 
 ---Check every window to see if any of them have any diagnostics and return the necessary color.
 ---@param windows windowID[]
+---@param current boolean
 ---@return string
-local function diagnostic_hl(windows)
+local function diagnostic_hl(windows, current)
+
+  ---@param hl string
+  ---@return highlight
+  local function diag_fmt(hl)
+    return tabl_hl(M.colors.tab .. hl, current)
+  end
+
   for _, win in ipairs(windows) do
     if vim.api.nvim_win_is_valid(win) then
       local diagnostics = vim.diagnostic.count(vim.api.nvim_win_get_buf(win))
 
-      if diagnostics ~= 0 then
-        -- TODO: Find a shorter way to write this.
+      if next(diagnostics) ~= nil then
         if diagnostics[1] ~= nil and diagnostics[1] > 0 then
-          return "%#TabLineError#"
+          return diag_fmt(M.colors.error)
         elseif diagnostics[2] ~= nil and diagnostics[2] > 0 then
-          return "%#TabLineWarn#"
+          return diag_fmt(M.colors.warn)
         elseif diagnostics[3] ~= nil and diagnostics[3] > 0 then
-          return "%#TabLineInfo#"
+          return diag_fmt(M.colors.info)
         elseif diagnostics[4] ~= nil and diagnostics[4] > 0 then
-          return "%#TabLineHint#"
+          return diag_fmt(M.colors.hint)
         end
       end
     end
   end
+
   return ""
 end
 
@@ -102,7 +111,7 @@ local function gen_tab(tab, current)
     valid,
     " ",
     tabl_hl(M.colors.tab, current),
-    diagnostic_hl(windows),
+    diagnostic_hl(windows, current),
     file,
     " "
   })
@@ -135,18 +144,33 @@ local function index()
   return tabl_hl(M.colors.index) .. " " .. vim.api.nvim_tabpage_get_number(0) .. " "
 end
 
+---Show the line count of the current buffer.
+---@param tab tabID
+---@return module
+local function line_count(tab)
+  local window = vim.api.nvim_tabpage_get_win(tab)
+  local buffer = vim.api.nvim_win_get_buf(window)
+
+  local lcount = vim.fn.getbufinfo(buffer)[1].linecount
+  if lcount ~= nil then
+    return tabl_hl(M.colors.loc) .. " /" .. lcount
+  else
+    return ""
+  end
+end
+
 ---Actual tabline used in 'vim.opt.tabline'.
 ---@return tabline
 function M.active()
   local tabs = vim.api.nvim_list_tabpages()
   local rendered = ""
 
-  local t = vim.api.nvim_tabpage_get_number
+  local ti = vim.api.nvim_tabpage_get_number
   for _, tab in pairs(tabs) do
-    rendered = rendered .. gen_tab(tab, t(0) == t(tab))
+    rendered = rendered .. gen_tab(tab, ti(0) == ti(tab))
   end
 
-  return rendered .. hl_reset .. "%=" .. diagnostics() .. index()
+  return rendered .. hl_reset .. "%=" .. diagnostics() .. line_count(0) .. index()
 end
 
 return M

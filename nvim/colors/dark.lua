@@ -3,7 +3,7 @@ local colors = {
   gray2 = "#131720",
   gray3 = "#0e1119",
 
-  white1 = "#ccdbfb",
+  white1 = "#c2d5ff",
   white2 = "#99a7c2",
   white3 = "#4e596f",
 
@@ -20,6 +20,10 @@ vim.cmd "syntax reset"
 
 vim.g.colors_name = "bodby"
 
+-- TODO: Generate statusline and tabline diagnostic highlights using the normal "Error",
+--       "Warning", etc. highlights.
+
+-- For creating "BG" and "FG" variants.
 local stl_hls = {
   ["StatusLineNormal"]  = colors.cyan,
   ["StatusLineVisual"]  = colors.green,
@@ -30,6 +34,14 @@ local stl_hls = {
   ["StatusLinePrompt"]  = colors.white3,
   ["StatusLineShell"]   = colors.white3,
   ["StatusLineLimbo"]   = colors.white3
+}
+
+-- For creating "Entry###" and "Entry###NC" variants.
+local tabl_hls = {
+  ["Error"] = colors.red,
+  ["Warn"]  = colors.yellow,
+  ["Info"]  = colors.blue,
+  ["Hint"]  = colors.purple
 }
 
 local hls = {
@@ -118,28 +130,26 @@ local hls = {
   -- ["WinBarLOC"]  = { fg = colors.white3, bg = colors.gray3 },
   -- ["WinBarMod"]  = { fg = colors.white1, bg = colors.gray3 },
 
-  ["TabLine"]        = { fg = colors.white1, bg = colors.gray3 },
-  ["TabLineEntry"]   = { fg = colors.white1, bg = colors.gray2, bold = true },
-  ["TabLineEntryNC"] = { fg = colors.white3, bg = colors.gray3 },
-  ["TabLineIndex"]   = { fg = colors.cyan,   bg = colors.gray2, bold = true },
-  ["TabLineCount"]   = { fg = colors.cyan,   bg = colors.gray2, bold = true },
-  ["TabLineCountNC"] = { fg = colors.white2, bg = colors.gray3 },
-  ["TabLineError"]   = { fg = colors.red,    bg = colors.gray2, bold = true },
-  ["TabLineWarn"]    = { fg = colors.yellow, bg = colors.gray2, bold = true },
-  ["TabLineInfo"]    = { fg = colors.blue,   bg = colors.gray2, bold = true },
-  ["TabLineHint"]    = { fg = colors.purple, bg = colors.gray2, bold = true },
+  ["TabLine"]          = { fg = colors.white1, bg = colors.gray3 },
+  ["TabLineEntry"]     = { fg = colors.white1, bg = colors.gray2, bold = true },
+  ["TabLineEntryNC"]   = { fg = colors.white3, bg = colors.gray3 },
+  ["TabLineIndex"]     = { fg = colors.cyan,   bg = colors.gray2, bold = true },
+  ["TabLineLineCount"] = { fg = colors.white3, bg = colors.gray2 },
+  ["TabLineCount"]     = { fg = colors.cyan,   bg = colors.gray2, bold = true },
+  ["TabLineCountNC"]   = { fg = colors.white2, bg = colors.gray3 },
 
-  ["DiagnosticError"]          = { fg = colors.red },
-  ["DiagnosticInfo"]           = { fg = colors.blue },
-  ["DiagnosticHint"]           = { fg = colors.purple },
-  ["DiagnosticOk"]             = { fg = colors.white3 },
-  ["DiagnosticWarn"]           = { fg = colors.yellow },
+  ["DiagnosticError"]          = { fg = colors.red, bold = true },
+  ["DiagnosticInfo"]           = { fg = colors.blue, bold = true },
+  ["DiagnosticHint"]           = { fg = colors.purple, bold = true },
+  ["DiagnosticOk"]             = { fg = colors.white3, bold = true },
+  ["DiagnosticWarn"]           = { fg = colors.yellow, bold = true },
   ["DiagnosticUnderlineError"] = { sp = colors.red,    underline = true },
   ["DiagnosticUnderlineHint"]  = { sp = colors.purple, underline = true },
   ["DiagnosticUnderlineInfo"]  = { sp = colors.blue,   underline = true },
   ["DiagnosticUnderlineOk"]    = { sp = colors.white3, underline = true },
   ["DiagnosticUnderlineWarn"]  = { sp = colors.yellow, underline = true },
   ["DiagnosticDeprecated"]     = { fg = colors.white3, strikethrough = true },
+  ["DiagnosticUnnecessary"]    = { fg = colors.white3, italic = true },
 
   ["Normal"]              = { fg = colors.white2, bg = colors.gray2 },
   ["NormalFloat"]         = { fg = colors.white2, bg = colors.gray3 },
@@ -266,6 +276,12 @@ end
 for hl, col in pairs(stl_hls) do
   vim.api.nvim_set_hl(0, hl .. "BG", { bg = col })
   vim.api.nvim_set_hl(0, hl .. "FG", { fg = col, bg = colors.gray3, bold = true })
+end
+
+for hl, col in pairs(tabl_hls) do
+  vim.api.nvim_set_hl(0, "TabLine" .. hl,      { fg = col, bg = colors.gray2, bold = true })
+  vim.api.nvim_set_hl(0, "TabLineEntry" .. hl, { fg = col, bg = colors.gray2, bold = true })
+  vim.api.nvim_set_hl(0, "TabLineEntry" .. hl .. "NC", { fg = col, bg = colors.gray3 })
 end
 
 vim.g.terminal_color_0  = colors.gray3

@@ -1,31 +1,10 @@
 local finders       = require "telescope.finders"
 local pickers       = require "telescope.pickers"
-local entry_display = require "telescope.pickers.entry_display"
 local actions       = require "telescope.actions"
 local action_state  = require "telescope.actions.state"
 local sorters       = require "telescope.sorters"
 local strategies    = require "telescope.pickers.layout_strategies"
 
-local displayer = function(entry)
-  return entry_display.create({
-    separator = "",
-    items = {
-      { width = 20 },
-      { remaining = true }
-    }
-  })({ entry.name, { entry.value, "Comment" } })
-end
-
-local project_entry = function(entry)
-  local name = vim.fn.fnamemodify(entry, ":t")
-
-  return {
-    name = name,
-    value = entry,
-    display = displayer,
-    ordinal = 1
-  }
-end
 local header_margin = vim.fn.max({
   2, vim.fn.floor(vim.fn.winheight(0) * 0.4)
 })
@@ -140,8 +119,6 @@ local project_button = function(project_dir)
         sorter = sorters.get_fuzzy_file(),
         finder = finders.new_table({
           results = entries,
-          -- FIXME: WHY DOES THIS BREAK?
-          -- entry_maker = project_entry
         }),
         attach_mappings = function(_, map)
           map("i", "<CR>", function(bufnr)

@@ -196,9 +196,9 @@ require("blink.cmp").setup({
 
   sources = {
     -- "markdown", "spell"
-    default = function(context)
+    default = function(_)
       local status, node = pcall(vim.treesitter.get_node)
-      if success and node and vim.tbl_contains({
+      if status and node and vim.tbl_contains({
         "comment", "line_comment", "block_comment"
       }, node:type()) then
         return { "buffer" }
