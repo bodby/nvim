@@ -229,16 +229,6 @@ require("blink.cmp").setup({
         name   = "LSP",
         module = "blink.cmp.sources.lsp",
 
-        transform_items = function(_, items)
-          return vim.tbl_filter(function(item)
-            local types = require "blink.cmp.types"
-
-            return item.kind ~= types.CompletionItemKind.Text
-              and item.kind ~= types.CompletionItemKind.Snippet
-          end,
-          items)
-        end,
-
         enabled            = true,
         async              = false,
         timeout_ms         = 2000,
