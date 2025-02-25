@@ -22,10 +22,6 @@
       ];
     in
     {
-      formatter = nixpkgs.lib.genAttrs systems (
-        system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
-      );
-
       # TODO: Use 'mkNeovim' here instead of in package.nix to make customization easier.
       packages = nixpkgs.lib.genAttrs systems (system:
         let
@@ -53,7 +49,22 @@
               neovide --fork --no-tabs --neovim-bin ${pkgs.nvim-btw}/bin/nvim
             '';
           };
-        }
-      );
+        });
+
+      devShells = nixpkgs.lib.genAttrs systems (system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              (import ./nix/pkgs)
+              (import ./nix/package.nix { inherit inputs pkgs; })
+            ];
+          };
+        in {
+          default = pkgs.mkShell {
+            packages = [ pkgs.lua-language-server ];
+            inputsFrom = [ ];
+          };
+        });
     };
 }

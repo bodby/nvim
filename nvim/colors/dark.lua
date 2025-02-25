@@ -253,7 +253,10 @@ local hls = {
   ["@spell.latex"]  = { fg = colors.white2 },
   ["@module.latex"] = { link = "Keyword" },
 
-  ["@lsp.type.macro"] = { }
+  ["@lsp.type.macro"]    = { },
+  -- ["@lsp.type.variable"] = { },
+  ["@lsp.mod.global"] = { link = "@module" },
+  ["@lsp.type.comment"] = { }
 }
 
 for hl, opts in pairs(hls) do

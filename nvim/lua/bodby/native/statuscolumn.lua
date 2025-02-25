@@ -1,12 +1,10 @@
 local M = { }
 
---- @alias highlight string
---- @alias module string
---- @alias statuscolumn string
---- @alias windowID number
---- @alias HPos number
---- @alias MPos number
---- @alias LPos number
+---@alias statuscolumn string
+---@alias windowID number
+---@alias HPos number
+---@alias MPos number
+---@alias LPos number
 
 M.colors = {
   wrapped = "Virt",
@@ -22,7 +20,7 @@ function M.setup()
     "BufEnter",
   }, {
     group    = "status",
-    callback = function(event)
+    callback = function(_)
       local windows = vim.api.nvim_tabpage_list_wins(0);
 
       for _, window in pairs(windows) do
@@ -37,19 +35,21 @@ function M.setup()
   })
 end
 
---- @param col string Color name
---- @param cursor bool Whether to prepend "Cursor" to the highlight name
---- @return highlight Usable statuscolumn highlight string surrounded by "%#...#"
+---@param col string Color name
+---@param cursor boolean Whether to prepend "Cursor" to the highlight name
+---@return highlight
 local function stc_hl(col, cursor)
   local c = cursor and "Cursor" or ""
   return "%#" .. c .. "LineNr" .. col .. "#"
 end
 
---- The HML motion indicators.
---- @see "https://github.com/mawkler/hml.nvim"
---- @param window windowID
---- @return (HPos, MPos, LPos)
-local hml = function(window)
+---The HML motion indicators.
+---https://github.com/mawkler/hml.nvim
+---@param window windowID
+---@return HPos
+---@return MPos
+---@return LPos
+local function hml(window)
   local scrolloff = vim.wo[window].scrolloff
   local buffer    = vim.api.nvim_win_get_buf(window)
 
@@ -74,11 +74,10 @@ local hml = function(window)
   return h, math.max(middle, h), l
 end
 
---- The relative/absolute line number along with HML indicators.
---- @param window windowID
---- @return module
-local line_nr = function(window)
-  local buffer = vim.api.nvim_win_get_buf(window)
+---The relative/absolute line number along with HML indicators.
+---@param window windowID
+---@return module
+local function line_nr(window)
   local h, m, l = hml(window)
 
   -- Negative when drawing virtual lines, zero when drawing normal lines, and positive when
@@ -104,10 +103,10 @@ local line_nr = function(window)
   return "%=" .. vim.v.relnum
 end
 
---- Actual statuscolumn used in 'vim.wo[window].statuscolumn'.
---- @param window windowID
---- @return statuscolumn
-M.active = function(window)
+---Actual statuscolumn used in 'vim.wo[window].statuscolumn'.
+---@param window windowID
+---@return statuscolumn
+function M.active(window)
   if vim.api.nvim_win_is_valid(window) then
     if not vim.wo[window].number or not vim.wo[window].relativenumber then
       return ""

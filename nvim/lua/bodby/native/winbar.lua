@@ -21,7 +21,7 @@ function M.setup()
     "BufEnter"
   }, {
     group    = "status",
-    callback = function(event)
+    callback = function(_)
       local windows = vim.api.nvim_tabpage_list_wins(0);
 
       for _, window in pairs(windows) do

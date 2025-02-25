@@ -1,8 +1,6 @@
 -- NOTE: 'else if' is not the same as 'elseif'.
 
---- @alias highlight string
---- @alias module string
---- @alias statusline string
+---@alias statusline string
 
 local M = { }
 
@@ -56,12 +54,12 @@ M.colors = {
 
 local hl_reset = "%#StatusLine#"
 
---- 3 billion download JS micro-dependency.
---- Checks if an element exists inside of an array.
---- @generic T
---- @param e T
---- @param xs T[]
---- @return bool
+---3 billion download JS micro-dependency.
+---Checks if an element exists inside of an array.
+---@generic T
+---@param e T
+---@param xs T[]
+---@return boolean
 local function elem(e, xs)
   for _, v in ipairs(xs) do
     if v == e then return true end
@@ -69,8 +67,8 @@ local function elem(e, xs)
   return false
 end
 
---- @param col string Color name
---- @return highlight Usable statusline highlight string surrounded by "%#...#"
+---@param col string Color name
+---@return highlight
 local function stl_hl(col)
   return "%#StatusLine" .. col .. "#"
 end
@@ -100,33 +98,31 @@ function M.setup()
     end
   })
 
-  if vim.g.neovide then
-    vim.api.nvim_create_autocmd({
-      "CmdwinEnter",
-      "CmdlineEnter"
-    }, {
-      group    = "status",
-      callback = function(_)
-        vim.opt.statusline = " "
-      end
-    })
+  vim.api.nvim_create_autocmd({
+    "CmdwinEnter",
+    "CmdlineEnter"
+  }, {
+    group    = "status",
+    callback = function(_)
+      vim.opt.statusline = " "
+    end
+  })
 
-    vim.api.nvim_create_autocmd({
-      "CmdwinLeave",
-      "CmdlineLeave"
-    }, {
-      group    = "status",
-      callback = function(_)
-        vim.opt.statusline = "%!v:lua.require('bodby.native.statusline').active()"
-      end
-    })
-  end
+  vim.api.nvim_create_autocmd({
+    "CmdwinLeave",
+    "CmdlineLeave"
+  }, {
+    group    = "status",
+    callback = function(_)
+      vim.opt.statusline = "%!v:lua.require('bodby.native.statusline').active()"
+    end
+  })
 end
 
---- Returns the current mode (optionally) as well as a colored block.
---- @param show_name bool Whether to show the current mode name
---- @return module
-local mode = function(show_name)
+---Returns the current mode (optionally) as well as a colored block.
+---@param show_name boolean Whether to show the current mode name
+---@return module
+local function mode(show_name)
   local current = M.modes[vim.api.nvim_get_mode().mode]
   local fg_hl   = stl_hl(current .. "FG")
   local bg_hl   = stl_hl(current .. "BG")
@@ -139,9 +135,9 @@ local mode = function(show_name)
   end
 end
 
---- The current file, directory, and a modification indicator.
---- @return module
-local path = function()
+---The current file, directory, and a modification indicator.
+---@return module
+local function path()
   -- TODO: Check if vim.go.columns minus the (sum of all the lengths plus the basename of the path)
   --       is less than 0. If so, it means the filename does not fit.
   --       Do the same with the full path (after fnamemodify), and not the basename.
@@ -172,9 +168,9 @@ local path = function()
   end
 end
 
---- The branch and number of files added, changed, and modified.
---- @return module
-local git_info = function()
+---The branch and number of files added, changed, and modified.
+---@return module
+local function git_info()
   -- TODO: This requires gitsigns.nvim. Should write this as a standalone function using
   --       only Git commands.
 
@@ -186,25 +182,25 @@ local git_info = function()
   return stl_hl(M.colors.git_branch) .. branch .. stl_hl(M.colors.git_delta) .. status
 end
 
---- The macro register if recording.
---- @return module
-local macro_reg = function()
+---The macro register if recording.
+---@return module
+local function macro_reg()
   local reg = vim.fn.reg_recording()
   return reg ~= "" and stl_hl(M.colors.macro) .. reg or hl_reset
 end
 
---- Current line, column, and percentage of whole file.
---- @return module
-local pos = function()
+---Current line, column, and percentage of whole file.
+---@return module
+local function pos()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   -- TODO: Use Lua to format the percentage instead of '%p'?
   return
     stl_hl(M.colors.pos) .. " " .. row .. ":" .. col .. stl_hl(M.colors.percentage) .. " %p%% "
 end
 
---- Errors, warnings, and hints and info.
---- @return module
-local diagnostics = function()
+---Errors, warnings, and hints and info.
+---@return module
+local function diagnostics()
   local count = vim.diagnostic.count(0)
 
   local errors   = count[1] ~= nil and (stl_hl(M.colors.error) .. " " .. count[1]) or ""
@@ -215,28 +211,28 @@ local diagnostics = function()
   return errors .. warnings .. info .. hints
 end
 
---- The filetype and type of line endings (CRLF or LF).
---- @return module
-local filetype = function()
-  local filetype = vim.bo.filetype
+---The filetype and type of line endings (CRLF or LF).
+---@return module
+local function filetype()
+  local ft       = vim.bo.filetype
   local newlines = vim.bo.fileformat
 
-  if elem(filetype, M.blocked_fts) then
+  if elem(ft, M.blocked_fts) then
     return ""
-  elseif filetype == "" then
+  elseif ft == "" then
     -- No filetype isn't blocked because I sometimes use temporary buffers.
     return stl_hl(M.colors.filetype) .. " !none " .. stl_hl(M.colors.newline) .. newlines
   else
     -- TODO: Add a config option to make the first letter uppercase,
     --       using 'filetype:gsub("^%l", string.upper)', or make the whole text uppercase.
     return
-      stl_hl(M.colors.filetype) .. " !" .. filetype .. " " .. stl_hl(M.colors.newline) .. newlines
+      stl_hl(M.colors.filetype) .. " !" .. ft .. " " .. stl_hl(M.colors.newline) .. newlines
   end
 end
 
---- Actual statusline used in 'vim.opt.statusline'.
---- @return statusline
-M.active = function()
+---Actual statusline used in 'vim.opt.statusline'.
+---@return statusline
+function M.active()
   return table.concat({
     mode(true),
     path(),

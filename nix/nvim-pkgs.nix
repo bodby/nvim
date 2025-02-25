@@ -72,5 +72,8 @@ in
   packages = with pkgs; [
     ripgrep
     nixd
+    # TODO: Should I have this only in a devShell?
+    #       Currently in this repo only.
+    # lua-language-server
   ];
 }
