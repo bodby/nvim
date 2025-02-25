@@ -24,7 +24,7 @@ require("bodby.native.tabline").setup()
 require "bodby.native.commentstring"
 
 local function lazy_load(plugins, event, pattern)
-  local augroup = "lazy" .. event:lower() .. string.gsub(pattern, "ft", "*.")
+  local augroup = "lazy" .. event:lower() .. pattern
 
   vim.api.nvim_create_augroup(augroup, { })
   vim.api.nvim_create_autocmd(event, {

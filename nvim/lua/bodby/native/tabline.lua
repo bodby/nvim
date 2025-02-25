@@ -7,13 +7,13 @@ local M = { }
 -- FIXME: 'EntryError' and 'EntryErrorNC' while the right side of the tabline just uses 'Error'.
 --        Entry diagnostic highlights are broken right now.
 M.colors = {
-  tab     = "Entry",
-  index   = "Index",
-  count   = "Count",
-  error   = "Error",
-  warning = "Warn",
-  info    = "Info",
-  hint    = "Hint"
+  tab   = "Entry",
+  index = "Index",
+  count = "Count",
+  error = "Error",
+  warn  = "Warn",
+  info  = "Info",
+  hint  = "Hint"
 }
 
 local hl_reset = "%#TabLine#"
@@ -113,10 +113,17 @@ end
 local function diagnostics()
   local count = vim.diagnostic.count()
 
-  local errors   = count[1] ~= nil and (tabl_hl(M.colors.error) .. " " .. count[1]) or ""
-  local warnings = count[2] ~= nil and (tabl_hl(M.colors.warning) .. " " .. count[2]) or ""
-  local info     = count[3] ~= nil and (tabl_hl(M.colors.info) .. " " ..count[3]) or ""
-  local hints    = count[4] ~= nil and (tabl_hl(M.colors.hint) .. " " ..count[4]) or ""
+  ---@param num number
+  ---@param hl string
+  ---@return highlight
+  local function diag_fmt(num, hl)
+    return count[num] ~= nil and (tabl_hl(hl) .. " " .. count[num]) or ""
+  end
+
+  local errors   = diag_fmt(1, M.colors.error)
+  local warnings = diag_fmt(2, M.colors.warn)
+  local info     = diag_fmt(3, M.colors.info)
+  local hints    = diag_fmt(4, M.colors.hint)
 
   return errors .. warnings .. hints .. info
 end
