@@ -1,5 +1,5 @@
 local colors = {
-  gray1 = "#1c2330",
+  gray1 = "#1d232f",
   gray2 = "#131720",
   gray3 = "#0e1119",
 
@@ -199,7 +199,7 @@ local hls = {
 
   ["Boolean"]     = { fg = colors.green },
   ["Character"]   = { fg = colors.green },
-  ["Comment"]     = { fg = colors.white3, italic = true },
+  ["Comment"]     = { fg = colors.white3 },
   ["Conditional"] = { fg = colors.purple, bold = true },
   ["Constant"]    = { fg = colors.yellow },
   ["Delimiter"]   = { fg = colors.cyan },
