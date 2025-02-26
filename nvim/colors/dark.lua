@@ -4,7 +4,7 @@ local colors = {
   gray3 = "#0e1119",
 
   white1 = "#c2d5ff",
-  white2 = "#99a7c2",
+  white2 = "#95a6c6",
   white3 = "#4e596f",
 
   purple = "#a87dff",
@@ -138,6 +138,9 @@ local hls = {
   ["TabLineCount"]     = { fg = colors.cyan,   bg = colors.gray2, bold = true },
   ["TabLineCountNC"]   = { fg = colors.white2, bg = colors.gray3 },
 
+  ["Folded"]     = { fg = colors.white2, bg = colors.gray1 },
+  ["FoldedDeco"] = { fg = colors.cyan, bg = colors.gray1 },
+
   ["DiagnosticError"]          = { fg = colors.red, bold = true },
   ["DiagnosticInfo"]           = { fg = colors.blue, bold = true },
   ["DiagnosticHint"]           = { fg = colors.purple, bold = true },
@@ -195,11 +198,10 @@ local hls = {
   ["PmenuThumb"]          = { bg = colors.gray1 },
   ["PmenuSel"]            = { fg = colors.white1, bold = true },
   ["NonText"]             = { fg = colors.white3 },
-  ["Folded"]              = { fg = colors.white2, bg = colors.gray1 },
 
   ["Boolean"]     = { fg = colors.green },
   ["Character"]   = { fg = colors.green },
-  ["Comment"]     = { fg = colors.white3 },
+  ["Comment"]     = { fg = colors.white3, italic = true },
   ["Conditional"] = { fg = colors.purple, bold = true },
   ["Constant"]    = { fg = colors.yellow },
   ["Delimiter"]   = { fg = colors.cyan },

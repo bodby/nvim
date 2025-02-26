@@ -74,7 +74,7 @@ end
 
 -- TODO: Take in an opts table.
 function M.setup()
-  vim.opt.tabline = "%!v:lua.require('bodby.native.tabline').active()"
+  vim.o.tabline = "%!v:lua.require('bodby.native.tabline').active()"
 end
 
 ---Generate a module for the passed tab ID.
@@ -154,7 +154,7 @@ local function line_count(tab)
   end
 end
 
----Actual tabline used in 'vim.opt.tabline'.
+---Actual tabline used in 'vim.o.tabline'.
 ---@return tabline
 function M.active()
   local tabs = vim.api.nvim_list_tabpages()

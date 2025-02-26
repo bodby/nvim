@@ -1,42 +1,43 @@
-vim.opt.pumheight      = 16
-vim.opt.scrolloff      = 8
-vim.opt.showmode       = false
-vim.opt.cmdheight      = 0
-vim.opt.number         = true
-vim.opt.relativenumber = true
-vim.opt.cursorline     = true
-vim.opt.numberwidth    = 1
-vim.opt.signcolumn     = "yes"
-vim.opt.wrap           = true
-vim.opt.hlsearch       = false
-vim.opt.ignorecase     = true
-vim.opt.smartcase      = true
-vim.opt.spelllang      = "en"
-vim.opt.spell          = false
-vim.opt.spellsuggest   = "best"
-vim.opt.conceallevel   = 0
-vim.opt.concealcursor  = ""
-vim.opt.guicursor      = "a:Cursor/Cursor"
-vim.opt.list           = true
-vim.opt.laststatus     = 3
-vim.opt.showtabline    = 2
-vim.opt.shortmess      = "oOstTWIcCFSqc"
-vim.opt.mouse          = ""
-vim.opt.confirm        = true
-vim.opt.undofile       = true
-vim.opt.undolevels     = 10000
-vim.opt.expandtab      = true
-vim.opt.shiftwidth     = 2
-vim.opt.tabstop        = 2
-vim.opt.softtabstop    = 2
-vim.opt.foldenable     = true
-vim.opt.foldmethod     = "expr"
-vim.opt.foldexpr       = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevel      = 99
--- If this isn't blank then I lose syntax colors.
-vim.opt.foldtext       = ""
-vim.opt.foldnestmax    = 4
+vim.o.pumheight      = 16
+vim.o.scrolloff      = 8
+vim.o.showmode       = false
+vim.o.cmdheight      = 0
+vim.o.number         = true
+vim.o.relativenumber = true
+vim.o.cursorline     = true
+vim.o.numberwidth    = 1
+vim.o.signcolumn     = "yes"
+vim.o.wrap           = true
+vim.o.hlsearch       = false
+vim.o.ignorecase     = true
+vim.o.smartcase      = true
+vim.o.spelllang      = "en"
+vim.o.spell          = false
+vim.o.spellsuggest   = "best"
+vim.o.conceallevel   = 0
+vim.o.concealcursor  = ""
+vim.o.guicursor      = "a:Cursor/Cursor"
+vim.o.list           = true
+vim.o.laststatus     = 3
+vim.o.showtabline    = 2
+vim.o.shortmess      = "oOstTWIcCFSqc"
+vim.o.mouse          = ""
+vim.o.confirm        = true
+vim.o.undofile       = true
+vim.o.undolevels     = 10000
+vim.o.expandtab      = true
+vim.o.shiftwidth     = 2
+vim.o.tabstop        = 2
+vim.o.softtabstop    = 2
+vim.o.foldenable     = true
+vim.o.foldmethod     = "expr"
+vim.o.foldexpr       = "nvim_treesitter#foldexpr()"
+vim.o.foldlevel      = 99
+vim.o.foldtext       = ""
+vim.o.foldnestmax    = 4
 
+-- FIXME: Move 'opt' to 'o'.
+--        https://github.com/neovim/neovim/issues/20107
 vim.opt.fillchars:append({
   eob  = " ",
   stl  = " ",
@@ -46,8 +47,7 @@ vim.opt.fillchars:append({
 
 vim.opt.listchars:append({
   trail = "_",
-  tab   = "> ",
-  -- space = "·"
+  tab   = "> "
 })
 
 vim.g.markdown_recommended_style = 0
@@ -63,19 +63,19 @@ vim.g.loaded_python3_provider    = 0
 
 if vim.g.neovide then
   -- https://github.com/neovide/neovide/issues/2491
-  -- vim.opt.guifont = "JetBrains Mono:h13.5"
+  -- vim.o.guifont = "JetBrains Mono:h13.5"
 
   vim.g.neovide_text_gamma    = 1.2
   vim.g.neovide_text_contrast = 0.0
 
   if vim.fn.hostname() == "scout" then
-    vim.opt.linespace = 5
+    vim.o.linespace = 5
     vim.g.neovide_padding_top    = 32
     vim.g.neovide_padding_bottom = 32
     vim.g.neovide_padding_right  = 32
     vim.g.neovide_padding_left   = 32
   else
-    vim.opt.linespace = 3
+    vim.o.linespace = 3
     vim.g.neovide_padding_top    = 24
     vim.g.neovide_padding_bottom = 24
     vim.g.neovide_padding_right  = 24

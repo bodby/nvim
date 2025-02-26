@@ -76,8 +76,8 @@ end
 -- TODO: Take in an opts table.
 function M.setup()
   -- FIXME: Make this work when 'laststatus' isn't 3.
-  vim.opt.laststatus = 3
-  vim.opt.statusline = "%!v:lua.require('bodby.native.statusline').active()"
+  vim.o.laststatus = 3
+  vim.o.statusline = "%!v:lua.require('bodby.native.statusline').active()"
 
   -- HACK: Don't hide the statusline on certain actions.
   vim.api.nvim_create_autocmd({
@@ -104,7 +104,7 @@ function M.setup()
   }, {
     group    = "status",
     callback = function(_)
-      vim.opt.statusline = " "
+      vim.o.statusline = " "
     end
   })
 
@@ -114,7 +114,7 @@ function M.setup()
   }, {
     group    = "status",
     callback = function(_)
-      vim.opt.statusline = "%!v:lua.require('bodby.native.statusline').active()"
+      vim.o.statusline = "%!v:lua.require('bodby.native.statusline').active()"
     end
   })
 end
@@ -238,7 +238,7 @@ local function filetype(buffer)
   end
 end
 
----Actual statusline used in 'vim.opt.statusline'.
+---Actual statusline used in 'vim.o.statusline'.
 ---@return statusline
 function M.active()
   local window = vim.api.nvim_get_current_win()

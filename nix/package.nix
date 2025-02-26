@@ -54,13 +54,13 @@ let
 
       initLua = /* lua */ ''
         vim.loader.enable()
-        vim.opt.rtp:prepend "${nvimRtp}"
+        vim.o.rtp = "${nvimRtp}," .. vim.o.rtp .. ",${nvimRtp}/after" 
 
         ${builtins.readFile ../nvim/init.lua}
 
         -- NOTE: I have to add this as a separate directory because normally 'queries/' and
         --       'ftplugin/' are actually in the root of the config folder.
-        vim.opt.rtp:prepend "${nvimRtp}/after"
+        -- vim.o.rtp = "${nvimRtp}/after" .. vim.o.rtp 
 
         -- Used for blink.cmp so it can find snippets.
         vim.g.root_path = "${nvimRtp}"

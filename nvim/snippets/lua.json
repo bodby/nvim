@@ -25,7 +25,7 @@
       "vim.api.nvim_create_autocmd({",
       "\t\"${1:VimEnter}\"",
       "}, {",
-      "\tgroup    = \"${2:augroup}\"",
+      "\tgroup    = \"${2:augroup}\",",
       "\tcallback = function(${3:event})",
       "\t\t$0",
       "\tend",

@@ -21,6 +21,7 @@ require("bodby.native.statusline").setup()
 require("bodby.native.statuscolumn").setup()
 -- require("bodby.native.winbar").setup()
 require("bodby.native.tabline").setup()
+-- require("bodby.native.folds").setup()
 require "bodby.native.commentstring"
 
 local function lazy_load(plugins, event, pattern)
