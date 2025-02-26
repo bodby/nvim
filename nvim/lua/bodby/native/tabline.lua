@@ -1,8 +1,6 @@
 local M = { }
 
 ---@alias tabline string
----@alias diagnosticID number
----@alias tabID number
 
 -- FIXME: 'EntryError' and 'EntryErrorNC' while the right side of the tabline just uses 'Error'.
 --        Entry diagnostic highlights are broken right now.
@@ -42,7 +40,7 @@ end
 ]]
 
 ---Check every window to see if any of them have any diagnostics and return the necessary color.
----@param windows windowID[]
+---@param windows winID[]
 ---@param current boolean
 ---@return string
 local function diagnostic_hl(windows, current)

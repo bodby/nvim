@@ -36,20 +36,20 @@ M.blocked_fts = {
 }
 
 M.colors = {
-  dir            = "Directory",
-  file           = "File",
-  git_branch     = "Branch",
-  git_delta      = "Delta",
-  macro          = "Macro",
-  error          = "Error",
-  warning        = "Warn",
-  info           = "Info",
-  hint           = "Hint",
-  filetype       = "FileType",
+  dir        = "Directory",
+  file       = "File",
+  git_branch = "Branch",
+  git_delta  = "Delta",
+  macro      = "Macro",
+  error      = "Error",
+  warning    = "Warn",
+  info       = "Info",
+  hint       = "Hint",
+  filetype   = "FileType",
   -- Newline type (CRLF or LF).
-  newline        = "NewLine",
-  pos            = "Pos",
-  percentage     = "Percent"
+  newline    = "NewLine",
+  pos        = "Pos",
+  percentage = "Percent"
 }
 
 local hl_reset = "%#StatusLine#"
@@ -136,8 +136,9 @@ local function mode(show_name)
 end
 
 ---The current file, directory, and a modification indicator.
+---@param buffer bufID The buffer to return the open file of
 ---@return module
-local function path()
+local function path(buffer)
   -- TODO: Check if vim.go.columns minus the (sum of all the lengths plus the basename of the path)
   --       is less than 0. If so, it means the filename does not fit.
   --       Do the same with the full path (after fnamemodify), and not the basename.
@@ -145,10 +146,9 @@ local function path()
   --       and hiding the directory while you change modes.
   --       Currently only have a hard cap of 70 columns (100) before I hide the filename (path).
 
-  local buffer = vim.api.nvim_get_current_buf()
-  local full   = vim.api.nvim_buf_get_name(buffer)
-  local file   = vim.fn.fnamemodify(full, ":~:.:t")
-  local dir    = vim.fn.fnamemodify(full, ":~:.:h")
+  local full = vim.api.nvim_buf_get_name(buffer)
+  local file = vim.fn.fnamemodify(full, ":~:.:t")
+  local dir  = vim.fn.fnamemodify(full, ":~:.:h")
 
   dir = dir ~= "." and dir .. "/" or ""
 
@@ -190,18 +190,25 @@ local function macro_reg()
 end
 
 ---Current line, column, and percentage of whole file.
+---@param window winID The window to get the cursor position from
+---@param ft string The filetype of the window's current buffer
 ---@return module
-local function pos()
-  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  -- TODO: Use Lua to format the percentage instead of '%p'?
-  return
-    stl_hl(M.colors.pos) .. " " .. row .. ":" .. col .. stl_hl(M.colors.percentage) .. " %p%% "
+local function pos(window, ft)
+  local row, col = unpack(vim.api.nvim_win_get_cursor(window))
+  if elem(ft, M.blocked_fts) then
+    return ""
+  else
+    -- TODO: Use Lua to format the percentage instead of '%p'?
+    return
+      stl_hl(M.colors.pos) .. " " .. row .. ":" .. col .. stl_hl(M.colors.percentage) .. " %p%% "
+  end
 end
 
 ---Errors, warnings, and hints and info.
+---@param buffer bufID The buffer to get the diagnostics of
 ---@return module
-local function diagnostics()
-  local count = vim.diagnostic.count(0)
+local function diagnostics(buffer)
+  local count = vim.diagnostic.count(buffer)
 
   local errors   = count[1] ~= nil and (stl_hl(M.colors.error) .. " " .. count[1]) or ""
   local warnings = count[2] ~= nil and (stl_hl(M.colors.warning) .. " " .. count[2]) or ""
@@ -212,10 +219,11 @@ local function diagnostics()
 end
 
 ---The filetype and type of line endings (CRLF or LF).
+---@param buffer bufID The buffer to get the filetype of
 ---@return module
-local function filetype()
-  local ft       = vim.bo.filetype
-  local newlines = vim.bo.fileformat
+local function filetype(buffer)
+  local ft       = vim.bo[buffer].filetype
+  local newlines = vim.bo[buffer].fileformat
 
   if elem(ft, M.blocked_fts) then
     return ""
@@ -233,16 +241,19 @@ end
 ---Actual statusline used in 'vim.opt.statusline'.
 ---@return statusline
 function M.active()
+  local window = vim.api.nvim_get_current_win()
+  local buffer = vim.api.nvim_win_get_buf(window)
+
   return table.concat({
     mode(true),
-    path(),
+    path(buffer),
     git_info(),
     macro_reg(),
     hl_reset,
     "%=",
-    diagnostics(),
-    filetype(),
-    pos(),
+    diagnostics(buffer),
+    filetype(buffer),
+    pos(window, vim.bo[buffer].filetype),
     mode(false)
   })
 end

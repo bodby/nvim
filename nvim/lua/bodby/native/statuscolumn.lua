@@ -1,7 +1,6 @@
 local M = { }
 
 ---@alias statuscolumn string
----@alias windowID number
 ---@alias HPos number
 ---@alias MPos number
 ---@alias LPos number
@@ -45,7 +44,7 @@ end
 
 ---The HML motion indicators.
 ---https://github.com/mawkler/hml.nvim
----@param window windowID
+---@param window winID
 ---@return HPos
 ---@return MPos
 ---@return LPos
@@ -75,7 +74,7 @@ local function hml(window)
 end
 
 ---The relative/absolute line number along with HML indicators.
----@param window windowID
+---@param window winID
 ---@return module
 local function line_nr(window)
   local h, m, l = hml(window)
@@ -104,7 +103,7 @@ local function line_nr(window)
 end
 
 ---Actual statuscolumn used in 'vim.wo[window].statuscolumn'.
----@param window windowID
+---@param window winID
 ---@return statuscolumn
 function M.active(window)
   if vim.api.nvim_win_is_valid(window) then
