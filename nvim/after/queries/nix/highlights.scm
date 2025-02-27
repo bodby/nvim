@@ -31,3 +31,9 @@ function: (_
         attrs: (inherited_attrs))
       (_)
     )))
+
+(let_expression
+  (binding_set
+    binding: (binding
+      attrpath: (attrpath
+        attr: (identifier) @variable))))
