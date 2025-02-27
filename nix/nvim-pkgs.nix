@@ -45,6 +45,7 @@ in
         luadoc
         vim
         vimdoc
+        doxygen
         python
         nix
         html

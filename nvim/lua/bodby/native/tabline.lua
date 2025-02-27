@@ -44,7 +44,6 @@ end
 ---@param current boolean
 ---@return string
 local function diagnostic_hl(windows, current)
-
   ---@param hl string
   ---@return highlight
   local function diag_fmt(hl)
@@ -148,7 +147,7 @@ local function line_count(tab)
 
   local lcount = vim.fn.getbufinfo(buffer)[1].linecount
   if lcount ~= nil then
-    return tabl_hl(M.colors.loc) .. " /" .. lcount
+    return tabl_hl(M.colors.loc) .. " " .. lcount
   else
     return ""
   end

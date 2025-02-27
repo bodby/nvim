@@ -83,9 +83,9 @@ local hls = {
 
   ["RenderMarkdownCode"]       = { bg = colors.gray3 },
   ["RenderMarkdownCodeInline"] = { fg = colors.purple, bg = colors.gray3 },
-  ["RenderMarkdownDash"]       = { link = "WinSeparator" },
+  ["RenderMarkdownDash"]       = { fg = colors.gray1 },
 
-  ["VirtColumn"] = { fg = colors.gray1, bg = nil },
+  ["VirtColumn"] = { link = "ColorColumn" },
   -- ["IndentLine"]        = { fg = colors.gray1 },
   -- ["IndentLineCurrent"] = { fg = colors.white3 },
   -- ["Hlargs"]            = { fg = colors.green, italic = true },
@@ -117,7 +117,7 @@ local hls = {
   ["StatusLineMacro"]     = { fg = colors.purple, bg = colors.gray3, bold = true },
   ["StatusLineError"]     = { fg = colors.red,    bg = colors.gray3, bold = true },
   ["StatusLineWarn"]      = { fg = colors.yellow, bg = colors.gray3, bold = true },
-  ["StatusLineInfo"]      = { fg = colors.blue, bg = colors.gray3, bold = true },
+  ["StatusLineInfo"]      = { fg = colors.blue,   bg = colors.gray3, bold = true },
   ["StatusLineHint"]      = { fg = colors.purple, bg = colors.gray3, bold = true },
   ["StatusLineFileType"]  = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLineNewLine"]   = { fg = colors.white2, bg = colors.gray3 },
@@ -130,13 +130,25 @@ local hls = {
   -- ["WinBarLOC"]  = { fg = colors.white3, bg = colors.gray3 },
   -- ["WinBarMod"]  = { fg = colors.white1, bg = colors.gray3 },
 
-  ["TabLine"]          = { fg = colors.white1, bg = colors.gray3 },
-  ["TabLineEntry"]     = { fg = colors.white1, bg = colors.gray2, bold = true },
-  ["TabLineEntryNC"]   = { fg = colors.white3, bg = colors.gray3 },
+  ["TabLine"] = { fg = colors.white1, bg = colors.gray2 },
+  ["TabLineEntry"] = {
+    fg        = colors.white1,
+    bg        = colors.gray2,
+    sp        = colors.cyan,
+    bold      = true,
+    underline = true
+  },
+  ["TabLineEntryNC"]   = { fg = colors.white3, bg = colors.gray2 },
   ["TabLineIndex"]     = { fg = colors.cyan,   bg = colors.gray2, bold = true },
   ["TabLineLineCount"] = { fg = colors.white3, bg = colors.gray2 },
-  ["TabLineCount"]     = { fg = colors.cyan,   bg = colors.gray2, bold = true },
-  ["TabLineCountNC"]   = { fg = colors.white2, bg = colors.gray3 },
+  ["TabLineCount"] = {
+    fg        = colors.cyan,
+    bg        = colors.gray2,
+    sp        = colors.cyan,
+    bold      = true,
+    underline = true
+  },
+  ["TabLineCountNC"]   = { fg = colors.white2, bg = colors.gray2 },
 
   ["Folded"]     = { fg = colors.white2, bg = colors.gray1 },
   ["FoldedDeco"] = { fg = colors.cyan, bg = colors.gray1 },
@@ -173,9 +185,9 @@ local hls = {
   ["Macro"]               = { fg = colors.blue },
   ["ModeMsg"]             = { fg = colors.white2 },
   ["MoreMsg"]             = { fg = colors.white1 },
-  ["SpellBad"]            = { fg = colors.yellow },
-  ["SpellRare"]           = { fg = colors.blue },
-  ["SpellCap"]            = { fg = colors.blue },
+  ["SpellBad"]            = { sp = colors.yellow, undercurl = true },
+  ["SpellRare"]           = { sp = colors.blue, undercurl = true },
+  ["SpellCap"]            = { sp = colors.blue, undercurl = true },
   ["Question"]            = { fg = colors.white2 },
   ["SpecialKey"]          = { fg = colors.purple },
   ["Visual"]              = { bg = colors.gray1 },
@@ -186,7 +198,7 @@ local hls = {
   ["LineNr"]              = { fg = colors.white3 },
   ["LineNrSpecial"]       = { fg = colors.white2, bold = true },
   ["LineNrWrapped"]       = { fg = colors.white3 },
-  ["WinSeparator"]        = { fg = colors.gray3 },
+  ["WinSeparator"]        = { fg = colors.gray2 },
   ["ColorColumn"]         = { fg = colors.gray1 },
   ["SignColumn"]          = { fg = colors.gray1 },
   ["CursorLine"]          = { },
@@ -268,8 +280,8 @@ local hls = {
 
   ["@lsp.type.macro"]    = { },
   -- ["@lsp.type.variable"] = { },
-  ["@lsp.mod.global"] = { link = "@module" },
-  ["@lsp.type.comment"] = { }
+  ["@lsp.mod.global"]    = { link = "@module" },
+  ["@lsp.type.comment"]  = { }
 }
 
 for hl, opts in pairs(hls) do
@@ -283,8 +295,14 @@ end
 
 for hl, col in pairs(tabl_hls) do
   vim.api.nvim_set_hl(0, "TabLine" .. hl,      { fg = col, bg = colors.gray2, bold = true })
-  vim.api.nvim_set_hl(0, "TabLineEntry" .. hl, { fg = col, bg = colors.gray2, bold = true })
-  vim.api.nvim_set_hl(0, "TabLineEntry" .. hl .. "NC", { fg = col, bg = colors.gray3 })
+  vim.api.nvim_set_hl(0, "TabLineEntry" .. hl, {
+    fg        = col,
+    bg        = colors.gray2,
+    sp        = colors.cyan,
+    bold      = true,
+    underline = true
+  })
+  vim.api.nvim_set_hl(0, "TabLineEntry" .. hl .. "NC", { fg = col, bg = colors.gray2 })
 end
 
 vim.g.terminal_color_0  = colors.gray3

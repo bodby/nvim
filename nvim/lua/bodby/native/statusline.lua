@@ -129,7 +129,7 @@ local function mode(show_name)
 
   if show_name then
     -- TODO: Make the mode name casing a config option.
-    return bg_hl .. " " .. fg_hl .. " :" .. current:lower() .. hl_reset .. " "
+    return bg_hl .. " " .. fg_hl .. " " .. current:upper() .. " "
   else
     return bg_hl .. " "
   end
@@ -139,7 +139,7 @@ end
 ---@param buffer bufID The buffer to return the open file of
 ---@return module
 local function path(buffer)
-  -- TODO: Check if vim.go.columns minus the (sum of all the lengths plus the basename of the path)
+  -- TODO: Check if 'go.columns' minus the (sum of all the lengths plus the basename of the path)
   --       is less than 0. If so, it means the filename does not fit.
   --       Do the same with the full path (after fnamemodify), and not the basename.
   --       Use the longest mode name length (6 letters) so it doesn't fluctuate between showing
@@ -229,12 +229,12 @@ local function filetype(buffer)
     return ""
   elseif ft == "" then
     -- No filetype isn't blocked because I sometimes use temporary buffers.
-    return stl_hl(M.colors.filetype) .. " !none " .. stl_hl(M.colors.newline) .. newlines
+    return stl_hl(M.colors.filetype) .. " none " .. stl_hl(M.colors.newline) .. newlines
   else
     -- TODO: Add a config option to make the first letter uppercase,
     --       using 'filetype:gsub("^%l", string.upper)', or make the whole text uppercase.
     return
-      stl_hl(M.colors.filetype) .. " !" .. ft .. " " .. stl_hl(M.colors.newline) .. newlines
+      stl_hl(M.colors.filetype) .. " " .. ft .. " " .. stl_hl(M.colors.newline) .. newlines
   end
 end
 
