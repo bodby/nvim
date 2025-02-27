@@ -15,29 +15,34 @@ vim.keymap.set({ "n", "v" }, "<Leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<Leader>Y", [["+Y]])
 
 -- System clipboard.
--- You can use this insert using 'Ctrl+O' -> 'Space p/P'
 vim.keymap.set("n", "<Leader>p", [["+p]])
 vim.keymap.set("n", "<Leader>P", [["+P]])
 
--- Helix uses Ctrl+C to comment.
--- I can still use 'gcj' and 'gck', etc. for multiple lines.
+-- Helix comment mapping.
 vim.keymap.set({ "n", "v" }, "<C-c>", "<Cmd>normal gcc<CR>")
 
 -- Snippets.
--- See ':h <expr>'. It inserts the result of the function rather than running it as a command.
 vim.keymap.set({ "n", "i", "v", "s" }, "<S-CR>", function()
   if vim.snippet.active({ direction = 1 }) then
     vim.snippet.jump(1)
   end
 end)
--- Alternatively, using tab (annoying because of fuzzy autocompletion).
--- vim.keymap.set({ "n", "i", "v", "s" }, "<Tab>", function()
---   if vim.snippet.active({ direction = 1 }) then
---     return "<Cmd>lua vim.snippet.jump(1)<CR>"
---   else
---     return "<Tab>"
---   end
--- end, { expr = true })
+
+-- Fix folds not updating when modifying files (I think).
+-- TODO: Should this be here?
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function(event)
+    vim.o.foldmethod = vim.o.foldmethod
+  end
+})
+
+vim.keymap.set({ "n", "v" }, "za", function()
+  vim.o.foldmethod = vim.o.foldmethod
+  return "za"
+end, {
+  expr  = true,
+  remap = false
+})
 
 function M.setup_lsp_mappings(opts)
   vim.keymap.set("n", "gd",     "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
