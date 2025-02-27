@@ -100,7 +100,7 @@ local hls = {
   ["TelescopePromptPrefix"]   = { fg = colors.white3 },
   ["TelescopeResultsNormal"]  = { fg = colors.white3, bg = colors.gray3 },
   ["TelescopeResultsBorder"]  = { fg = colors.gray2,  bg = colors.gray3 },
-  ["TelescopePreviewNormal"]  = { fg = colors.white1, bg = colors.gray3 },
+  ["TelescopePreviewNormal"]  = { fg = colors.white2, bg = colors.gray3 },
   ["TelescopePreviewBorder"]  = { fg = colors.gray2,  bg = colors.gray3 },
   ["TelescopePreviewTitle"]   = { fg = colors.gray1,  bg = colors.gray3 },
   ["TelescopePreviewMatch"]   = { bg = colors.gray2 },
@@ -270,12 +270,12 @@ local hls = {
 
   ["@constructor.ocaml"] = { link = "@punctuation.bracket" },
 
-  ["@spell.markdown"] = { fg = colors.white2 },
+  -- ["@spell.markdown"] = { fg = colors.white2 },
   ["@markup.heading"] = { link = "Title" },
   ["@markup.link"]    = { fg = colors.white1 },
   ["@markup.strong"]  = { fg = colors.white1, bold = true },
 
-  ["@spell.latex"]  = { fg = colors.white2 },
+  -- ["@spell.latex"]  = { fg = colors.white2 },
   ["@module.latex"] = { link = "Keyword" },
 
   ["@lsp.type.macro"]    = { },
