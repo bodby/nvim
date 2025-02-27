@@ -150,5 +150,9 @@
   "overbrace": {
     "prefix": "overbrace",
     "body": "\\overbrace{${1:expr}}^{${2:label}}$0"
+  },
+  "citation": {
+    "prefix": [ "citation", "cite" ],
+    "body": "\\cite{${1:key}}$0"
   }
 }
