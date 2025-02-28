@@ -7,11 +7,11 @@ local colors = {
   white2 = "#95a6c6",
   white3 = "#4e596f",
 
-  purple = "#a87dff",
-  blue   = "#809fff",
-  yellow = "#ffb06b",
+  purple = "#9d7dff",
+  blue   = "#809cff",
+  yellow = "#ffb96b",
   green  = "#bbef86",
-  red    = "#f75f8d",
+  red    = "#f75fa8",
   cyan   = "#89bcff"
 }
 
@@ -36,7 +36,7 @@ local stl_hls = {
   ["StatusLineLimbo"]   = colors.white3
 }
 
--- For creating "Entry###" and "Entry###NC" variants.
+-- For creating "Entryand "EntryNC" variants.
 local tabl_hls = {
   ["Error"] = colors.red,
   ["Warn"]  = colors.yellow,
@@ -71,7 +71,7 @@ local hls = {
   ["BlinkCmpKindEnum"]          = { fg = colors.purple },
   ["BlinkCmpKindEnumMember"]    = { fg = colors.yellow },
   ["BlinkCmpKindKeyword"]       = { fg = colors.cyan, bold = true },
-  ["BlinkCmpKindConstant"]      = { fg = colors.yellow },
+  ["BlinkCmpKindConstant"]      = { fg = colors.white1, bold = true },
   ["BlinkCmpKindSnippet"]       = { fg = colors.purple, bold = true },
   ["BlinkCmpKindColor"]         = { fg = colors.green },
   ["BlinkCmpKindFile"]          = { fg = colors.white1 },
@@ -85,7 +85,7 @@ local hls = {
   ["RenderMarkdownCodeInline"] = { fg = colors.purple, bg = colors.gray3 },
   ["RenderMarkdownDash"]       = { fg = colors.gray1 },
 
-  ["VirtColumn"] = { link = "ColorColumn" },
+  ["VirtColumn"] = { fg = colors.gray1 },
   -- ["IndentLine"]        = { fg = colors.gray1 },
   -- ["IndentLineCurrent"] = { fg = colors.white3 },
   -- ["Hlargs"]            = { fg = colors.green, italic = true },
@@ -215,8 +215,8 @@ local hls = {
   ["Character"]   = { fg = colors.green },
   ["Comment"]     = { fg = colors.white3, italic = true },
   ["Conditional"] = { fg = colors.purple, bold = true },
-  ["Constant"]    = { fg = colors.yellow },
-  ["Delimiter"]   = { fg = colors.cyan },
+  ["Constant"]    = { fg = colors.yellow, bold = true },
+  ["Delimiter"]   = { fg = colors.cyan, nocombine = true },
   ["Float"]       = { fg = colors.green },
   ["Function"]    = { fg = colors.blue },
   ["Identifier"]  = { fg = colors.white2 },
@@ -225,21 +225,21 @@ local hls = {
   ["PreProc"]     = { fg = colors.purple },
   ["Number"]      = { fg = colors.green },
   ["Operator"]    = { fg = colors.cyan },
-  ["Special"]     = { fg = colors.white1 },
-  ["SpecialChar"] = { fg = colors.green },
+  ["Special"]     = { fg = colors.purple },
+  ["SpecialChar"] = { fg = colors.green, italic = true },
   ["Statement"]   = { fg = colors.white2 },
   ["String"]      = { fg = colors.green },
   ["Tag"]         = { fg = colors.blue },
   ["Todo"]        = { fg = colors.white2, bold = true },
   ["Type"]        = { fg = colors.purple },
 
-  ["@comment.warning"] = { fg = colors.white2, bold = true },
-  ["@comment.error"]   = { fg = colors.white2, bold = true },
-  ["@comment.todo"]    = { fg = colors.white2, bold = true },
-  ["@comment.note"]    = { fg = colors.white2, bold = true },
+  ["@comment.warning"] = { fg = colors.cyan, bold = true },
+  ["@comment.error"]   = { fg = colors.cyan, bold = true },
+  ["@comment.todo"]    = { fg = colors.cyan, bold = true },
+  ["@comment.note"]    = { fg = colors.cyan, bold = true },
 
   -- Users, e.g.
-  -- TODO (@bodby): Something
+  -- TODO (@bodby): Something.
   ["@constant.comment"] = { fg = colors.blue },
 
   ["@type.builtin"]        = { link = "Type" },
@@ -254,29 +254,33 @@ local hls = {
   ["@keyword.operator"]    = { fg = colors.cyan },
   ["@punctuation.special"] = { link = "Operator" },
   ["@character.special"]   = { fg = colors.cyan },
-  ["@constant.builtin"]    = { fg = colors.green },
+  -- TODO: Does this only affect 'null' and 'nil'?
+  ["@constant.builtin"]    = { link = "Boolean" },
   ["@constructor"]         = { fg = colors.yellow },
-  ["@namespace"]           = { fg = colors.yellow },
-  ["@module"]              = { fg = colors.yellow },
-  ["@module.builtin"]      = { fg = colors.yellow },
+  ["@namespace"]           = { fg = colors.yellow, bold = true },
+  ["@module"]              = { fg = colors.yellow, bold = true },
+  ["@module.builtin"]      = { fg = colors.yellow, bold = true },
 
   ["@function.macro.vim"] = { link = "String" },
   ["@constructor.lua"]    = { link = "@punctuation.bracket" },
 
-  ["@keyword.import.nix"] = { link = "@function.call" },
+  ["@keyword.import.nix"]             = { link = "@function.call" },
+  ["@variable.parameter.builtin.nix"] = { link = "Delimiter" },
 
   ["@tag.delimiter.html"] = { link = "Delimiter" },
   ["@tag.attribute.html"] = { fg = colors.purple },
 
   ["@constructor.ocaml"] = { link = "@punctuation.bracket" },
 
-  -- ["@spell.markdown"] = { fg = colors.white2 },
   ["@markup.heading"] = { link = "Title" },
   ["@markup.link"]    = { fg = colors.white1 },
   ["@markup.strong"]  = { fg = colors.white1, bold = true },
 
-  -- ["@spell.latex"]  = { fg = colors.white2 },
-  ["@module.latex"] = { link = "Keyword" },
+  ["@module.latex"]                 = { link = "Keyword" },
+  ["@markup.link.latex"]            = { fg = colors.white1 },
+  ["@string.special.symbol.bibtex"] = { fg = colors.white1 },
+
+  ["@punctuation.special.luadoc"] = { fg = colors.purple },
 
   ["@lsp.type.macro"]    = { },
   -- ["@lsp.type.variable"] = { },

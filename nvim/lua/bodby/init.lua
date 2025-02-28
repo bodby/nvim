@@ -7,12 +7,6 @@ vim.g.mapleader = " "
 -- Why does NvChad defer mappings?
 vim.schedule(function()
   require "bodby.config.mappings"
-
-  vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(event)
-      require("bodby.config.mappings").setup_lsp_mappings({ buffer = event.buf })
-    end
-  })
 end)
 
 vim.api.nvim_create_augroup("status", { })

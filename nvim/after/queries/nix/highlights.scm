@@ -7,9 +7,9 @@ function: (select_expression
 function: (_
   name: (identifier) @function.call)
 
-(variable_expression
-  name: (identifier) @module.builtin
-    (#any-of? @module.builtin "nixpkgs" "builtins" "lib" "pkgs"))
+; (variable_expression
+;   name: (identifier) @module.builtin
+;     (#any-of? @module.builtin "nixpkgs" "builtins" "lib" "pkgs"))
 
 (binding
   attrpath: (attrpath

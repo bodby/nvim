@@ -106,7 +106,7 @@ vim.keymap.set("n", "<Leader>fv", function()
     prompt_title  = "",
     preview_title = "",
     cwd           = "~/vault",
-    search_dirs   = { "lists", "notes" }
+    search_dirs   = { "papers", "lists", "notes" }
   })
 end)
 

@@ -2,7 +2,8 @@
   description = "Neovim config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    # NOTE: blink.cmp doesn't work on master.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # blink-cmp.url = "github:Saghen/blink.cmp";
     # blink-cmp.inputs.nixpkgs.follows = "nixpkgs";

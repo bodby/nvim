@@ -1,5 +1,4 @@
-local M = { }
-
+-- TODO: Move all mappings into named table ('vanilla', 'lsp', 'abbreviations', etc.).
 vim.keymap.set("v",          "<Leader>p", [["_dP]])
 vim.keymap.set("v",          "<Leader>P", [["_dP]])
 vim.keymap.set({ "n", "v" }, "<Leader>d", [["_d]])
@@ -29,7 +28,7 @@ vim.keymap.set({ "n", "i", "v", "s" }, "<S-CR>", function()
 end)
 
 -- Fix folds not updating when modifying files (I think).
--- TODO: Should this be here?
+-- FIXME: Do these even work?
 vim.api.nvim_create_autocmd("InsertLeave", {
   callback = function(event)
     vim.o.foldmethod = vim.o.foldmethod
@@ -44,16 +43,84 @@ end, {
   remap = false
 })
 
-function M.setup_lsp_mappings(opts)
-  vim.keymap.set("n", "gd",     "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  vim.keymap.set("n", "grn",    "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.keymap.set("n", "gra",    "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  vim.keymap.set("n", "K",      "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.keymap.set("n", "<C-w>d", "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
-  vim.keymap.set("n", "]d",     "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-  vim.keymap.set("n", "[d",     "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-end
+-- Abbreviations.
+-- vim.api.nvim_create_autocmd("Filetype", {
+--   pattern  = { "tex", "latex" },
+--   callback = function(event)
+--     local opts = { buffer = vim.api.nvim_get_current_buf() }
+--
+--     vim.keymap.set("ia", "@<-", "\\gets", opts)
+--     vim.keymap.set("ia", "@!", "\\neg",  opts)
+--     vim.keymap.set("ia", "@>=", "\\geq",  opts)
+--     vim.keymap.set("ia", "@<=", "\\leq",  opts)
+--     vim.keymap.set("ia", "@/=", "\\neq",  opts)
+--   end
+-- })
 
+-- LaTeX specific.
+-- TODO: Also for Markdown.
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern  = { "tex", "latex" },
+  callback = function(event)
+    local opts = { buffer = vim.api.nvim_get_current_buf() }
+
+    vim.keymap.set("i", "<C-b>", function()
+      vim.snippet.expand("\\textbf{${1:text}}$0")
+    end, opts)
+
+    vim.keymap.set("i", "<C-i>", function()
+      vim.snippet.expand("\\textit{${1:text}}$0")
+    end, opts)
+
+    vim.keymap.set("i", "<C-S-b>", function()
+      vim.snippet.expand("\\mathbf{${1:expr}}$0")
+    end, opts)
+
+    vim.keymap.set("i", "<C-S-i>", function()
+      vim.snippet.expand("\\mathit{${1:expr}}$0")
+    end, opts)
+  end
+})
+
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern  = "markdown",
+  callback = function(event)
+    local opts = { buffer = vim.api.nvim_get_current_buf() }
+
+    vim.keymap.set({ "i", "v" }, "<C-b>", function()
+      vim.snippet.expand("**${1:text}**$0")
+    end, opts)
+
+    vim.keymap.set({ "i", "v" }, "<C-i>", function()
+      vim.snippet.expand("*${1:text}*$0")
+    end, opts)
+
+    -- TODO: Does this work in Markdown math blocks?
+    vim.keymap.set("i", "<C-S-b>", function()
+      vim.snippet.expand("\\mathbf{${1:expr}}$0")
+    end, opts)
+
+    vim.keymap.set("i", "<C-S-i>", function()
+      vim.snippet.expand("\\mathit{${1:expr}}$0")
+    end, opts)
+  end
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(event)
+    local opts = { buffer = event.buf }
+
+    vim.keymap.set("n", "gd",     "<Cmd>lua vim.lsp.buf.definition()<CR>",    opts)
+    vim.keymap.set("n", "grn",    "<Cmd>lua vim.lsp.buf.rename()<CR>",        opts)
+    vim.keymap.set("n", "gra",    "<Cmd>lua vim.lsp.buf.code_action()<CR>",   opts)
+    vim.keymap.set("n", "K",      "<Cmd>lua vim.lsp.buf.hover()<CR>",         opts)
+    vim.keymap.set("n", "<C-w>d", "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
+    vim.keymap.set("n", "]d",     "<Cmd>lua vim.diagnostic.goto_next()<CR>",  opts)
+    vim.keymap.set("n", "[d",     "<Cmd>lua vim.diagnostic.goto_prev()<CR>",  opts)
+  end
+})
+
+-- Zoom mappings.
 if vim.g.neovide then
   vim.keymap.set("n", "<C-+>", function()
     vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.125
@@ -67,5 +134,3 @@ if vim.g.neovide then
     vim.g.neovide_scale_factor = 1.0
   end)
 end
-
-return M

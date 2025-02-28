@@ -11,15 +11,20 @@ local filetypes = {
   json    = "// %s",
   jsonc   = "// %s",
   ocaml   = "(* %s *)",
+  query   = "; %s",
+  bib     = "% %s",
+  tex     = "% %s",
+  latex   = "% %s",
   rust    = "// %s",
   html    = "<!-- %s -->",
   css     = "/* %s */"
 }
 
 vim.api.nvim_create_autocmd("FileType", {
-  callback = function()
-    if filetypes[vim.bo.filetype] ~= nil then
-      vim.bo.commentstring = filetypes[vim.bo.filetype]
+  callback = function(event)
+    local buffer = event.buf
+    if filetypes[vim.bo[buffer].filetype] ~= nil then
+      vim.bo[buffer].commentstring = filetypes[vim.bo[buffer].filetype]
     end
   end
 })

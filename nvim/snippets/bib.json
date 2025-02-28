@@ -6,8 +6,8 @@
       "\tauthor  = \"$2\",",
       "\ttitle   = \"$3\",",
       "\tjournal = \"$4\",",
-      "\tyear    = \"$5\"",
-      "}$0"
+      "\tyear    = $0",
+      "}"
     ]
   },
   "book": {
@@ -17,16 +17,16 @@
       "\tauthor    = \"$2\",",
       "\ttitle     = \"$3\",",
       "\tpublisher = \"$4\",",
-      "\tyear      = \"$5\"",
-      "}$0"
+      "\tyear      = $0",
+      "}"
     ]
   },
   "booklet": {
     "prefix": "booklet",
     "body": [
       "@booklet{${1:key},",
-      "\ttitle = \"$2\"",
-      "}$0"
+      "\ttitle = \"$2\"$0",
+      "}"
     ]
   },
   "inbook": {
@@ -35,10 +35,10 @@
       "@inbook{${1:key},",
       "\tauthor    = \"$2\",",
       "\ttitle     = \"$3\",",
-      "\tpages     = \"${4:from}--${5:to}\",",
-      "\tpublisher = \"$6\",",
-      "\tyear      = \"$7\"",
-      "}$0"
+      "\tpages     = \"${4:1,3,6--18}\",",
+      "\tpublisher = \"$5\",",
+      "\tyear      = $0",
+      "}"
     ]
   },
   "incollection": {
@@ -49,8 +49,8 @@
       "\ttitle     = \"$3\",",
       "\tbooktitle = \"$4\",",
       "\tpublisher = \"$5\",",
-      "\tyear      = \"$6\"",
-      "}$0"
+      "\tyear      = $0",
+      "}"
     ]
   },
   "inproceedings": {
@@ -60,16 +60,16 @@
       "\tauthor    = \"$2\",",
       "\ttitle     = \"$3\",",
       "\tbooktitle = \"$4\",",
-      "\tyear      = \"$5\"",
-      "}$0"
+      "\tyear      = $0",
+      "}"
     ]
   },
   "manual": {
     "prefix": [ "manual", "rtfm" ],
     "body": [
       "@manual{${1:key},",
-      "\ttitle = \"$2\"",
-      "}$0"
+      "\ttitle = \"$2\"$0",
+      "}"
     ]
   },
   "mastersthesis": {
@@ -79,8 +79,8 @@
       "\tauthor = \"$2\",",
       "\ttitle  = \"$3\",",
       "\tschool = \"$4\",",
-      "\tyear   = \"$5\"",
-      "}$0"
+      "\tyear   = $0",
+      "}"
     ]
   },
   "misc": {
@@ -98,8 +98,8 @@
       "\tauthor = \"$2\",",
       "\ttitle  = \"$3\",",
       "\tschool = \"$4\",",
-      "\tyear   = \"$5\"",
-      "}$0"
+      "\tyear   = $0",
+      "}"
     ]
   },
   "proceedings": {
@@ -107,8 +107,8 @@
     "body": [
       "@proceedings{${1:key},",
       "\ttitle = \"$2\",",
-      "\tyear  = \"$3\"",
-      "}$0"
+      "\tyear  = $0",
+      "}"
     ]
   },
   "techreport": {
@@ -118,8 +118,8 @@
       "\tauthor      = \"$2\",",
       "\ttitle       = \"$3\",",
       "\tinstitution = \"$4\",",
-      "\tyear        = \"$5\"",
-      "}$0"
+      "\tyear        = $0",
+      "}"
     ]
   },
   "unpublished": {
@@ -128,8 +128,8 @@
       "@unpublished{${1:key},",
       "\tauthor = \"$2\",",
       "\ttitle  = \"$3\",",
-      "\tnote   = \"$4\"",
-      "}$0"
+      "\tnote   = \"$4\"$0",
+      "}"
     ]
   }
 }

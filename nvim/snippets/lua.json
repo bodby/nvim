@@ -26,7 +26,8 @@
       "\t\"${1:VimEnter}\"",
       "}, {",
       "\tgroup    = \"${2:augroup}\",",
-      "\tcallback = function(${3:event})",
+      "\tpattern  = \"${3:*}\",",
+      "\tcallback = function(${4:event})",
       "\t\t$0",
       "\tend",
       "})"
