@@ -41,20 +41,29 @@ vim.diagnostic.config({
 
 -- FIXME: Change the 'servers' table to a dictionary with per-LSP config options.
 lspconfig["lua_ls"].setup({
+  capabilities = cmp_caps,
   settings = {
     Lua = {
       runtime = {
-        version = "LuaJIT"
+        version = "LuaJIT",
+        path    = vim.split(package.path, ";")
       },
+
       diagnostics = {
         globals       = { "vim" },
-        workspaceRate = 70
+        workspaceRate = 100
+      },
+
+      workspace = {
+        library         = { vim.env.VIMRUNTIME },
+        preloadFileSize = 10000,
+        checkThirdParty = false
       },
 
       completion = {
         autoRequire      = true,
         callSnippet      = "Replace",
-        keywordSnippet   = "Replace",
+        keywordSnippet   = "Disable",
         requireSeparator = ".",
         showWord         = "Enable",
         workspaceWord    = true

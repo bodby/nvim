@@ -18,6 +18,9 @@ require("bodby.native.tabline").setup()
 -- require("bodby.native.folds").setup()
 require "bodby.native.commentstring"
 
+---@param plugins string[]
+---@param event string
+---@param pattern string
 local function lazy_load(plugins, event, pattern)
   local augroup = "lazy" .. event:lower() .. pattern
 
@@ -44,7 +47,6 @@ require "bodby.plugins.nvim-lspconfig"
 lazy_load({
   "blink-cmp",
   -- "indentmini-nvim",
-  -- "blink-indent",
   -- "hlargs-nvim",
   "gitsigns-nvim",
   "smartcolumn-nvim",

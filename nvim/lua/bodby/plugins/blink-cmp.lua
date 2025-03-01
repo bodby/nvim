@@ -29,7 +29,7 @@ require("blink.cmp").setup({
     end,
 
     active = function(filter)
-      vim.snippet.active(filter)
+      return vim.snippet.active(filter)
     end,
 
     jump = function(direction)
@@ -52,7 +52,7 @@ require("blink.cmp").setup({
     },
 
     list = {
-      max_items = 200,
+      max_items = 20000,
       selection = { preselect = true, auto_insert = true },
       cycle = {
         from_bottom = true,
@@ -189,10 +189,22 @@ require("blink.cmp").setup({
     }
   },
 
+  cmdline = {
+    enabled = true,
+    keymap = {
+      ["<Tab>"] = { "show", "accept" }
+    },
+
+    completion = {
+      menu = {
+        auto_show = true
+      }
+    }
+  },
+
   sources = {
     -- "markdown", "spell"
-    default = { "buffer", "snippets", "lsp", "path" },
-    -- cmdline = { },
+    default = { "snippets", "buffer", "lsp", "path" },
 
     providers = {
       buffer = {
@@ -216,15 +228,14 @@ require("blink.cmp").setup({
         module = "blink.cmp.sources.lsp",
 
         enabled            = true,
-        async              = false,
+        async              = true,
         timeout_ms         = 2000,
         transform_items    = nil,
         should_show_items  = true,
         max_items          = nil,
         min_keyword_length = 0,
         -- fallbacks          = { "buffer" },
-        score_offset       = 0,
-        override           = nil
+        score_offset       = 0
       },
 
       path = {
@@ -243,7 +254,7 @@ require("blink.cmp").setup({
 
         enabled      = true,
         -- fallbacks    = { "buffer" },
-        score_offset = 3
+        score_offset = 50
       },
 
       snippets = {
@@ -251,9 +262,9 @@ require("blink.cmp").setup({
         module = "blink.cmp.sources.snippets",
 
         opts = {
-          friendly_snippets  = true,
+          friendly_snippets  = false,
           -- search_paths       = { vim.fn.stdpath("config") .. "/snippets" },
-          -- NOTE: 'root_path' is set by 'package.nix'.
+          -- 'root_path' is set by 'package.nix'.
           search_paths       = { vim.g.root_path .. "/snippets" },
           global_snippets    = { "all" },
           extended_filetypes = { },
@@ -265,7 +276,7 @@ require("blink.cmp").setup({
         },
 
         enabled      = true,
-        score_offset = 3
+        score_offset = 100
       },
 
       -- spell = {

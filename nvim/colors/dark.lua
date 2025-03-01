@@ -8,15 +8,15 @@ local colors = {
   white3 = "#4e596f",
 
   purple = "#9d7dff",
-  blue   = "#809cff",
+  blue = "#809cff",
   yellow = "#ffb96b",
-  green  = "#bbef86",
-  red    = "#f75fa8",
-  cyan   = "#89bcff"
+  green = "#bbef86",
+  red = "#f75fa8",
+  cyan = "#89bcff",
 }
 
-vim.cmd "highlight clear"
-vim.cmd "syntax reset"
+vim.cmd("highlight clear")
+vim.cmd("syntax reset")
 
 vim.g.colors_name = "bodby"
 
@@ -25,15 +25,15 @@ vim.g.colors_name = "bodby"
 
 -- For creating "BG" and "FG" variants.
 local stl_hls = {
-  ["StatusLineNormal"]  = colors.cyan,
-  ["StatusLineVisual"]  = colors.green,
-  ["StatusLineSelect"]  = colors.green,
-  ["StatusLineInsert"]  = colors.purple,
+  ["StatusLineNormal"] = colors.cyan,
+  ["StatusLineVisual"] = colors.green,
+  ["StatusLineSelect"] = colors.green,
+  ["StatusLineInsert"] = colors.purple,
   ["StatusLineReplace"] = colors.red,
   ["StatusLineCommand"] = colors.yellow,
-  ["StatusLinePrompt"]  = colors.white3,
-  ["StatusLineShell"]   = colors.white3,
-  ["StatusLineLimbo"]   = colors.white3
+  ["StatusLinePrompt"] = colors.white3,
+  ["StatusLineShell"] = colors.white3,
+  ["StatusLineLimbo"] = colors.white3,
 }
 
 -- For creating "Entryand "EntryNC" variants.
@@ -41,7 +41,7 @@ local tabl_hls = {
   ["Error"] = colors.red,
   ["Warn"]  = colors.yellow,
   ["Info"]  = colors.blue,
-  ["Hint"]  = colors.purple
+  ["Hint"]  = colors.purple,
 }
 
 local hls = {
@@ -54,6 +54,7 @@ local hls = {
   ["BlinkCmpMenu"]              = { fg = colors.white3, bg = colors.gray3 },
   ["BlinkCmpMenuSelection"]     = { fg = colors.white1, bold = true },
   ["BlinkCmpLabelMatch"]        = { bold = true },
+  ["BlinkCmpLabelDeprecated"]   = { strikethrough = true },
   ["BlinkCmpKindText"]          = { fg = colors.white2 },
   ["BlinkCmpKindMethod"]        = { fg = colors.blue },
   ["BlinkCmpKindFunction"]      = { fg = colors.blue },
@@ -70,7 +71,7 @@ local hls = {
   ["BlinkCmpKindValue"]         = { fg = colors.green },
   ["BlinkCmpKindEnum"]          = { fg = colors.purple },
   ["BlinkCmpKindEnumMember"]    = { fg = colors.yellow },
-  ["BlinkCmpKindKeyword"]       = { fg = colors.cyan, bold = true },
+  ["BlinkCmpKindKeyword"]       = { fg = colors.cyan,   bold = true },
   ["BlinkCmpKindConstant"]      = { fg = colors.white1, bold = true },
   ["BlinkCmpKindSnippet"]       = { fg = colors.purple, bold = true },
   ["BlinkCmpKindColor"]         = { fg = colors.green },
@@ -136,7 +137,7 @@ local hls = {
     bg        = colors.gray2,
     sp        = colors.cyan,
     bold      = true,
-    underline = true
+    underline = true,
   },
   ["TabLineEntryNC"]   = { fg = colors.white3, bg = colors.gray2 },
   ["TabLineIndex"]     = { fg = colors.cyan,   bg = colors.gray2, bold = true },
@@ -146,7 +147,7 @@ local hls = {
     bg        = colors.gray2,
     sp        = colors.cyan,
     bold      = true,
-    underline = true
+    underline = true,
   },
   ["TabLineCountNC"]   = { fg = colors.white2, bg = colors.gray2 },
 
@@ -285,7 +286,7 @@ local hls = {
   ["@lsp.type.macro"]    = { },
   -- ["@lsp.type.variable"] = { },
   ["@lsp.mod.global"]    = { link = "@module" },
-  ["@lsp.type.comment"]  = { }
+  ["@lsp.type.comment"]  = { },
 }
 
 for hl, opts in pairs(hls) do
@@ -304,7 +305,7 @@ for hl, col in pairs(tabl_hls) do
     bg        = colors.gray2,
     sp        = colors.cyan,
     bold      = true,
-    underline = true
+    underline = true,
   })
   vim.api.nvim_set_hl(0, "TabLineEntry" .. hl .. "NC", { fg = col, bg = colors.gray2 })
 end

@@ -1,102 +1,37 @@
 {
-  "class": {
-    "prefix": "class",
-    "body": [
-      "local M = { }",
-      "",
-      "function M.${1:new}($2)",
-      "\t$0",
-      "end",
-      "",
-      "return M"
-    ]
-  },
-  "schedule": {
-    "prefix": [ "schedule", "vim-schedule" ],
-    "body": [
-      "vim.schedule(function()",
-      "\t$0",
-      "end)"
-    ]
-  },
-  "autocmd": {
-    "prefix": [ "autocmd", "nvim-create-autocmd" ],
-    "body": [
-      "vim.api.nvim_create_autocmd({",
-      "\t\"${1:VimEnter}\"",
-      "}, {",
-      "\tgroup    = \"${2:augroup}\",",
-      "\tpattern  = \"${3:*}\",",
-      "\tcallback = function(${4:event})",
-      "\t\t$0",
-      "\tend",
-      "})"
-    ]
-  },
-  "metatable": {
-    "prefix": [ "metatable", "setmetatable" ],
-    "body": [
-      "setmetatable({",
-      "\t$1",
-      "}, {",
-      "\t__index = function(${2:self}, ${3:k})",
-      "\t\t$0",
-      "\tend",
-      "})"
-    ]
-  },
-
-  "local": {
-    "prefix": "local",
-    "body": "local ${1:x} = $0"
-  },
   "function": {
     "prefix": "function",
     "body": [
-      "function ${1:f}($2)",
+      "function ${1:name}($2)",
       "\t$0",
       "end"
     ]
   },
+
   "lambda": {
-    "prefix": [ "lambda", "anonymous-function" ],
+    "prefix": "lambda",
     "body": [
       "function($1)",
       "\t$0",
       "end"
     ]
   },
+
   "pcall": {
     "prefix": "pcall",
-    "body": "local ${1:status}, ${2:value} = pcall(${3:command})$0"
-  },
-  "require": {
-    "prefix": "require",
-    "body": "require \"${1:path.to.module}\"$0"
-  },
-  "local-require": {
-    "prefix": "local-require",
-    "body": "local ${1:identifier} = require \"${2:path.to.module}\"$0"
-  },
-  "return": {
-    "prefix": "return",
-    "body": "return $0"
+    "body": "local ${1:status}, ${2:value} = pcall($3)$0"
   },
   "if": {
     "prefix": "if",
-    "body": [
-      "if ${1:true} then",
-      "\t$0",
-      "end"
-    ]
+    "body": "if $1 then $0 end"
+  },
+  "either": {
+    "prefix": "either",
+    "body": "$1 and $2 or $0"
   },
   "else": {
     "prefix": "else",
-    "body": [
-      "else",
-      "\t$0",
-      "end"
-    ]
+    "body": "else $0 end"
   },
   "elseif": {
     "prefix": [ "elseif", "elif" ],
@@ -128,6 +63,14 @@
       "while ${1:true} do",
       "\t$0",
       "end"
+    ]
+  },
+  "repeat": {
+    "prefix": "repeat",
+    "body": [
+      "repeat",
+      "\t$0",
+      "until $1"
     ]
   }
 }

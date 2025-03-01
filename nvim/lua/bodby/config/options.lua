@@ -1,3 +1,4 @@
+-- FIXME: Move all 'vim.opt' lines to 'vim.o'.
 vim.o.pumheight      = 16
 vim.o.scrolloff      = 8
 vim.o.showmode       = false

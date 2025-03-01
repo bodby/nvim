@@ -154,10 +154,6 @@
     "prefix": [ "math-italic-math", "math-emphasis-math" ],
     "body": "\\mathit{${1:text}}$0"
   },
-  "italic-math": {
-    "prefix": [ "math-italic-math", "math-emphasis-math" ],
-    "body": "\\mathit{${1:text}}$0"
-  },
 
   "bold-text": {
     "prefix": [ "text-bold-text", "text-strong-text" ],
