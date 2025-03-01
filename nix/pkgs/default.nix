@@ -4,5 +4,5 @@ final: prev: with prev; {
   # github-nvim-theme = callPackage ./github-nvim-theme.nix { };
   nvim-align = callPackage ./nvim-align.nix { };
   # indentmini-nvim = callPackage ./indentmini-nvim.nix { };
-  hlargs-nvim = callPackage ./hlargs-nvim.nix { };
+  # hlargs-nvim = callPackage ./hlargs-nvim.nix { };
 }

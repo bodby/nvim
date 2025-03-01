@@ -1,9 +1,9 @@
-local finders       = require "telescope.finders"
-local pickers       = require "telescope.pickers"
-local actions       = require "telescope.actions"
-local action_state  = require "telescope.actions.state"
-local sorters       = require "telescope.sorters"
-local strategies    = require "telescope.pickers.layout_strategies"
+local finders      = require "telescope.finders"
+local pickers      = require "telescope.pickers"
+local actions      = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local sorters      = require "telescope.sorters"
+local strategies   = require "telescope.pickers.layout_strategies"
 
 local header_margin = vim.fn.max({
   2, vim.fn.floor(vim.fn.winheight(0) * 0.4)
@@ -11,7 +11,7 @@ local header_margin = vim.fn.max({
 
 local header = {
   type = "text",
-  val = "78 101 111 118 105 109",
+  val  = "78 101 111 118 105 109",
   -- val = {
   --   "           ▄ ▄                   ",
   --   "       ▄   ▄▄▄     ▄ ▄▄▄ ▄ ▄     ",
@@ -40,7 +40,7 @@ local footer = {
   }
 }
 
-local button = function(shortcut, text, action)
+local function button(shortcut, text, action)
   local opts = {
     position       = "center",
     shortcut       = shortcut,
@@ -65,21 +65,15 @@ local button = function(shortcut, text, action)
     }
   }
 
-  local function on_press()
-    -- local keys = vim.api.nvim_replace_termcodes(cmd, true, false, true)
-    -- vim.api.nvim_feedkeys(keys, "t", false)
-    action()
-  end
-
   return {
     type     = "button",
     val      = "* " .. text,
     opts     = opts,
-    on_press = on_press
+    on_press = action
   }
 end
 
-strategies.project_picker = function(picker, max_columns, max_lines, layout_config)
+function strategies.project_picker(picker, max_columns, max_lines, layout_config)
   local layout = strategies.vertical(picker, max_columns, max_lines, layout_config)
 
   layout.prompt.title  = ""
@@ -90,7 +84,7 @@ strategies.project_picker = function(picker, max_columns, max_lines, layout_conf
   return layout
 end
 
-local title_picker_fix = function(opts)
+local function title_picker_fix(opts)
   return vim.tbl_deep_extend("force", {
     theme           = "project_picker",
     layout_strategy = "project_picker",
@@ -172,10 +166,6 @@ local shortcuts = {
     vault_button(),
 
     project_button("/home/bodby/dev"),
-
-    button("q", "Quit", function()
-      vim.cmd "qa"
-    end)
   },
 
   opts = { spacing = 1 }

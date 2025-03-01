@@ -92,12 +92,16 @@ local function gen_tab(tab, current)
   end
 
   local window = vim.api.nvim_tabpage_get_win(tab)
-  local buffer = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(window))
-  local file   = vim.fs.basename(buffer)
+  local buffer = vim.api.nvim_win_get_buf(window)
+  local name   = vim.fs.basename(vim.api.nvim_buf_get_name(buffer))
 
-  if file == "" then
-    file = "New file"
+  if name == "" then
+    name = "???"
   end
+
+  -- if vim.api.nvim_win_get_config(window).relative ~= "" then
+  --   name = "Floating"
+  -- end
 
   return table.concat({
     tabl_hl(M.colors.count, current),
@@ -106,7 +110,7 @@ local function gen_tab(tab, current)
     " ",
     tabl_hl(M.colors.tab, current),
     diagnostic_hl(windows, current),
-    file,
+    name,
     " "
   })
 end

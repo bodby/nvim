@@ -30,7 +30,7 @@ end)
 -- Fix folds not updating when modifying files (I think).
 -- FIXME: Do these even work?
 vim.api.nvim_create_autocmd("InsertLeave", {
-  callback = function(event)
+  callback = function(_)
     vim.o.foldmethod = vim.o.foldmethod
   end
 })
@@ -56,55 +56,6 @@ end, {
 --     vim.keymap.set("ia", "@/=", "\\neq",  opts)
 --   end
 -- })
-
--- LaTeX specific.
--- TODO: Also for Markdown.
-vim.api.nvim_create_autocmd("Filetype", {
-  pattern  = { "tex", "latex" },
-  callback = function(event)
-    local opts = { buffer = vim.api.nvim_get_current_buf() }
-
-    vim.keymap.set("i", "<C-b>", function()
-      vim.snippet.expand("\\textbf{${1:text}}$0")
-    end, opts)
-
-    vim.keymap.set("i", "<C-i>", function()
-      vim.snippet.expand("\\textit{${1:text}}$0")
-    end, opts)
-
-    vim.keymap.set("i", "<C-S-b>", function()
-      vim.snippet.expand("\\mathbf{${1:expr}}$0")
-    end, opts)
-
-    vim.keymap.set("i", "<C-S-i>", function()
-      vim.snippet.expand("\\mathit{${1:expr}}$0")
-    end, opts)
-  end
-})
-
-vim.api.nvim_create_autocmd("Filetype", {
-  pattern  = "markdown",
-  callback = function(event)
-    local opts = { buffer = vim.api.nvim_get_current_buf() }
-
-    vim.keymap.set({ "i", "v" }, "<C-b>", function()
-      vim.snippet.expand("**${1:text}**$0")
-    end, opts)
-
-    vim.keymap.set({ "i", "v" }, "<C-i>", function()
-      vim.snippet.expand("*${1:text}*$0")
-    end, opts)
-
-    -- TODO: Does this work in Markdown math blocks?
-    vim.keymap.set("i", "<C-S-b>", function()
-      vim.snippet.expand("\\mathbf{${1:expr}}$0")
-    end, opts)
-
-    vim.keymap.set("i", "<C-S-i>", function()
-      vim.snippet.expand("\\mathit{${1:expr}}$0")
-    end, opts)
-  end
-})
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
