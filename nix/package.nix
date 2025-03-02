@@ -1,119 +1,110 @@
-{ inputs, pkgs, ... }:
-final: prev:
+{
+  pkgs,
+  plugins,
+  packages,
+
+  appName ? null,
+  viAlias ? appName == null || appName == "nvim",
+  vimAlias ? appName == null || appName == "nvim",
+  ...
+}:
 let
-  nvimPackages = import ./nvim-pkgs.nix {
-    inherit pkgs inputs;
-    inherit (final) system;
-  };
+  inherit (pkgs) stdenv lib;
 
-  mkNeovimConfig =
-    {
-      appName ? null,
-      nvim-unwrapped ? pkgs.neovim-unwrapped,
-      plugins ? [ ],
-      extraPackages ? [ ],
-      extraLuaPackages ? p: [ ],
-      viAlias ? false,
-      vimAlias ? false,
-    }:
-    with pkgs.lib;
-    let
-      inherit (pkgs) stdenv;
+  mkNeovim = {
+    appName,
+    viAlias,
+    vimAlias,
+    nvim-unwrapped ? pkgs.neovim-unwrapped,
+    extraPlugins ? [ ],
+    extraPackages ? [ ],
+    extraLuaPackages ? p: [ ]
+  }:
+  let
+    defaultPlugin = {
+      plugin = null;
+      config = null;
+      optional = false;
+      runtime = { };
+    };
 
-      defaultPlugin = {
-        plugin = null;
-        config = null;
-        optional = false;
-        runtime = { };
-      };
+    nvimConfig = pkgs.neovimUtils.makeNeovimConfig {
+      inherit viAlias vimAlias;
+      extraPython3Packages = p: [ ];
+      withPython3 = false;
+      withRuby = false;
+      withNodeJs = false;
+      plugins = map (p:
+        defaultPlugin // (if p ? plugin then p else { plugin = p; })) extraPlugins;
+    };
 
-      nvimConfig = pkgs.neovimUtils.makeNeovimConfig {
-        inherit viAlias vimAlias;
-        extraPython3Packages = p: [ ];
-        withPython3 = false;
-        withRuby = false;
-        withNodeJs = false;
-        plugins = map (x: defaultPlugin // (if x ? plugin then x else { plugin = x; })) plugins;
-      };
+    nvimRtp = stdenv.mkDerivation {
+      name = "nvim-rtp";
+      src = ../nvim;
 
-      nvimRtp = stdenv.mkDerivation {
-        name = "nvim-rtp";
-        src = ../nvim;
-
-        buildPhase = ''
-          mkdir -p $out/lua
-          mkdir -p $out/after
-          mkdir -p $out/snippets
-          mkdir -p $out/colors
-        '';
-
-        installPhase = ''
-          cp -r lua after snippets colors $out
-        '';
-      };
-
-      initLua = /* lua */ ''
-        vim.loader.enable()
-
-        -- Used for blink.cmp so it can find snippets.
-        vim.g.root_path = "${nvimRtp}"
-
-        vim.o.rtp = "${nvimRtp}," .. vim.o.rtp .. ",${nvimRtp}/after"
-
-        ${builtins.readFile ../nvim/init.lua}
-
-        -- NOTE: I have to add this as a separate directory because normally 'queries/' and
-        --       'ftplugin/' are actually in the root of the config folder.
-        -- vim.o.rtp = "${nvimRtp}/after" .. vim.o.rtp 
+      buildPhase = ''
+        mkdir -p $out/lua
+        mkdir -p $out/after
+        mkdir -p $out/snippets
+        mkdir -p $out/colors
       '';
 
-      isCustomAppName = appName != null && appName != "nvim" && appName != "";
+      installPhase = ''
+        cp -r lua after snippets colors $out
+      '';
+    };
 
-      extraMakeWrapperArgs =
-        (optionalString isCustomAppName "--set NVIM_APPNAME '${appName}'")
-        + (optionalString (extraPackages != [ ]) "--suffix PATH ':' '${makeBinPath extraPackages}'");
+    initLua = /* lua */ ''
+      vim.loader.enable()
+      -- Used for blink.cmp so it can find snippets.
+      vim.g.root_path = "${nvimRtp}"
+      vim.o.rtp = "${nvimRtp}," .. vim.o.rtp .. ",${nvimRtp}/after"
 
-      extraLuaPackages' = extraLuaPackages nvim-unwrapped.lua.pkgs;
+      ${builtins.readFile ../nvim/init.lua}
+    '';
 
-      extraLuaWrapperArgs =
-        optionalString (extraLuaPackages' != [ ])
-          "--suffix LUA_PATH ';' '${concatMapStringsSep ";" luaPackages.getLuaPath extraLuaPackages'}'";
+    modifiedAppName = appName != null && appName != "nvim" && appName != "";
+    extraLuaPackages' = extraLuaPackages nvim-unwrapped.lua.pkgs;
 
-      extraLuaCWrapperArgs =
-        optionalString (extraLuaPackages' != [ ])
-          "--suffix LUA_CPATH ';' '${concatMapStringsSep ";" luaPackages.getLuaCPath extraLuaPackages'}'";
+    makeWrapperArgs = with lib;
+      strings.concatStringsSep " " [
+        (optionalString modifiedAppName
+          "--set NVIM_APPNAME '${appName}'")
+        (optionalString (extraPackages != [ ])
+          "--prefix PATH ':' '${makeBinPath extraPackages}'")
+      ];
 
-      nvim-wrapped = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
-        nvimConfig
-        // {
-          luaRcContent = initLua;
-          wrapperArgs =
-            escapeShellArgs nvimConfig.wrapperArgs
-            + " "
-            + extraMakeWrapperArgs
-            + " "
-            + extraLuaCWrapperArgs
-            + " "
-            + extraLuaWrapperArgs;
-          wrapRc = true;
-        }
-      );
-    in
-    nvim-wrapped.overrideAttrs (prev: {
-      buildPhase =
-        prev.buildPhase
-        + optionalString isCustomAppName /* bash */ ''
-          mv $out/bin/nvim $out/bin/${escapeShellArgs appName}
-        '';
+    luaWrapperArgs = with lib;
+      let paths = strings.concatMapStringsSep ";" luaPackages.getLuaPath extraLuaPackages';
+      in optionalString (extraLuaPackages' != [ ]) "--suffix LUA_PATH ';' '${paths}'";
 
-      meta.mainProgram = if isCustomAppName then appName else prev.meta.mainProgram;
-    });
+    luaCWrapperArgs = with lib;
+      let paths = strings.concatMapStringsSep ";" luaPackages.getLuaCPath extraLuaPackages';
+      in optionalString (extraLuaPackages' != [ ]) "--suffix LUA_CPATH ';' '${paths}'";
+
+    nvim-wrapped = pkgs.wrapNeovimUnstable nvim-unwrapped
+      (nvimConfig // {
+        luaRcContent = initLua;
+        wrapperArgs = lib.strings.concatStringsSep " " [
+          (lib.escapeShellArgs nvimConfig.wrapperArgs)
+          makeWrapperArgs
+          luaCWrapperArgs
+          luaWrapperArgs
+        ];
+        wrapRc = true;
+      });
+  in
+  nvim-wrapped.overrideAttrs (finalAttrs: {
+    buildPhase = finalAttrs.buildPhase
+      + lib.optionalString modifiedAppName /* bash */ ''
+        mv $out/bin/nvim $out/bin/${lib.escapeShellArgs appName}
+      '';
+
+    meta.mainProgram = if modifiedAppName then appName else finalAttrs.meta.mainProgram;
+  });
 in
-{
-  nvim-btw = mkNeovimConfig {
-    plugins = nvimPackages.plugins;
-    extraPackages = nvimPackages.packages;
-    viAlias = true;
-    vimAlias = true;
-  };
+mkNeovim {
+  inherit viAlias vimAlias appName;
+  extraPlugins = plugins;
+  extraPackages = packages;
 }

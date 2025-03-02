@@ -1,3 +1,5 @@
+-- NOTE: When this used the Lua implementation, I was able to get proper Neovim API LSP
+--       suggestions. Maybe I should use that instead of the Rust impl.?
 require("blink.cmp").setup({
   signature = { enabled = false },
   keymap = {

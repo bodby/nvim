@@ -37,3 +37,12 @@ function: (_
     binding: (binding
       attrpath: (attrpath
         attr: (identifier) @variable))))
+
+(binding
+  attrpath: (attrpath
+    attr: (identifier) @function)
+  expression: (function_expression))
+
+(variable_expression
+  name: (identifier) @module.builtin
+  (#eq? @module.builtin "builtins"))

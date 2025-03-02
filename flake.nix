@@ -1,19 +1,10 @@
 {
   description = "Neovim config";
 
-  inputs = {
-    # NOTE: blink.cmp doesn't work on master.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    # blink-cmp.url = "github:Saghen/blink.cmp";
-    # blink-cmp.inputs.nixpkgs.follows = "nixpkgs";
-  };
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs =
-    {
-      nixpkgs,
-      ...
-    }@inputs:
+    { self, nixpkgs, ... }:
     let
       systems = [
         "x86_64-linux"
@@ -21,46 +12,37 @@
         "x86_64-darwin"
         "aarch64-darwin"
       ];
-    in
-    {
-      # TODO: Use 'mkNeovim' here instead of in package.nix to make customization easier.
-      packages = nixpkgs.lib.genAttrs systems (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [
-              (import ./nix/pkgs)
-              (import ./nix/package.nix { inherit inputs pkgs; })
-            ];
-          };
-        in
-        rec {
-          default = nvim;
-          # FIXME: Don't use an overlay.
-          nvim = pkgs.nvim-btw;
 
-          gui = pkgs.writeShellApplication {
-            name = "neovide-btw";
-            runtimeInputs = with pkgs; [
-              neovide
-              nvim-btw
+      forall = nixpkgs.lib.genAttrs systems;
+    in {
+      packages = forall (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+          nvim-pkgs = import ./nix/plugins.nix { inherit pkgs; };
+        in {
+          default = pkgs.callPackage ./nix/package.nix {
+            inherit (nvim-pkgs) plugins packages;
+            viAlias = true;
+            vimAlias = true;
+          };
+
+          gui = let
+            package = self.packages.${system}.default;
+          in pkgs.writeShellApplication {
+            name = "nvim-gui";
+            runtimeInputs = [
+              pkgs.neovide
+              package
             ];
-            # '--no-multigrid'
-            text = ''
-              neovide --fork --no-tabs --neovim-bin ${pkgs.nvim-btw}/bin/nvim
+            text = /* bash */ ''
+              neovide --fork --no-tabs --neovim-bin ${package}/bin/nvim
             '';
           };
         });
 
-      devShells = nixpkgs.lib.genAttrs systems (system:
+      devShells = forall (system:
         let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [
-              (import ./nix/pkgs)
-              (import ./nix/package.nix { inherit inputs pkgs; })
-            ];
-          };
+          pkgs = import nixpkgs { inherit system; };
         in {
           default = pkgs.mkShell {
             packages = [ pkgs.lua-language-server ];
