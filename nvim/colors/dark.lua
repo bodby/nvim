@@ -12,7 +12,7 @@ local colors = {
   yellow = "#ffb96b",
   green = "#bbef86",
   red = "#f75fa8",
-  cyan = "#89bcff",
+  cyan = "#89bcff"
 }
 
 vim.cmd("highlight clear")
@@ -33,7 +33,7 @@ local stl_hls = {
   ["StatusLineCommand"] = colors.yellow,
   ["StatusLinePrompt"] = colors.white3,
   ["StatusLineShell"] = colors.white3,
-  ["StatusLineLimbo"] = colors.white3,
+  ["StatusLineLimbo"] = colors.white3
 }
 
 -- For creating "Entryand "EntryNC" variants.
@@ -41,7 +41,7 @@ local tabl_hls = {
   ["Error"] = colors.red,
   ["Warn"]  = colors.yellow,
   ["Info"]  = colors.blue,
-  ["Hint"]  = colors.purple,
+  ["Hint"]  = colors.purple
 }
 
 local hls = {
@@ -139,18 +139,17 @@ local hls = {
     bold      = true,
     underline = true,
   },
-  ["TabLineEntryNC"]   = { fg = colors.white3, bg = colors.gray2 },
-  ["TabLineIndex"]     = { fg = colors.cyan,   bg = colors.gray2, bold = true },
-  ["TabLineLineCount"] = { fg = colors.white3, bg = colors.gray2 },
   ["TabLineCount"] = {
     fg        = colors.cyan,
     bg        = colors.gray2,
     sp        = colors.cyan,
     bold      = true,
-    underline = true,
+    underline = true
   },
-  ["TabLineCountNC"]   = { fg = colors.white2, bg = colors.gray2 },
-
+  ["TabLineCountNC"]   = { fg = colors.white3, bg = colors.gray2 },
+  ["TabLineEntryNC"]   = { fg = colors.white3, bg = colors.gray2 },
+  ["TabLineIndex"]     = { fg = colors.cyan,   bg = colors.gray2, bold = true },
+  ["TabLineLineCount"] = { fg = colors.white3, bg = colors.gray2 },
   ["Folded"]     = { fg = colors.white2, bg = colors.gray1 },
   ["FoldedDeco"] = { fg = colors.cyan, bg = colors.gray1 },
 
@@ -165,7 +164,7 @@ local hls = {
   ["DiagnosticUnderlineOk"]    = { sp = colors.white3, underline = true },
   ["DiagnosticUnderlineWarn"]  = { sp = colors.yellow, underline = true },
   ["DiagnosticDeprecated"]     = { fg = colors.white3, strikethrough = true },
-  ["DiagnosticUnnecessary"]    = { fg = colors.white3, italic = true },
+  ["DiagnosticUnnecessary"]    = { },
 
   ["Normal"]              = { fg = colors.white2, bg = colors.gray2 },
   ["NormalFloat"]         = { fg = colors.white2, bg = colors.gray3 },
@@ -281,12 +280,10 @@ local hls = {
   ["@markup.link.latex"]            = { fg = colors.white1 },
   ["@string.special.symbol.bibtex"] = { fg = colors.white1 },
 
-  ["@punctuation.special.luadoc"] = { fg = colors.purple },
-
   ["@lsp.type.macro"]    = { },
   -- ["@lsp.type.variable"] = { },
   ["@lsp.mod.global"]    = { link = "@module" },
-  ["@lsp.type.comment"]  = { },
+  ["@lsp.type.comment"]  = { }
 }
 
 for hl, opts in pairs(hls) do
@@ -301,13 +298,21 @@ end
 for hl, col in pairs(tabl_hls) do
   vim.api.nvim_set_hl(0, "TabLine" .. hl,      { fg = col, bg = colors.gray2, bold = true })
   vim.api.nvim_set_hl(0, "TabLineEntry" .. hl, {
-    fg        = col,
+    fg        = colors.white1,
     bg        = colors.gray2,
-    sp        = colors.cyan,
+    sp        = col,
     bold      = true,
-    underline = true,
+    underline = true
   })
   vim.api.nvim_set_hl(0, "TabLineEntry" .. hl .. "NC", { fg = col, bg = colors.gray2 })
+  vim.api.nvim_set_hl(0, "TabLineCount" .. hl, {
+    fg        = col,
+    bg        = colors.gray2,
+    sp        = col,
+    bold      = true,
+    underline = true
+  })
+  vim.api.nvim_set_hl(0, "TabLineCount" .. hl .. "NC", { fg = colors.white2, bg = colors.gray2 })
 end
 
 vim.g.terminal_color_0  = colors.gray3

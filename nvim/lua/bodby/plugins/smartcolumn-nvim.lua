@@ -1,5 +1,5 @@
 require("smartcolumn").setup({
-  colorcolumn  = "99",
+  colorcolumn  = "79",
   scope        = "window",
   editorconfig = true,
 
@@ -13,7 +13,8 @@ require("smartcolumn").setup({
     markdown = "79",
     nix      = "99",
     latex    = "79",
-    tex      = "79"
+    tex      = "79",
+    lua      = "79"
   }
 })
 

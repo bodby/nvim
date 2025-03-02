@@ -42,12 +42,17 @@ end
 ---Check every window to see if any of them have any diagnostics and return the necessary color.
 ---@param windows winID[]
 ---@param current boolean
+---@param number boolean
 ---@return string
-local function diagnostic_hl(windows, current)
+local function diagnostic_hl(windows, current, number)
   ---@param hl string
   ---@return highlight
   local function diag_fmt(hl)
-    return tabl_hl(M.colors.tab .. hl, current)
+    if number then
+      return tabl_hl(M.colors.count .. hl, current)
+    else
+      return tabl_hl(M.colors.tab .. hl, current)
+    end
   end
 
   for _, win in ipairs(windows) do
@@ -103,13 +108,16 @@ local function gen_tab(tab, current)
   --   name = "Floating"
   -- end
 
+  -- TODO: Instead of having two highlight functions after the other, just make
+  -- diagnostic_hl() return tabl_hl(M.colors.count) when no errors are found.
   return table.concat({
     tabl_hl(M.colors.count, current),
+    diagnostic_hl(windows, current, true),
     " ",
     valid,
     " ",
     tabl_hl(M.colors.tab, current),
-    diagnostic_hl(windows, current),
+    diagnostic_hl(windows, current, false),
     name,
     " "
   })

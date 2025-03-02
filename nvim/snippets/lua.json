@@ -27,7 +27,7 @@
   },
   "either": {
     "prefix": "either",
-    "body": "$1 and $2 or $0"
+    "body": "($1) and $2 or $0"
   },
   "else": {
     "prefix": "else",
