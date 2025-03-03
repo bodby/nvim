@@ -22,8 +22,8 @@ local function get_treesitter_hls(buffer, start, last)
   local row1, col1 = start[1], start[2]
   local row2, col2 = last[1],  last[2]
 
-  ---@param ts_tree TSTree
-  ---@param tree LanguageTree
+  --- @param ts_tree TSTree
+  --- @param tree LanguageTree
   data.tree:for_each_tree(function(ts_tree, tree)
     if not ts_tree then
       return
@@ -35,7 +35,7 @@ local function get_treesitter_hls(buffer, start, last)
       return
     end
 
-    ---@type Query
+    --- @type Query
     local query = data:get_query(tree:lang())
     if not query:query() then
       return

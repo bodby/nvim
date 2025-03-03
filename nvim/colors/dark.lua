@@ -52,7 +52,8 @@ local hls = {
   ["AlphaFooter"]      = { fg = colors.white3, italic = true },
 
   ["BlinkCmpMenu"]              = { fg = colors.white3, bg = colors.gray3 },
-  ["BlinkCmpMenuSelection"]     = { fg = colors.white1, bold = true },
+  ["BlinkCmpMenuSelection"]     = { fg = colors.white1, bg = colors.gray3, bold = true },
+  ["BlinkCmpSource"]            = { fg = colors.gray1, bg = colors.gray3 },
   ["BlinkCmpLabelMatch"]        = { bold = true },
   ["BlinkCmpLabelDeprecated"]   = { strikethrough = true },
   ["BlinkCmpKindText"]          = { fg = colors.white2 },
@@ -137,6 +138,7 @@ local hls = {
     bg        = colors.gray2,
     sp        = colors.cyan,
     bold      = true,
+    italic    = true,
     underline = true,
   },
   ["TabLineCount"] = {
@@ -209,18 +211,18 @@ local hls = {
   ["PmenuSbar"]           = { bg = colors.gray2 },
   ["PmenuThumb"]          = { bg = colors.gray1 },
   ["PmenuSel"]            = { fg = colors.white1, bold = true },
-  ["NonText"]             = { fg = colors.white3 },
+  ["NonText"]             = { fg = colors.white3, italic = true },
 
   ["Boolean"]     = { fg = colors.green },
   ["Character"]   = { fg = colors.green },
   ["Comment"]     = { fg = colors.white3, italic = true },
   ["Conditional"] = { fg = colors.purple, bold = true },
   ["Constant"]    = { fg = colors.yellow, bold = true },
-  ["Delimiter"]   = { fg = colors.cyan, nocombine = true },
+  ["Delimiter"]   = { fg = colors.cyan },
   ["Float"]       = { fg = colors.green },
   ["Function"]    = { fg = colors.blue },
   ["Identifier"]  = { fg = colors.white2 },
-  ["Keyword"]     = { fg = colors.cyan, bold = true },
+  ["Keyword"]     = { fg = colors.cyan, bold = true, italic = true },
   ["Label"]       = { fg = colors.purple, bold = true },
   ["PreProc"]     = { fg = colors.purple },
   ["Number"]      = { fg = colors.green },
@@ -228,7 +230,7 @@ local hls = {
   ["Special"]     = { fg = colors.purple },
   ["SpecialChar"] = { fg = colors.green, italic = true },
   ["Statement"]   = { fg = colors.white2 },
-  ["String"]      = { fg = colors.green },
+  ["String"]      = { fg = colors.green, italic = true },
   ["Tag"]         = { fg = colors.blue },
   ["Todo"]        = { fg = colors.white2, bold = true },
   ["Type"]        = { fg = colors.purple },
@@ -278,6 +280,7 @@ local hls = {
 
   ["@module.latex"]                 = { link = "Keyword" },
   ["@markup.link.latex"]            = { fg = colors.white1 },
+  ["@punctuation.bracket.latex"]    = { fg = colors.cyan, nocombine = true },
   ["@string.special.symbol.bibtex"] = { fg = colors.white1 },
 
   ["@lsp.type.macro"]    = { },
@@ -302,6 +305,7 @@ for hl, col in pairs(tabl_hls) do
     bg        = colors.gray2,
     sp        = col,
     bold      = true,
+    italic    = true,
     underline = true
   })
   vim.api.nvim_set_hl(0, "TabLineEntry" .. hl .. "NC", { fg = col, bg = colors.gray2 })

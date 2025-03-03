@@ -1,8 +1,36 @@
--- FIXME: When this used the Lua implementation, I was able to get proper Neovim API LSP
---        suggestions. Maybe I should use that instead of the Rust impl.?
---        See https://github.com/Saghen/blink.cmp/pull/1356.
+local options = {
+  --- Whether to show the autocompletion menu by default.
+  --- Note that this does not affect the cmdline menu, which will always show.
+  --- @type boolean
+  show_menu = false,
 
--- TODO: Finish config. Remove default values.
+  --- Change the appearance of the autocompletion menu.
+  --- Some border options were left out because they don't look good IMO.
+  --- @type "none" | "single" | "rounded" | "solid" | "padded"
+  menu_border = "none",
+
+  --- Show the documentation window next to the autocompletion menu.
+  --- @type boolean
+  show_docs = false,
+
+  --- Show a preview of the currently selected autocompletion icon.
+  --- This works best when `show_menu` is false.
+  --- @type boolean
+  show_ghost_text = true,
+
+  --- Show the source that a completion icon came from, e.g. "(lsp)".
+  --- @type boolean
+  show_item_source = true,
+
+  --- Which implementation of the fuzzy algorithm to use.
+  --- @type "prefer_rust" | "prefer_rust_with_warning" | "rust" | "lua"
+  fuzzy_impl = "prefer_rust",
+
+  --- Add and show a trailing slash at the end of directories.
+  --- @type boolean
+  trailing_slash = true
+}
+
 return {
   event = "BufEnter",
   pattern = "*",
@@ -11,7 +39,7 @@ return {
       preset = "none",
 
       ["<C-Space>"] = { "show" },
-      ["<Tab>"] = { "select_and_accept", },
+      ["<Tab>"] = { "select_and_accept" },
       ["<S-CR>"] = { "snippet_forward", "fallback" },
 
       ["<C-n>"] = {
@@ -41,31 +69,34 @@ return {
 
       menu = {
         enabled = true,
-        min_width = 8,
-        max_height = 16,
-        border = "none",
-        scrolloff = 3,
+        min_width = 12,
+        max_height = vim.o.pumheight,
+        border = options.menu_border,
+        scrolloff = 4,
         scrollbar = false,
-
-        auto_show = function(ctx)
-          return ctx.mode == "cmdline" or vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
-        end,
+        auto_show = options.show_menu,
 
         draw = {
           padding = 1,
           gap = 1,
 
-          -- TODO: Add "label_description"?
-          columns = {
-            { "kind", "label", "source_name" }
-          },
+          columns = function()
+            if options.show_item_source then
+              return {
+                { "kind" }, { "label", "source", gap = 1 }
+              }
+            end
+            return {
+              { "kind" }, { "label" }
+            }
+          end,
 
           components = {
             kind = {
               ellipsis = false,
 
               text = function(context)
-                return context.kind_icon .. context.icon_gap
+                return context.kind_icon
               end,
 
               highlight = function(context)
@@ -75,48 +106,57 @@ return {
 
             label = {
               ellipsis = true,
-
               width = {
-                max = 36,
+                max = 48,
                 fill = true
               },
 
               text = function(context)
-                return context.label .. context.label_detail
+                return context.label
               end,
 
               highlight = function(context)
                 local base = "BlinkCmpLabel"
-                local label = context.label
+                local hl = context.deprecated and base .. "Deprecated" or base
+
                 local highlights = {
-                  { 0, #label, group = context.deprecated and base .. "Deprecated" or base }
+                  { 0, #context.label, group = hl }
                 }
 
-                if context.label_detail then
+                for _, v in ipairs(context.label_matched_indices) do
                   table.insert(highlights, {
-                    #label,
-                    #label + #context.label_detail,
-                    group = base .. "Detail"
+                    v, v + 1, group = base .. "Match"
                   })
-                end
-
-                for _, i in ipairs(context.label_matched_indices) do
-                  table.insert(highlights, { i, i + 1, group = base .. "Match" })
                 end
 
                 return highlights
               end
+            },
+
+            source = {
+              ellipsis = false,
+
+              text = function(context)
+                return "(" .. context.source_name .. ")"
+              end,
+
+              highlight = "BlinkCmpSource"
             }
           }
         }
       },
 
-      documentation = { auto_show = false },
-      ghost_text = { enabled = true }
+      documentation = { auto_show = options.show_docs },
+      ghost_text = { enabled = options.show_ghost_text }
     },
 
     fuzzy = {
-      implementation = "prefer_rust",
+      -- FIXME: When this used the Lua implementation, I was able to get proper
+      --        Neovim API LSP suggestions. Maybe I should use that instead of
+      --        the Rust implementation?
+      --
+      --        See https://github.com/Saghen/blink.cmp/pull/1356.
+      implementation = options.fuzzy_impl,
 
       max_typos = function(keyword)
         return math.floor(#keyword / 4)
@@ -133,157 +173,83 @@ return {
 
       providers = {
         lsp = {
-          name = "LSP",
+          name = "lsp",
           module = "blink.cmp.sources.lsp"
         },
 
         path = {
-          name = "Path",
+          name = "path",
           module = "blink.cmp.sources.path",
+          score_offset = 50,
 
           opts = {
-            trailing_slash = false,
+            trailing_slash = options.trailing_slash,
             show_hidden_files_by_default = true,
-            label_trailing_slash = true,
-
-            get_cwd = function(context)
-              return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
-            end
-          },
-
-          enabled = true,
-          score_offset = 50
+            label_trailing_slash = options.trailing_slash
+          }
         },
 
         snippets = {
           name = "Snippets",
           module = "blink.cmp.sources.snippets",
+          score_offset = 100,
 
           opts = {
-            friendly_snippets  = false,
-            -- 'root_path' is set by nix/package.nix.
+            friendly_snippets = false,
+            -- 'root_path' is set by package.nix.
             search_paths = { vim.g.root_path .. "/snippets" },
-            global_snippets = { "all" },
-            extended_filetypes = { },
-            ignored_filetypes = { },
-
-            get_filetype = function(_)
-              return vim.bo.filetype
-            end
-          },
-
-          enabled      = true,
-          score_offset = 100
+            global_snippets = { "all" }
+          }
         },
 
         buffer = {
-          name   = "Buffer",
-          module = "blink.cmp.sources.buffer",
-
-          opts = {
-            get_bufnrs = function()
-              return vim.iter(vim.api.nvim_list_wins())
-                :map(function(win) return vim.api.nvim_win_get_buf(win) end)
-                :filter(function(buf) return vim.bo[buf].buftype ~= "nofile" end)
-                :totable()
-            end
-          },
-
-          -- fallbacks = { "snippets" }
-        },
-
-
-        -- spell = {
-        --   name   = "Spell",
-        --   module = "blink-cmp-spell",
-        --
-        --   opts = {
-        --     max_entries = 8,
-        --
-        --     -- enable_in_context = function() return true end
-        --     -- Only enable in @spell TS captures.
-        --     enable_in_context = function()
-        --       for _, hl in pairs(vim.treesitter.get_captures_at_cursor(0)) do
-        --         if hl == "spell" then
-        --           return true
-        --         end
-        --       end
-        --
-        --       return false
-        --     end
-        --   },
-        --
-        --   enabled      = true,
-        --   score_offset = 3
-        -- }
-
-        -- markdown = {
-        --   name      = "RenderMarkdown",
-        --   module    = "render-markdown.integ.blink",
-        --   enabled   = true,
-        --   fallbacks = { "buffer" }
-        -- }
-      }
-    },
-
-
-    cmdline = {
-      enabled = true,
-      keymap = {
-        ["<Tab>"] = { "show", "accept" }
-      },
-
-      completion = {
-        menu = {
-          auto_show = true
+          name = "Buffer",
+          module = "blink.cmp.sources.buffer"
         }
       }
     },
 
-    snippets = {
-      expand = function(snippet)
-        vim.snippet.expand(snippet)
-      end,
+    cmdline = {
+      enabled = true,
+      keymap = {
+        preset = "none",
 
-      active = function(filter)
-        return vim.snippet.active(filter)
-      end,
+        ["<Tab>"] = { "show", "accept" },
+        ["<C-n>"] = { "select_next" },
+        ["<C-p>"] = { "select_prev" }
+      },
 
-      jump = function(direction)
-        vim.snippet.jump(direction)
-      end
+      completion = {
+        menu = { auto_show = true }
+      }
     },
 
     appearance = {
-      highlight_ns            = vim.api.nvim_create_namespace "blink_cmp",
-      use_nvim_cmp_as_default = false,
-      nerd_font_variant       = "normal",
-
       kind_icons = {
-        Text          = "b",
-        Method        = "f",
-        Function      = "f",
-        Constructor   = "c",
-        Field         = "v",
-        Variable      = "v",
-        Property      = "p",
-        Class         = "t",
-        Interface     = "i",
-        Struct        = "s",
-        Module        = "m",
-        Unit          = "u",
-        Value         = "v",
-        Enum          = "e",
-        EnumMember    = "e",
-        Keyword       = "k",
-        Constant      = "k",
-        Snippet       = "s",
-        Color         = "c",
-        File          = "f",
-        Reference     = "&",
-        Folder        = "d",
-        Event         = "e",
-        Operator      = ":",
+        Text = "b",
+        Method = "f",
+        Function = "f",
+        Constructor = "m",
+        Field = "v",
+        Variable = "v",
+        Property = "p",
+        Class = "t",
+        Interface = "i",
+        Struct = "t",
+        Module = "m",
+        Unit = "u",
+        Value = "v",
+        Enum = "e",
+        EnumMember = "e",
+        Keyword = "k",
+        Constant = "k",
+        Snippet = "s",
+        Color = "c",
+        File = "f",
+        Reference = "&",
+        Folder = "d",
+        Event = "e",
+        Operator = "+",
         TypeParameter = "t"
       }
     }

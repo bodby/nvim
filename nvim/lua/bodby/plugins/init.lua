@@ -1,6 +1,14 @@
+--- @module "bodby.plugins"
+--- @type plugin
+
+--- @class plugin
+--- @field event string
+--- @field pattern string
+--- @field opts table
+
 local plugins = {
-  ["blink.cmp"] = "blink-cmp"
-  -- ["alpha"] = "alpha",
+  ["blink.cmp"] = "blink-cmp",
+  ["alpha"] = "alpha"
   -- ["gitsigns"] = "gitsigns",
   -- ["nvim-treesitter.configs"] = "nvim-treesitter",
   -- ["render-markdown"] = "render-markdown",

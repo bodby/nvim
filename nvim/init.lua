@@ -14,6 +14,7 @@ require("bodby.native.statusline").setup()
 require("bodby.native.statuscolumn").setup()
 require("bodby.native.tabline").setup()
 
+--- @type table<string, plugin>
 local plugins = require("bodby.plugins")
 local grouped = { }
 

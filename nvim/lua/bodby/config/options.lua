@@ -1,6 +1,6 @@
 -- FIXME: Move all 'vim.opt' lines to 'vim.o'.
 vim.o.pumheight      = 16
-vim.o.scrolloff      = 8
+vim.o.scrolloff      = 12
 vim.o.showmode       = false
 vim.o.cmdheight      = 0
 vim.o.number         = true
@@ -76,7 +76,7 @@ if vim.g.neovide then
     vim.g.neovide_padding_right  = 32
     vim.g.neovide_padding_left   = 32
   else
-    vim.o.linespace = 3
+    vim.o.linespace = 4
     vim.g.neovide_padding_top    = 24
     vim.g.neovide_padding_bottom = 24
     vim.g.neovide_padding_right  = 24

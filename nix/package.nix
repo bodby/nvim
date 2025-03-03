@@ -1,7 +1,8 @@
 {
   pkgs,
-  plugins,
-  packages,
+  plugins ? [ ],
+  packages ? [ ],
+  luaPackages ? p: [ ],
 
   appName ? null,
   viAlias ? appName == null || appName == "nvim",
@@ -43,10 +44,7 @@ let
       src = ../nvim;
 
       buildPhase = ''
-        mkdir -p $out/lua
-        mkdir -p $out/after
-        mkdir -p $out/snippets
-        mkdir -p $out/colors
+        mkdir -p $out/lua $out/after $out/snippets $out/colors
       '';
 
       installPhase = ''

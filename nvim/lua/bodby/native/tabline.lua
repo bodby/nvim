@@ -1,6 +1,6 @@
 local M = { }
 
----@alias tabline string
+--- @alias tabline string
 
 -- FIXME: 'EntryError' and 'EntryErrorNC' while the right side of the tabline just uses 'Error'.
 --        Entry diagnostic highlights are broken right now.
@@ -17,9 +17,9 @@ M.colors = {
 
 local hl_reset = "%#TabLine#"
 
----@param col string Color name
----@param current boolean? Whether to append NC to the highlight
----@return highlight
+--- @param col string Color name
+--- @param current boolean? Whether to append NC to the highlight
+--- @return highlight
 local function tabl_hl(col, current)
   if current == nil then current = true end
 
@@ -29,24 +29,24 @@ end
 
 -- TODO: Use this somewhere.
 --[[
-  ---Add spaces after 'str' to make it have the length 'max'.
-  ---Returns the string as-is if it is already long enough.
-  ---@param str string
-  ---@param max number
-  ---@return string
+  --- Add spaces after 'str' to make it have the length 'max'.
+  --- Returns the string as-is if it is already long enough.
+  --- @param str string
+  --- @param max number
+  --- @return string
   local function pad(str, max)
     return str .. string.rep(" ", math.max(max - str:len(), 0))
   end
 ]]
 
----Check every window to see if any of them have any diagnostics and return the necessary color.
----@param windows winID[]
----@param current boolean
----@param number boolean
----@return string
+--- Check every window to see if any of them have any diagnostics and return the necessary color.
+--- @param windows winID[]
+--- @param current boolean
+--- @param number boolean
+--- @return string
 local function diagnostic_hl(windows, current, number)
-  ---@param hl string
-  ---@return highlight
+  --- @param hl string
+  --- @return highlight
   local function diag_fmt(hl)
     if number then
       return tabl_hl(M.colors.count .. hl, current)
@@ -81,10 +81,10 @@ function M.setup()
   vim.o.tabline = "%!v:lua.require('bodby.native.tabline').active()"
 end
 
----Generate a module for the passed tab ID.
----@param tab tabID
----@param current boolean
----@return module
+--- Generate a module for the passed tab ID.
+--- @param tab tabID
+--- @param current boolean
+--- @return module
 local function gen_tab(tab, current)
   local windows = vim.api.nvim_tabpage_list_wins(tab)
 
@@ -123,14 +123,14 @@ local function gen_tab(tab, current)
   })
 end
 
----Return the diagnostics of all the windows open in every tab.
----@return module
+--- Return the diagnostics of all the windows open in every tab.
+--- @return module
 local function diagnostics()
   local count = vim.diagnostic.count()
 
-  ---@param num number
-  ---@param hl string
-  ---@return highlight
+  --- @param num number
+  --- @param hl string
+  --- @return highlight
   local function diag_fmt(num, hl)
     return count[num] ~= nil and (tabl_hl(hl) .. " " .. count[num]) or ""
   end
@@ -143,16 +143,16 @@ local function diagnostics()
   return errors .. warnings .. hints .. info
 end
 
----Show the current tab index.
----I just needed something to always be visible on the right.
----@return module
+--- Show the current tab index.
+--- I just needed something to always be visible on the right.
+--- @return module
 local function index()
   return tabl_hl(M.colors.index) .. " " .. vim.api.nvim_tabpage_get_number(0) .. " "
 end
 
----Show the line count of the current buffer.
----@param tab tabID
----@return module
+--- Show the line count of the current buffer.
+--- @param tab tabID
+--- @return module
 local function line_count(tab)
   local window = vim.api.nvim_tabpage_get_win(tab)
   local buffer = vim.api.nvim_win_get_buf(window)
@@ -165,8 +165,8 @@ local function line_count(tab)
   end
 end
 
----Actual tabline used in 'vim.o.tabline'.
----@return tabline
+--- Actual tabline used in 'vim.o.tabline'.
+--- @return tabline
 function M.active()
   local tabs = vim.api.nvim_list_tabpages()
   local rendered = ""

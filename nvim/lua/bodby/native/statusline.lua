@@ -1,6 +1,6 @@
 -- NOTE: 'else if' is not the same as 'elseif'.
 
----@alias statusline string
+--- @alias statusline string
 
 local M = { }
 
@@ -54,12 +54,12 @@ M.colors = {
 
 local hl_reset = "%#StatusLine#"
 
----3 billion download JS micro-dependency.
----Checks if an element exists inside of an array.
----@generic T
----@param e T
----@param xs T[]
----@return boolean
+--- 3 billion download JS micro-dependency.
+--- Checks if an element exists inside of an array.
+--- @generic T
+--- @param e T
+--- @param xs T[]
+--- @return boolean
 local function elem(e, xs)
   for _, v in ipairs(xs) do
     if v == e then return true end
@@ -67,8 +67,8 @@ local function elem(e, xs)
   return false
 end
 
----@param col string Color name
----@return highlight
+--- @param col string Color name
+--- @return highlight
 local function stl_hl(col)
   return "%#StatusLine" .. col .. "#"
 end
@@ -119,9 +119,9 @@ function M.setup()
   })
 end
 
----Returns the current mode (optionally) as well as a colored block.
----@param show_name boolean Whether to show the current mode name
----@return module
+--- Returns the current mode (optionally) as well as a colored block.
+--- @param show_name boolean Whether to show the current mode name
+--- @return module
 local function mode(show_name)
   local current = M.modes[vim.api.nvim_get_mode().mode]
   local fg_hl   = stl_hl(current .. "FG")
@@ -135,9 +135,9 @@ local function mode(show_name)
   end
 end
 
----The current file, directory, and a modification indicator.
----@param buffer bufID The buffer to return the open file of
----@return module
+--- The current file, directory, and a modification indicator.
+--- @param buffer bufID The buffer to return the open file of
+--- @return module
 local function path(buffer)
   -- TODO: Check if 'go.columns' minus the (sum of all the lengths plus the basename of the path)
   --       is less than 0. If so, it means the filename does not fit.
@@ -168,8 +168,8 @@ local function path(buffer)
   end
 end
 
----The branch and number of files added, changed, and modified.
----@return module
+--- The branch and number of files added, changed, and modified.
+--- @return module
 local function git_info()
   -- TODO: This requires gitsigns.nvim. Should write this as a standalone function using
   --       only Git commands.
@@ -182,17 +182,17 @@ local function git_info()
   return stl_hl(M.colors.git_branch) .. branch .. stl_hl(M.colors.git_delta) .. status
 end
 
----The macro register if recording.
----@return module
+--- The macro register if recording.
+--- @return module
 local function macro_reg()
   local reg = vim.fn.reg_recording()
   return reg ~= "" and stl_hl(M.colors.macro) .. reg or hl_reset
 end
 
----Current line, column, and percentage of whole file.
----@param window winID The window to get the cursor position from
----@param ft string The filetype of the window's current buffer
----@return module
+--- Current line, column, and percentage of whole file.
+--- @param window winID The window to get the cursor position from
+--- @param ft string The filetype of the window's current buffer
+--- @return module
 local function pos(window, ft)
   local row, col = unpack(vim.api.nvim_win_get_cursor(window))
   if elem(ft, M.blocked_fts) then
@@ -204,9 +204,9 @@ local function pos(window, ft)
   end
 end
 
----Errors, warnings, and hints and info.
----@param buffer bufID The buffer to get the diagnostics of
----@return module
+--- Errors, warnings, and hints and info.
+--- @param buffer bufID The buffer to get the diagnostics of
+--- @return module
 local function diagnostics(buffer)
   local count = vim.diagnostic.count(buffer)
 
@@ -218,9 +218,9 @@ local function diagnostics(buffer)
   return errors .. warnings .. info .. hints
 end
 
----The filetype and type of line endings (CRLF or LF).
----@param buffer bufID The buffer to get the filetype of
----@return module
+--- The filetype and type of line endings (CRLF or LF).
+--- @param buffer bufID The buffer to get the filetype of
+--- @return module
 local function filetype(buffer)
   local ft       = vim.bo[buffer].filetype
   local newlines = vim.bo[buffer].fileformat
@@ -238,8 +238,8 @@ local function filetype(buffer)
   end
 end
 
----Actual statusline used in 'vim.o.statusline'.
----@return statusline
+--- Actual statusline used in 'vim.o.statusline'.
+--- @return statusline
 function M.active()
   local window = vim.api.nvim_get_current_win()
   local buffer = vim.api.nvim_win_get_buf(window)

@@ -1,9 +1,9 @@
 local M = { }
 
----@alias statuscolumn string
----@alias HPos number
----@alias MPos number
----@alias LPos number
+--- @alias statuscolumn string
+--- @alias HPos number
+--- @alias MPos number
+--- @alias LPos number
 
 M.colors = {
   wrapped = "Virt",
@@ -34,20 +34,20 @@ function M.setup()
   })
 end
 
----@param col string Color name
----@param cursor boolean Whether to prepend "Cursor" to the highlight name
----@return highlight
+--- @param col string Color name
+--- @param cursor boolean Whether to prepend "Cursor" to the highlight name
+--- @return highlight
 local function stc_hl(col, cursor)
   local c = cursor and "Cursor" or ""
   return "%#" .. c .. "LineNr" .. col .. "#"
 end
 
----The HML motion indicators.
----https://github.com/mawkler/hml.nvim
----@param window winID
----@return HPos
----@return MPos
----@return LPos
+--- The HML motion indicators.
+--- https://github.com/mawkler/hml.nvim
+--- @param window winID
+--- @return HPos
+--- @return MPos
+--- @return LPos
 local function hml(window)
   local scrolloff = vim.wo[window].scrolloff
   local buffer    = vim.api.nvim_win_get_buf(window)
@@ -73,9 +73,9 @@ local function hml(window)
   return h, math.max(middle, h), l
 end
 
----The relative/absolute line number along with HML indicators.
----@param window winID
----@return module
+--- The relative/absolute line number along with HML indicators.
+--- @param window winID
+--- @return module
 local function line_nr(window)
   local h, m, l = hml(window)
 
@@ -102,9 +102,9 @@ local function line_nr(window)
   return "%=" .. vim.v.relnum
 end
 
----Actual statuscolumn used in 'vim.wo[window].statuscolumn'.
----@param window winID
----@return statuscolumn
+--- Actual statuscolumn used in 'vim.wo[window].statuscolumn'.
+--- @param window winID
+--- @return statuscolumn
 function M.active(window)
   if vim.api.nvim_win_is_valid(window) then
     if not vim.wo[window].number or not vim.wo[window].relativenumber then
