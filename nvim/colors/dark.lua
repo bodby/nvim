@@ -115,8 +115,8 @@ local hls = {
   ["TelescopeMultiSelection"] = { fg = colors.cyan },
 
   ["StatusLine"]          = { fg = colors.gray1,  bg = colors.gray3 },
-  ["StatusLineDirectory"] = { fg = colors.white3, bg = colors.gray3 },
-  ["StatusLineFile"]      = { fg = colors.white2, bg = colors.gray3 },
+  ["StatusLineDirectory"] = { fg = colors.white3, bg = colors.gray3, italic = true },
+  ["StatusLineFile"]      = { fg = colors.white2, bg = colors.gray3, bold = true, italic = true },
   ["StatusLineBranch"]    = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLineDelta"]     = { fg = colors.white2, bg = colors.gray3 },
   ["StatusLineMacro"]     = { fg = colors.purple, bg = colors.gray3, bold = true },

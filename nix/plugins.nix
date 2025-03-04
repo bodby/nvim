@@ -1,4 +1,4 @@
-{ pkgs, stdenv }: {
+{ pkgs }: {
   plugins = with pkgs.vimPlugins; [
     nvim-lspconfig
     (nvim-treesitter.withPlugins (p: with p; [
