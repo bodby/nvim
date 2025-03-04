@@ -54,7 +54,7 @@ let
 
     initLua = /* lua */ ''
       vim.loader.enable()
-      -- Used for blink.cmp so it can find snippets.
+      -- Used for blink.cmp's snippet search path.
       vim.g.root_path = "${nvimRtp}"
       vim.o.rtp = "${nvimRtp}," .. vim.o.rtp .. ",${nvimRtp}/after"
 

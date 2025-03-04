@@ -31,9 +31,9 @@ local options = {
   trailing_slash = true
 }
 
+--- @type plugin_config
 return {
   event = "BufEnter",
-  pattern = "*",
   opts = {
     keymap = {
       preset = "none",

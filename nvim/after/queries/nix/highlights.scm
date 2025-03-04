@@ -16,21 +16,29 @@ function: (_
     attr: (identifier) @variable)
   expression: (attrset_expression
     (binding_set
-      binding: (binding
-        attrpath: (attrpath
-          attr: (identifier)))
-      (_)
-    )))
+      binding: [
+        (binding
+          attrpath: (attrpath
+            attr: (identifier)))
+        (inherit)
+        (inherit_from)
+      ]
+      (_))))
 
 (binding
   attrpath: (attrpath
     attr: (identifier) @variable)
-  expression: (attrset_expression
-    (binding_set
-      binding: (inherit
-        attrs: (inherited_attrs))
-      (_)
-    )))
+  expression: (apply_expression
+    argument: (attrset_expression
+      (binding_set
+        binding: [
+          (binding
+            attrpath: (attrpath
+              attr: (identifier)))
+          (inherit)
+          (inherit_from)
+        ]
+        (_)))))
 
 (let_expression
   (binding_set

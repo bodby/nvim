@@ -145,6 +145,7 @@ local header_margin = {
   })
 }
 
+--- @type plugin_config
 return {
   opts = {
     layout = {

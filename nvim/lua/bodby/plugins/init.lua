@@ -1,22 +1,28 @@
 --- @module "bodby.plugins"
---- @type plugin
 
---- @class plugin
---- @field event string
---- @field pattern string
+--- @class plugin_config
+--- @field event? string
+--- @field pattern? string
+---
+--- Mappings that get created after the plugin is configured.
+--- These are deferred using `vim.schedule()`.
+--- @field mappings? table<string, mapping>
+---
+--- Per-plugin configuration options. These are passed to `setup()`.
 --- @field opts table
+---
+--- Called after the plugin is setup.
+--- These are deferred using `vim.schedule()`.
+--- @field post? fun()
 
-local plugins = {
+return {
   ["blink.cmp"] = "blink-cmp",
-  ["alpha"] = "alpha"
-  -- ["gitsigns"] = "gitsigns",
-  -- ["nvim-treesitter.configs"] = "nvim-treesitter",
-  -- ["render-markdown"] = "render-markdown",
+  ["alpha"] = "alpha",
+  ["gitsigns"] = "gitsigns",
+  ["nvim-treesitter.configs"] = "nvim-treesitter",
+  ["render-markdown"] = "render-markdown",
+  -- TODO: The rest of these.
   -- ["smartcolumn"] = "smart-column",
   -- ["virt-column"] = "virt-column",
   -- ["telescope"] = "telescope"
 }
-
-return vim.tbl_map(function(p)
-  return require("bodby.plugins." .. p)
-end, plugins)

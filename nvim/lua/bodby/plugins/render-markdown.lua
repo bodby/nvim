@@ -1,92 +1,134 @@
-local plugin = require "render-markdown"
-
-plugin.setup({
-  preset     = "obsidian",
-  injections = {
-    gitcommit = {
-      enabled = true,
-      query   = [[
-        ((message) @injection.content
-          (#set! injection.combined)
-          (#set! injection.include-children)
-          (#set! injection.language "markdown"))
-      ]]
+--- @type plugin_config
+return {
+  event = "FileType",
+  pattern = "markdown",
+  mappings = {
+    {
+      lhs = "<Leader>m",
+      modes = "n",
+      callback = function()
+        require("render-markdown").toggle()
+      end
     }
   },
 
-  render_modes     = true,
-  anti_conceal     = { enabled = true },
-  latex            = { enabled = false },
-  paragraph        = { enabled = false },
-  bullet           = { enabled = false },
-  inline_highlight = { enabled = false },
-  html             = { enabled = false },
+  opts = {
+    render_modes = { "n", "c", "t" },
+    anti_conceal = { enabled = false },
 
-  heading = {
-    enabled     = true,
-    sign        = true,
-    position    = "inline",
-    icons       = { "" },
-    signs       = { "1", "2", "3", "4", "5", "6" },
-    width       = "block",
-    backgrounds = { "Title" },
-    foregrounds = { "Title" },
-  },
+    win_options = {
+      conceallevel = {
+        default = vim.wo.conceallevel,
+        rendered = 3
+      },
+      concealcursor = {
+        default = vim.wo.concealcursor,
+        rendered = "nc"
+      }
+    },
 
-  code = {
-    enabled    = true,
-    sign       = false,
-    style      = "normal",
-    width      = "block",
-    left_pad   = 2,
-    right_pad  = 2,
-    inline_pad = 1,
-    border     = "thick"
-  },
+    -- TODO: Blockquote icon.
+    quote = {
+      icon = "|"
+    },
 
-  dash = {
-    enabled = true,
-    icon    = "─",
-    width   = "full"
-  },
+    -- TODO: 'quote_icon's and remove unused callouts.
+    callout = {
+      note = { rendered = "Note" },
+      tip = { rendered = "Tip" },
+      important = { rendered = "Important" },
+      warning = { rendered = "Warning" },
+      caution = { rendered = "Caution" },
+      abstract = { rendered = "Abstract" },
+      summary = { rendered = "Summary" },
+      tldr = { rendered = "Tldr" },
+      info = { rendered = "Info" },
+      todo = { rendered = "Todo" },
+      hint = { rendered = "Hint" },
+      success = { rendered = "Success" },
+      check = { rendered = "Check" },
+      done = { rendered = "Done" },
+      question = { rendered = "Question" },
+      help = { rendered = "Help" },
+      faq = { rendered = "Faq" },
+      attention = { rendered = "Attention" },
+      failure = { rendered = "Failure" },
+      fail = { rendered = "Fail" },
+      missing = { rendered = "Missing" },
+      danger = { rendered = "Danger" },
+      error = { rendered = "Error" },
+      bug = { rendered = "Bug" },
+      example = { rendered = "Example" },
+      quote = { rendered = "Quote" },
+      cite = { rendered = "Cite" }
+    },
 
-  checkbox = {
-    enabled   = true,
-    unchecked = { icon = "( )" },
-    checked   = { icon = "(X)" },
-    custom    = { }
-  },
+    checkbox = { enabled = false },
 
-  quote = {
-    enabled = true,
-    icon    = "│"
-  },
+    code = {
+      style = "normal",
+      width = "block",
+      -- TODO: 2 instead?
+      left_pad = 1,
+      right_pad = 1,
+      border = "thick",
+      inline_pad = 1
+    },
 
-  callout = {
-    note = {
-      rendered  = "NOTE:",
-      highlight = "Todo"
+    dash = {
+      icon = "-"
+    },
+
+    -- FIXME: If hovering your cursor over headings causes weird alignment
+    --        issues, then see render-markdown's config's window options.
+    heading = {
+      -- I love changelogs.
+      icons = function(context)
+        return table.concat(context.sections, ".") .. ". "
+      end,
+      backgrounds = { },
+      -- This changes the icon highlight, not the text.
+      foregrounds = { "RenderMarkdownHeader" }
+    },
+
+    latex = { enabled = false },
+
+    -- TODO: Icons?
+    link = {
+      footnote = {
+        superscript = false,
+        prefix = "[",
+        suffix = "]"
+      },
+
+      image = "",
+      email = "",
+      hyperlink = "",
+      wiki = "",
+      custom = {
+        web = { icon = "" },
+        discord = { icon = "" },
+        github = { icon = "" },
+        gitlab = { icon = "" },
+        google = { icon = "" },
+        neovim = { icon = "" },
+        reddit = { icon = "" },
+        stackoverflow = { icon = "" },
+        wikipedia = { icon = "" },
+        youtube = { icon = "" }
+      }
+    },
+
+    bullet = { enabled = false },
+    paragraph = { enabled = false },
+
+    -- FIXME: If signs still appear then this doesn't work.
+    sign = { enabled = false },
+
+    pipe_table = {
+      preset = "round",
+      alignment_indicator = "",
+      cell = "trimmed"
     }
-  },
-
-  pipe_table = {
-    enabled             = true,
-    preset              = "none",
-    alignment_indicator = "┅",
-    head                = "WinSeparator",
-    row                 = "WinSeparator",
-    filler              = "RenderMarkdownTableFill"
-  },
-
-  link = {
-    enabled   = true,
-    footnote  = { superscript = true },
-    image     = "",
-    email     = "",
-    hyperlink = "",
-    wiki      = { icon = "" },
-    custom    = { }
   }
-})
-
-vim.keymap.set("n", "<Leader>m", plugin.toggle)
+}

@@ -69,19 +69,11 @@ if vim.g.neovide then
   vim.g.neovide_text_gamma    = 1.2
   vim.g.neovide_text_contrast = 0.0
 
-  if vim.fn.hostname() == "scout" then
-    vim.o.linespace = 5
-    vim.g.neovide_padding_top    = 32
-    vim.g.neovide_padding_bottom = 32
-    vim.g.neovide_padding_right  = 32
-    vim.g.neovide_padding_left   = 32
-  else
-    vim.o.linespace = 4
-    vim.g.neovide_padding_top    = 24
-    vim.g.neovide_padding_bottom = 24
-    vim.g.neovide_padding_right  = 24
-    vim.g.neovide_padding_left   = 24
-  end
+  vim.o.linespace = 4
+  vim.g.neovide_padding_top    = 24
+  vim.g.neovide_padding_bottom = 24
+  vim.g.neovide_padding_right  = 24
+  vim.g.neovide_padding_left   = 24
 
   vim.g.neovide_cursor_unfocused_outline_width = 0
 

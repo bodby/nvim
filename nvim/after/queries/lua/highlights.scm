@@ -6,7 +6,5 @@
 ((field
   name: (identifier) @variable
   value: (table_constructor
-    (field
-      (identifier)
-      (_)))
-  ))
+    (field)
+      (_))))
