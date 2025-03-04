@@ -153,7 +153,6 @@ return {
       header,
       margin,
       shortcuts,
-      margin,
       footer
     }
   }
