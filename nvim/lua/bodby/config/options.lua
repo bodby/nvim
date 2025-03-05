@@ -69,7 +69,7 @@ if vim.g.neovide then
   vim.g.neovide_text_gamma    = 1.2
   vim.g.neovide_text_contrast = 0.0
 
-  vim.o.linespace = 4
+  vim.o.linespace = 6
   vim.g.neovide_padding_top    = 24
   vim.g.neovide_padding_bottom = 24
   vim.g.neovide_padding_right  = 24
@@ -91,7 +91,7 @@ if vim.g.neovide then
   vim.g.neovide_position_animation_length     = 0.2
   vim.g.neovide_scroll_animation_length       = 0.2
   vim.g.neovide_scroll_animation_far_lines    = 0
-  vim.g.neovide_cursor_animation_length       = 0.05
+  vim.g.neovide_cursor_animation_length       = 0.06
   vim.g.neovide_cursor_trail_size             = 0.4
   vim.g.neovide_cursor_animate_in_insert_mode = true
   vim.g.neovide_cursor_animate_command_line   = true

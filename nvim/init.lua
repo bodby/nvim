@@ -1,7 +1,7 @@
 local mappings = require("bodby.mappings")
 
 vim.cmd.colorscheme("dark")
-require("bodby.config.options")
+require("bodby.options")
 
 vim.schedule(function()
   vim.g.mapleader = " "
@@ -26,6 +26,26 @@ local config = vim.tbl_map(function(p)
   return require("bodby.plugins." .. p)
 end, plugins)
 
+--- Run the setup function of the passed plugin and defer adding its mappings
+--- and `post()` function if defined.
+--- @param plugin string
+local function setup(plugin)
+  local options = config[plugin]
+  require(plugin).setup(options.opts)
+
+  vim.schedule(function()
+    if options.mappings then
+      for k, v in pairs(options.mappings) do
+        mappings.map(v.modes, k, v.callback, v.opts)
+      end
+    end
+
+    if options.post then
+      options.post()
+    end
+  end)
+end
+
 -- Map plugins to their configured event or set them up if they don't have one.
 for p, o in pairs(config) do
   local has_event = o.event and o.event ~= ""
@@ -43,12 +63,11 @@ for p, o in pairs(config) do
 
     table.insert(mapped[o.event][pattern], p)
   else
-    require(p).setup(o.opts)
+    setup(p)
   end
 end
 
 -- Create autocommands for each filetype and pattern group.
--- TODO: Setup the 'mappings' field. See bodby/mappings.lua.
 for ev, ps in pairs(mapped) do
   for p, vs in pairs(ps) do
     local group = "Lazy" .. ev .. p
@@ -59,21 +78,7 @@ for ev, ps in pairs(mapped) do
       pattern = p,
       callback = function()
         for _, x in ipairs(vs) do
-          local options = config[x]
-          require(x).setup(options.opts)
-
-          vim.schedule(function()
-            if options.mappings then
-              for _, o in ipairs(options.mappings) do
-                mappings.map(o.modes, o.lhs, o.callback, o.opts)
-              end
-            end
-
-            if options.post then
-              options.post()
-            end
-          end)
-
+          setup(x)
           vim.api.nvim_clear_autocmds({ group = group })
         end
       end

@@ -1,11 +1,5 @@
 local M = { }
--- TODO: I want to make the mapping tables of type table<string, mapping>
---       (with the key being the lhs instead of a separate lhs field), but
---       it is inefficient because I have to then loop through each one
---       separately. :(
-
 --- @class mapping
---- @field lhs string
 --- @field modes string
 --- @field callback string | fun() : string?
 --- @field opts? table
@@ -18,57 +12,28 @@ local M = { }
 --   { lhs = "K", modes = "n", callback = vim.lsp.buf.hover }
 -- }
 
---- Neovide zoom mappings.
---- @type table<string, mapping>
-local zoom_mappings = {
-  {
-    lhs = "<C-+>",
-    modes = "niv",
-    callback = function()
-      vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.125
-    end
-  },
-  {
-    lhs = "<C-_>",
-    modes = "niv",
-    callback = function()
-      vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.125
-    end
-  },
-  {
-    lhs = "<C-)>",
-    modes = "niv",
-    callback = function()
-      vim.g.neovide_scale_factor = 1.0
-    end
-  }
-}
-
 --- @type table<string, mapping>
 local mappings = {
   -- Register mappings.
-  { lhs = "<Leader>p", modes = "v", callback = '"_dP' },
-  { lhs = "<Leader>P", modes = "v", callback = '"_dP' },
-  { lhs = "<Leader>d", modes = "nv", callback = '"_d' },
-  { lhs = "<Leader>D", modes = "nv", callback = '"_D' },
-  { lhs = "<Leader>c", modes = "nv", callback = '"_c' },
-  { lhs = "<Leader>C", modes = "nv", callback = '"_C' },
-  { lhs = "<Leader>x", modes = "nv", callback = '"_x' },
-  { lhs = "<Leader>X", modes = "nv", callback = '"_X' },
-  { lhs = "<Leader>s", modes = "nv", callback = '"_s' },
-  { lhs = "<Leader>S", modes = "nv", callback = '"_S' },
+  ["<Leader>d"] = { modes = "nv", callback = '"_d' },
+  ["<Leader>D"] = { modes = "nv", callback = '"_D' },
+  ["<Leader>c"] = { modes = "nv", callback = '"_c' },
+  ["<Leader>C"] = { modes = "nv", callback = '"_C' },
+  ["<Leader>x"] = { modes = "nv", callback = '"_x' },
+  ["<Leader>X"] = { modes = "nv", callback = '"_X' },
+  ["<Leader>s"] = { modes = "nv", callback = '"_s' },
+  ["<Leader>S"] = { modes = "nv", callback = '"_S' },
 
   -- System clipboard mappings.
-  { lhs = "<Leader>y", modes = "nv", callback = '"+y' },
-  { lhs = "<Leader>Y", modes = "nv", callback = '"+Y' },
-  { lhs = "<Leader>p", modes = "n", callback = '"+p' },
-  { lhs = "<Leader>P", modes = "n", callback = '"+P' },
+  ["<Leader>y"] = { modes = "nv", callback = '"+y' },
+  ["<Leader>Y"] = { modes = "nv", callback = '"+Y' },
+  ["<Leader>p"] = { modes = "n", callback = '"+p' },
+  ["<Leader>P"] = { modes = "n", callback = '"+P' },
 
   -- TODO: Is there a way to do this without ':normal'?
   --       Perhaps with 'expr'?
-  { lhs = "<C-c>", modes = "nv", callback = "<Cmd>normal gcc<CR>" },
-  {
-    lhs = "<S-CR>",
+  ["<C-c>"] = { modes = "nv", callback = "<Cmd>normal gcc<CR>" },
+  ["<S-CR>"] = {
     modes = "nivs",
     callback = function()
       if vim.snippet.active({ direction = 1 }) then
@@ -93,6 +58,29 @@ local mappings = {
   -- }
 }
 
+--- Neovide zoom mappings.
+--- @type table<string, mapping>
+local neovide_mappings = {
+  ["<C-+>"] = {
+    modes = "niv",
+    callback = function()
+      vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.125
+    end
+  },
+  ["<C-_>"] = {
+    modes = "niv",
+    callback = function()
+      vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.125
+    end
+  },
+  ["<C-)>"] = {
+    modes = "niv",
+    callback = function()
+      vim.g.neovide_scale_factor = 1.0
+    end
+  }
+}
+
 --- Create a mapping.
 --- @param modes string
 --- @param lhs string
@@ -103,15 +91,14 @@ function M.map(modes, lhs, rhs, opts)
   vim.keymap.set(mode_tbl, lhs, rhs, opts or { })
 end
 
---- Very efficient.
 function M.setup()
-  for _, v in ipairs(mappings) do
-    M.map(v.modes, v.lhs, v.callback, v.opts)
+  for k, v in pairs(mappings) do
+    M.map(v.modes, k, v.callback, v.opts)
   end
 
   if vim.g.neovide then
-    for _, v in ipairs(zoom_mappings) do
-      M.map(v.modes, v.lhs, v.callback, v.opts)
+    for k, v in pairs(neovide_mappings) do
+      M.map(v.modes, k, v.callback, v.opts)
     end
   end
 end
