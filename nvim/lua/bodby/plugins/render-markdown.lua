@@ -104,7 +104,7 @@ return {
       image = "",
       email = "",
       hyperlink = "",
-      wiki = "",
+      wiki = { icon = "" },
       custom = {
         web = { icon = "" },
         discord = { icon = "" },
@@ -121,8 +121,6 @@ return {
 
     bullet = { enabled = false },
     paragraph = { enabled = false },
-
-    -- FIXME: If signs still appear then this doesn't work.
     sign = { enabled = false },
 
     pipe_table = {

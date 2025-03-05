@@ -64,8 +64,8 @@ for ev, ps in pairs(mapped) do
 
           vim.schedule(function()
             if options.mappings then
-              for _, v in ipairs(options.mappings) do
-                mappings.map(v.modes, v.lhs, v.callback, v.opts)
+              for _, o in ipairs(options.mappings) do
+                mappings.map(o.modes, o.lhs, o.callback, o.opts)
               end
             end
 
@@ -74,9 +74,7 @@ for ev, ps in pairs(mapped) do
             end
           end)
 
-          vim.api.nvim_clear_autocmds({
-            group = group
-          })
+          vim.api.nvim_clear_autocmds({ group = group })
         end
       end
     })

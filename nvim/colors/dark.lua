@@ -39,9 +39,9 @@ local stl_hls = {
 -- For creating "Entryand "EntryNC" variants.
 local tabl_hls = {
   ["Error"] = colors.red,
-  ["Warn"]  = colors.yellow,
-  ["Info"]  = colors.blue,
-  ["Hint"]  = colors.purple
+  ["Warn"] = colors.yellow,
+  ["Info"] = colors.blue,
+  ["Hint"] = colors.purple
 }
 
 local hls = {
@@ -116,7 +116,7 @@ local hls = {
 
   ["StatusLine"]          = { fg = colors.gray1,  bg = colors.gray3 },
   ["StatusLineDirectory"] = { fg = colors.white3, bg = colors.gray3, italic = true },
-  ["StatusLineFile"]      = { fg = colors.white2, bg = colors.gray3, bold = true, italic = true },
+  ["StatusLineFile"]      = { fg = colors.white2, bg = colors.gray3, italic = true },
   ["StatusLineBranch"]    = { fg = colors.white1, bg = colors.gray3, bold = true },
   ["StatusLineDelta"]     = { fg = colors.white2, bg = colors.gray3 },
   ["StatusLineMacro"]     = { fg = colors.purple, bg = colors.gray3, bold = true },
@@ -137,18 +137,18 @@ local hls = {
 
   ["TabLine"] = { fg = colors.white1, bg = colors.gray2 },
   ["TabLineEntry"] = {
-    fg        = colors.white1,
-    bg        = colors.gray2,
-    sp        = colors.cyan,
-    bold      = true,
-    italic    = true,
-    underline = true,
+    fg = colors.white1,
+    bg = colors.gray2,
+    sp = colors.cyan,
+    bold = true,
+    italic = true,
+    underline = true
   },
   ["TabLineCount"] = {
-    fg        = colors.cyan,
-    bg        = colors.gray2,
-    sp        = colors.cyan,
-    bold      = true,
+    fg = colors.cyan,
+    bg = colors.gray2,
+    sp = colors.cyan,
+    bold = true,
     underline = true
   },
   ["TabLineCountNC"]   = { fg = colors.white3, bg = colors.gray2 },
@@ -260,11 +260,11 @@ local hls = {
   ["@punctuation.special"] = { link = "Operator" },
   ["@character.special"]   = { fg = colors.cyan },
   -- TODO: Does this only affect 'null' and 'nil'?
-  ["@constant.builtin"]    = { link = "Boolean" },
-  ["@constructor"]         = { fg = colors.yellow },
-  ["@namespace"]           = { fg = colors.yellow, bold = true },
-  ["@module"]              = { fg = colors.yellow, bold = true },
-  ["@module.builtin"]      = { fg = colors.yellow, bold = true },
+  ["@constant.builtin"] = { link = "Boolean" },
+  ["@constructor"] = { fg = colors.yellow },
+  ["@namespace"] = { fg = colors.yellow, bold = true },
+  ["@module"] = { fg = colors.yellow, bold = true },
+  ["@module.builtin"] = { fg = colors.yellow, bold = true },
 
   ["@function.macro.vim"] = { link = "String" },
   ["@constructor.lua"]    = { link = "@punctuation.bracket" },
@@ -277,13 +277,14 @@ local hls = {
 
   ["@constructor.ocaml"] = { link = "@punctuation.bracket" },
 
+  ["@markup.raw.markdown_inline"] = { fg = colors.red, bg = colors.gray3 },
+
   ["@markup.heading"] = { link = "Title" },
-  ["@markup.link"]    = { fg = colors.white1 },
+  ["@markup.link"]    = { fg = colors.white1, underline = true },
   ["@markup.strong"]  = { fg = colors.white1, bold = true },
 
-  ["@module.latex"]                 = { link = "Keyword" },
-  ["@markup.link.latex"]            = { fg = colors.white1 },
-  ["@punctuation.bracket.latex"]    = { fg = colors.cyan, nocombine = true },
+  ["@module.latex"] = { link = "Keyword" },
+  ["@punctuation.bracket.latex"] = { fg = colors.cyan, nocombine = true },
   ["@string.special.symbol.bibtex"] = { fg = colors.white1 },
 
   ["@lsp.type.macro"]    = { },
@@ -304,19 +305,19 @@ end
 for hl, col in pairs(tabl_hls) do
   vim.api.nvim_set_hl(0, "TabLine" .. hl,      { fg = col, bg = colors.gray2, bold = true })
   vim.api.nvim_set_hl(0, "TabLineEntry" .. hl, {
-    fg        = colors.white1,
-    bg        = colors.gray2,
-    sp        = col,
-    bold      = true,
-    italic    = true,
+    fg = colors.white1,
+    bg = colors.gray2,
+    sp = col,
+    bold = true,
+    italic = true,
     underline = true
   })
   vim.api.nvim_set_hl(0, "TabLineEntry" .. hl .. "NC", { fg = col, bg = colors.gray2 })
   vim.api.nvim_set_hl(0, "TabLineCount" .. hl, {
-    fg        = col,
-    bg        = colors.gray2,
-    sp        = col,
-    bold      = true,
+    fg = col,
+    bg = colors.gray2,
+    sp = col,
+    bold = true,
     underline = true
   })
   vim.api.nvim_set_hl(0, "TabLineCount" .. hl .. "NC", { fg = colors.white2, bg = colors.gray2 })
