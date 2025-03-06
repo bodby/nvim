@@ -20,8 +20,11 @@ vim.cmd("syntax reset")
 
 vim.g.colors_name = "bodby"
 
--- TODO: Generate statusline and tabline diagnostic highlights using the normal "Error",
---       "Warning", etc. highlights.
+-- TODO: Generate statusline and tabline diagnostic highlights using the normal
+--       "Error", "Warning", etc. highlights.
+--       Also do so in the respective plugins, e.g. the statusline shouldn't
+--       need me to create a bunch of highlights and should just get the
+--       brackground from the regular statusline highlight.
 
 -- For creating "BG" and "FG" variants.
 local stl_hls = {
@@ -112,6 +115,7 @@ local hls = {
   ["TelescopePreviewLine"] = { bg = colors.gray2 },
   ["TelescopeMatching"] = { bold = true },
   ["TelescopeSelection"] = { fg = colors.white1, bold = true },
+  ["TelescopeSelectionCaret"] = { fg = colors.cyan },
   ["TelescopeMultiSelection"] = { fg = colors.cyan },
 
   ["StatusLine"]          = { fg = colors.gray1,  bg = colors.gray3 },

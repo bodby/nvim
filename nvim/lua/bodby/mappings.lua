@@ -6,9 +6,6 @@ local M = { }
 
 -- TODO: I don't think I need these.
 -- local lsp_mappings = {
---   { lhs = "gd", modes = "nv", callback = vim.lsp.buf.definition },
---   { lhs = "grn", modes = "n", callback = vim.lsp.buf.rename },
---   { lhs = "gra", modes = "n", callback = vim.lsp.buf.code_action },
 --   { lhs = "K", modes = "n", callback = vim.lsp.buf.hover }
 -- }
 
@@ -30,8 +27,7 @@ local mappings = {
   ["<Leader>p"] = { modes = "n", callback = '"+p' },
   ["<Leader>P"] = { modes = "n", callback = '"+P' },
 
-  -- TODO: Is there a way to do this without ':normal'?
-  --       Perhaps with 'expr'?
+  -- Misc. mappings.
   ["<C-c>"] = { modes = "nv", callback = "<Cmd>normal gcc<CR>" },
   ["<S-CR>"] = {
     modes = "nivs",
@@ -40,7 +36,12 @@ local mappings = {
         vim.snippet.jump(1)
       end
     end
-  }
+  },
+
+  -- Extra LSP actions.
+  ["gd"] = { modes = "nv", callback = vim.lsp.buf.definition },
+  ["grn"] = { modes = "n", callback = vim.lsp.buf.rename },
+  ["gra"] = { modes = "n", callback = vim.lsp.buf.code_action }
 
   -- TODO: Do I need these, or are they defaults?
   --       I don't know if they work in Treesitter query files by default.

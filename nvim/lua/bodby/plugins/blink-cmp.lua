@@ -28,7 +28,11 @@ local options = {
 
   --- Add and show a trailing slash at the end of directories.
   --- @type boolean
-  trailing_slash = true
+  trailing_slash = true,
+
+  --- The maximum number of items to show in the menu.
+  --- @type number
+  max_items = 150
 }
 
 --- @type plugin_config
@@ -39,7 +43,7 @@ return {
       preset = "none",
 
       ["<C-Space>"] = { "show" },
-      ["<Tab>"] = { "select_and_accept" },
+      ["<Tab>"] = { "select_and_accept", "fallback" },
       ["<S-CR>"] = { "snippet_forward", "fallback" },
 
       ["<C-n>"] = {
@@ -62,7 +66,7 @@ return {
     },
 
     completion = {
-      list = { max_items = 1000 },
+      list = { max_items = options.max_items },
       accept = {
         auto_brackets = { enabled = false }
       },
@@ -214,7 +218,7 @@ return {
       keymap = {
         preset = "none",
 
-        ["<Tab>"] = { "show", "accept" },
+        ["<Tab>"] = { "show", "accept", "fallback" },
         ["<C-n>"] = { "select_next" },
         ["<C-p>"] = { "select_prev" }
       },

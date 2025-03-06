@@ -6,6 +6,8 @@ require("bodby.options")
 vim.schedule(function()
   vim.g.mapleader = " "
   mappings.setup()
+
+  require("bodby.lsp")
 end)
 
 -- TODO: Move this into native plugin code and set 'clear = false'?

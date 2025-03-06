@@ -2,7 +2,7 @@ local options = {
   --- How much padding should be added to the top of the dashboard, as a
   --- percentage of the screen width.
   --- @type number
-  top_margin = 0.3,
+  top_margin = 0.28,
 
   --- Width of the dashboard in columns.
   --- @type number

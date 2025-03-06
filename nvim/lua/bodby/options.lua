@@ -1,11 +1,9 @@
 --- @type table<string, any>
 local options = {
-  pumheight = 16,
-  scrolloff = 12,
-  cmdheight = 0,
-  wrap = true,
-  conceallevel = 0,
-  concealcursor = "",
+  expandtab = true,
+  shiftwidth = 2,
+  tabstop = 2,
+  softtabstop = 2,
 
   number = true,
   relativenumber = true,
@@ -15,34 +13,46 @@ local options = {
   laststatus = 3,
   showtabline = 2,
 
+  pumheight = 16,
+  scrolloff = 12,
+  cmdheight = 0,
+  wrap = true,
+  conceallevel = 0,
+  concealcursor = "",
+
   hlsearch = false,
   ignorecase = true,
   smartcase = true,
 
-  guicursor = "a:Cursor/Cursor",
-  linespace = 6,
+  guicursor = { a = "Cursor/Cursor" },
+  -- FIXME: Too much?
+  linespace = 8,
+
+  list = true,
+  fillchars = {
+    eob = " ",
+    fold = " "
+  },
+
+  listchars = {
+    tab = "> ",
+    trail = "_"
+  },
 
   confirm = true,
   undofile = true,
   undolevels = 10000,
   shortmess = "oOstTWIcCFSqc",
 
-  expandtab = true,
-  shiftwidth = 2,
-  tabstop = 2,
-  softtabstop = 2,
-
-  list = true,
-  fillchars = "eob: ,fold: ",
-  listchars = "tab:> ,trail:_"
+  spelllang = "en",
+  spellsuggest = "best"
 }
 
 --- Global options prefixed with "neovide_".
 --- @type table<string, any>
 local neovide_options = {
-  -- TODO: Make font thinner.
-  text_gamma = 1.2,
-  text_contrast = 0.0,
+  text_gamma = 0.8,
+  text_contrast = 0.2,
 
   padding_top = 24,
   padding_right = 24,
@@ -69,7 +79,16 @@ local neovide_options = {
 }
 
 for k, v in pairs(options) do
-  vim.o[k] = v
+  if type(v) ~= "table" then
+    vim.o[k] = v
+  else
+    local result = ""
+    for k2, v2 in pairs(v) do
+      result = result .. k2 .. ":" .. v2 .. ","
+    end
+
+    vim.o[k] = result:sub(0, #result - 1)
+  end
 end
 
 if vim.g.neovide then

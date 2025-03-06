@@ -62,7 +62,7 @@ return {
 
       prompt_prefix = "",
       entry_prefix = "",
-      selection_caret = "",
+      selection_caret = "* ",
       hl_result_eol = true,
       multi_icon = "",
       border = true,
@@ -97,6 +97,7 @@ return {
         initial_sort = nil,
         smart_case = true
       },
+
       generic = {
         enable = true,
         highlight_results = false,
