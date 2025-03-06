@@ -1,3 +1,5 @@
+vim.g.colors_name = "bodby"
+
 local colors = {
   gray1 = "#1d232f",
   gray2 = "#131720",
@@ -18,15 +20,13 @@ local colors = {
 vim.cmd("highlight clear")
 vim.cmd("syntax reset")
 
-vim.g.colors_name = "bodby"
+local tabl_hls = {
+  Error = colors.red,
+  Warn = colors.yellow,
+  Info = colors.blue,
+  Hint = colors.purple
+}
 
--- TODO: Generate statusline and tabline diagnostic highlights using the normal
---       "Error", "Warning", etc. highlights.
---       Also do so in the respective plugins, e.g. the statusline shouldn't
---       need me to create a bunch of highlights and should just get the
---       brackground from the regular statusline highlight.
-
--- For creating "BG" and "FG" variants.
 local stl_hls = {
   ["StatusLineNormal"] = colors.cyan,
   ["StatusLineVisual"] = colors.green,
@@ -39,14 +39,6 @@ local stl_hls = {
   ["StatusLineLimbo"] = colors.white3
 }
 
--- For creating "Entryand "EntryNC" variants.
-local tabl_hls = {
-  ["Error"] = colors.red,
-  ["Warn"] = colors.yellow,
-  ["Info"] = colors.blue,
-  ["Hint"] = colors.purple
-}
-
 local hls = {
   ["AlphaButtons"]     = { fg = colors.cyan },
   ["AlphaHeaderLabel"] = { fg = colors.white2 },
@@ -56,7 +48,7 @@ local hls = {
 
   ["BlinkCmpMenu"]              = { fg = colors.white3, bg = colors.gray3 },
   ["BlinkCmpMenuSelection"]     = { fg = colors.white1, bg = colors.gray3, bold = true },
-  ["BlinkCmpSource"]            = { fg = colors.gray1, bg = colors.gray3 },
+  ["BlinkCmpSource"]            = { fg = colors.white3, bg = colors.gray3 },
   ["BlinkCmpLabelMatch"]        = { bold = true },
   ["BlinkCmpLabelDeprecated"]   = { strikethrough = true },
   ["BlinkCmpKindText"]          = { fg = colors.white2 },
@@ -101,7 +93,9 @@ local hls = {
   ["Added"]                = { fg = colors.green },
   ["Changed"]              = { fg = colors.yellow },
   ["Removed"]              = { fg = colors.red },
-  ["GitSignsDeleteVirtLn"] = { fg = colors.red },
+  ["DiffDelete"] = { fg = colors.red },
+  -- dhawdhaw
+  -- ["GitSignsDeleteVirtLn"] = { fg = colors.red },
 
   ["TelescopePromptNormal"] = { bg = colors.gray3 },
   ["TelescopePromptBorder"] = { fg = colors.gray3, bg = colors.gray3 },
@@ -114,7 +108,7 @@ local hls = {
   ["TelescopePreviewMatch"] = { bg = colors.gray2 },
   ["TelescopePreviewLine"] = { bg = colors.gray2 },
   ["TelescopeMatching"] = { bold = true },
-  ["TelescopeSelection"] = { fg = colors.white1, bold = true },
+  ["TelescopeSelection"] = { fg = colors.white1, bold = true, italic = true },
   ["TelescopeSelectionCaret"] = { fg = colors.cyan },
   ["TelescopeMultiSelection"] = { fg = colors.cyan },
 
@@ -230,8 +224,8 @@ local hls = {
   ["Function"]    = { fg = colors.blue },
   ["Identifier"]  = { fg = colors.white2 },
   ["Keyword"]     = { fg = colors.cyan, bold = true, italic = true },
-  ["Label"]       = { fg = colors.purple, bold = true },
-  ["PreProc"]     = { fg = colors.purple },
+  ["Label"]       = { fg = colors.white1, bold = true, italic = true },
+  ["PreProc"]     = { fg = colors.cyan, bold = true, italic = true },
   ["Number"]      = { fg = colors.green },
   ["Operator"]    = { fg = colors.cyan },
   ["Special"]     = { fg = colors.purple },
@@ -263,7 +257,6 @@ local hls = {
   ["@keyword.operator"]    = { fg = colors.cyan },
   ["@punctuation.special"] = { link = "Operator" },
   ["@character.special"]   = { fg = colors.cyan },
-  -- TODO: Does this only affect 'null' and 'nil'?
   ["@constant.builtin"] = { link = "Boolean" },
   ["@constructor"] = { fg = colors.yellow },
   ["@namespace"] = { fg = colors.yellow, bold = true },

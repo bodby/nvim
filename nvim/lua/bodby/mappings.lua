@@ -68,12 +68,14 @@ local neovide_mappings = {
       vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.125
     end
   },
+
   ["<C-_>"] = {
     modes = "niv",
     callback = function()
       vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.125
     end
   },
+
   ["<C-)>"] = {
     modes = "niv",
     callback = function()

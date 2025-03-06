@@ -19,6 +19,7 @@ local options = {
   wrap = true,
   conceallevel = 0,
   concealcursor = "",
+  mouse = "",
 
   hlsearch = false,
   ignorecase = true,
@@ -78,6 +79,22 @@ local neovide_options = {
   cursor_animate_command_line = true
 }
 
+--- Disables some plugins.
+--- @type table<string, any>
+local globals = {
+  -- Unnecessary plugins.
+  loaded_netrwPlugin = 1,
+  loaded_netrw = 1,
+  loaded_2html_plugin = 0,
+  loaded_fzf = 0,
+  loaded_zipPlugin = 0,
+  loaded_tutor_mode_plugin = 0,
+
+  -- Per-filetype options. See `:h filetype`.
+  markdown_recommended_style = 0,
+  tex_flavor = "latex"
+}
+
 for k, v in pairs(options) do
   if type(v) ~= "table" then
     vim.o[k] = v
@@ -95,4 +112,8 @@ if vim.g.neovide then
   for k, v in pairs(neovide_options) do
     vim.g["neovide_" .. k] = v
   end
+end
+
+for k, v in pairs(globals) do
+  vim.g[k] = v
 end

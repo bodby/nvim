@@ -21,20 +21,9 @@ end
 
 return {
   mappings = {
-    ["<Leader>ff"] = {
-      modes = "n",
-      callback = builtin.find_files
-    },
-
-    ["<Leader>fr"] = {
-      modes = "n",
-      callback = builtin.oldfiles
-    },
-
-    ["<Leader>fb"] = {
-      modes = "n",
-      callback = builtin.buffers
-    },
+    ["<Leader>ff"] = { modes = "n", callback = builtin.find_files },
+    ["<Leader>fr"] = { modes = "n", callback = builtin.oldfiles },
+    ["<Leader>fb"] = { modes = "n", callback = builtin.buffers },
 
     ["<Leader>fg"] = {
       modes = "n",
@@ -64,7 +53,7 @@ return {
       entry_prefix = "",
       selection_caret = "* ",
       hl_result_eol = true,
-      multi_icon = "",
+      multi_icon = "+ ",
       border = true,
 
       preview = { msg_bg_fillchar = " " },

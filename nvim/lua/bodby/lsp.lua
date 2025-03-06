@@ -1,9 +1,10 @@
 local lspconfig = require("lspconfig")
 local caps = require("blink.cmp").get_lsp_capabilities()
 
--- TODO: Add markdown-oxide and TexLab.
+-- TODO: markdown-oxide and TexLab.
+--- @type table<string, table> | string[]
 local servers = {
-  -- TODO: Can I configure clangd without a .clangd?
+  -- TODO: Can I configure clangd without a .clangd file?
   ["clangd"] = {
     settings = {
       InlayHints = { Enabled = false },
@@ -25,6 +26,7 @@ local servers = {
       }
     }
   },
+
   ["lua_ls"] = {
     settings = {
       Lua = {
@@ -44,7 +46,9 @@ local servers = {
 
         completion = {
           callSnippet = "Replace",
-          keywordSnippet = "Disable"
+          keywordSnippet = "Disable",
+          -- FIXME: Does disabling this fix blink.cmp's "buffer" source?
+          showWord = "Disable"
         },
 
         type = {
@@ -61,11 +65,38 @@ local servers = {
   }
 }
 
+--- @type table<string, any>
+local diag_config = {
+  underline = true,
+  virtual_text = false,
+  update_in_insert = true,
+  severity_sort = true,
+
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "X",
+      [vim.diagnostic.severity.WARN] = "!",
+      [vim.diagnostic.severity.INFO] = "i",
+      [vim.diagnostic.severity.HINT] = "?"
+    }
+  },
+
+  float = {
+    scope = "line",
+    severity_sort = true,
+    header = "",
+    source = false,
+    prefix = ""
+  }
+}
+
 local capabilities = { capabilities = caps }
 for k, v in pairs(servers) do
-  if type(k) == "table" then
-    lspconfig[v].setup(vim.tbl_deep_extend("force", k, capabilities))
+  if type(v) == "table" then
+    lspconfig[k].setup(vim.tbl_deep_extend("force", v, capabilities))
   else
-    lspconfig[k].setup(capabilities)
+    lspconfig[v].setup(capabilities)
   end
 end
+
+vim.diagnostic.config(diag_config)

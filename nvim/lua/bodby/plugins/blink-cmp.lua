@@ -32,7 +32,7 @@ local options = {
 
   --- The maximum number of items to show in the menu.
   --- @type number
-  max_items = 150
+  max_items = 100
 }
 
 --- @type plugin_config
@@ -141,7 +141,7 @@ return {
               ellipsis = false,
 
               text = function(context)
-                return "(" .. context.source_name .. ")"
+                return "[" .. context.source_name .. "]"
               end,
 
               highlight = "BlinkCmpSource"
@@ -172,19 +172,24 @@ return {
       prebuilt_binaries = { download = false }
     },
 
+    -- NOTE: Use 'should_show_items' to never hide a source's items.
+    --       E.g. always showing buffer items even when there are plenty of LSP
+    --       items.
     sources = {
       default = { "lsp", "path", "snippets", "buffer" },
 
       providers = {
         lsp = {
           name = "lsp",
-          module = "blink.cmp.sources.lsp"
+          module = "blink.cmp.sources.lsp",
+          fallbacks = { }
         },
 
         path = {
           name = "path",
           module = "blink.cmp.sources.path",
-          score_offset = 50,
+          score_offset = 100,
+          fallbacks = { },
 
           opts = {
             trailing_slash = options.trailing_slash,
@@ -194,9 +199,11 @@ return {
         },
 
         snippets = {
-          name = "Snippets",
+          name = "snippet",
           module = "blink.cmp.sources.snippets",
-          score_offset = 100,
+          score_offset = 200,
+          fallbacks = { },
+          should_show_items = true,
 
           opts = {
             friendly_snippets = false,
@@ -207,8 +214,10 @@ return {
         },
 
         buffer = {
-          name = "Buffer",
-          module = "blink.cmp.sources.buffer"
+          name = "buffer",
+          module = "blink.cmp.sources.buffer",
+          fallbacks = { },
+          should_show_items = true
         }
       }
     },

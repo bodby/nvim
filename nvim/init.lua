@@ -1,6 +1,6 @@
 local mappings = require("bodby.mappings")
 
-vim.cmd.colorscheme("dark")
+vim.cmd.colorscheme("bodby")
 require("bodby.options")
 
 vim.schedule(function()
