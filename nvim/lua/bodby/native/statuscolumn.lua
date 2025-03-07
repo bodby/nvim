@@ -39,7 +39,7 @@ end
 --- @return highlight
 local function stc_hl(col, cursor)
   local c = cursor and "Cursor" or ""
-  return "%#" .. c .. "LineNr" .. col .. "#"
+  return "%#" .. c .. "Line" .. col .. "#"
 end
 
 --- The HML motion indicators.

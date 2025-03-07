@@ -4,6 +4,7 @@ local options = {
   shiftwidth = 2,
   tabstop = 2,
   softtabstop = 2,
+  textwidth = 80,
 
   number = true,
   relativenumber = true,
@@ -26,13 +27,20 @@ local options = {
   smartcase = true,
 
   guicursor = { a = "Cursor/Cursor" },
-  -- FIXME: Too much?
   linespace = 8,
 
   list = true,
   fillchars = {
     eob = " ",
-    fold = " "
+    fold = " ",
+
+    horiz = " ",
+    horizup = " ",
+    horizdown = " ",
+    vert = " ",
+    vertleft = " ",
+    vertright = " ",
+    verthoriz = " "
   },
 
   listchars = {
