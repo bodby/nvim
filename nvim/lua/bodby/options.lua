@@ -27,7 +27,7 @@ local options = {
   smartcase = true,
 
   guicursor = { a = "Cursor/Cursor" },
-  linespace = 8,
+  linespace = 7,
 
   list = true,
   fillchars = {
