@@ -151,7 +151,10 @@ return {
       },
 
       documentation = { auto_show = options.show_docs },
-      ghost_text = { enabled = options.show_ghost_text }
+      ghost_text = {
+        enabled = options.show_ghost_text,
+        show_with_menu = false
+      }
     },
 
     fuzzy = {
@@ -244,7 +247,7 @@ return {
         Function = "f",
         Constructor = "m",
         Field = "v",
-        Variable = "v",
+        Variable = "x",
         Property = "p",
         Class = "t",
         Interface = "i",

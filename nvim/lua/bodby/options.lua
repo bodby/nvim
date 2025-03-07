@@ -15,7 +15,7 @@ local options = {
   showtabline = 2,
 
   pumheight = 16,
-  scrolloff = 12,
+  scrolloff = 6,
   cmdheight = 0,
   wrap = true,
   conceallevel = 0,

@@ -1,3 +1,5 @@
+-- WARN: This file is very ugly. I got tired of working on this.
+
 --- @type table<string, string>
 local colors = {
   gray1 = "#1d232f",
@@ -16,7 +18,6 @@ local colors = {
   cyan = "#89bcff"
 }
 
-
 -- NOTE: Snippets should be highlighted like macros.
 
 --- Atomic highlights that other highlights can inherit.
@@ -25,6 +26,7 @@ local base = {
   -- Syntax.
   identifier = { fg = colors.white1 },
   field = { fg = colors.white2 },
+  property = { fg = colors.white2 },
   keyword = {
     fg = colors.cyan,
     bold = true,
@@ -62,7 +64,11 @@ local base = {
   -- UI.
   normal = { fg = colors.white2, bg = colors.gray2 },
   popup = { fg = colors.white2, bg = colors.gray3 },
-  hover = { fg = colors.white1, bold = true },
+  hover = {
+    fg = colors.white1,
+    bold = true,
+    italic = true
+  },
   ghost = { fg = colors.white3, italic = true },
   cursor_line = { bg = colors.gray3 },
   line_number = { fg = colors.white3 },
@@ -75,7 +81,12 @@ local base = {
   snippet_tabstop = { italic = true },
   --- For blink.cmp and Telescope.
   matching_char = { bold = true },
-  matching_search = { fg = colors.red, bold = true },
+  matching_search = {
+    fg = colors.white1,
+    bg = colors.gray1,
+    bold = true
+  },
+
   matching_punctuation = { fg = colors.yellow, bold = true },
   key = { fg = colors.purple, bold = true },
   directory = { fg = colors.white2 },
@@ -85,6 +96,10 @@ local base = {
     fg = colors.white1,
     underline = true
   },
+
+  spell_bad = { sp = colors.red, undercurl = true },
+  spell_rare = { sp = colors.purple, undercurl = true },
+  spell_casing = { sp = colors.blue, undercurl = true },
 
   title = {
     fg = colors.white1,
@@ -107,9 +122,27 @@ local base = {
     italic = true
   },
 
+  tabline = { bg = colors.gray2 },
+  tab_index = { fg = colors.cyan, bold = true },
+  tabline_loc = { fg = colors.white3 },
+  tab_inactive = { fg = colors.white3 },
+  tab_count = {
+    fg = colors.cyan,
+    bold = true,
+    underline = true
+  },
+
+  tab = {
+    fg = colors.white1,
+    sp = colors.cyan,
+    bold = true,
+    italic = true,
+    underline = true
+  },
+
   -- Diagnostics.
   error = { fg = colors.red, bold = true },
-  warning = { fg = colors.yellow, bold = true },
+  warn = { fg = colors.yellow, bold = true },
   info = { fg = colors.blue, bold = true },
   hint = { fg = colors.purple, bold = true },
   success = { fg = colors.green, bold = true },
@@ -126,22 +159,27 @@ local base = {
 --- Override a `base` highlight.
 --- @param orig base
 --- @param opts table
---- @param nocombine? boolean
 --- @return table
 --- @nodiscard
-local function inherit(orig, opts, nocombine)
-  opts = vim.tbl_extend("force", opts, { nocombine = nocombine or false })
+local function inherit(orig, opts)
   return vim.tbl_deep_extend("force", orig, opts)
 end
 
--- TODO: Function to generate diagnostic highlights ("Error", etc. suffixes).
+--- @param name string
+--- @param opts table
+local function hl(name, opts)
+  vim.api.nvim_set_hl(0, name, opts)
+end
 
 -- See `:h syntax` for some of these highlights.
 --- @type table<string, table>
 local highlights = {
   ["Normal"] = base.normal,
   ["StatusLine"] = base.statusline,
+  ["TabLine"] = base.tabline,
   ["NormalFloat"] = base.popup,
+  ["FloatBorder"] = inherit(base.popup, { fg = base.popup.bg }),
+  ["MsgArea"] = base.popup,
   ["Title"] = base.title,
   ["Pmenu"] = inherit(base.popup, { fg = colors.white3 }),
   ["PmenuSel"] = base.hover,
@@ -151,10 +189,12 @@ local highlights = {
   ["CursorLineWrapped"] = base.line_number,
   ["LineNr"] = base.line_number,
   ["LineNrSpecial"] = base.hml_indicator,
+  ["WinSeparator"] = base.separator,
 
   ["Visual"] = base.visual,
   ["Search"] = base.matching_search,
   ["IncSearch"] = { link = "Search" },
+  ["CurSearch"] = { link = "Search" },
   ["Substitute"] = { link = "Search" },
   ["MatchParen"] = base.matching_punctuation,
   ["NonText"] = base.ghost,
@@ -170,9 +210,12 @@ local highlights = {
   ["Exception"] = base.keyword,
   ["Conditional"] = base.conditional,
   ["Identifier"] = base.identifier,
+  ["Statement"] = { },
   ["String"] = base._string,
   ["Character"] = base.character,
   ["Special"] = base.special,
+  ["SpecialKey"] = base.key,
+  ["QuickFixLine"] = base.accent,
   ["SpecialChar"] = base.special_char,
   ["Number"] = base.number,
   ["Float"] = { link = "Number" },
@@ -187,6 +230,7 @@ local highlights = {
   ["Comment"] = base.comment,
 
   ["Underlined"] = base.url,
+  ["Directory"] = base.directory,
   ["Todo"] = base.todo,
   ["Added"] = base.diff_added,
   ["Changed"] = base.diff_changed,
@@ -197,54 +241,71 @@ local highlights = {
 
   -- Diagnostics.
   ["Error"] = base.error,
-  ["Warning"] = base.warning,
+  ["Warning"] = base.warn,
+  ["ErrorMsg"] = { link = "Error" },
+  ["WarningMsg"] = { link = "Warning" },
+  ["MoreMsg"] = { link = "Question" },
+  ["Question"] = base.key,
   ["DiagnosticDeprecated"] = base.deprecated,
   ["DiagnosticError"] = base.error,
   ["DiagnosticInfo"] = base.info,
   ["DiagnosticHint"] = base.hint,
   ["DiagnosticOk"] = base.success,
-  ["DiagnosticWarn"] = base.warning,
+  ["DiagnosticWarn"] = base.warn,
   ["DiagnosticUnderlineError"] = inherit(base.error, { underline = true }),
   ["DiagnosticUnderlineInfo"] = inherit(base.info, { underline = true }),
   ["DiagnosticUnderlineHint"] = inherit(base.hint, { underline = true }),
   ["DiagnosticUnderlineOk"] = inherit(base.success, { underline = true }),
-  ["DiagnosticUnderlineWarn"] = inherit(base.warning, { underline = true }),
+  ["DiagnosticUnderlineWarn"] = inherit(base.warn, { underline = true }),
+
+  ["SpellBad"] = base.spell_bad,
+  ["SpellRare"] = base.spell_rare,
+  ["SpellCap"] = base.spell_casing,
 
   -- Treesitter.
   ["@variable"] = { link = "Identifier" },
-  ["@property"] = base.field,
-  ["@variable.member"] = { link = "@property" },
+  ["@property"] = base.property,
+  ["@variable.member"] = base.field,
   ["@constructor"] = base.constructor,
   ["@keyword.function"] = base.function_keyword,
-  ["@keyword.conditional"] = base.conditional,
+  ["@keyword.conditional"] = { link = "Conditional" },
+  ["@keyword.operator"] = { link = "Operator" },
+  ["@punctuation.special"] = { link = "Delimiter" },
+  ["@tag.delimiter"] = { link = "Delimiter" },
+  ["@character.special"] = { link = "Operator" },
+  ["@constant.builtin"] = { link = "Boolean" },
   ["@function.builtin"] = { link = "@function" },
+  ["@type.builtin"] = { link = "Type" },
   ["@module"] = base.module,
   ["@module.builtin"] = { link = "@module" },
+  ["@namespace"] = { link = "@module" },
 
-  -- Lua.
-  ["@constructor.lua"] = base.delimiter,
+  ["@constructor.lua"] = { link = "Delimiter" },
+  ["@constructor.ocaml"] = { link = "Delimiter" },
+
+  ["@tag.attribute.html"] = { link = "@property" },
+
+  ["@markup.raw.markdown_inline"] = base.code,
+  -- TODO: Resolved and unresolved link colors.
+  --       Unresolved probably belongs to LSP highlights.
+  ["@markup.link"] = base.url,
+  ["@markup.strong"] = { fg = colors.white1, bold = true },
+
+  ["@module.latex"] = { link = "Keyword" },
+  ["@punctuation.bracket.latex"] = inherit(base.delimiter, { nocombine = true }),
+  ["@string.special.symbol.bibtex"] = { link = "Identifier" },
 
   -- Todo comments.
   ["@comment.warning"] = { link = "Todo" },
-  ["@comment.error"]   = { link = "Todo" },
-  ["@comment.todo"]    = { link = "Todo" },
-  ["@comment.note"]    = { link = "Todo" },
+  ["@comment.error"] = { link = "Todo" },
+  ["@comment.todo"] = { link = "Todo" },
+  ["@comment.note"] = { link = "Todo" },
+  ["@constant.comment"] = base.assignee,
 
   -- LSP highlights.
-  ["@lsp.type.comment"] = { }
-}
-
---- @type table<string, string>
-local stl_highlights = {
-  ["Normal"] = colors.cyan,
-  ["Visual"] = colors.green,
-  ["Select"] = colors.green,
-  ["Insert"] = colors.purple,
-  ["Replace"] = colors.red,
-  ["Command"] = colors.yellow,
-  ["Prompt"] = colors.white3,
-  ["Shell"] = colors.green,
-  ["Limbo"] = colors.white3
+  ["@lsp.type.comment"] = { },
+  ["@lsp.type.macro"] = { },
+  ["@lsp.mod.global"] = { link = "@module" }
 }
 
 --- "Alpha" prefixed highlights.
@@ -294,6 +355,34 @@ local blink_highlights = {
   ["KindTypeParameter"] = { link = "Identifier" }
 }
 
+--- "Telescope" prefixed highlights.
+--- @type table<string, table>
+local telescope_highlights = {
+  ["PromptNormal"] = { link = "NormalFloat" },
+  ["PromptBorder"] = { link = "FloatBorder" },
+  ["ResultsNormal"] = { link = "Pmenu" },
+  ["ResultsBorder"] = { link = "FloatBorder" },
+  ["PreviewNormal"] = { link = "NormalFloat" },
+  ["PreviewBorder"] = { link = "FloatBorder" },
+
+  ["Matching"] = base.matching_char,
+  ["Selection"] = { link = "PmenuSel" },
+  ["SelectionCaret"] = base.caret,
+  ["MultiSelection"] = { link = "NormalFloat" },
+  ["MultiIcon"] = base.accent
+}
+
+--- "RenderMarkdown" prefixed highlights.
+--- @type table<string, table>
+local render_md_highlights = {
+  ["Header"] = inherit(base.title, { fg = colors.white3, italic = false }),
+  ["Code"] = { bg = base.code.bg },
+  ["CodeInline"] = base.code,
+  ["Dash"] = { link = "WinSeparator" },
+  ["TableHead"] = { link = "WinSeparator" },
+  ["TableRow"] = { link = "WinSeparator" }
+}
+
 --- "StatusLine" prefixed highlights.
 --- @type table<string, table>
 local statusline_highlights = {
@@ -305,26 +394,115 @@ local statusline_highlights = {
   ["FileType"] = base.statusline_filetype,
   ["NewLine"] = base.statusline_endings,
   ["Pos"] = base.statusline_position,
-  ["Percent"] = base.statusline_percent
+  ["Percent"] = base.statusline_percent,
+
+  ["Error"] = inherit(base.error, { bg = base.statusline.bg }),
+  ["Warn"] = inherit(base.warn, { bg = base.statusline.bg }),
+  ["Info"] = inherit(base.info, { bg = base.statusline.bg }),
+  ["Hint"] = inherit(base.hint, { bg = base.statusline.bg })
+}
+
+--- For "BG" and "FG" suffixed highlights.
+--- @type table<string, string>
+local statusline_mode_highlights = {
+  ["Normal"] = colors.cyan,
+  ["Visual"] = colors.green,
+  ["Select"] = colors.green,
+  ["Insert"] = colors.purple,
+  ["Replace"] = colors.red,
+  ["Command"] = colors.yellow,
+  ["Prompt"] = colors.white3,
+  ["Shell"] = colors.green,
+  ["Limbo"] = colors.white3
+}
+
+--- "TabLine" prefixed highlights.
+--- @type table<string, table>
+local tabline_highlights = {
+  ["Entry"] = base.tab,
+  ["EntryNC"] = base.tab_inactive,
+  ["Count"] = base.tab_count,
+  ["CountNC"] = base.tab_inactive,
+  ["Index"] = base.tab_index,
+  ["LineCount"] = base.tabline_loc,
+
+  ["EntryError"] = inherit(base.tab, { sp = base.error.fg ,underline = true }),
+  ["EntryWarn"] = inherit(base.tab, { sp = base.warn.fg, underline = true }),
+  ["EntryInfo"] = inherit(base.tab, { sp = base.info.fg, underline = true }),
+  ["EntryHint"] = inherit(base.tab, { sp = base.hint.fg, underline = true }),
+
+  ["CountError"] = inherit(base.error, { underline = true }),
+  ["CountWarn"] = inherit(base.warn, { underline = true }),
+  ["CountInfo"] = inherit(base.info, { underline = true }),
+  ["CountHint"] = inherit(base.hint, { underline = true }),
+
+  ["EntryErrorNC"] = base.error,
+  ["EntryWarnNC"] = base.warn,
+  ["EntryInfoNC"] = base.info,
+  ["EntryHintNC"] = base.hint,
+
+  ["CountErrorNC"] = base.error,
+  ["CountWarnNC"] = base.warn,
+  ["CountInfoNC"] = base.info,
+  ["CountHintNC"] = base.hint
 }
 
 vim.g.colors_name = "bodby"
 vim.cmd("highlight clear")
 vim.cmd("syntax reset")
 
+-- TODO: Place all of the other tables into the `highlights` table to be looped
+--       over on its own.
 for k, v in pairs(highlights) do
-  vim.api.nvim_set_hl(0, k, v)
+  hl(k, v)
 end
 
 for k, v in pairs(alpha_highlights) do
-  vim.api.nvim_set_hl(0, "Alpha" .. k, v)
+  hl("Alpha" .. k, v)
 end
 
 for k, v in pairs(blink_highlights) do
-  vim.api.nvim_set_hl(0, "BlinkCmp" .. k, v)
+  hl("BlinkCmp" .. k, v)
 end
 
-for k, v in pairs(statusline_highlights) do
-  local hl = inherit(base.statusline, v)
-  vim.api.nvim_set_hl(0, "StatusLine" .. k, hl)
+for k, v in pairs(telescope_highlights) do
+  hl("Telescope" .. k, v)
 end
+
+for k, v in pairs(render_md_highlights) do
+  hl("RenderMarkdown" .. k, v)
+end
+
+-- Statusline.
+for k, v in pairs(statusline_highlights) do
+  hl("StatusLine" .. k, inherit(base.statusline, v))
+end
+
+for k, v in pairs(statusline_mode_highlights) do
+  local fg = inherit(base.statusline, { fg = v, bold = true })
+
+  hl("StatusLine" .. k .. "FG", fg)
+  hl("StatusLine" .. k .. "BG", { bg = v })
+end
+
+-- Tabline.
+for k, v in pairs(tabline_highlights) do
+  hl("TabLine" .. k, inherit(base.tabline, v))
+end
+
+vim.g.terminal_color_0  = colors.gray3
+vim.g.terminal_color_1  = colors.red
+vim.g.terminal_color_2  = colors.green
+vim.g.terminal_color_3  = colors.yellow
+vim.g.terminal_color_4  = colors.blue
+vim.g.terminal_color_5  = colors.purple
+vim.g.terminal_color_6  = colors.cyan
+vim.g.terminal_color_7  = colors.white2
+vim.g.terminal_color_8  = colors.gray1
+vim.g.terminal_color_9  = colors.red
+vim.g.terminal_color_10 = colors.green
+vim.g.terminal_color_11 = colors.yellow
+vim.g.terminal_color_12 = colors.blue
+vim.g.terminal_color_13 = colors.purple
+vim.g.terminal_color_14 = colors.cyan
+vim.g.terminal_color_15 = colors.white1
