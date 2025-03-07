@@ -16,6 +16,9 @@ local colors = {
   cyan = "#89bcff"
 }
 
+
+-- NOTE: Snippets should be highlighted like macros.
+
 --- Atomic highlights that other highlights can inherit.
 --- @enum base
 local base = {
@@ -38,19 +41,48 @@ local base = {
   number = { fg = colors.green },
   _string = { fg = colors.green, italic = true },
   type = { fg = colors.purple },
+  class = { fg = colors.purple },
+  enum = { fg = colors.purple },
+  enum_member = { fg = colors.yellow },
+  --- Typeclasses and traits.
+  interface = { fg = colors.purple },
+  --- Type constructors.
+  constructor = { fg = colors.yellow },
   tag = { fg = colors.blue },
+  module = { fg = colors.yellow },
+  constant = { fg = colors.yellow, bold = true },
 
   -- UI.
   normal = { fg = colors.white2, bg = colors.gray2 },
+  popup = { fg = colors.white2, bg = colors.gray3 },
   accent = { fg = colors.cyan, bold = true },
   caret = { fg = colors.cyan },
   key = { fg = colors.purple, bold = true },
+  directory = { fg = colors.white2 },
+  code = { fg = colors.cyan, bg = colors.gray3 },
+  separator = { fg = colors.gray1 },
+  title = {
+    fg = colors.white1,
+    bold = true,
+    italic = true
+  },
+
+  statusline = { bg = colors.gray3 },
+  statusline_directory = { fg = colors.white3, italic = true },
+  statusline_file = { fg = colors.white2, italic = true },
+  statusline_branch = { fg = colors.white1, bold = true },
+  statusline_delta = { fg = colors.white2 },
 
   -- Diagnostics.
   error = { fg = colors.red, bold = true },
   warning = { fg = colors.yellow, bold = true },
   info = { fg = colors.blue, bold = true },
   hint = { fg = colors.purple, bold = true },
+  deprecated = {
+    fg = colors.white3,
+    sp = colors.white3,
+    strikethrough = true
+  },
 
   -- Todo comments.
   todo = { fg = colors.cyan, bold = true },
