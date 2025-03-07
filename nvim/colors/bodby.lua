@@ -134,6 +134,8 @@ local function inherit(orig, opts, nocombine)
   return vim.tbl_deep_extend("force", orig, opts)
 end
 
+-- TODO: Function to generate diagnostic highlights ("Error", etc. suffixes).
+
 -- See `:h syntax` for some of these highlights.
 --- @type table<string, table>
 local highlights = {
