@@ -45,7 +45,6 @@
     # TODO: Obsidian. Unless markdown-oxide is enough.
     # obsidian-nvim
 
-    # TODO: Get rid of gitsigns and rewrite statusline Git module.
     gitsigns-nvim
     # smartcolumn-nvim
     # virt-column-nvim

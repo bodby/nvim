@@ -27,7 +27,7 @@ local options = {
   smartcase = true,
 
   guicursor = { a = "Cursor/Cursor" },
-  linespace = 7,
+  linespace = 6,
 
   list = true,
   fillchars = {
@@ -87,7 +87,6 @@ local neovide_options = {
   cursor_animate_command_line = true
 }
 
---- Disables some plugins.
 --- @type table<string, any>
 local globals = {
   -- Unnecessary plugins.

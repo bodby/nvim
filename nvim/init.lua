@@ -29,13 +29,14 @@ local config = vim.tbl_map(function(p)
   return require("bodby.plugins." .. p)
 end, plugins)
 
---- Run the setup function of the passed plugin and defer adding its mappings
---- and `post()` function if defined.
+--- Setup the passed plugin, its mappings, and its post function.
 --- @param plugin string
 local function setup(plugin)
+  --- @type plugin_config
   local options = config[plugin]
-  require(plugin).setup(options.opts)
+  assert(options, ("Invalid plugin passed (" .. plugin .. ")"))
 
+  require(plugin).setup(options.opts)
   vim.schedule(function()
     if options.mappings then
       for k, v in pairs(options.mappings) do
@@ -49,13 +50,14 @@ local function setup(plugin)
   end)
 end
 
--- Map plugins to their configured event or set them up if they don't have one.
+-- Map plugins to their configured event, or set them up immediately if they
+-- don't have one.
 for p, o in pairs(config) do
+  --- @type boolean
   local has_event = o.event and o.event ~= ""
-
   if has_event then
+    --- @type string
     local pattern = o.pattern and o.pattern ~= "" and o.pattern or "*"
-
     if not mapped[o.event] then
       mapped[o.event] = { }
     end

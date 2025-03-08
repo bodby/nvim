@@ -4,7 +4,7 @@ local caps = require("blink.cmp").get_lsp_capabilities()
 -- TODO: markdown-oxide and TexLab.
 --- @type table<string, table> | string[]
 local servers = {
-  -- TODO: Can I configure clangd without a .clangd file?
+  -- FIXME: Can I configure clangd without a .clangd file?
   ["clangd"] = {
     settings = {
       InlayHints = { Enabled = false },

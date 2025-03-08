@@ -6,9 +6,9 @@ local colors = {
   gray2 = "#131720",
   gray3 = "#0e1119",
 
-  white1 = "#c2d5ff",
-  white2 = "#95a6c6",
-  white3 = "#4e596f",
+  white1 = "#bfd3ff",
+  white2 = "#93a5c8",
+  white3 = "#4c5771",
 
   purple = "#9d7dff",
   blue = "#809cff",
@@ -48,7 +48,7 @@ local base = {
   boolean = { fg = colors.green },
   character = { fg = colors.green },
   --- Nix paths and escape codes.
-  special_char = { fg = colors.green, italic = true },
+  special_char = { fg = colors.cyan, italic = true },
   number = { fg = colors.green },
   _string = { fg = colors.green, italic = true },
   type = { fg = colors.purple },
@@ -56,7 +56,7 @@ local base = {
   constructor = { fg = colors.yellow },
   tag = { fg = colors.blue },
   module = { fg = colors.yellow, bold = true },
-  constant = { fg = colors.yellow, bold = true },
+  constant = { fg = colors.white1, bold = true },
   -- TODO: Find where this is used.
   special = { fg = colors.purple },
   comment = { fg = colors.white3, italic = true },
@@ -93,7 +93,7 @@ local base = {
   code = { fg = colors.cyan, bg = colors.gray3 },
   separator = { fg = colors.gray1 },
   url = {
-    fg = colors.white1,
+    fg = colors.purple,
     underline = true
   },
 
@@ -245,7 +245,7 @@ local highlights = {
   ["ErrorMsg"] = { link = "Error" },
   ["WarningMsg"] = { link = "Warning" },
   ["MoreMsg"] = { link = "Question" },
-  ["Question"] = base.key,
+  ["Question"] = base.popup,
   ["DiagnosticDeprecated"] = base.deprecated,
   ["DiagnosticError"] = base.error,
   ["DiagnosticInfo"] = base.info,
@@ -285,15 +285,21 @@ local highlights = {
 
   ["@tag.attribute.html"] = { link = "@property" },
 
+  ["@variable.builtin.bash"] = { link = "Constant" },
+  ["@punctuation.special.bash"] = inherit(base.delimiter, { nocombine = true }),
+
   ["@markup.raw.markdown_inline"] = base.code,
   -- TODO: Resolved and unresolved link colors.
-  --       Unresolved probably belongs to LSP highlights.
+  --       The unresolved highlight belongs to LSP highlights.
   ["@markup.link"] = base.url,
   ["@markup.strong"] = { fg = colors.white1, bold = true },
 
   ["@module.latex"] = { link = "Keyword" },
   ["@punctuation.bracket.latex"] = inherit(base.delimiter, { nocombine = true }),
   ["@string.special.symbol.bibtex"] = { link = "Identifier" },
+
+  -- TODO
+  -- ["@constant.builtin.css"] = { link = "Boolean" },
 
   -- Todo comments.
   ["@comment.warning"] = { link = "Todo" },
