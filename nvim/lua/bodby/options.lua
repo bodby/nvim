@@ -18,6 +18,7 @@ local options = {
   scrolloff = 6,
   cmdheight = 0,
   wrap = true,
+  linebreak = true,
   conceallevel = 0,
   concealcursor = "",
   mouse = "",

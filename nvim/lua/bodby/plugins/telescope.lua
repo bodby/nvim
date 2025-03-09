@@ -21,7 +21,12 @@ end
 
 return {
   mappings = {
-    ["<Leader>ff"] = { modes = "n", callback = builtin.find_files },
+    ["<Leader>ff"] = {
+      modes = "n",
+      callback = function()
+        builtin.find_files({ hidden = true })
+      end
+    },
     ["<Leader>fr"] = { modes = "n", callback = builtin.oldfiles },
     ["<Leader>fb"] = { modes = "n", callback = builtin.buffers },
 

@@ -1,21 +1,15 @@
 local lspconfig = require("lspconfig")
 local caps = require("blink.cmp").get_lsp_capabilities()
 
--- TODO: markdown-oxide and TexLab.
+-- TODO: TexLab.
 --- @type table<string, table> | string[]
 local servers = {
-  -- FIXME: Can I configure clangd without a .clangd file?
-  ["clangd"] = {
-    settings = {
-      InlayHints = { Enabled = false },
-      Hover = { ShowAKA = true }
-    }
-  },
-
+  "clangd",
   "nixd",
   "ocamllsp",
   "rust_analyzer",
   "mesonlsp",
+  "markdown_oxide",
 
   ["hls"] = {
     settings = {
@@ -90,12 +84,12 @@ local diag_config = {
   }
 }
 
-local capabilities = { capabilities = caps }
+local opts = { capabilities = caps, silent = true }
 for k, v in pairs(servers) do
   if type(v) == "table" then
-    lspconfig[k].setup(vim.tbl_deep_extend("force", v, capabilities))
+    lspconfig[k].setup(vim.tbl_deep_extend("force", v, opts))
   else
-    lspconfig[v].setup(capabilities)
+    lspconfig[v].setup(opts)
   end
 end
 

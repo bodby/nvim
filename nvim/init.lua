@@ -21,6 +21,7 @@ require("bodby.native.tabline").setup()
 
 --- @type table<string, string>
 local plugins = require("bodby.plugins")
+
 --- @type table<string, table<string, string[]>>
 local mapped = { }
 

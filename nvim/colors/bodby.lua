@@ -93,7 +93,7 @@ local base = {
   code = { fg = colors.cyan, bg = colors.gray3 },
   separator = { fg = colors.gray1 },
   url = {
-    fg = colors.purple,
+    fg = colors.white1,
     underline = true
   },
 
@@ -298,8 +298,13 @@ local highlights = {
   ["@punctuation.bracket.latex"] = inherit(base.delimiter, { nocombine = true }),
   ["@string.special.symbol.bibtex"] = { link = "Identifier" },
 
+  ["@string.special.path"] = { link = "String" },
+  ["@variable.parameter.builtin"] = { link = "Delimiter" },
+
+  ["@keyword.import.nix"] = { link = "Function" },
+
   -- TODO
-  -- ["@constant.builtin.css"] = { link = "Boolean" },
+  ["@constant.builtin.css"] = { link = "Keyword" },
 
   -- Todo comments.
   ["@comment.warning"] = { link = "Todo" },
@@ -496,16 +501,16 @@ for k, v in pairs(tabline_highlights) do
   hl("TabLine" .. k, inherit(base.tabline, v))
 end
 
-vim.g.terminal_color_0  = colors.gray3
-vim.g.terminal_color_1  = colors.red
-vim.g.terminal_color_2  = colors.green
-vim.g.terminal_color_3  = colors.yellow
-vim.g.terminal_color_4  = colors.blue
-vim.g.terminal_color_5  = colors.purple
-vim.g.terminal_color_6  = colors.cyan
-vim.g.terminal_color_7  = colors.white2
-vim.g.terminal_color_8  = colors.gray1
-vim.g.terminal_color_9  = colors.red
+vim.g.terminal_color_0 = colors.gray3
+vim.g.terminal_color_1 = colors.red
+vim.g.terminal_color_2 = colors.green
+vim.g.terminal_color_3 = colors.yellow
+vim.g.terminal_color_4 = colors.blue
+vim.g.terminal_color_5 = colors.purple
+vim.g.terminal_color_6 = colors.cyan
+vim.g.terminal_color_7 = colors.white2
+vim.g.terminal_color_8 = colors.gray1
+vim.g.terminal_color_9 = colors.red
 vim.g.terminal_color_10 = colors.green
 vim.g.terminal_color_11 = colors.yellow
 vim.g.terminal_color_12 = colors.blue
