@@ -43,7 +43,6 @@ return {
       preset = 'none',
       ['<C-Space>'] = { 'show' },
       ['<Tab>'] = { 'select_and_accept', 'fallback' },
-      ['<S-CR>'] = { 'snippet_forward', 'fallback' },
       ['<C-n>'] = {
         function(cmp)
           if not cmp.is_menu_visible() then

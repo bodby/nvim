@@ -1,3 +1,6 @@
+local notes = require('bodby.native.notes')
+local with_args = require('bodby.shared').lib.with_args
+
 local M = {}
 
 --- @class (exact) Mapping
@@ -23,6 +26,16 @@ local mappings = {
   ['<Leader>P'] = { modes = 'n', callback = '"+P' },
   -- Misc. mappings.
   ['<C-c>'] = { modes = 'nv', callback = '<Cmd>normal gcc<CR>' },
+  -- TODO: Make this a standalone plugin so I can place these in plugin
+  --       mappings?
+  ['<Leader>nn'] = {
+    modes = 'n',
+    callback = with_args(notes.create_note, 'note')
+  },
+  ['<Leader>nb'] = {
+    modes = 'n',
+    callback = with_args(notes.create_note, 'blog')
+  },
 }
 
 --- Neovide zoom mappings.
