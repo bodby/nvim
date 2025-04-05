@@ -2,8 +2,15 @@ local lib = require('bodby.shared').lib
 
 local M = {
   template_dir = '/home/bodby/vault/templates',
+  note_dir = '/home/bodby/vault/notes/inbox',
   date_format = '%Y-%m-%d',
 }
+
+--- @param name string
+--- @return string
+local function file_name_from(name)
+  return name:gsub('%s', '-'):gsub('%A', ''):lower() .. '.md'
+end
 
 --- @param content string[]
 --- @param name string
@@ -11,7 +18,7 @@ local function open(content, name)
   vim.cmd.enew()
   local buffer = vim.api.nvim_get_current_buf()
   vim.api.nvim_buf_set_text(buffer, 0, 0, 0, 0, content)
-  vim.api.nvim_buf_set_name(buffer, name)
+  vim.api.nvim_buf_set_name(buffer, vim.fs.joinpath(M.note_dir, name))
   vim.api.nvim_set_option_value('filetype', 'markdown', { buf = buffer })
 end
 
@@ -44,7 +51,7 @@ local function create(template, fields, name)
     end
   end
 
-  open(content, name:gsub('%s', '-'):lower() .. '.md')
+  open(content, file_name_from(name))
   return true
 end
 

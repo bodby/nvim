@@ -63,7 +63,7 @@ local base = {
   cursor = { bg = colors.cyan },
   visual = { bg = colors.gray1 },
   snippet_tabstop = { italic = true },
-  --- For blink.cmp and Telescope.
+  --- For Blink Completion and Telescope.
   matching_char = { bold = true },
   matching_search = {
     bg = colors.gray1,
@@ -304,6 +304,7 @@ local lsp_highlights = {
     ['mod.global'] = { link = '@module' },
     ['type.keyword'] = {},
     ['type.decorator.lua'] = { link = '@keyword.lua' },
+    ['type.macro.lua'] = {},
     ['type.type.lua'] = {},
   },
 }
