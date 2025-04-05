@@ -9,7 +9,7 @@ local M = {
 --- @param name string
 --- @return string
 local function file_name_from(name)
-  return name:gsub('%s', '-'):gsub('%A', ''):lower() .. '.md'
+  return name:gsub('%s', '-'):gsub('[^%a-]', ''):lower() .. '.md'
 end
 
 --- @param content string[]
