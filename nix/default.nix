@@ -10,7 +10,6 @@
   neovim-unwrapped,
   stdenvNoCC,
   wrapNeovimUnstable,
-  ...
 }:
 let
   inherit (lib) concatStringsSep optionalString concatMapStringsSep;
