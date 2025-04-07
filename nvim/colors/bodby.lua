@@ -10,12 +10,12 @@ local colors = {
   white3 = '#495674',
   gray1 = '#141924',
   gray2 = '#0e1119',
-  gray3 = '#0a0d14',
-  purple = '#9d7dff',
-  blue = '#809cff',
-  yellow = '#ffc175',
-  green = '#bbf48a',
+  gray3 = '#0a0d15',
   red = '#f75fa8',
+  green = '#bbf48a',
+  yellow = '#ffc175',
+  blue = '#809cff',
+  purple = '#9d7dff',
   cyan = '#89bcff',
 }
 
