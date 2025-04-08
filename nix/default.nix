@@ -10,9 +10,10 @@
   neovim-unwrapped,
   stdenvNoCC,
   wrapNeovimUnstable,
+  ...
 }:
 let
-  inherit (lib) concatStringsSep optionalString concatMapStringsSep;
+  inherit (lib.strings) concatStringsSep optionalString concatMapStringsSep;
   config = neovimUtils.makeNeovimConfig {
     inherit viAlias vimAlias plugins;
     extraPython3Packages = p: [ ];
@@ -34,7 +35,7 @@ let
   luaPackages = neovim-unwrapped.lua.pkgs;
   makeWrapperArgs = concatStringsSep " " [
     (optionalString (packages != [ ])
-      "--prefix PATH ':' '${lib.makeBinPath packages}'")
+      "--prefix PATH ':' '${lib.strings.makeBinPath packages}'")
   ];
 
   luaPath = type: env:
@@ -53,7 +54,7 @@ wrapNeovimUnstable neovim-unwrapped (config // {
   '';
   wrapRc = true;
   wrapperArgs = concatStringsSep " " [
-    (lib.escapeShellArgs config.wrapperArgs)
+    (lib.strings.escapeShellArgs config.wrapperArgs)
     makeWrapperArgs
     luaCWrapperArgs
     luaWrapperArgs
