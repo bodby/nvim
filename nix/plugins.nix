@@ -1,7 +1,4 @@
-{
-  vimPlugins,
-  ripgrep,
-}:
+{ vimPlugins, ripgrep }:
 let
   # syntax-gaslighting = vimUtils.buildVimPlugin {
   #   pname = "syntax-gaslighting.nvim";
