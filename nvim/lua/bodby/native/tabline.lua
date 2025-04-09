@@ -1,4 +1,3 @@
-local elem = require('bodby.shared').lib.elem
 local M = {
   highlights = {
     tab = 'Tab',
@@ -73,7 +72,7 @@ function M.text()
   for _, v in ipairs(windows) do
     if is_tiled(v) then
       local buffer = vim.api.nvim_win_get_buf(v)
-      if not elem(buffer, skip) then
+      if not vim.tbl_contains(skip, buffer) then
         table.insert(skip, buffer)
         buffers = buffers .. buffer_entry(buffer)
       end

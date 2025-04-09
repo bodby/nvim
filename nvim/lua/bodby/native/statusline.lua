@@ -1,6 +1,5 @@
 local lib = require('bodby.shared').lib
 local nil_str = lib.nil_str
-local elem = lib.elem
 
 --- @class (exact) StatusLineModule
 --- @field text string
@@ -315,7 +314,7 @@ function M.text()
   -- 7 is the combined length of the mode module and the macro register.
   local length = 7 + _diff.length + _branch.length
 
-  local blocked = elem(vim.bo[buffer].filetype, M.blocked_filetypes)
+  local blocked = vim.tbl_contains(M.blocked_filetypes, vim.bo[buffer].filetype)
   local file_info = blocked and '' or _lines.text .. _filetype.text
   if not blocked then
     length = length + _lines.length + _filetype.length

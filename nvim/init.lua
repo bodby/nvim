@@ -27,8 +27,8 @@ local mapped = {}
 
 --- Table with plugin configs instead of just their filename.
 --- @type table<string, Plugin>
-local config = vim.tbl_map(function(p)
-  return require('bodby.plugins.' .. p)
+local config = vim.tbl_map(function(t)
+  return require('bodby.plugins.' .. t)
 end, plugins)
 
 --- Setup the passed plugin, its mappings, and its post function.

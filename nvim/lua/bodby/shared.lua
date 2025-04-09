@@ -10,20 +10,6 @@ local M = {
   lib = {},
 }
 
---- Return whether or not an element exists in an array.
---- @generic T
---- @param e T
---- @param xs T[]
---- @return boolean
-function M.lib.elem(e, xs)
-  for _, v in ipairs(xs) do
-    if v == e then
-      return true
-    end
-  end
-  return false
-end
-
 --- Return whether the string passed is blank (`''`) or `nil`.
 --- @param str string
 --- @return boolean
@@ -84,13 +70,13 @@ end
 
 --- Reverse the order of a list's elements.
 --- @generic T
---- @param tbl T[]
+--- @param t T[]
 --- @return T[]
-function M.lib.reverse(tbl)
-  local result = tbl
-  for i1 = 1, math.floor(#tbl / 2) do
-    local i2 = #tbl - i1 + 1
-    tbl[i1], tbl[i2] = tbl[i2], tbl[i1]
+function M.lib.reverse(t)
+  local result = t
+  for i1 = 1, math.floor(#t / 2) do
+    local i2 = #t - i1 + 1
+    t[i1], t[i2] = t[i2], t[i1]
   end
   return result
 end

@@ -94,8 +94,7 @@ return {
               }
             end
             return {
-              { 'kind' },
-              { 'label' },
+              { 'kind' }, { 'label' },
             }
           end,
 
@@ -182,7 +181,6 @@ return {
           module = 'blink.cmp.sources.lsp',
           fallbacks = {},
         },
-
         path = {
           name = 'path',
           module = 'blink.cmp.sources.path',
@@ -194,7 +192,6 @@ return {
             label_trailing_slash = options.trailing_slash,
           },
         },
-
         snippets = {
           name = 'snippet',
           module = 'blink.cmp.sources.snippets',
@@ -203,11 +200,12 @@ return {
           should_show_items = true,
           opts = {
             friendly_snippets = false,
-            search_paths = { vim.g.root_path .. '/snippets' },
+            search_paths = {
+              vim.fs.joinpath(vim.split(vim.o.rtp, ',')[1], '/snippets'),
+            },
             global_snippets = { 'all' },
           },
         },
-
         buffer = {
           name = 'buffer',
           module = 'blink.cmp.sources.buffer',
@@ -225,7 +223,6 @@ return {
         ['<C-n>'] = { 'select_next' },
         ['<C-p>'] = { 'select_prev' },
       },
-
       completion = {
         menu = { auto_show = true },
       },
