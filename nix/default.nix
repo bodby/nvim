@@ -46,7 +46,8 @@ wrapNeovimUnstable neovim-unwrapped {
     "PATH"
     ":"
     (lib.strings.makeBinPath packages)
-  ] ++ optionals (luaPackages != null) [
+  ]
+  ++ optionals (luaPackages != null) [
     "--prefix"
     "LUA_PATH"
     ";"
