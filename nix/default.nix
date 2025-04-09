@@ -41,7 +41,6 @@ wrapNeovimUnstable neovim-unwrapped {
     vim.o.rtp = '${runtimepath},' .. vim.o.rtp .. ',${runtimepath}/after'
     ${builtins.readFile ../nvim/init.lua}
   '';
-  # wrapperArgs = luaWrapperArgs.wrapperArgs ++ makeWrapperArgs;
   wrapperArgs = optionals (packages != [ ]) [
     "--prefix"
     "PATH"
