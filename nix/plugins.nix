@@ -58,8 +58,7 @@ in {
       render-markdown-nvim
       # alpha-nvim
       gitsigns-nvim;
-  }
-  ++ [
+  } ++ [
     # syntax-gaslighting
     treesitter-parsers
   ];
