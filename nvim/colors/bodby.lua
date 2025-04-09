@@ -300,7 +300,7 @@ local lsp_highlights = {
   highlights = {
     -- TODO: Resolved and unresolved link colors.
     ['type.comment'] = {},
-    ['type.macro'] = { link = "Macro" },
+    ['type.macro'] = { link = 'Macro' },
     ['mod.global'] = { link = '@module' },
     ['type.keyword'] = {},
     ['type.decorator.lua'] = { link = '@keyword.lua' },

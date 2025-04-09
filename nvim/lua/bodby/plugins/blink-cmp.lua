@@ -94,7 +94,8 @@ return {
               }
             end
             return {
-              { 'kind' }, { 'label' },
+              { 'kind' },
+              { 'label' },
             }
           end,
 

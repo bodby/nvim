@@ -30,11 +30,11 @@ local mappings = {
   --       mappings?
   ['<Leader>nn'] = {
     modes = 'n',
-    callback = with_args(notes.create_note, 'note')
+    callback = with_args(notes.create_note, 'note'),
   },
   ['<Leader>nb'] = {
     modes = 'n',
-    callback = with_args(notes.create_note, 'blog')
+    callback = with_args(notes.create_note, 'blog'),
   },
 }
 
