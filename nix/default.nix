@@ -13,7 +13,8 @@
   ...
 }:
 let
-  rtp = stdenvNoCC.mkDerivation {
+  inherit (lib.lists) optionals;
+  runtimepath = stdenvNoCC.mkDerivation {
     name = "nvim";
     src = ../nvim;
     buildPhase = ''
@@ -23,15 +24,8 @@ let
       cp -r lua after snippets colors "$out"
     '';
   };
-
-  luaWrapperArgs = neovimUtils.makeNeovimConfig { inherit extraLuaPackages; };
-  # TODO: Append to runtimeDeps? See wrapNeovimUnstable source.
-  makeWrapperArgs = lib.lists.optional (packages != [ ]) [
-    "--prefix"
-    "PATH"
-    ":"
-    (lib.strings.makeBinPath packages)
-  ];
+  luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
+  luaLib = neovim-unwrapped.lua.pkgs.luaLib;
 in
 wrapNeovimUnstable neovim-unwrapped {
   inherit viAlias vimAlias;
@@ -44,13 +38,23 @@ wrapNeovimUnstable neovim-unwrapped {
   plugins = neovimUtils.normalizePlugins plugins;
   luaRcContent = /* lua */ ''
     vim.loader.enable()
-    -- FIXME: vim.split(',') instead and use [1]. Remove this after.
-    vim.g.root_path = '${rtp}'
-    vim.o.rtp = '${rtp},' .. vim.o.rtp .. ',${rtp}/after'
+    vim.o.rtp = '${runtimepath},' .. vim.o.rtp .. ',${runtimepath}/after'
     ${builtins.readFile ../nvim/init.lua}
   '';
-  wrapperArgs = (lib.strings.concatMapStringsSep " " lib.strings.escapeShellArgs [
-    luaWrapperArgs.wrapperArgs
-    makeWrapperArgs
-  ]);
+  # wrapperArgs = luaWrapperArgs.wrapperArgs ++ makeWrapperArgs;
+  wrapperArgs = optionals (packages != [ ]) [
+    "--prefix"
+    "PATH"
+    ":"
+    (lib.strings.makeBinPath packages)
+  ] ++ optionals (luaPackages != null) [
+    "--prefix"
+    "LUA_PATH"
+    ";"
+    (luaLib.genLuaPathAbsStr luaPackages)
+    "--prefix"
+    "LUA_CPATH"
+    ";"
+    (luaLib.genLuaCPathAbsStr luaPackages)
+  ];
 }
