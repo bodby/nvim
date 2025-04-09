@@ -16,7 +16,7 @@
 --- @type table<string, string>
 return {
   ['blink.cmp'] = 'blink-cmp',
-  ['alpha'] = 'alpha',
+  -- ['alpha'] = 'alpha',
   ['telescope'] = 'telescope',
   ['gitsigns'] = 'gitsigns',
   ['nvim-treesitter.configs'] = 'nvim-treesitter',

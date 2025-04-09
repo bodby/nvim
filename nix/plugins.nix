@@ -56,7 +56,7 @@ in {
       blink-cmp
       # blink-compat
       render-markdown-nvim
-      alpha-nvim
+      # alpha-nvim
       gitsigns-nvim;
   }
   ++ [
