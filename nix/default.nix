@@ -35,11 +35,13 @@ let
 in
 wrapNeovimUnstable neovim-unwrapped {
   inherit viAlias vimAlias;
-  plugins = neovimUtils.normalizePlugins plugins;
+
   withPython3 = false;
   withRuby = false;
   withNodeJs = false;
   withPerl = false;
+
+  plugins = neovimUtils.normalizePlugins plugins;
   luaRcContent = /* lua */ ''
     vim.loader.enable()
     -- FIXME: vim.split(',') instead and use [1]. Remove this after.
