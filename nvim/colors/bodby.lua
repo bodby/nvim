@@ -452,8 +452,8 @@ local gaslighting_highlights = {
 }
 
 --- @type Highlights
-local flop_highlights = {
-  prefix = 'Flop',
+local fold_highlights = {
+  prefix = 'Folded',
   highlights = {
     ['Ellipsis'] = base.folded_range,
     ['Range'] = base.folded_range,
@@ -471,13 +471,13 @@ local all = {
   highlights,
   treesitter_highlights,
   lsp_highlights,
-  alpha_highlights,
+  -- alpha_highlights,
   blink_highlights,
   telescope_highlights,
   render_md_highlights,
   statusline_highlights,
   tabline_highlights,
-  flop_highlights,
+  -- fold_highlights,
   -- gaslighting_highlights,
 }
 
