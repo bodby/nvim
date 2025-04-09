@@ -25,22 +25,22 @@ let
     name = "nvim";
     src = ../nvim;
     buildPhase = ''
-      mkdir -p $out/lua $out/after $out/snippets $out/colors
+      mkdir -p "$out"/lua "$out"/after "$out"/snippets "$out"/colors
     '';
     installPhase = ''
-      cp -r lua after snippets colors $out
+      cp -r lua after snippets colors "$out"
     '';
   };
 
   luaPackages = neovim-unwrapped.lua.pkgs;
   makeWrapperArgs = concatStringsSep " " [
     (optionalString (packages != [ ])
-      "--prefix PATH ':' '${lib.strings.makeBinPath packages}'")
+      "--prefix PATH : ${lib.strings.makeBinPath packages}")
   ];
 
   luaPath = type: env:
     let path' = concatMapStringsSep ";" type (extraLuaPackages luaPackages); in
-    optionalString (extraLuaPackages != [ ]) "--suffix ${env} ';' '${path'}'";
+    optionalString (extraLuaPackages != [ ]) "--suffix ${env} : ${path'}";
 
   luaWrapperArgs = luaPath luaPackages.getLuaPath "LUA_PATH";
   luaCWrapperArgs = luaPath luaPackages.getLuaCPath "LUA_CPATH";
