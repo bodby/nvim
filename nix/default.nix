@@ -13,22 +13,6 @@
   ...
 }:
 let
-  config = neovimUtils.makeNeovimConfig {
-    inherit viAlias vimAlias extraLuaPackages;
-    plugins = neovimUtils.normalizePlugins plugins;
-    extraPython3Packages = _: [ ];
-    withPython3 = false;
-    withRuby = false;
-    withNodeJs = false;
-    withPerl = false;
-    luaRcContent = /* lua */ ''
-      vim.loader.enable()
-      -- FIXME: vim.split(',') instead and use [1]. Remove this after.
-      vim.g.root_path = '${rtp}'
-      vim.o.rtp = '${rtp},' .. vim.o.rtp .. ',${rtp}/after'
-      ${builtins.readFile ../nvim/init.lua}
-    '';
-  };
   rtp = stdenvNoCC.mkDerivation {
     name = "nvim";
     src = ../nvim;
@@ -40,6 +24,7 @@ let
     '';
   };
 
+  luaWrapperArgs = neovimUtils.makeNeovimConfig { inherit extraLuaPackages; };
   # TODO: Append to runtimeDeps? See wrapNeovimUnstable source.
   makeWrapperArgs = lib.lists.optional (packages != [ ]) [
     "--prefix"
@@ -48,9 +33,22 @@ let
     (lib.strings.makeBinPath packages)
   ];
 in
-wrapNeovimUnstable neovim-unwrapped (config // {
+wrapNeovimUnstable neovim-unwrapped {
+  inherit viAlias vimAlias;
+  plugins = neovimUtils.normalizePlugins plugins;
+  withPython3 = false;
+  withRuby = false;
+  withNodeJs = false;
+  withPerl = false;
+  luaRcContent = /* lua */ ''
+    vim.loader.enable()
+    -- FIXME: vim.split(',') instead and use [1]. Remove this after.
+    vim.g.root_path = '${rtp}'
+    vim.o.rtp = '${rtp},' .. vim.o.rtp .. ',${rtp}/after'
+    ${builtins.readFile ../nvim/init.lua}
+  '';
   wrapperArgs = (lib.strings.concatMapStringsSep " " lib.strings.escapeShellArgs [
-    config.wrapperArgs
+    luaWrapperArgs.wrapperArgs
     makeWrapperArgs
   ]);
-})
+}
