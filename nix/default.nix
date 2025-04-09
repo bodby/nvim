@@ -1,7 +1,7 @@
 {
   plugins ? [ ],
   packages ? [ ],
-  extraLuaPackages ? p: [ ],
+  extraLuaPackages ? _: [ ],
   viAlias ? true,
   vimAlias ? true,
 
@@ -13,13 +13,21 @@
   ...
 }:
 let
-  inherit (lib.strings) concatStringsSep optionalString concatMapStringsSep;
   config = neovimUtils.makeNeovimConfig {
-    inherit viAlias vimAlias plugins;
-    extraPython3Packages = p: [ ];
+    inherit viAlias vimAlias extraLuaPackages;
+    plugins = neovimUtils.normalizePlugins plugins;
+    extraPython3Packages = _: [ ];
     withPython3 = false;
     withRuby = false;
     withNodeJs = false;
+    withPerl = false;
+    luaRcContent = /* lua */ ''
+      vim.loader.enable()
+      -- FIXME: vim.split(',') instead and use [1]. Remove this after.
+      vim.g.root_path = '${rtp}'
+      vim.o.rtp = '${rtp},' .. vim.o.rtp .. ',${rtp}/after'
+      ${builtins.readFile ../nvim/init.lua}
+    '';
   };
   rtp = stdenvNoCC.mkDerivation {
     name = "nvim";
@@ -32,31 +40,17 @@ let
     '';
   };
 
-  luaPackages = neovim-unwrapped.lua.pkgs;
-  makeWrapperArgs = concatStringsSep " " [
-    (optionalString (packages != [ ])
-      "--prefix PATH : ${lib.strings.makeBinPath packages}")
+  # TODO: Append to runtimeDeps? See wrapNeovimUnstable source.
+  makeWrapperArgs = lib.lists.optional (packages != [ ]) [
+    "--prefix"
+    "PATH"
+    ":"
+    (lib.strings.makeBinPath packages)
   ];
-
-  luaPath = type: env:
-    let path' = concatMapStringsSep ";" type (extraLuaPackages luaPackages); in
-    optionalString (extraLuaPackages != [ ]) "--suffix ${env} : ${path'}";
-
-  luaWrapperArgs = luaPath luaPackages.getLuaPath "LUA_PATH";
-  luaCWrapperArgs = luaPath luaPackages.getLuaCPath "LUA_CPATH";
 in
 wrapNeovimUnstable neovim-unwrapped (config // {
-  luaRcContent = /* lua */ ''
-    vim.loader.enable()
-    vim.g.root_path = '${rtp}'
-    vim.o.rtp = '${rtp},' .. vim.o.rtp .. ',${rtp}/after'
-    ${builtins.readFile ../nvim/init.lua}
-  '';
-  wrapRc = true;
-  wrapperArgs = concatStringsSep " " [
-    (lib.strings.escapeShellArgs config.wrapperArgs)
+  wrapperArgs = (lib.strings.concatMapStringsSep " " lib.strings.escapeShellArgs [
+    config.wrapperArgs
     makeWrapperArgs
-    luaCWrapperArgs
-    luaWrapperArgs
-  ];
+  ]);
 })
