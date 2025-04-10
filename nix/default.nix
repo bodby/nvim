@@ -14,6 +14,7 @@
 }:
 let
   inherit (lib.lists) optionals;
+  inherit (neovim-unwrapped.lua.pkgs) luaLib;
   runtimepath = stdenvNoCC.mkDerivation {
     name = "nvim";
     src = ../nvim;
@@ -25,7 +26,6 @@ let
     '';
   };
   luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
-  luaLib = neovim-unwrapped.lua.pkgs.luaLib;
 in
 wrapNeovimUnstable neovim-unwrapped {
   inherit viAlias vimAlias;
