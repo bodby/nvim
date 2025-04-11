@@ -405,7 +405,6 @@ local render_md_highlights = {
 --- @type Highlights
 local statusline_highlights = {
   prefix = 'StatusLine',
-  base = base.statusline,
   highlights = {
     ['Prefix'] = base.statusline_prefix,
     ['CWD'] = base.statusline_cwd,
