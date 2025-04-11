@@ -5,7 +5,7 @@ local M = {
     border = {
       name = 'rounded',
       -- characters = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-      characters = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
+      characters = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
     },
   },
   --- Helpful utility functions.

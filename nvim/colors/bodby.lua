@@ -58,11 +58,11 @@ local base = {
   -- UI.
   normal = {
     fg = colors.white2,
-    bg = transparent and '' or colors.gray2
+    bg = transparent and '' or colors.gray2,
   },
   popup = {
     fg = colors.white2,
-    bg = transparent and '' or colors.gray3
+    bg = transparent and '' or colors.gray3,
   },
   border = {
     fg = transparent and colors.gray1 or colors.gray3,
