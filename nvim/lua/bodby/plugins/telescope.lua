@@ -3,27 +3,41 @@ local shared = require('bodby.shared')
 local with_args = shared.lib.with_args
 local border = shared.ui.border
 
+local no_titles = {
+  results_title = '',
+  preview_title = '',
+  prompt_title = '',
+}
+
 --- @type Plugin
 return {
   mappings = {
     ['<Leader>fr'] = {
       modes = 'n',
-      callback = function()
-        require('telescope.builtin').oldfiles()
-      end,
+      callback = with_args(builtin.oldfiles, no_titles),
     },
     -- TODO: Symbols style (preferrably using the 'ui' table in shared.lua).
-    ['<Leader>fw'] = { modes = 'n', callback = builtin.lsp_workspace_symbols },
+    ['<Leader>fw'] = {
+      modes = 'n',
+      callback = with_args(builtin.lsp_workspace_symbols, no_titles),
+    },
     ['<Leader>ff'] = {
       modes = 'n',
-      callback = with_args(builtin.find_files, { hidden = true }),
+      callback = with_args(builtin.find_files, {
+        hidden = true,
+        results_title = '',
+        preview_title = '',
+        prompt_title = '',
+      }),
     },
-
     ['<Leader>fg'] = {
       modes = 'n',
       callback = with_args(builtin.live_grep, {
         grep_open_files = false,
         disable_coordinates = true,
+        results_title = '',
+        preview_title = '',
+        prompt_title = '',
       }),
     },
   },
@@ -48,6 +62,7 @@ return {
       multi_icon = '+ ',
       border = true,
 
+      dynamic_preview_title = false,
       preview = { msg_bg_fillchar = ' ' },
 
       borderchars = {
@@ -61,7 +76,7 @@ return {
         return ''
       end,
 
-      layout_strategy = 'custom',
+      layout_strategy = shared.ui.transparent and 'flex' or 'custom',
       sorting_strategy = 'descending',
 
       layout_config = {

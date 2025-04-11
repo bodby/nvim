@@ -1,9 +1,11 @@
 local M = {
-  --- TODO: UI config (icons).
+  --- TODO: Icons.
   ui = {
+    transparent = true,
     border = {
-      name = 'none',
-      characters = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+      name = 'rounded',
+      -- characters = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+      characters = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
     },
   },
   --- Helpful utility functions.

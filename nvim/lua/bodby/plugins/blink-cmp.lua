@@ -7,7 +7,7 @@ local options = {
   --- Change the appearance of the autocompletion menu.
   --- Some border options were left out because they don't look good IMO.
   --- @type 'none' | 'single' | 'rounded' | 'solid' | 'padded'
-  menu_border = 'none',
+  menu_border = require('bodby.shared').ui.border.name,
 
   --- Show the documentation window next to the autocompletion menu.
   --- @type boolean

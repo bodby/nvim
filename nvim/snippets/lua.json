@@ -2,7 +2,7 @@
   "function": {
     "prefix": "function",
     "body": [
-      "function ${1:hello}($2)",
+      "function ${1:name}($2)",
       "\t$0",
       "end"
     ]
@@ -11,7 +11,7 @@
   "lambda": {
     "prefix": "lambda",
     "body": [
-      "function($1)",
+      "function(${1:args})",
       "\t$0",
       "end"
     ]
@@ -51,7 +51,7 @@
   "for-pairs": {
     "prefix": "for-pairs",
     "body": [
-      "for ${1:k}, ${2:v} in pairs(${3:xs}) do",
+      "for ${1:k}, ${2:v} in pairs(${3:t}) do",
       "\t$0",
       "end"
     ]
@@ -60,7 +60,7 @@
   "for-ipairs": {
     "prefix": "for-ipairs",
     "body": [
-      "for ${1:i}, ${2:v} in ipairs(${3:xs}) do",
+      "for ${1:i}, ${2:v} in ipairs(${3:t}) do",
       "\t$0",
       "end"
     ]

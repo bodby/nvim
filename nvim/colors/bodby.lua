@@ -3,6 +3,13 @@
 --- @field base? Base
 --- @field highlights table<string, table>
 
+-- I am indecisive.
+local transparent = false
+local ok, shared = pcall(require, 'bodby.shared')
+if ok then
+  transparent = shared.ui.transparent
+end
+
 --- @type table<string, string>
 local colors = {
   white1 = '#aec5f2',
@@ -10,7 +17,7 @@ local colors = {
   white3 = '#495674',
   gray1 = '#141924',
   gray2 = '#0e1119',
-  gray3 = '#0a0d15',
+  gray3 = transparent and '#05070d' or '#0a0d15',
   red = '#f75fa8',
   green = '#bbf48a',
   yellow = '#ffc175',
@@ -49,11 +56,24 @@ local base = {
   special = { fg = colors.purple },
   comment = { fg = colors.white3, italic = true },
   -- UI.
-  normal = { fg = colors.white2, bg = colors.gray2 },
-  popup = { fg = colors.white2, bg = colors.gray3 },
+  normal = {
+    fg = colors.white2,
+    bg = transparent and '' or colors.gray2
+  },
+  popup = {
+    fg = colors.white2,
+    bg = transparent and '' or colors.gray3
+  },
+  border = {
+    fg = transparent and colors.gray1 or colors.gray3,
+    bg = transparent and '' or colors.gray3,
+  },
   hover = { fg = colors.white1, bold = true },
   ghost = { fg = colors.white3, italic = true },
-  folded = { fg = colors.white3, bg = colors.gray3 },
+  folded = {
+    fg = colors.white3,
+    bg = transparent and '' or colors.gray3,
+  },
   folded_range = { fg = colors.white3 },
   cursor_line = {},
   line_number = { fg = colors.white3 },
@@ -61,7 +81,9 @@ local base = {
   accent = { fg = colors.cyan, bold = true },
   caret = { fg = colors.cyan },
   cursor = { bg = colors.cyan },
-  visual = { bg = colors.gray1 },
+  visual = {
+    bg = transparent and colors.gray2 or colors.gray1,
+  },
   snippet_tabstop = { italic = true },
   --- For Blink Completion and Telescope.
   matching_char = { bold = true },
@@ -73,7 +95,9 @@ local base = {
   key = { fg = colors.purple, bold = true },
   directory = { fg = colors.white2 },
   code = { fg = colors.cyan, bg = colors.gray3 },
-  separator = { fg = colors.gray1 },
+  separator = {
+    fg = transparent and colors.gray1 or colors.gray2,
+  },
   url = {
     fg = colors.white1,
     underline = true,
@@ -87,7 +111,9 @@ local base = {
     bold = true,
     italic = true,
   },
-  statusline = { bg = colors.gray3 },
+  statusline = {
+    bg = transparent and '' or colors.gray3,
+  },
   statusline_cwd = { fg = colors.cyan },
   statusline_prefix = { fg = colors.white1, bold = true, italic = true },
   statusline_path = { fg = colors.white2 },
@@ -98,11 +124,13 @@ local base = {
     fg = colors.white2,
     italic = true,
   },
-  tabline = { bg = colors.gray2 },
+  tabline = {
+    bg = transparent and '' or colors.gray2,
+  },
   tab_inactive = { fg = colors.white3 },
   tab = {
     fg = colors.cyan,
-    bg = colors.gray1,
+    bg = transparent and colors.gray2 or colors.gray1,
     bold = true,
     underline = true,
   },
@@ -155,7 +183,7 @@ local highlights = {
     ['StatusLine'] = base.statusline,
     ['TabLine'] = base.tabline,
     ['NormalFloat'] = base.popup,
-    ['FloatBorder'] = inherit(base.popup, { fg = base.popup.bg }),
+    ['FloatBorder'] = base.border,
     ['Folded'] = base.folded,
     ['MsgArea'] = base.popup,
     ['Title'] = base.title,
@@ -169,6 +197,7 @@ local highlights = {
     ['LineNrWrapped'] = base.line_number,
     ['LineNrVirt'] = base.line_number,
     ['WinSeparator'] = base.separator,
+    ['MsgSeparator'] = base.separator,
     ['Visual'] = base.visual,
     ['Search'] = base.matching_search,
     ['IncSearch'] = { link = 'Search' },
@@ -326,6 +355,7 @@ local blink_highlights = {
   prefix = 'BlinkCmp',
   highlights = {
     ['Menu'] = { link = 'Pmenu' },
+    ['MenuBorder'] = { link = 'FloatBorder' },
     ['MenuSelection'] = { link = 'PmenuSel' },
     ['Source'] = { link = 'NormalFloat' },
     ['LabelMatch'] = base.matching_char,
