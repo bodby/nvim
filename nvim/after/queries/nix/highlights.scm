@@ -7,8 +7,11 @@ function: (select_expression
 function: (_
   name: (identifier) @function.call)
 
+; ((identifier) @module.builtin
+;   (#any-of? @module.builtin "builtins" "lib" "pkgs"))
+
 ((identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs"))
+  (#eq? @module.builtin "builtins"))
 
 ; (variable_expression
 ;   name: (identifier) @module.builtin
