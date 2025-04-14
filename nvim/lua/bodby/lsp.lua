@@ -1,3 +1,5 @@
+local ui = require('bodby.shared').ui
+
 --- @type table<string, table>
 local servers = {
   ['clangd'] = {
@@ -109,6 +111,7 @@ local diag_config = {
     source = false,
     prefix = ' ',
     suffix = ' ',
+    border = ui.border.name,
   },
 }
 
