@@ -120,12 +120,8 @@ vim.lsp.config('*', {
 })
 
 for k, v in pairs(servers) do
-  if type(v) == 'table' then
-    vim.lsp.config(k, v)
-    vim.lsp.enable(k)
-  else
-    vim.lsp.enable(v)
-  end
+  vim.lsp.config(k, v)
+  vim.lsp.enable(k)
 end
 
 vim.diagnostic.config(diag_config)
