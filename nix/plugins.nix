@@ -1,5 +1,6 @@
 { vimPlugins, ripgrep }:
 let
+  inherit (builtins) attrValues;
   # syntax-gaslighting = vimUtils.buildVimPlugin {
   #   pname = "syntax-gaslighting.nvim";
   #   version = "2025-03-10";
@@ -11,7 +12,7 @@ let
   #   };
   # };
   treesitter-parsers = vimPlugins.nvim-treesitter.withPlugins (p:
-    builtins.attrValues {
+    attrValues {
       inherit (p)
         comment
         luadoc
@@ -49,19 +50,18 @@ let
         query;
     });
 in {
-  plugins = builtins.attrValues {
+  plugins = attrValues {
     inherit (vimPlugins)
       telescope-nvim
       telescope-zf-native-nvim
       blink-cmp
       # blink-compat
-      render-markdown-nvim
+      # render-markdown-nvim
       # alpha-nvim
       gitsigns-nvim;
   } ++ [
     # syntax-gaslighting
     treesitter-parsers
   ];
-
   packages = [ ripgrep ];
 }

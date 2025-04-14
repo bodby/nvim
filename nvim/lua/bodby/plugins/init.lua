@@ -20,6 +20,6 @@ return {
   ['telescope'] = 'telescope',
   ['gitsigns'] = 'gitsigns',
   ['nvim-treesitter.configs'] = 'nvim-treesitter',
-  ['render-markdown'] = 'render-markdown',
+  -- ['render-markdown'] = 'render-markdown',
   -- ['syntax-gaslighting'] = 'gaslighting',
 }

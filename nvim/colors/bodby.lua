@@ -130,7 +130,7 @@ local base = {
   tab_inactive = { fg = colors.white3 },
   tab = {
     fg = colors.cyan,
-    bg = transparent and colors.gray2 or colors.gray1,
+    bg = colors.gray1,
     bold = true,
     underline = true,
   },

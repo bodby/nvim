@@ -1,3 +1,5 @@
+local ui = require('bodby.shared').ui
+
 local notes = require('bodby.native.notes')
 local with_args = require('bodby.shared').lib.with_args
 
@@ -35,6 +37,13 @@ local mappings = {
   ['<Leader>nb'] = {
     modes = 'n',
     callback = with_args(notes.create_note, 'blog'),
+  },
+  -- LSP hover border.
+  ['K'] = {
+    modes = 'n',
+    callback = with_args(vim.lsp.buf.hover, {
+      border = ui.border.name,
+    }),
   },
 }
 
@@ -83,5 +92,4 @@ function M.setup()
     end
   end
 end
-
 return M

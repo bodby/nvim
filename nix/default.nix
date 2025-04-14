@@ -7,24 +7,27 @@
 
   lib,
   neovim-unwrapped,
-  stdenvNoCC,
+  symlinkJoin,
   wrapNeovimUnstable,
   neovimUtils,
   ...
 }:
 let
-  inherit (lib.lists) optionals;
   inherit (neovim-unwrapped.lua.pkgs) luaLib;
-  # TODO: Use buildEnv instead.
-  runtimepath = stdenvNoCC.mkDerivation {
+  inherit (lib.lists) optionals;
+  inherit (lib) fileset;
+  runtimepath = symlinkJoin {
     name = "nvim";
-    src = ../nvim;
-    buildPhase = ''
-      mkdir -p "$out"/lua "$out"/after "$out"/snippets "$out"/colors
-    '';
-    installPhase = ''
-      cp -r lua after snippets colors "$out"
-    '';
+    paths = [
+      (fileset.toSource {
+        root = ../nvim;
+        fileset = fileset.difference ../nvim ../nvim/init.lua;
+      })
+    ];
+  };
+  packages' = symlinkJoin {
+    name = "nvim-packages";
+    paths = packages;
   };
   luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
 in
@@ -46,7 +49,7 @@ wrapNeovimUnstable neovim-unwrapped {
     "--prefix"
     "PATH"
     ":"
-    (lib.strings.makeBinPath packages)
+    "${packages'}/bin"
   ]
   ++ optionals (luaPackages != null) [
     "--prefix"
