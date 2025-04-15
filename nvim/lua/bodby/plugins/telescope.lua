@@ -76,7 +76,7 @@ return {
         return ''
       end,
 
-      layout_strategy = shared.ui.transparent and 'flex' or 'custom',
+      layout_strategy = 'flex',
       sorting_strategy = 'descending',
 
       layout_config = {
@@ -94,7 +94,6 @@ return {
         initial_sort = nil,
         smart_case = true,
       },
-
       generic = {
         enable = true,
         highlight_results = false,
@@ -107,27 +106,28 @@ return {
 
   post = function()
     require('telescope').load_extension('zf-native')
-    local strategies = require('telescope.pickers.layout_strategies')
 
-    strategies.custom = function(picker, max_columns, max_lines, layout_config)
-      local layout =
-        strategies.flex(picker, max_columns, max_lines, layout_config)
-
-      if layout.preview then
-        layout.preview.col = layout.preview.col + 1
-        layout.preview.width = layout.preview.width - 2
-        layout.preview.height = layout.preview.height - 1
-      end
-
-      layout.results.col = layout.results.col + 1
-      layout.results.width = layout.results.width - 2
-      layout.results.height = layout.results.height - 2
-
-      layout.prompt.col = layout.prompt.col + 1
-      layout.prompt.width = layout.prompt.width - 2
-      layout.prompt.line = layout.prompt.line - 1
-
-      return layout
-    end
+    -- local strategies = require('telescope.pickers.layout_strategies')
+    -- Set `layout_strategy` to 'custom' if you want to use this.
+    -- strategies.custom = function(picker, max_columns, max_lines, layout_config)
+    --   local layout =
+    --     strategies.flex(picker, max_columns, max_lines, layout_config)
+    --
+    --   if layout.preview then
+    --     layout.preview.col = layout.preview.col + 1
+    --     layout.preview.width = layout.preview.width - 2
+    --     layout.preview.height = layout.preview.height - 1
+    --   end
+    --
+    --   layout.results.col = layout.results.col + 1
+    --   layout.results.width = layout.results.width - 2
+    --   layout.results.height = layout.results.height - 2
+    --
+    --   layout.prompt.col = layout.prompt.col + 1
+    --   layout.prompt.width = layout.prompt.width - 2
+    --   layout.prompt.line = layout.prompt.line - 1
+    --
+    --   return layout
+    -- end
   end,
 }

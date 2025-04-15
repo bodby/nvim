@@ -67,6 +67,7 @@ local M = {
   prefixes = {
     { pattern = '^' .. vim.env.HOME .. '/dev/nixos/', replacement = 'nixos' },
     { pattern = '^' .. vim.env.HOME .. '/dev/nvim/', replacement = 'nvim' },
+    { pattern = '^' .. vim.env.HOME .. '/dev/', replacement = 'dev' },
     { pattern = '^' .. vim.env.HOME .. '/', replacement = 'home' },
     { pattern = '^/nix/store/%w+-', replacement = 'store' },
     { pattern = '^/etc/nixos/', replacement = 'nixos' },
@@ -103,7 +104,7 @@ function M.setup()
   })
 end
 
---- Show a pipe character and optionally the current mode name.
+--- Show a character and optionally the current mode name.
 --- @param show_name boolean
 --- @return StatusLineModule
 local function mode(show_name)
@@ -112,11 +113,11 @@ local function mode(show_name)
 
   if show_name then
     return {
-      text = highlight .. '| ' .. current:sub(1, 2):upper() .. ' ',
-      length = 0,
+      text = highlight .. '· ' .. current:upper() .. ' ',
+      length = #current + 1,
     }
   else
-    return { text = highlight .. '|', length = 0 }
+    return { text = highlight .. '· ', length = 2 }
   end
 end
 
@@ -305,14 +306,14 @@ function M.text()
   local window = vim.api.nvim_get_current_win()
   local buffer = vim.api.nvim_win_get_buf(window)
 
-  -- Instead of having to recalculate the values twice.
+  local _mode = mode(false)
   local _lines = line_length(window, buffer)
   local _filetype = filetype(buffer)
   local _diff = git(buffer, 'diff')
   local _branch = git(buffer, 'branch')
 
-  -- 7 is the combined length of the mode module and the macro register.
-  local length = 7 + _diff.length + _branch.length
+  -- 2 for macro register.
+  local length = 2 + _mode.length + _diff.length + _branch.length
 
   local blocked = vim.tbl_contains(M.blocked_filetypes, vim.bo[buffer].filetype)
   local file_info = blocked and '' or _lines.text .. _filetype.text
@@ -321,7 +322,7 @@ function M.text()
   end
 
   return table.concat({
-    mode(true).text,
+    _mode.text,
     path(buffer, length),
     _diff.text,
     macro().text,
