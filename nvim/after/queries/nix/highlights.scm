@@ -1,13 +1,5 @@
 ;; extends
 
-function: (_
-  name: (identifier) @function.call)
-
-(binding
-  attrpath: (attrpath
-    attr: (identifier) @function)
-  expression: (function_expression))
-
 ; ((identifier) @module.builtin
 ;   (#any-of? @module.builtin "builtins" "lib" "pkgs"))
 
@@ -43,3 +35,11 @@ function: (_
 (inherit
   attrs: (inherited_attrs
     attr: (identifier) @variable))
+
+function: (_
+  name: (identifier) @function.call)
+
+(binding
+  attrpath: (attrpath
+    attr: (identifier) @function)
+  expression: (function_expression))
