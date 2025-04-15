@@ -52,10 +52,7 @@ local base = {
   special = { fg = colors.cyan, italic = true },
   comment = { fg = colors.white3, italic = true },
   -- UI.
-  normal = {
-    fg = colors.white2,
-    bg = colors.gray4,
-  },
+  normal = { fg = colors.white2, bg = colors.gray4 },
   popup = { fg = colors.white2 },
   border = { fg = colors.gray1 },
   hover = { fg = colors.white1, bold = true },
@@ -72,19 +69,13 @@ local base = {
   snippet_tabstop = { italic = true },
   --- For Blink Completion and Telescope.
   matching_char = { bold = true },
-  matching_search = {
-    bg = colors.gray1,
-    bold = true,
-  },
+  matching_search = { bg = colors.gray1, bold = true },
   matching_punctuation = { fg = colors.yellow, bold = true },
   key = { fg = colors.cyan, bold = true },
   directory = { fg = colors.white2 },
   code = { fg = colors.cyan, bg = colors.gray3 },
   separator = { fg = colors.gray1 },
-  url = {
-    fg = colors.white1,
-    underline = true,
-  },
+  url = { fg = colors.white1, underline = true },
   spell_bad = { sp = colors.red, undercurl = true },
   spell_rare = { sp = colors.purple, undercurl = true },
   spell_casing = { sp = colors.blue, undercurl = true },
@@ -105,10 +96,7 @@ local base = {
   statusline_branch = { fg = colors.white1, bold = true },
   statusline_diff = { fg = colors.white3 },
   statusline_lines = { fg = colors.white3 },
-  statusline_filetype = {
-    fg = colors.white2,
-    italic = true,
-  },
+  statusline_filetype = { fg = colors.white2, italic = true },
   tabline = {},
   tab_inactive = { fg = colors.white3 },
   tab = {
