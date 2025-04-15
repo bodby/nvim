@@ -3,13 +3,6 @@
 --- @field base? Base
 --- @field highlights table<string, table>
 
--- I am indecisive.
-local transparent = false
-local ok, shared = pcall(require, 'bodby.shared')
-if ok then
-  transparent = shared.ui.transparent
-end
-
 --- @type table<string, string>
 local colors = {
   white1 = '#aec5f2',
@@ -17,7 +10,8 @@ local colors = {
   white3 = '#495674',
   gray1 = '#141921',
   gray2 = '#0e1119',
-  gray3 = transparent and '#05070d' or '#0a0d15',
+  gray3 = '#05070d',
+  gray4 = '#07090f',
   red = '#f75fa8',
   green = '#bbf48a',
   yellow = '#ffc475',
@@ -53,27 +47,18 @@ local base = {
   module = { fg = colors.yellow, italic = true },
   constant = { fg = colors.white1, bold = true },
   builtin = { fg = colors.yellow, italic = true },
-  special = { fg = colors.purple },
+  special = { fg = colors.cyan, italic = true },
   comment = { fg = colors.white3, italic = true },
   -- UI.
   normal = {
     fg = colors.white2,
-    bg = transparent and '' or colors.gray2,
+    bg = colors.gray4,
   },
-  popup = {
-    fg = colors.white2,
-    bg = transparent and '' or colors.gray3,
-  },
-  border = {
-    fg = transparent and colors.gray1 or colors.gray3,
-    bg = transparent and '' or colors.gray3,
-  },
+  popup = { fg = colors.white2 },
+  border = { fg = colors.gray1 },
   hover = { fg = colors.white1, bold = true },
   ghost = { fg = colors.white3, italic = true },
-  folded = {
-    fg = colors.white3,
-    bg = transparent and '' or colors.gray3,
-  },
+  folded = { fg = colors.white3 },
   folded_range = { fg = colors.white3 },
   cursor_line = {},
   line_number = { fg = colors.white3 },
@@ -81,9 +66,7 @@ local base = {
   accent = { fg = colors.cyan, bold = true },
   caret = { fg = colors.cyan },
   cursor = { bg = colors.cyan },
-  visual = {
-    bg = transparent and colors.gray2 or colors.gray1,
-  },
+  visual = { bg = colors.gray1 },
   snippet_tabstop = { italic = true },
   --- For Blink Completion and Telescope.
   matching_char = { bold = true },
@@ -92,12 +75,10 @@ local base = {
     bold = true,
   },
   matching_punctuation = { fg = colors.yellow, bold = true },
-  key = { fg = colors.purple, bold = true },
+  key = { fg = colors.cyan, bold = true },
   directory = { fg = colors.white2 },
   code = { fg = colors.cyan, bg = colors.gray3 },
-  separator = {
-    fg = transparent and colors.gray1 or colors.gray2,
-  },
+  separator = { fg = colors.gray1 },
   url = {
     fg = colors.white1,
     underline = true,
@@ -111,11 +92,13 @@ local base = {
     bold = true,
     italic = true,
   },
-  statusline = {
-    bg = transparent and '' or colors.gray3,
+  statusline = {},
+  statusline_cwd = { fg = colors.cyan, italic = true },
+  statusline_prefix = {
+    fg = colors.white1,
+    bold = true,
+    italic = true,
   },
-  statusline_cwd = { fg = colors.cyan },
-  statusline_prefix = { fg = colors.white1, bold = true, italic = true },
   statusline_path = { fg = colors.white2 },
   statusline_branch = { fg = colors.white1, bold = true },
   statusline_diff = { fg = colors.white3 },
@@ -124,9 +107,7 @@ local base = {
     fg = colors.white2,
     italic = true,
   },
-  tabline = {
-    bg = transparent and '' or colors.gray2,
-  },
+  tabline = {},
   tab_inactive = { fg = colors.white3 },
   tab = {
     fg = colors.cyan,
@@ -220,7 +201,7 @@ local highlights = {
     ['String'] = base._string,
     ['Character'] = base.character,
     ['Special'] = base.special,
-    ['SpecialKey'] = base.key,
+    ['SpecialKey'] = base.special,
     ['QuickFixLine'] = base.accent,
     ['SpecialChar'] = base.special_char,
     ['Number'] = base.number,
@@ -448,12 +429,12 @@ local statusline_highlights = {
     ['Warn'] = inherit(base.warn, { bg = base.statusline.bg }),
     ['Info'] = inherit(base.info, { bg = base.statusline.bg }),
     ['Hint'] = inherit(base.hint, { bg = base.statusline.bg }),
-    ['Normal'] = { fg = colors.cyan, bold = true },
+    ['Normal'] = { fg = colors.white3, bold = true },
     ['Visual'] = { fg = colors.green, bold = true },
     ['Select'] = { fg = colors.green, bold = true },
-    ['Insert'] = { fg = colors.purple, bold = true },
+    ['Insert'] = { fg = colors.cyan, bold = true },
     ['Replace'] = { fg = colors.red, bold = true },
-    ['Command'] = { fg = colors.yellow, bold = true },
+    ['Command'] = { fg = colors.purple, bold = true },
     ['Prompt'] = { fg = colors.white3, bold = true },
     ['Shell'] = { fg = colors.green, bold = true },
     ['Limbo'] = { fg = colors.white3, bold = true },

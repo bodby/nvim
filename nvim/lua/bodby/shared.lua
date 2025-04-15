@@ -1,7 +1,6 @@
 local M = {
   --- TODO: Icons.
   ui = {
-    transparent = true,
     border = {
       name = 'rounded',
       -- characters = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
