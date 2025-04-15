@@ -8,15 +8,17 @@ local colors = {
   white1 = '#aec5f2',
   white2 = '#91a4ca',
   white3 = '#495674',
+  -- TODO: Make grays match gray4/white# contrast.
   gray1 = '#141921',
   gray2 = '#0e1119',
   gray3 = '#05070d',
   gray4 = '#07090f',
   red = '#f75fa8',
-  green = '#bbf48a',
-  yellow = '#ffc475',
+  -- Or '#bbf48a'?
+  green = '#bef48f',
+  yellow = '#ffcb85',
   blue = '#809cff',
-  purple = '#9d7dff',
+  purple = '#9f80ff',
   cyan = '#89bcff',
 }
 

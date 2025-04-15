@@ -83,6 +83,9 @@ return {
         height = 0.8,
         width = 0.8,
         prompt_position = 'bottom',
+        horizontal = {
+          preview_width = 0.55,
+        },
       },
     },
 

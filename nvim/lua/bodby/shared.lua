@@ -19,23 +19,10 @@ function M.lib.nil_str(str)
 end
 
 --- Trim a string, returning it without any leading or trailing spaces.
---- This acts only on spaces, not tabs.
 --- @param str string
 --- @return string
 function M.lib.trim(str)
-  local i1, i2 = 1, #str
-  while str:sub(i1, i1) == ' ' do
-    i1 = i1 + 1
-  end
-  while str:sub(i2, i2) == ' ' do
-    i2 = i2 - 1
-  end
-  return str:sub(i1, i2)
-  -- if M.lib.nil_str(str) then
-  --   return ''
-  -- else
-  --   return str:match('^%s*(.-)%s*$')
-  -- end
+  return str:match('^%s*(.-)%s*$')
 end
 
 --- Insert all passed elements into an array.
