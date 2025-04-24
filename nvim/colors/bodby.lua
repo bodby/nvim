@@ -72,7 +72,7 @@ local base = {
   directory = { fg = colors.white2 },
   code = { fg = colors.cyan },
   separator = { fg = colors.gray1 },
-  url = { fg = colors.white1, underline = true },
+  url = { fg = colors.purple, underline = true },
   spell_bad = { sp = colors.red, undercurl = true },
   spell_rare = { sp = colors.purple, undercurl = true },
   spell_casing = { sp = colors.blue, undercurl = true },
