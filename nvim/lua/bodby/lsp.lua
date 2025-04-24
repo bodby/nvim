@@ -60,17 +60,6 @@ local servers = {
     },
     settings = {
       Lua = {
-        runtime = {
-          version = 'LuaJIT',
-          path = vim.split(package.path, ';'),
-        },
-        diagnostics = {
-          globals = { 'vim' },
-        },
-        workspace = {
-          library = { vim.env.VIMRUNTIME },
-          checkThirdParty = false,
-        },
         completion = {
           callSnippet = 'Replace',
           keywordSnippet = 'Disable',
@@ -86,6 +75,30 @@ local servers = {
         semantic = { variable = false },
       },
     },
+    on_init = function(client)
+      local path = client.workspace_folders[1].name
+
+      local json = vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.json'))
+      local jsonc = vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.jsonc'))
+      if json or jsonc then
+        return
+      end
+
+      client.config.settings.Lua =
+        vim.tbl_deep_extend('force', client.config.settings.Lua, {
+          runtime = {
+            version = 'LuaJIT',
+            path = vim.split(package.path, ';'),
+          },
+          diagnostics = {
+            globals = { 'vim' },
+          },
+          workspace = {
+            library = { vim.env.VIMRUNTIME },
+            checkThirdParty = false,
+          },
+        })
+    end,
   },
 }
 

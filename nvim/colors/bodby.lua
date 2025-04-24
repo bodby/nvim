@@ -8,7 +8,7 @@ local colors = {
   white1 = '#aec5f2',
   white2 = '#91a4ca',
   white3 = '#495674',
-  gray1 = '#0f1014',
+  gray1 = '#0f1117',
   gray2 = '#040404',
   red = '#f75fa8',
   green = '#b2f48f',
@@ -145,7 +145,6 @@ end
 --- Normal/uncategorized highlights.
 --- @type Highlights
 local highlights = {
-  prefix = nil,
   highlights = {
     ['Normal'] = base.normal,
     ['StatusLine'] = base.statusline,
