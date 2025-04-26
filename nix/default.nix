@@ -14,8 +14,7 @@
 }:
 let
   inherit (neovim-unwrapped.lua.pkgs) luaLib;
-  inherit (lib.lists) optionals;
-  inherit (lib) fileset;
+  inherit (lib) fileset optionals;
   runtimepath = symlinkJoin {
     name = "nvim";
     paths = [

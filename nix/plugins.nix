@@ -47,7 +47,8 @@ let
         html
         css
         javascript
-        query;
+        query
+        ;
     });
 in {
   plugins = attrValues {
@@ -58,7 +59,8 @@ in {
       # blink-compat
       # render-markdown-nvim
       # alpha-nvim
-      gitsigns-nvim;
+      gitsigns-nvim
+      ;
   } ++ [
     # syntax-gaslighting
     treesitter-parsers

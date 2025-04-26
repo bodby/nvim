@@ -27,8 +27,7 @@
         attr: (identifier) @variable))))
 
 (inherit_from
-  expression: (variable_expression
-    name: (identifier))
+  expression: (_)
   attrs: (inherited_attrs
     attr: (identifier) @variable.member))
 

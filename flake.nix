@@ -10,8 +10,8 @@
         "x86_64-darwin"
         "aarch64-darwin"
       ];
-      forall = fn: nixpkgs.lib.attrsets.genAttrs systems (system:
-        fn nixpkgs.legacyPackages.${system});
+      forall = f: nixpkgs.lib.genAttrs systems (system:
+        f nixpkgs.legacyPackages.${system});
       call = file: forall (pkgs: {
         default = pkgs.callPackage file { };
       });
