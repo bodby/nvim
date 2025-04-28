@@ -60,6 +60,7 @@ in {
       # render-markdown-nvim
       # alpha-nvim
       gitsigns-nvim
+      # mini-indentscope
       ;
   } ++ [
     # syntax-gaslighting

@@ -18,8 +18,10 @@ return {
   ['blink.cmp'] = 'blink-cmp',
   -- ['alpha'] = 'alpha',
   ['telescope'] = 'telescope',
+  -- TODO: Remove and write custom Git status module in statusline.
   ['gitsigns'] = 'gitsigns',
   ['nvim-treesitter.configs'] = 'nvim-treesitter',
+  -- ['mini.indentscope'] = 'indentscope',
   -- ['render-markdown'] = 'render-markdown',
   -- ['syntax-gaslighting'] = 'gaslighting',
 }
