@@ -67,7 +67,7 @@ local base = {
   --- For Blink Completion and Telescope.
   matching_char = { bold = true },
   matching_search = { bg = colors.gray1, bold = true },
-  matching_punctuation = { fg = colors.yellow, bold = true },
+  matching_punctuation = { fg = colors.cyan, underline = true },
   key = { fg = colors.cyan, bold = true },
   directory = { fg = colors.white2 },
   code = { fg = colors.cyan },
@@ -161,8 +161,8 @@ local highlights = {
     ['CursorLineNr'] = base.current_line_number,
     ['LineNr'] = base.line_number,
     ['CursorLineNrWrapped'] = base.current_line_number,
-    ['LineNrWrapped'] = base.line_number,
-    ['LineNrVirt'] = base.line_number,
+    ['LineNrWrapped'] = base.separator,
+    ['LineNrVirt'] = base.separator,
     ['WinSeparator'] = base.separator,
     ['MsgSeparator'] = base.separator,
     ['Visual'] = base.visual,
@@ -267,7 +267,7 @@ local treesitter_highlights = {
     ),
     ['markup.raw.markdown_inline'] = base.code,
     ['markup.quote.markdown'] = {},
-    ['markup.raw.block.markdown'] = base.delimiter,
+    ['markup.raw.block'] = inherit(base.delimiter, { nocombine = true }),
     ['markup.list'] = inherit(base.comment, { italic = false }),
     ['markup.link'] = base.url,
     ['markup.strong'] = { fg = colors.white1, bold = true },
@@ -456,6 +456,13 @@ local fold_highlights = {
   },
 }
 
+local indentscope_highlights = {
+  prefix = 'MiniIndentscope',
+  highlights = {
+    ['Symbol'] = { fg = colors.cyan },
+  },
+}
+
 vim.g.colors_name = 'bodby'
 vim.cmd.highlight('clear')
 vim.cmd.syntax('reset')
@@ -470,9 +477,10 @@ local all = {
   -- alpha_highlights,
   blink_highlights,
   telescope_highlights,
-  render_md_highlights,
+  -- render_md_highlights,
   statusline_highlights,
   tabline_highlights,
+  -- indentscope_highlights,
   -- fold_highlights,
   -- gaslighting_highlights,
 }
