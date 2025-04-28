@@ -49,9 +49,9 @@ function M.text(window)
   local sign = '%s%='
 
   if vim.v.virtnum > 0 then
-    return sign .. hl(M.highlights.wrapped, cursor) .. '| '
+    return sign .. hl(M.highlights.wrapped, cursor) .. '│ '
   elseif vim.v.virtnum < 0 then
-    return sign .. hl(M.highlights.virtual, false) .. '- '
+    return sign .. hl(M.highlights.virtual, false) .. '│ '
   end
 
   local highlight = hl('', cursor)
