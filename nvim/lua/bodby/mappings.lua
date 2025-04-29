@@ -45,6 +45,10 @@ local mappings = {
       border = ui.border.name,
     }),
   },
+  ['gd'] = {
+    modes = 'n',
+    callback = vim.lsp.buf.definition,
+  },
 }
 
 --- Neovide zoom mappings.
