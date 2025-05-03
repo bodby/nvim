@@ -8,7 +8,7 @@ local colors = {
   white1 = '#aec5f2',
   white2 = '#91a4ca',
   white3 = '#495674',
-  gray1 = '#13151b',
+  gray1 = '#111319',
   gray2 = '#050505',
   red = '#f75fa8',
   green = '#b2f48f',
@@ -369,7 +369,7 @@ local telescope_highlights = {
     ['Matching'] = base.matching_char,
     ['Selection'] = { link = 'PmenuSel' },
     ['SelectionCaret'] = base.caret,
-    ['MultiSelection'] = { link = 'NormalFloat' },
+    ['MultiSelection'] = { fg = colors.cyan },
     ['MultiIcon'] = base.accent,
     -- Symbols.
     ['ResultsMethod'] = { link = 'Function' },
