@@ -55,15 +55,18 @@ return {
         },
       },
 
-      prompt_prefix = '',
-      entry_prefix = '',
-      selection_caret = '* ',
+      prompt_prefix = ' ',
+      entry_prefix = ' ',
+      selection_caret = ' ',
       hl_result_eol = true,
-      multi_icon = '+ ',
+      multi_icon = ' ',
       border = true,
 
       dynamic_preview_title = false,
-      preview = { msg_bg_fillchar = ' ' },
+      preview = {
+        hide_on_startup = true,
+        msg_bg_fillchar = ' ',
+      },
 
       borderchars = {
         prompt = border.characters,
@@ -80,8 +83,8 @@ return {
       sorting_strategy = 'descending',
 
       layout_config = {
-        height = 0.8,
-        width = 0.8,
+        height = 0.6,
+        width = 0.6,
         prompt_position = 'bottom',
         horizontal = {
           preview_width = 0.55,
