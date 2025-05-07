@@ -29,7 +29,7 @@ local options = {
     ['a'] = 'Cursor/Cursor',
     ['n-v-c'] = 'block',
     ['i-ci-ve'] = 'ver25',
-    ['r-cr'] = 'hor10',
+    ['o-r-cr'] = 'hor10',
   },
   linespace = 6,
   list = true,
