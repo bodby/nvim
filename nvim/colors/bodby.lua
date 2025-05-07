@@ -265,9 +265,9 @@ local treesitter_highlights = {
       base.delimiter,
       { nocombine = true }
     ),
-    ['markup.raw.markdown_inline'] = base.code,
-    ['markup.quote.markdown'] = {},
+    ['markup.raw'] = base.code,
     ['markup.raw.block'] = inherit(base.delimiter, { nocombine = true }),
+    ['markup.quote.markdown'] = {},
     ['markup.list'] = inherit(base.comment, { italic = false }),
     ['markup.link'] = base.url,
     ['markup.strong'] = { fg = colors.white1, bold = true },
