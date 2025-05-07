@@ -113,11 +113,11 @@ local function mode(show_name)
 
   if show_name then
     return {
-      text = highlight .. '· ' .. current:upper() .. ' ',
+      text = highlight .. ': ' .. current:upper() .. ' ',
       length = #current + 1,
     }
   else
-    return { text = highlight .. '· ', length = 2 }
+    return { text = highlight .. ': ', length = 2 }
   end
 end
 
