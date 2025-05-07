@@ -76,7 +76,7 @@ local servers = {
       },
     },
     on_init = function(client)
-      local path = client.workspace_folders[1].name
+      local path = client.workspace_folders[1].name or vim.fn.getcwd()
 
       local json = vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.json'))
       local jsonc = vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.jsonc'))
@@ -128,12 +128,15 @@ local diag_config = {
   },
 }
 
-vim.lsp.config('*', {
-  root_markers = { 'flake.nix', '.git/' },
-})
+local default = {
+  root_markers = {
+    'flake.nix',
+    '.git/',
+  },
+}
 
 for k, v in pairs(servers) do
-  vim.lsp.config(k, v)
+  vim.lsp.config(k, v or default)
   vim.lsp.enable(k)
 end
 
