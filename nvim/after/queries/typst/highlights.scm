@@ -2,7 +2,7 @@
 
 (none) @constant.builtin
 
-(elude ".." @operator)
+(elude "..") @operator
 
 (call
   item: (field
@@ -16,3 +16,5 @@
 (field
   (ident)
   field: (ident) @variable.member)
+
+(linebreak) @punctuation
