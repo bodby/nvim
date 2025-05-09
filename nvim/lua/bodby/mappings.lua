@@ -5,6 +5,9 @@ local with_args = require('bodby.shared').lib.with_args
 
 local M = {}
 
+-- TODO: Telescope-style mappings, where modes are at the top (i.e. `i = { ...
+--       }`) rather than having it as a field.
+
 --- @class (exact) Mapping
 --- @field modes string
 --- @field callback string | fun(): string? | table
