@@ -8,8 +8,7 @@ local colors = {
   white1 = '#aec5f2',
   white2 = '#91a4ca',
   white3 = '#495674',
-  -- TODO: Desaturate.
-  gray1 = '#111319',
+  gray1 = '#12151a',
   gray2 = '#050505',
   red = '#f75fa8',
   green = '#b2f48f',
