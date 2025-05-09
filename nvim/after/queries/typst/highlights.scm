@@ -12,3 +12,7 @@
 (lambda
   pattern: (ident)
   "=>" @operator)
+
+(field
+  (ident)
+  field: (ident) @variable.member)
