@@ -1,6 +1,4 @@
 local ui = require('bodby.shared').ui
-
-local notes = require('bodby.native.notes')
 local with_args = require('bodby.shared').lib.with_args
 
 local M = {}
@@ -31,16 +29,6 @@ local mappings = {
   ['<Leader>P'] = { modes = 'n', callback = '"+P' },
   -- Misc. mappings.
   ['<C-c>'] = { modes = 'nv', callback = '<Cmd>normal gcc<CR>' },
-  -- TODO: Make this a standalone plugin so I can place these in plugin
-  --       mappings?
-  ['<Leader>nn'] = {
-    modes = 'n',
-    callback = with_args(notes.create_note, 'note'),
-  },
-  ['<Leader>nb'] = {
-    modes = 'n',
-    callback = with_args(notes.create_note, 'blog'),
-  },
   -- LSP hover border.
   ['K'] = {
     modes = 'n',
@@ -51,6 +39,10 @@ local mappings = {
   ['gd'] = {
     modes = 'n',
     callback = vim.lsp.buf.definition,
+  },
+  ['<S-CR>'] = {
+    modes = 'is',
+    callback = with_args(vim.snippet.jump, 1),
   },
 }
 
@@ -98,5 +90,9 @@ function M.setup()
       M.map(v.modes, k, v.callback, v.opts)
     end
   end
+
+  vim.keymap.del({ 'i', 's' }, '<Tab>')
+  vim.keymap.del({ 'i', 's' }, '<S-Tab>')
 end
+
 return M

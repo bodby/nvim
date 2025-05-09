@@ -1,4 +1,5 @@
 local lib = require('bodby.shared').lib
+local mappings = require('bodby.mappings')
 
 local M = {
   template_dir = '/home/bodby/vault/templates',
@@ -9,7 +10,7 @@ local M = {
 --- @param name string
 --- @return string
 local function file_name_from(name)
-  return name:gsub('%s', '-'):gsub('[^%a-]', ''):lower() .. '.md'
+  return name:gsub('%s', '-'):gsub('[^%a-]', ''):lower()
 end
 
 --- @param content string[]
@@ -51,25 +52,41 @@ local function create(template, fields, name)
     end
   end
 
-  open(content, file_name_from(name))
+  open(content, name .. '.md')
   return true
 end
 
 --- @param template string
 function M.create_note(template)
-  local date = os.date(M.date_format)
-  local opts = {
-    prompt = 'Enter note title: ',
-  }
-  vim.ui.input(opts, function(input)
-    if not lib.nil_str(input) then
+  --- @param title? string
+  local function with_name(title)
+    vim.ui.input({
+      prompt = 'Enter note file name: ',
+      default = file_name_from(title),
+    }, function(name)
       local fields = {
-        ['{{date}}'] = date,
-        ['{{title}}'] = input,
+        ['{{date}}'] = os.date(M.date_format),
+        ['{{title}}'] = title,
       }
-      create(vim.fs.joinpath(M.template_dir, template .. '.md'), fields, input)
-    end
-  end)
+      if not lib.nil_str(title) then
+        create(
+          vim.fs.joinpath(M.template_dir, template .. '.md'),
+          fields,
+          name
+        )
+      end
+    end)
+  end
+
+  vim.ui.input({
+    prompt = 'Enter note title: ',
+  }, with_name)
+end
+
+--- Set up note creation mappings.
+function M.setup()
+  -- TODO: Typst document mapping.
+  mappings.map('n', '<Leader>nn', lib.with_args(M.create_note, 'note'))
 end
 
 return M
