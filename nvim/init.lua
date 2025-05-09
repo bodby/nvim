@@ -4,18 +4,22 @@ local mappings = require('bodby.mappings')
 vim.cmd.colorscheme('bodby')
 require('bodby.options')
 
--- Why does NvChad defer mappings?
 vim.g.mapleader = ' '
 mappings.setup()
 require('bodby.lsp')
 
 -- TODO: Allow these to be configured like other plugins.
 --       And decide on either 'buffer' and 'window' or 'bufnr' and 'winid'.
-require('bodby.native.statusline').setup()
-require('bodby.native.statuscolumn').setup()
-require('bodby.native.tabline').setup()
--- TODO: Winbar with Treesitter breadcrumbs.
--- require('bodby.native.winbar').setup()
+vim.iter({
+  'statusline',
+  'statuscolumn',
+  'tabline',
+  -- TODO: Winbar with Treesitter breadcrumbs.
+  -- 'winbar',
+  'notes',
+}):map(function(t)
+  require('bodby.native.' .. t).setup()
+end)
 
 --- Table of plugin module names and their config's filename.
 --- @type table<string, string>
