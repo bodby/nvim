@@ -63,6 +63,10 @@ return {
       border = true,
 
       dynamic_preview_title = false,
+      path_display = {
+        'smart',
+        'filename_first',
+      },
       preview = {
         hide_on_startup = true,
         msg_bg_fillchar = ' ',
