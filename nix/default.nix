@@ -13,8 +13,11 @@
   ...
 }:
 let
-  inherit (neovim-unwrapped.lua.pkgs) luaLib;
   inherit (lib) fileset optionals;
+  inherit (neovim-unwrapped.lua.pkgs.luaLib)
+    genLuaPathAbsStr
+    genLuaCPathAbsStr
+    ;
   runtimepath = symlinkJoin {
     name = "nvim";
     paths = [
@@ -24,11 +27,11 @@ let
       })
     ];
   };
+  luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
   packages' = symlinkJoin {
     name = "nvim-packages";
     paths = packages;
   };
-  luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
 in
 wrapNeovimUnstable neovim-unwrapped {
   inherit viAlias vimAlias;
@@ -54,10 +57,10 @@ wrapNeovimUnstable neovim-unwrapped {
     "--prefix"
     "LUA_PATH"
     ";"
-    (luaLib.genLuaPathAbsStr luaPackages)
+    (genLuaPathAbsStr luaPackages)
     "--prefix"
     "LUA_CPATH"
     ";"
-    (luaLib.genLuaCPathAbsStr luaPackages)
+    (genLuaCPathAbsStr luaPackages)
   ];
 }
