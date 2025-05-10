@@ -5,17 +5,18 @@
 
 --- @type table<string, string>
 local colors = {
+  -- TODO: White saturations.
   white1 = '#aec5f2',
   white2 = '#91a4ca',
   white3 = '#495674',
-  gray1 = '#12151a',
+  gray1 = '#13151d',
   gray2 = '#050505',
-  red = '#f75fa8',
-  green = '#b2f48f',
-  yellow = '#ffcb85',
+  red = '#f75fb8',
+  green = '#a9f499',
+  yellow = '#ffcbaa',
   blue = '#809cff',
-  purple = '#9f80ff',
-  cyan = '#89bcff',
+  purple = '#9f8fff',
+  cyan = '#8cbcff',
 }
 
 --- Atomic highlights that others can inherit from.
