@@ -204,6 +204,8 @@ local function path(buffer, length)
   end
 end
 
+-- TODO: Rewrite without Gitsigns. Remove Gitsigns afterwards.
+
 --- Return either the current branch or the status.
 --- @param buffer integer
 --- @param type 'diff' | 'branch'
