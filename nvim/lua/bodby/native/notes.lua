@@ -92,7 +92,17 @@ function M.create_note(template)
           ['{{title}}'] = title,
         }
 
-        create(vim.fs.joinpath(M.template_dir, template), fields, name)
+        local ok =
+          create(vim.fs.joinpath(M.template_dir, template), fields, name)
+        if not ok then
+          vim.notify(
+            'Could not find template '
+              .. template
+              .. ' in '
+              .. M.template_dir,
+            4
+          )
+        end
       end
     end)
   end
@@ -104,7 +114,11 @@ end
 
 --- Set up note creation mappings.
 function M.setup()
-  mappings.map('n', '<Leader>nn', lib.with_args(M.create_note, 'atom.md'))
+  mappings.map({
+    ['n'] = {
+      ['<Leader>nn'] = lib.with_args(M.create_note, 'note.md'),
+    },
+  })
 end
 
 return M
