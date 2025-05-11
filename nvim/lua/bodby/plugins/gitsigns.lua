@@ -4,11 +4,8 @@ local gitsigns = require('gitsigns')
 return {
   event = 'BufEnter',
   mappings = {
-    ['<Leader>g'] = {
-      modes = 'n',
-      callback = function()
-        gitsigns.toggle_signs()
-      end,
+    ['n'] = {
+      ['<Leader>g'] = gitsigns.toggle_signs,
     },
   },
   opts = {

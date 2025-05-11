@@ -12,27 +12,19 @@ local no_titles = {
 --- @type Plugin
 return {
   mappings = {
-    ['<Leader>fr'] = {
-      modes = 'n',
-      callback = with_args(builtin.oldfiles, no_titles),
-    },
-    -- TODO: Symbols style (preferrably using the 'ui' table in shared.lua).
-    ['<Leader>fw'] = {
-      modes = 'n',
-      callback = with_args(builtin.lsp_workspace_symbols, no_titles),
-    },
-    ['<Leader>ff'] = {
-      modes = 'n',
-      callback = with_args(builtin.find_files, {
+    ['n'] = {
+      ['<Leader>fr'] = with_args(builtin.oldfiles, no_titles),
+      -- TODO: Symbols style (preferrably using the 'ui' table in shared.lua).
+      ['<Leader>fw'] = with_args(builtin.lsp_workspace_symbols, no_titles),
+
+      ['<Leader>ff'] = with_args(builtin.find_files, {
         hidden = true,
         results_title = '',
         preview_title = '',
         prompt_title = '',
       }),
-    },
-    ['<Leader>fg'] = {
-      modes = 'n',
-      callback = with_args(builtin.live_grep, {
+
+      ['<Leader>fg'] = with_args(builtin.live_grep, {
         grep_open_files = false,
         disable_coordinates = true,
         results_title = '',
@@ -45,7 +37,7 @@ return {
   opts = {
     defaults = {
       mappings = {
-        i = {
+        ['i'] = {
           ['<C-n>'] = 'move_selection_next',
           ['<C-p>'] = 'move_selection_previous',
           ['<C-u>'] = 'preview_scrolling_up',

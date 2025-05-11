@@ -47,9 +47,7 @@ local function setup(plugin)
 
   vim.schedule(function()
     if options.mappings then
-      for k, v in pairs(options.mappings) do
-        mappings.map(v.modes, k, v.callback, v.opts)
-      end
+      mappings.map(options.mappings)
     end
     if options.post then
       options.post()
