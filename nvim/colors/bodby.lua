@@ -66,8 +66,8 @@ local base = {
   visual = { bg = colors.gray1 },
   snippet_tabstop = { italic = true },
   --- For Blink Completion and Telescope.
-  matching_char = { bold = true },
-  matching_search = { bg = colors.gray1, underline = true },
+  matching_char = { underline = true },
+  matching_search = { underline = true },
   matching_punctuation = { fg = colors.cyan, underline = true },
   key = { fg = colors.cyan, bold = true },
   directory = { fg = colors.white2 },
