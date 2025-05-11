@@ -10,16 +10,18 @@ require('bodby.lsp')
 
 -- TODO: Allow these to be configured like other plugins.
 --       And decide on either 'buffer' and 'window' or 'bufnr' and 'winid'.
-vim.iter({
-  'statusline',
-  'statuscolumn',
-  'tabline',
-  -- TODO: Winbar with Treesitter breadcrumbs.
-  -- 'winbar',
-  'notes',
-}):map(function(t)
-  require('bodby.native.' .. t).setup()
-end)
+vim
+  .iter({
+    'statusline',
+    'statuscolumn',
+    'tabline',
+    -- TODO: Winbar with Treesitter breadcrumbs.
+    -- 'winbar',
+    'notes',
+  })
+  :map(function(t)
+    require('bodby.native.' .. t).setup()
+  end)
 
 --- Table of plugin module names and their config's filename.
 --- @type table<string, string>
