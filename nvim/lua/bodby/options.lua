@@ -22,7 +22,7 @@ local options = {
   conceallevel = 0,
   concealcursor = '',
   mouse = '',
-  hlsearch = false,
+  hlsearch = true,
   ignorecase = true,
   smartcase = true,
   guicursor = {
@@ -36,13 +36,6 @@ local options = {
   fillchars = {
     eob = ' ',
     fold = '·',
-    -- horiz = ' ',
-    -- horizup = ' ',
-    -- horizdown = ' ',
-    -- vert = ' ',
-    -- vertleft = ' ',
-    -- vertright = ' ',
-    -- verthoriz = ' ',
     msgsep = '─',
   },
   listchars = {
@@ -112,13 +105,11 @@ for k, v in pairs(options) do
   if type(v) ~= 'table' then
     vim.o[k] = v
   else
-    -- TODO: Rewrite this.
     local result = ''
     for k2, v2 in pairs(v) do
       result = result .. k2 .. ':' .. v2 .. ','
     end
-
-    vim.o[k] = result:sub(0, #result - 1)
+    vim.o[k] = result
   end
 end
 
