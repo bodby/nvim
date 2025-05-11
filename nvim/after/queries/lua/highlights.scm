@@ -1,7 +1,10 @@
 ;; extends
 
+; ((identifier) @module
+;   (#any-of? @module "vim" "M"))
+
 ((identifier) @module
-  (#any-of? @module "vim" "M"))
+  (#eq? @module "vim"))
 
 (field
   name: (identifier) @variable
