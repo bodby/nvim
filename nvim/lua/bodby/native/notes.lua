@@ -7,20 +7,37 @@ local M = {
   date_format = '%Y-%m-%d',
 }
 
---- @param name string
+--- Get a usable kebab case file name with no extension from a note title.
+--- @param title string
 --- @return string
-local function file_name_from(name)
-  return name:gsub('%s', '-'):gsub('[^%a-]', ''):lower()
+local function file_name_from(title)
+  return title:gsub('%s', '-'):gsub('[^%a-]', ''):lower()
+end
+
+--- @param name string
+--- @return { extension: string, filetype: string }
+local function get_extension(name)
+  local filetypes = {
+    ['md'] = 'markdown',
+    ['typ'] = 'typst',
+  }
+
+  local ext = name:match('%..*'):sub(2)
+  return {
+    extension = ext,
+    filetype = filetypes[ext] or ext,
+  }
 end
 
 --- @param content string[]
 --- @param name string
-local function open(content, name)
+--- @param filetype string
+local function open(content, name, filetype)
   vim.cmd.enew()
   local buffer = vim.api.nvim_get_current_buf()
   vim.api.nvim_buf_set_text(buffer, 0, 0, 0, 0, content)
   vim.api.nvim_buf_set_name(buffer, vim.fs.joinpath(M.note_dir, name))
-  vim.api.nvim_set_option_value('filetype', 'markdown', { buf = buffer })
+  vim.api.nvim_set_option_value('filetype', filetype, { buf = buffer })
 end
 
 --- @param path string
@@ -52,7 +69,8 @@ local function create(template, fields, name)
     end
   end
 
-  open(content, name .. '.md')
+  local ext = get_extension(template)
+  open(content, name .. '.' .. ext.extension, ext.filetype)
   return true
 end
 
@@ -60,20 +78,21 @@ end
 function M.create_note(template)
   --- @param title? string
   local function with_name(title)
+    if lib.nil_str(title) then
+      return
+    end
+
     vim.ui.input({
       prompt = 'Enter note file name: ',
       default = file_name_from(title),
     }, function(name)
-      local fields = {
-        ['{{date}}'] = os.date(M.date_format),
-        ['{{title}}'] = title,
-      }
-      if not lib.nil_str(title) then
-        create(
-          vim.fs.joinpath(M.template_dir, template .. '.md'),
-          fields,
-          name
-        )
+      if not lib.nil_str(name) then
+        local fields = {
+          ['{{date}}'] = os.date(M.date_format),
+          ['{{title}}'] = title,
+        }
+
+        create(vim.fs.joinpath(M.template_dir, template), fields, name)
       end
     end)
   end
@@ -85,8 +104,7 @@ end
 
 --- Set up note creation mappings.
 function M.setup()
-  -- TODO: Typst document mapping.
-  mappings.map('n', '<Leader>nn', lib.with_args(M.create_note, 'note'))
+  mappings.map('n', '<Leader>nn', lib.with_args(M.create_note, 'atom.md'))
 end
 
 return M
