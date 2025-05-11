@@ -25,11 +25,9 @@ function M.lib.trim(str)
 end
 
 --- Call the passed function with arguments.
---- @generic T1
---- @generic T2
---- @param fn fun(...: T2): T1
---- @param ... T2
---- @return T2
+--- @param fn fun(...: any): any
+--- @param ... any
+--- @return any
 function M.lib.with_args(fn, ...)
   local args = { ... }
   return function()

@@ -4,7 +4,7 @@
 ---
 --- Mappings that get created after the plugin is configured.
 --- These are deferred using `vim.schedule()`.
---- @field mappings? table<string, Mapping>
+--- @field mappings? table<string, table<string, string | fun()>>
 ---
 --- Per-plugin configuration options. These are passed to `setup()`.
 --- @field opts? table
@@ -18,7 +18,6 @@ return {
   ['blink.cmp'] = 'blink-cmp',
   -- ['alpha'] = 'alpha',
   ['telescope'] = 'telescope',
-  -- TODO: Remove and write custom Git status module in statusline.
   ['gitsigns'] = 'gitsigns',
   ['nvim-treesitter.configs'] = 'nvim-treesitter',
   -- ['mini.indentscope'] = 'indentscope',
