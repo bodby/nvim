@@ -46,7 +46,7 @@ function M.text(window)
   end
 
   local cursor = (vim.v.relnum == 0)
-  local sign = '%s%='
+  local sign = ' %s%='
 
   if vim.v.virtnum > 0 then
     return sign .. hl(M.highlights.wrapped, cursor) .. '│ '
