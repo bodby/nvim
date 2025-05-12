@@ -33,7 +33,7 @@ local mappings = {
     ['<Leader>P'] = '"_dP',
   },
 
-  ['is'] = {
+  ['nivs'] = {
     ['<S-CR>'] = with_args(vim.snippet.jump, 1),
   },
 }
