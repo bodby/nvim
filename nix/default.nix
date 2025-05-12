@@ -1,23 +1,24 @@
 {
-  plugins ? [ ],
-  packages ? [ ],
-  extraLuaPackages ? _: [ ],
-  viAlias ? true,
-  vimAlias ? true,
-
   lib,
   neovim-unwrapped,
   symlinkJoin,
   wrapNeovimUnstable,
   neovimUtils,
-  ...
+  callPackage,
 }:
 let
-  inherit (lib) fileset optionals;
+  inherit (lib) fileset;
   inherit (neovim-unwrapped.lua.pkgs.luaLib)
     genLuaPathAbsStr
     genLuaCPathAbsStr
     ;
+
+  inherit (callPackage ./plugins.nix { })
+    plugins
+    packages
+    extraLuaPackages
+    ;
+
   runtimepath = symlinkJoin {
     name = "nvim";
     paths = [
@@ -27,6 +28,7 @@ let
       })
     ];
   };
+
   luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
   packages' = symlinkJoin {
     name = "nvim-packages";
@@ -34,7 +36,8 @@ let
   };
 in
 wrapNeovimUnstable neovim-unwrapped {
-  inherit viAlias vimAlias;
+  viAlias = true;
+  vimAlias = true;
 
   withPython3 = false;
   withRuby = false;
@@ -47,13 +50,14 @@ wrapNeovimUnstable neovim-unwrapped {
     vim.o.rtp = '${runtimepath},' .. vim.o.rtp .. ',${runtimepath}/after'
     ${builtins.readFile ../nvim/init.lua}
   '';
-  wrapperArgs = optionals (packages != [ ]) [
+
+  wrapperArgs = lib.optionals (packages != [ ]) [
     "--prefix"
     "PATH"
     ":"
     "${packages'}/bin"
   ]
-  ++ optionals (luaPackages != null) [
+  ++ lib.optionals (luaPackages != null) [
     "--prefix"
     "LUA_PATH"
     ";"

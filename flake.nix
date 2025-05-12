@@ -2,6 +2,7 @@
   inputs = {
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
   };
+
   outputs = { nixpkgs, ... }:
     let
       systems = [
@@ -16,13 +17,7 @@
         default = pkgs.callPackage file { };
       });
     in {
-      packages = forall (pkgs:
-        let
-          inherit (pkgs) callPackage;
-          plugins = callPackage ./nix/plugins.nix { };
-        in {
-          default = callPackage ./nix/default.nix plugins;
-        });
+      packages = call ./nix/default.nix;
       devShells = call ./nix/shell.nix;
     };
 }

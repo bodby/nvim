@@ -16,6 +16,7 @@ mkShellNoCC {
     stylua
     luajitPackages.luacheck
     luajitPackages.busted
+
     nixd
     statix
     nurl

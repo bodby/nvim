@@ -3,12 +3,14 @@
     "prefix": "link",
     "body": "[${1:text}](${2:link})$0"
   },
+
   "wikilink": {
-    "prefix": "link",
-    "body": "[${1:link}|${2:text}]$0"
+    "prefix": "wikilink",
+    "body": "[[${1:link}|${2:text}]]$0"
   },
+
   "code": {
-    "prefix": "code",
+    "prefix": [ "code", "raw" ],
     "body": [
       "```${1:text}",
       "$0",
