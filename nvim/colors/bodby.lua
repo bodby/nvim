@@ -44,6 +44,7 @@ local base = {
   type = { fg = colors.purple },
   constructor = { fg = colors.yellow },
   tag = { fg = colors.yellow },
+  label = { fg = colors.yellow },
   module = { fg = colors.yellow, italic = true },
   constant = { fg = colors.white1, bold = true },
   builtin = { fg = colors.yellow, italic = true },
@@ -73,7 +74,7 @@ local base = {
   directory = { fg = colors.white2 },
   code = { fg = colors.cyan },
   separator = { fg = colors.gray1 },
-  url = { fg = colors.purple, underline = true },
+  url = { fg = colors.purple },
   spell_bad = { sp = colors.red, undercurl = true },
   spell_rare = { sp = colors.purple, undercurl = true },
   spell_casing = { sp = colors.blue, undercurl = true },
@@ -179,7 +180,7 @@ local highlights = {
     ['PreProc'] = base.preprocessor,
     ['Typedef'] = base.keyword,
     ['StorageClass'] = base.keyword,
-    ['Label'] = base.keyword,
+    ['Label'] = base.label,
     ['Repeat'] = base.keyword,
     ['Exception'] = base.keyword,
     ['Conditional'] = base.conditional,
@@ -261,6 +262,7 @@ local treesitter_highlights = {
     ['constructor.lua'] = { link = 'Delimiter' },
     ['variable.builtin.luadoc'] = { link = '@variable.parameter.builtin' },
     ['constructor.ocaml'] = { link = 'Delimiter' },
+    ['attribute.rust'] = { link = 'Label' },
     ['tag.attribute.html'] = { link = '@property' },
     ['punctuation.special.bash'] = inherit(
       base.delimiter,
@@ -272,11 +274,11 @@ local treesitter_highlights = {
     ['markup.list'] = inherit(base.comment, { italic = false }),
     ['markup.link'] = base.url,
     ['markup.strong'] = { fg = colors.white1, bold = true },
-    ['module.latex'] = { link = 'Keyword' },
-    ['punctuation.bracket.latex'] = inherit(
-      base.delimiter,
-      { nocombine = true }
-    ),
+    -- ['module.latex'] = { link = 'Keyword' },
+    -- ['punctuation.bracket.latex'] = inherit(
+    --   base.delimiter,
+    --   { nocombine = true }
+    -- ),
     ['string.special.symbol.bibtex'] = { link = 'Identifier' },
     ['string.special.path'] = { link = 'String' },
     ['variable.parameter.builtin'] = { link = 'Delimiter' },
@@ -288,6 +290,7 @@ local treesitter_highlights = {
     ['comment.note'] = { link = 'Todo' },
     ['constant.comment'] = base.assignee,
     ['constant.typst'] = { link = 'Identifier' },
+    ['markup.link.label.typst'] = { link = 'Tag' },
   },
 }
 
@@ -295,7 +298,7 @@ local treesitter_highlights = {
 local lsp_highlights = {
   prefix = '@lsp.',
   highlights = {
-    -- TODO: Resolved and unresolved link colors.
+    -- TODO: Unresolved 50% opacity link colors for Markdown.
     ['type.comment'] = {},
     ['type.macro'] = {},
     ['mod.global'] = { link = '@module' },

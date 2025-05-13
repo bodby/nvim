@@ -18,3 +18,8 @@
     field: (ident) @function .))
 
 (linebreak) @punctuation
+
+((label "<" ">") @markup.link.label
+  (#set! "priority" 105))
+
+(ref) @markup.link.label
