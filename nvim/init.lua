@@ -26,22 +26,18 @@ vim
     require('bodby.native.' .. t).setup()
   end)
 
---- Table of plugin module names and their config's filename.
 --- @type table<string, string>
 local plugins = require('bodby.plugins')
 
---- Table of filetypes and events, with a list of plugins inside them.
 --- @type { [string]: table<string, string[]> }
 local mapped = {}
 
---- Table with plugin configs instead of just their filename.
 --- @type table<string, Plugin>
 local config = vim.iter(plugins):fold({}, function(acc, k, v)
   acc[k] = require('bodby.plugins.' .. v)
   return acc
 end)
 
---- Setup the passed plugin, its mappings, and its post function.
 --- @param plugin string
 local function setup(plugin)
   --- @type Plugin
@@ -58,21 +54,14 @@ local function setup(plugin)
   end)
 end
 
--- Map plugins to their configured event, or set them up immediately if they
--- don't have one.
 for p, o in pairs(config) do
   --- @type boolean
   local has_event = not nil_str(o.event)
   if has_event then
     --- @type string
     local pattern = not nil_str(o.pattern) and o.pattern or '*'
-    if not mapped[o.event] then
-      mapped[o.event] = {}
-    end
-
-    if not mapped[o.event][pattern] then
-      mapped[o.event][pattern] = {}
-    end
+    mapped[o.event] = mapped[o.event] or {}
+    mapped[o.event][pattern] = mapped[o.event][pattern] or {}
 
     table.insert(mapped[o.event][pattern], p)
   else
@@ -80,7 +69,6 @@ for p, o in pairs(config) do
   end
 end
 
--- Create autocommands for each filetype and pattern group.
 for ev, ps in pairs(mapped) do
   for p, vs in pairs(ps) do
     local group = 'Lazy' .. ev .. p
