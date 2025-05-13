@@ -17,6 +17,9 @@ vim
     'tabline',
     -- TODO: Winbar with Treesitter breadcrumbs.
     -- 'winbar',
+    -- TODO: Indent lines with customizable start and end character.
+    --       Also doesn't show if the scope is only a single line.
+    -- 'indent',
     'notes',
   })
   :map(function(t)
