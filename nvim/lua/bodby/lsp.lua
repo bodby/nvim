@@ -11,14 +11,17 @@ local servers = {
       'compile_flags.txt',
     },
   },
+
   ['nixd'] = {
     cmd = { 'nixd' },
     filetypes = { 'nix' },
   },
+
   ['tinymist'] = {
     cmd = { 'tinymist' },
     filetypes = { 'typst' },
   },
+
   ['rust-analyzer'] = {
     cmd = { 'rust-analyzer' },
     filetypes = { 'rust' },
@@ -27,6 +30,7 @@ local servers = {
       'rust-project.json',
     },
   },
+
   ['markdown-oxide'] = {
     cmd = { 'markdown-oxide' },
     filetypes = { 'markdown' },
@@ -38,17 +42,51 @@ local servers = {
       },
     },
   },
+
   ['haskell-language-server'] = {
     cmd = { 'haskell-language-server' },
-    filetypes = { 'haskell' },
+    filetypes = { 'haskell', 'lhaskell' },
+    root_markers = {
+      'hie.yaml',
+      'stack.yaml',
+      'package.yaml',
+      'cabal.project',
+      '*.cabal',
+    },
+
     settings = {
       haskell = {
+        cabalFormattingProvider = 'cabalfmt',
+        formattingProvider = 'ormolu',
         maxCompletions = 100,
         checkProject = false,
         checkParents = 'CheckOnSave',
       },
     },
   },
+
+  ['haskell-language-server-wrapped'] = {
+    cmd = { 'haskell-language-server-wrapper', '--lsp' },
+    filetypes = { 'haskell', 'lhaskell' },
+    root_markers = {
+      'hie.yaml',
+      'stack.yaml',
+      'package.yaml',
+      'cabal.project',
+      '*.cabal',
+    },
+
+    settings = {
+      haskell = {
+        cabalFormattingProvider = 'cabalfmt',
+        formattingProvider = 'ormolu',
+        maxCompletions = 100,
+        checkProject = false,
+        checkParents = 'CheckOnSave',
+      },
+    },
+  },
+
   ['luals'] = {
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },
@@ -58,6 +96,7 @@ local servers = {
       '.stylua.toml',
       '.luacheckrc',
     },
+
     settings = {
       Lua = {
         completion = {
@@ -65,16 +104,19 @@ local servers = {
           keywordSnippet = 'Disable',
           showWord = 'Disable',
         },
+
         type = {
           weakNilCheck = true,
           weakUnionCheck = true,
         },
+
         format = { enable = false },
         hint = { enable = false },
         telemetry = { enable = false },
         semantic = { variable = false },
       },
     },
+
     on_init = function(client)
       local path = client.workspace_folders[1].name or vim.fn.getcwd()
 
@@ -90,9 +132,11 @@ local servers = {
             version = 'LuaJIT',
             path = vim.split(package.path, ';'),
           },
+
           diagnostics = {
             globals = { 'vim' },
           },
+
           workspace = {
             library = { vim.env.VIMRUNTIME },
             checkThirdParty = false,
