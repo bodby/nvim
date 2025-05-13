@@ -69,7 +69,7 @@ local base = {
   matching_char = { underline = true },
   matching_search = { underline = true },
   matching_punctuation = { fg = colors.cyan, underline = true },
-  key = { fg = colors.cyan, bold = true },
+  key = { fg = colors.cyan },
   directory = { fg = colors.white2 },
   code = { fg = colors.cyan },
   separator = { fg = colors.gray1 },
@@ -84,7 +84,7 @@ local base = {
     italic = true,
   },
   statusline = {},
-  statusline_cwd = { fg = colors.cyan, italic = true },
+  statusline_cwd = { fg = colors.purple, italic = true },
   statusline_prefix = {
     fg = colors.white1,
     bold = true,
