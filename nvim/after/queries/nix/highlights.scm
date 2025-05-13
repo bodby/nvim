@@ -1,10 +1,10 @@
 ;; extends
 
-; ((identifier) @module.builtin
-;   (#any-of? @module.builtin "builtins" "lib" "pkgs"))
-
 ((identifier) @module.builtin
-  (#eq? @module.builtin "builtins"))
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+
+((identifier) @variable.builtin
+  (#eq? @variable.builtin "self"))
 
 (binding
   attrpath: (attrpath
