@@ -96,10 +96,7 @@ function M.create_note(template)
           create(vim.fs.joinpath(M.template_dir, template), fields, name)
         if not ok then
           vim.notify(
-            'Could not find template '
-              .. template
-              .. ' in '
-              .. M.template_dir,
+            'Could not find template ' .. template .. ' in ' .. M.template_dir,
             4
           )
         end

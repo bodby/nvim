@@ -11,6 +11,7 @@
         "x86_64-darwin"
         "aarch64-darwin"
       ];
+
       forall = f: nixpkgs.lib.genAttrs systems (system:
         f nixpkgs.legacyPackages.${system});
       call = file: forall (pkgs: {
