@@ -55,10 +55,12 @@ return {
       border = true,
 
       dynamic_preview_title = false,
+      -- TODO: Make this a function to match statusline prefix styling.
       path_display = {
-        'smart',
         'filename_first',
+        truncate = 1,
       },
+
       preview = {
         hide_on_startup = true,
         msg_bg_fillchar = ' ',
