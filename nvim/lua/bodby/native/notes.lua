@@ -11,7 +11,7 @@ local M = {
 --- @param title string
 --- @return string
 local function file_name_from(title)
-  return lib.trim(title:gsub('%s', '-'):gsub('[^%a-]', ''):lower())
+  return lib.trim(title):gsub('%s', '-'):gsub('[^%a-]', ''):lower()
 end
 
 --- @param name string
@@ -92,7 +92,7 @@ function M.create_note(template, root)
       if not lib.nil_str(name) then
         local fields = {
           ['{{date}}'] = os.date(M.date_format),
-          ['{{title}}'] = title,
+          ['{{title}}'] = lib.trim(title),
         }
 
         local ok = create(
