@@ -2,8 +2,8 @@ local lib = require('bodby.shared').lib
 local mappings = require('bodby.mappings')
 
 local M = {
-  template_dir = '/home/bodby/vault/templates',
-  note_dir = '/home/bodby/vault/notes/inbox',
+  template_dir = vim.fs.joinpath(vim.env.HOME, 'vault/templates'),
+  default_dir = vim.fs.joinpath(vim.env.HOME, 'vault/notes/inbox'),
   date_format = '%Y-%m-%d',
 }
 
@@ -32,11 +32,12 @@ end
 --- @param content string[]
 --- @param name string
 --- @param filetype string
-local function open(content, name, filetype)
+--- @param root string
+local function open(content, name, filetype, root)
   vim.cmd.enew()
   local buffer = vim.api.nvim_get_current_buf()
   vim.api.nvim_buf_set_text(buffer, 0, 0, 0, 0, content)
-  vim.api.nvim_buf_set_name(buffer, vim.fs.joinpath(M.note_dir, name))
+  vim.api.nvim_buf_set_name(buffer, vim.fs.joinpath(root, name))
   vim.api.nvim_set_option_value('filetype', filetype, { buf = buffer })
 end
 
@@ -56,8 +57,9 @@ end
 --- @param template string
 --- @param fields table<string, string>
 --- @param name string
+--- @param root string
 --- @return boolean
-local function create(template, fields, name)
+local function create(template, fields, name, root)
   local content = read(template)
   if not content then
     return false
@@ -70,12 +72,13 @@ local function create(template, fields, name)
   end
 
   local ext = get_extension(template)
-  open(content, name .. '.' .. ext.extension, ext.filetype)
+  open(content, name .. '.' .. ext.extension, ext.filetype, root)
   return true
 end
 
 --- @param template string
-function M.create_note(template)
+--- @param root? string
+function M.create_note(template, root)
   --- @param title? string
   local function with_name(title)
     if lib.nil_str(title) then
@@ -83,7 +86,7 @@ function M.create_note(template)
     end
 
     vim.ui.input({
-      prompt = 'Enter note file name: ',
+      prompt = 'File name: ',
       default = file_name_from(title),
     }, function(name)
       if not lib.nil_str(name) then
@@ -92,8 +95,12 @@ function M.create_note(template)
           ['{{title}}'] = title,
         }
 
-        local ok =
-          create(vim.fs.joinpath(M.template_dir, template), fields, name)
+        local ok = create(
+          vim.fs.joinpath(M.template_dir, template),
+          fields,
+          name,
+          root or M.default_dir
+        )
         if not ok then
           vim.notify(
             'Could not find template ' .. template .. ' in ' .. M.template_dir,
@@ -105,7 +112,7 @@ function M.create_note(template)
   end
 
   vim.ui.input({
-    prompt = 'Enter note title: ',
+    prompt = 'Title: ',
   }, with_name)
 end
 
@@ -113,7 +120,12 @@ end
 function M.setup()
   mappings.map({
     ['n'] = {
-      ['<Leader>nn'] = lib.with_args(M.create_note, 'note.md'),
+      ['<Leader>nn'] = lib.with_args(M.create_note, 'default.md'),
+      ['<Leader>np'] = lib.with_args(
+        M.create_note,
+        'default.typ',
+        vim.fs.joinpath(vim.env.HOME, 'vault/notes/papers')
+      ),
     },
   })
 end
