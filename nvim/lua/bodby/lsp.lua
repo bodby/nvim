@@ -2,7 +2,10 @@ local ui = require('bodby.shared').ui
 
 --- @type table<string, table>
 local servers = {
-  ['clangd'] = {
+  -- TODO: Haskell.
+  --       Now I understand what rexim meant about horrible tooling.
+
+  c = {
     cmd = { 'clangd', '--background-index' },
     filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
     root_markers = {
@@ -12,26 +15,28 @@ local servers = {
     },
   },
 
-  ['nixd'] = {
+  nix = {
     cmd = { 'nixd' },
     filetypes = { 'nix' },
   },
 
-  ['tinymist'] = {
+  typst = {
     cmd = { 'tinymist' },
     filetypes = { 'typst' },
   },
 
-  ['rust-analyzer'] = {
+  rust = {
     cmd = { 'rust-analyzer' },
     filetypes = { 'rust' },
     root_markers = {
       'Cargo.toml',
+      'clippy.toml',
+      'rustfmt.toml',
       'rust-project.json',
     },
   },
 
-  ['markdown-oxide'] = {
+  markdown = {
     cmd = { 'markdown-oxide' },
     filetypes = { 'markdown' },
     capabilities = {
@@ -43,51 +48,7 @@ local servers = {
     },
   },
 
-  ['haskell-language-server'] = {
-    cmd = { 'haskell-language-server' },
-    filetypes = { 'haskell', 'lhaskell' },
-    root_markers = {
-      'hie.yaml',
-      'stack.yaml',
-      'package.yaml',
-      'cabal.project',
-      '*.cabal',
-    },
-
-    settings = {
-      haskell = {
-        cabalFormattingProvider = 'cabalfmt',
-        formattingProvider = 'ormolu',
-        maxCompletions = 100,
-        checkProject = false,
-        checkParents = 'CheckOnSave',
-      },
-    },
-  },
-
-  ['haskell-language-server-wrapped'] = {
-    cmd = { 'haskell-language-server-wrapper', '--lsp' },
-    filetypes = { 'haskell', 'lhaskell' },
-    root_markers = {
-      'hie.yaml',
-      'stack.yaml',
-      'package.yaml',
-      'cabal.project',
-      '*.cabal',
-    },
-
-    settings = {
-      haskell = {
-        cabalFormattingProvider = 'cabalfmt',
-        formattingProvider = 'ormolu',
-        maxCompletions = 100,
-        checkProject = false,
-        checkParents = 'CheckOnSave',
-      },
-    },
-  },
-
-  ['luals'] = {
+  lua = {
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },
     root_markers = {
@@ -161,6 +122,7 @@ local diag_config = {
       [vim.diagnostic.severity.HINT] = '?',
     },
   },
+
   float = {
     scope = 'line',
     severity_sort = true,
@@ -179,9 +141,8 @@ local default = {
   },
 }
 
+vim.diagnostic.config(diag_config)
 for k, v in pairs(servers) do
   vim.lsp.config(k, v or default)
   vim.lsp.enable(k)
 end
-
-vim.diagnostic.config(diag_config)
