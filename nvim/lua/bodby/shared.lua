@@ -6,6 +6,7 @@ local M = {
       characters = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
     },
   },
+
   --- Helpful utility functions.
   lib = {},
 }
@@ -33,6 +34,13 @@ function M.lib.with_args(fn, ...)
   return function()
     return fn(unpack(args))
   end
+end
+
+--- Escape characters that may be interpreted as patterns.
+--- @param str string
+--- @return string
+function M.lib.escape(str)
+  return (str:gsub('[%^%$%(%)%%%.%[%]%*%+%-%?]', '%%%0'))
 end
 
 return M
