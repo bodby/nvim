@@ -12,8 +12,9 @@ local colors = {
   gray1 = '#12151c',
   gray2 = '#050505',
   red = '#ff85c2',
-  green = '#a9f4a2',
-  yellow = '#ffccc9',
+  green = '#a9f4a0',
+  -- #ffccc9
+  yellow = '#ffd0c7',
   blue = '#809cff',
   purple = '#9f8fff',
   cyan = '#8cbcff',
