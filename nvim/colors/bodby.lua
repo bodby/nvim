@@ -93,7 +93,7 @@ local base = {
     italic = true,
   },
   statusline_path = { fg = colors.white2 },
-  statusline_branch = { fg = colors.white1, bold = true },
+  statusline_branch = { fg = colors.purple },
   statusline_diff = { fg = colors.white3 },
   statusline_lines = { fg = colors.white3 },
   statusline_filetype = { fg = colors.white2, italic = true },
