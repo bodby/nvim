@@ -3,9 +3,6 @@
 ; ((identifier) @module.builtin
 ;   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
 
-((identifier) @variable.builtin
-  (#eq? @variable.builtin "self"))
-
 (binding
   attrpath: (attrpath
     attr: (identifier) @variable)
