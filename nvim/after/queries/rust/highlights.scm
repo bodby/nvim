@@ -7,12 +7,18 @@
 
 (block
   (call_expression
-    function: (identifier) @constant) .)
+    function: (identifier) @constructor) .)
 
-(match_arm
-  (call_expression
-    function: (identifier) @constant
-      (#match? @constant "^[A-Z][a-z_0-9]+$") .))
+; (match_arm
+;   (call_expression
+;     function: (identifier) @constructor
+;       (#match? @constructor "^[A-Z][a-z_0-9]+$") .))
+
+function: ((identifier) @constructor
+  (#match? @constructor "^[A-Z][a-z_0-9]+$") .)
+
+type: ((identifier) @constructor
+  (#match? @constructor "^[A-Z][a-z_0-9]+$") .)
 
 (use_declaration
   argument: (identifier) @module)
