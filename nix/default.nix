@@ -30,34 +30,40 @@ let
 
   luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
 
-  wrapper = args:
-    (wrapNeovimUnstable neovim-unwrapped ({
-      withPython3 = false;
-      withRuby = false;
-      withNodeJs = false;
-      withPerl = false;
+  wrapper =
+    args:
+    (wrapNeovimUnstable neovim-unwrapped (
+      {
+        withPython3 = false;
+        withRuby = false;
+        withNodeJs = false;
+        withPerl = false;
 
-      plugins = neovimUtils.normalizePlugins plugins;
-      luaRcContent = /* lua */ ''
-        vim.loader.enable()
-        vim.o.rtp = '${runtimepath},' .. vim.o.rtp .. ',${runtimepath}/after'
-        ${builtins.readFile ../nvim/init.lua}
-      '';
+        plugins = neovimUtils.normalizePlugins plugins;
+        luaRcContent = # lua
+          ''
+            vim.loader.enable()
+            vim.o.rtp = '${runtimepath},' .. vim.o.rtp .. ',${runtimepath}/after'
+            ${builtins.readFile ../nvim/init.lua}
+          '';
 
-      wrapperArgs = lib.optionals (luaPackages != null) [
-        "--prefix"
-        "LUA_PATH"
-        ";"
-        (genLuaPathAbsStr luaPackages)
+        wrapperArgs = lib.optionals (luaPackages != null) [
+          "--prefix"
+          "LUA_PATH"
+          ";"
+          (genLuaPathAbsStr luaPackages)
 
-        "--prefix"
-        "LUA_CPATH"
-        ";"
-        (genLuaCPathAbsStr luaPackages)
-      ];
-    } // args)).overrideAttrs (finalAttrs: {
-      runtimeDeps = finalAttrs.runtimeDeps ++ packages;
-    });
+          "--prefix"
+          "LUA_CPATH"
+          ";"
+          (genLuaCPathAbsStr luaPackages)
+        ];
+      }
+      // args
+    )).overrideAttrs
+      (finalAttrs: {
+        runtimeDeps = finalAttrs.runtimeDeps ++ packages;
+      });
 in
 lib.makeOverridable wrapper {
   viAlias = true;

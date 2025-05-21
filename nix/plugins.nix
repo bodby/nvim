@@ -6,7 +6,8 @@
 let
   inherit (builtins) attrValues;
   tree-sitter' = callPackage ./tree-sitter.nix { };
-in {
+in
+{
   packages = [ ripgrep ];
   extraLuaPackages = _: [ ];
   plugins = attrValues {
@@ -18,7 +19,8 @@ in {
       gitsigns-nvim
       ;
 
-    parsers = vimPlugins.nvim-treesitter.withPlugins (p:
+    parsers = vimPlugins.nvim-treesitter.withPlugins (
+      p:
       attrValues {
         inherit (tree-sitter') markdown markdown-inline;
         inherit (p)
@@ -53,6 +55,7 @@ in {
           javascript
           query
           ;
-      });
+      }
+    );
   };
 }

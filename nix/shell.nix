@@ -3,7 +3,6 @@
   luajit,
   lua-language-server,
   stylua,
-  luajitPackages,
   nixd,
   statix,
   nurl,
@@ -14,8 +13,6 @@ mkShellNoCC {
     luajit
     lua-language-server
     stylua
-    luajitPackages.luacheck
-    luajitPackages.busted
 
     nixd
     statix

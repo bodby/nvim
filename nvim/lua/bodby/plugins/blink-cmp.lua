@@ -249,7 +249,7 @@ return {
             end
 
             return result
-          end
+          end,
         },
       },
     },
@@ -261,8 +261,8 @@ return {
         ['<Tab>'] = { 'show', 'accept', 'fallback' },
         ['<C-n>'] = { 'select_next' },
         ['<C-p>'] = { 'select_prev' },
-        ['<Up>'] = { 'select_next' },
-        ['<Down>'] = { 'select_prev' },
+        ['<Up>'] = { 'select_prev', 'fallback' },
+        ['<Down>'] = { 'select_next', 'fallback' },
       },
 
       completion = {
