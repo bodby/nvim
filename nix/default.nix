@@ -31,9 +31,7 @@ let
   luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
 
   wrapper = args:
-    (wrapNeovimUnstable neovim-unwrapped {
-      inherit (args) viAlias vimAlias;
-
+    (wrapNeovimUnstable neovim-unwrapped ({
       withPython3 = false;
       withRuby = false;
       withNodeJs = false;
@@ -57,7 +55,7 @@ let
         ";"
         (genLuaCPathAbsStr luaPackages)
       ];
-    }).overrideAttrs (finalAttrs: {
+    } // args)).overrideAttrs (finalAttrs: {
       runtimeDeps = finalAttrs.runtimeDeps ++ packages;
     });
 in
