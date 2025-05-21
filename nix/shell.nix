@@ -4,6 +4,7 @@
   lua-language-server,
   stylua,
   nixd,
+  nixfmt-rfc-style,
   statix,
   nurl,
 }:
@@ -15,6 +16,7 @@ mkShellNoCC {
     stylua
 
     nixd
+    nixfmt-rfc-style
     statix
     nurl
   ];
