@@ -7,7 +7,6 @@
   callPackage,
 }:
 let
-  inherit (lib) fileset;
   inherit (neovim-unwrapped.lua.pkgs.luaLib)
     genLuaPathAbsStr
     genLuaCPathAbsStr
@@ -22,49 +21,47 @@ let
   runtimepath = symlinkJoin {
     name = "nvim";
     paths = [
-      (fileset.toSource {
+      (lib.fileset.toSource {
         root = ../nvim;
-        fileset = fileset.difference ../nvim ../nvim/init.lua;
+        fileset = lib.fileset.difference ../nvim ../nvim/init.lua;
       })
     ];
   };
 
   luaPackages = neovim-unwrapped.lua.withPackages extraLuaPackages;
-  packages' = symlinkJoin {
-    name = "nvim-packages";
-    paths = packages;
-  };
+
+  wrapper = args:
+    (wrapNeovimUnstable neovim-unwrapped {
+      inherit (args) viAlias vimAlias;
+
+      withPython3 = false;
+      withRuby = false;
+      withNodeJs = false;
+      withPerl = false;
+
+      plugins = neovimUtils.normalizePlugins plugins;
+      luaRcContent = /* lua */ ''
+        vim.loader.enable()
+        vim.o.rtp = '${runtimepath},' .. vim.o.rtp .. ',${runtimepath}/after'
+        ${builtins.readFile ../nvim/init.lua}
+      '';
+
+      wrapperArgs = lib.optionals (luaPackages != null) [
+        "--prefix"
+        "LUA_PATH"
+        ";"
+        (genLuaPathAbsStr luaPackages)
+
+        "--prefix"
+        "LUA_CPATH"
+        ";"
+        (genLuaCPathAbsStr luaPackages)
+      ];
+    }).overrideAttrs (finalAttrs: {
+      runtimeDeps = finalAttrs.runtimeDeps ++ packages;
+    });
 in
-wrapNeovimUnstable neovim-unwrapped {
+lib.makeOverridable wrapper {
   viAlias = true;
   vimAlias = true;
-
-  withPython3 = false;
-  withRuby = false;
-  withNodeJs = false;
-  withPerl = false;
-
-  plugins = neovimUtils.normalizePlugins plugins;
-  luaRcContent = /* lua */ ''
-    vim.loader.enable()
-    vim.o.rtp = '${runtimepath},' .. vim.o.rtp .. ',${runtimepath}/after'
-    ${builtins.readFile ../nvim/init.lua}
-  '';
-
-  wrapperArgs = lib.optionals (packages != [ ]) [
-    "--prefix"
-    "PATH"
-    ":"
-    "${packages'}/bin"
-  ]
-  ++ lib.optionals (luaPackages != null) [
-    "--prefix"
-    "LUA_PATH"
-    ";"
-    (genLuaPathAbsStr luaPackages)
-    "--prefix"
-    "LUA_CPATH"
-    ";"
-    (genLuaCPathAbsStr luaPackages)
-  ];
 }

@@ -1,60 +1,15 @@
 {
-  tree-sitter,
-  fetchFromGitHub,
+  lib,
+  callPackage,
   vimPlugins,
   ripgrep,
-  lib,
 }:
 let
   inherit (builtins) map attrValues;
-
-  grammarWithFeatures = {
-    language,
-    version,
-    src,
-    location,
-    features,
-    ...
-  } @ args:
-  (tree-sitter.buildGrammar {
-    inherit language version src;
-    generate = true;
-  } // builtins.removeAttrs args [
-    "language"
-    "location"
-    "features"
-  ]).overrideAttrs {
-    configurePhase = lib.optionalString (location != null) ''
-      cd ${location}
-    ''
-    + ''
-      ${lib.concatStringsSep " " (map (x: "${x}=1") features)} tree-sitter generate
-    '';
-  };
-
-  # No `passthru` for the original grammar packages. :(
-  # The above function and below would be shorter if the packages did have `passthru`.
-  markdownShared = language: location: {
-    inherit language location;
-    version = "2025-05-12";
-    src = fetchFromGitHub {
-      owner = "MDeiml";
-      repo = "tree-sitter-markdown";
-      rev = "413285231ce8fa8b11e7074bbe265b48aa7277f9";
-      hash = "sha256-Oe2iL5b1Cyv+dK0nQYFNLCCOCe+93nojxt6ukH2lEmU=";
-    };
-
-    meta = {
-      homepage = "https://github.com/MDeiml/tree-sitter-markdown";
-    };
-
-    features = [
-      "EXTENSION_WIKI_LINK"
-      "EXTENSION_TAGS"
-    ];
-  };
+  tree-sitter' = callPackage ./tree-sitter.nix { };
 in {
   packages = [ ripgrep ];
+
   extraLuaPackages = _: [ ];
 
   plugins = attrValues {
@@ -68,12 +23,12 @@ in {
 
     parsers = vimPlugins.nvim-treesitter.withPlugins (p:
       attrValues {
+        inherit (tree-sitter') markdown markdown-inline;
         inherit (p)
           comment
           luadoc
           vimdoc
           doxygen
-          jsdoc
           gitignore
           gitcommit
           git_rebase
@@ -92,7 +47,6 @@ in {
           zig
           meson
           rust
-          ocaml
           lua
           vim
           python
@@ -102,11 +56,6 @@ in {
           javascript
           query
           ;
-
-        markdown = grammarWithFeatures
-          (markdownShared "markdown" "tree-sitter-markdown");
-        markdown-inline = grammarWithFeatures
-          (markdownShared "markdown_inline" "tree-sitter-markdown-inline");
       });
   };
 }
