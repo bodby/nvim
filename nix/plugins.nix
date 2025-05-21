@@ -1,17 +1,14 @@
 {
-  lib,
   callPackage,
   vimPlugins,
   ripgrep,
 }:
 let
-  inherit (builtins) map attrValues;
+  inherit (builtins) attrValues;
   tree-sitter' = callPackage ./tree-sitter.nix { };
 in {
   packages = [ ripgrep ];
-
   extraLuaPackages = _: [ ];
-
   plugins = attrValues {
     inherit (vimPlugins)
       telescope-nvim
