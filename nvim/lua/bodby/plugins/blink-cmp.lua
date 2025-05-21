@@ -66,6 +66,7 @@ return {
         max_items = options.max_items,
         selection = { preselect = true, auto_insert = false },
       },
+
       accept = {
         auto_brackets = { enabled = false },
       },
@@ -168,6 +169,7 @@ return {
         return math.floor(#keyword / 4)
       end,
 
+      sorts = { 'exact', 'score' },
       use_frecency = true,
       use_proximity = true,
       prebuilt_binaries = { download = false },
@@ -182,6 +184,7 @@ return {
           module = 'blink.cmp.sources.lsp',
           fallbacks = {},
         },
+
         path = {
           name = 'path',
           module = 'blink.cmp.sources.path',
@@ -193,6 +196,7 @@ return {
             label_trailing_slash = options.trailing_slash,
           },
         },
+
         snippets = {
           name = 'snippet',
           module = 'blink.cmp.sources.snippets',
@@ -207,11 +211,45 @@ return {
             global_snippets = { 'all' },
           },
         },
+
         buffer = {
           name = 'buffer',
           module = 'blink.cmp.sources.buffer',
           fallbacks = {},
           should_show_items = true,
+
+          transform_items = function(context, items)
+            --- @type string
+            local keyword = context.get_keyword()
+            local undesired = '^%l+$'
+            --- @type fun(str: string): string
+            local modifier = string.upper
+            if keyword:match('^%l') then
+              undesired = '^%u%l+$'
+              modifier = string.lower
+            elseif not keyword:match('^%u') then
+              return items
+            end
+
+            local result = {}
+            local prev = {}
+
+            for _, v in ipairs(items) do
+              local raw = v.insertText
+              if raw:match(undesired) then
+                local text = modifier(raw:sub(1, 1)) .. raw:sub(2)
+                v.insertText = text
+                v.label = text
+              end
+
+              if not prev[v.insertText] then
+                prev[v.insertText] = true
+                table.insert(result, v)
+              end
+            end
+
+            return result
+          end
         },
       },
     },
@@ -223,7 +261,10 @@ return {
         ['<Tab>'] = { 'show', 'accept', 'fallback' },
         ['<C-n>'] = { 'select_next' },
         ['<C-p>'] = { 'select_prev' },
+        ['<Up>'] = { 'select_next' },
+        ['<Down>'] = { 'select_prev' },
       },
+
       completion = {
         menu = { auto_show = true },
       },
