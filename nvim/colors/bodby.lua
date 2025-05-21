@@ -13,10 +13,9 @@ local colors = {
   gray2 = '#050505',
   red = '#ff85c2',
   green = '#a9f4a0',
-  -- #ffccc9
-  yellow = '#ffd0c7',
+  yellow = '#ffcec8',
   blue = '#809cff',
-  purple = '#9f8fff',
+  purple = '#9a8fff',
   cyan = '#8cbcff',
 }
 
@@ -43,7 +42,7 @@ local base = {
   number = { fg = colors.yellow },
   _string = { fg = colors.green, italic = true },
   type = { fg = colors.purple },
-  constructor = { fg = colors.yellow },
+  constructor = { fg = colors.white1, bold = true, italic = true },
   tag = { fg = colors.yellow },
   label = { fg = colors.yellow },
   module = { fg = colors.yellow, italic = true },
@@ -195,7 +194,7 @@ local highlights = {
     ['SpecialChar'] = base.special_char,
     ['Number'] = base.number,
     ['Float'] = { link = 'Number' },
-    ['Boolean'] = base.boolean,
+    ['Boolean'] = inherit(base.boolean, { nocombine = true }),
     ['Constant'] = base.constant,
     ['Operator'] = base.operator,
     ['Delimiter'] = base.delimiter,
@@ -261,8 +260,9 @@ local treesitter_highlights = {
     ['module.builtin'] = { link = '@module' },
     ['namespace'] = { link = '@module' },
     ['constructor.lua'] = { link = 'Delimiter' },
+    -- TODO: Either this or change Rust monad implicit returns, e.g. `Ok(())`.
+    ['constant.typst'] = { link = 'Identifier' },
     ['variable.builtin.luadoc'] = { link = '@variable.parameter.builtin' },
-    ['constructor.ocaml'] = { link = 'Delimiter' },
     ['attribute.rust'] = { link = 'Label' },
     ['tag.attribute.html'] = { link = '@property' },
     ['punctuation.special.bash'] = inherit(
@@ -271,27 +271,21 @@ local treesitter_highlights = {
     ),
     ['markup.raw'] = base.code,
     ['markup.raw.block'] = inherit(base.delimiter, { nocombine = true }),
-    ['markup.quote.markdown'] = {},
     ['markup.list'] = inherit(base.comment, { italic = false }),
     ['markup.link'] = base.url,
     ['markup.strong'] = { fg = colors.white1, bold = true },
-    -- ['module.latex'] = { link = 'Keyword' },
-    -- ['punctuation.bracket.latex'] = inherit(
-    --   base.delimiter,
-    --   { nocombine = true }
-    -- ),
-    ['string.special.symbol.bibtex'] = { link = 'Identifier' },
+    ['markup.link.label.typst'] = { link = 'Tag' },
+    ['markup.quote.markdown'] = {},
+    ['markup.heading.gitcommit'] = {},
+    -- ['string.special.symbol.bibtex'] = { link = 'Identifier' },
     ['string.special.path'] = { link = 'String' },
     ['variable.parameter.builtin'] = { link = 'Delimiter' },
     ['keyword.import.nix'] = { link = 'Function' },
-    -- Todo comments.
     ['comment.warning'] = { link = 'Todo' },
     ['comment.error'] = { link = 'Todo' },
     ['comment.todo'] = { link = 'Todo' },
     ['comment.note'] = { link = 'Todo' },
     ['constant.comment'] = base.assignee,
-    ['constant.typst'] = { link = 'Identifier' },
-    ['markup.link.label.typst'] = { link = 'Tag' },
   },
 }
 
