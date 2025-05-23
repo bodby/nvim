@@ -34,15 +34,11 @@ fix (self: {
   buildGrammar =
     {
       language,
-      src,
-      version,
-      env ? { },
       generate ? true,
       ...
     }@args:
     stdenv.mkDerivation (
       {
-        inherit src version;
         pname = "${language}-grammar";
 
         stripDebugList = [ "parser" ];
@@ -51,7 +47,9 @@ fix (self: {
           tree-sitter
         ];
 
-        env = env // {
+	      # TODO: Do I really need to convert these into strings?
+        #       I previously merged an `env` arg with this but it seemed unnecessary.
+        env = {
           CFLAGS = lib.escapeShellArgs [
             "-Isrc"
             "-O2"
@@ -94,7 +92,6 @@ fix (self: {
 
         passthru = {
           inherit language generate;
-          env' = env;
         };
       }
       // removeAttrs args [ "language" ]
