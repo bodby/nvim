@@ -47,7 +47,7 @@ fix (self: {
           tree-sitter
         ];
 
-	      # TODO: Do I really need to convert these into strings?
+        # TODO: Do I really need to convert these into strings?
         #       I previously merged an `env` arg with this but it seemed unnecessary.
         env = {
           CFLAGS = lib.escapeShellArgs [
