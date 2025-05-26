@@ -5,7 +5,7 @@
 
 (binding
   attrpath: (attrpath
-    attr: (identifier) @variable)
+    attr: (identifier) @variable .)
   (attrset_expression
     (binding_set
       binding: [
