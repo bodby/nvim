@@ -25,7 +25,6 @@ local mappings = {
     ['<Leader>S'] = '"_S',
     ['<Leader>y'] = '"+y',
     ['<Leader>Y'] = '"+Y',
-    ['<C-c>'] = '<Cmd>normal gcc<CR>',
   },
 
   ['v'] = {

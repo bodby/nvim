@@ -221,11 +221,9 @@ return {
           transform_items = function(context, items)
             --- @type string
             local keyword = context.get_keyword()
-            local undesired = '^%l+$'
             --- @type fun(str: string): string
             local modifier = string.upper
             if keyword:match('^%l') then
-              undesired = '^%u%l+$'
               modifier = string.lower
             elseif not keyword:match('^%u') then
               return items
@@ -235,12 +233,9 @@ return {
             local prev = {}
 
             for _, v in ipairs(items) do
-              local raw = v.insertText
-              if raw:match(undesired) then
-                local text = modifier(raw:sub(1, 1)) .. raw:sub(2)
-                v.insertText = text
-                v.label = text
-              end
+              local text = modifier(v.insertText:sub(1, 1)) .. v.insertText:sub(2)
+              v.insertText = text
+              v.label = text
 
               if not prev[v.insertText] then
                 prev[v.insertText] = true
