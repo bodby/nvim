@@ -39,3 +39,42 @@ function: (_
   attrpath: (attrpath
     attr: (identifier) @function)
   expression: (function_expression))
+
+(inherit_from
+  expression: (variable_expression
+    name: (identifier) @_name)
+  attrs: (inherited_attrs
+    attr: (identifier) @function)
+  (#any-of? @_name "builtins" "lib" "lib'"))
+
+(inherit_from
+  expression: (select_expression
+    expression: (variable_expression
+      name: (identifier) @_name))
+    attrs: (inherited_attrs
+      attr: (identifier) @function)
+    (#any-of? @_name "builtins" "lib" "lib'"))
+
+(apply_expression
+  (select_expression
+    expression: (variable_expression
+      name: (identifier) @_name)
+    attrpath: (attrpath
+      attr: (identifier) @function)
+    (#any-of? @_name "lib" "lib'")))
+
+(binding
+  (select_expression
+    expression: (variable_expression
+      name: (identifier) @_name)
+    attrpath: (attrpath
+      attr: (identifier) @function)
+    (#any-of? @_name "lib" "lib'")))
+
+(variable_expression
+  name: (identifier) @keyword.import
+  (#eq? @keyword.import "import"))
+
+(variable_expression
+  name: (identifier) @keyword.exception
+  (#eq? @keyword.exception "abort"))

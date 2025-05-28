@@ -40,8 +40,10 @@ local base = {
   --- Nix paths and escape codes.
   special_char = { fg = colors.cyan, italic = true },
   number = { fg = colors.yellow },
+  -- TODO: Bright purple strings.
   _string = { fg = colors.green, italic = true },
   type = { fg = colors.purple },
+  -- TODO: Yellow constructors again after purple strings.
   constructor = { fg = colors.white1, bold = true, italic = true },
   tag = { fg = colors.yellow },
   label = { fg = colors.yellow },
@@ -282,7 +284,7 @@ local treesitter_highlights = {
     -- ['string.special.symbol.bibtex'] = { link = 'Identifier' },
     ['string.special.path'] = { link = 'String' },
     ['variable.parameter.builtin'] = { link = 'Delimiter' },
-    ['keyword.import.nix'] = { link = 'Function' },
+    -- ['keyword.import.nix'] = { link = 'Function' },
     ['comment.warning'] = { link = 'Todo' },
     ['comment.error'] = { link = 'Todo' },
     ['comment.todo'] = { link = 'Todo' },
