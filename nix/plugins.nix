@@ -5,7 +5,6 @@
 }:
 let
   inherit (builtins) attrValues;
-  tree-sitter' = callPackage ./tree-sitter.nix { };
 in
 {
   packages = [ ripgrep ];
@@ -22,7 +21,7 @@ in
     parsers = vimPlugins.nvim-treesitter.withPlugins (
       p:
       attrValues {
-        inherit (tree-sitter') markdown markdown-inline;
+        inherit (callPackage ./tree-sitter.nix { }) markdown markdown-inline;
         inherit (p)
           comment
           luadoc
