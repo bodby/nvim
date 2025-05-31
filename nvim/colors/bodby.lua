@@ -13,7 +13,8 @@ local colors = {
   gray2 = '#050505',
   red = '#ff85c2',
   green = '#a9f4a0',
-  yellow = '#ffcec8',
+  -- '#ffc599'
+  yellow = '#ffcfb8',
   blue = '#809cff',
   purple = '#9a8fff',
   cyan = '#8cbcff',
@@ -40,7 +41,7 @@ local base = {
   --- Nix paths and escape codes.
   special_char = { fg = colors.cyan, italic = true },
   number = { fg = colors.yellow },
-  -- TODO: Bright purple strings.
+  -- TODO: Yellow strings.
   _string = { fg = colors.green, italic = true },
   type = { fg = colors.purple },
   -- TODO: Yellow constructors again after purple strings.
@@ -284,7 +285,7 @@ local treesitter_highlights = {
     -- ['string.special.symbol.bibtex'] = { link = 'Identifier' },
     ['string.special.path'] = { link = 'String' },
     ['variable.parameter.builtin'] = { link = 'Delimiter' },
-    -- ['keyword.import.nix'] = { link = 'Function' },
+    ['keyword.import.nix'] = inherit(base._function, { italic = true }),
     ['comment.warning'] = { link = 'Todo' },
     ['comment.error'] = { link = 'Todo' },
     ['comment.todo'] = { link = 'Todo' },
