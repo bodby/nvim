@@ -2,9 +2,6 @@ local ui = require('bodby.shared').ui
 
 --- @type table<string, table>
 local servers = {
-  -- TODO: Haskell.
-  --       Now I understand what rexim meant about horrible tooling.
-
   c = {
     cmd = { 'clangd', '--background-index' },
     filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
@@ -23,6 +20,12 @@ local servers = {
   typst = {
     cmd = { 'tinymist' },
     filetypes = { 'typst' },
+  },
+
+  haskell = {
+    cmd = { 'haskell-language-server-wrapper', '--lsp' },
+    filetypes = { 'haskell', 'lhaskell' },
+    root_markers = { '*.cabal' },
   },
 
   rust = {
