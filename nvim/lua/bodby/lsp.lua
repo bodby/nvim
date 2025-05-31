@@ -79,7 +79,8 @@ local servers = {
     },
 
     on_init = function(client)
-      local path = client.workspace_folders[1].name or vim.fn.getcwd()
+      local path = client.workspace_folders and client.workspace_folders[1].name
+        or vim.fn.getcwd()
 
       local json = vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.json'))
       local jsonc = vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.jsonc'))
