@@ -5,19 +5,18 @@
 
 --- @type table<string, string>
 local colors = {
-  -- TODO: White saturations.
   white1 = '#aec5f2',
   white2 = '#91a4ca',
-  white3 = '#495674',
+  white3 = '#687899',
+  white4 = '#495674',
   gray1 = '#12151c',
   gray2 = '#050505',
   red = '#ff85c2',
   green = '#a9f4a0',
-  -- '#ffc599'
   yellow = '#ffcfb8',
   blue = '#809cff',
-  purple = '#9a8fff',
-  cyan = '#8cbcff',
+  purple = '#988fff',
+  cyan = '#8cb9ff',
 }
 
 --- Atomic highlights that others can inherit from.
@@ -30,21 +29,22 @@ local base = {
   property = { fg = colors.white2 },
   keyword = { fg = colors.cyan, italic = true },
   preprocessor = { fg = colors.cyan, italic = true },
-  conditional = { fg = colors.purple, italic = true },
+  conditional = { fg = colors.cyan, italic = true },
   function_keyword = { fg = colors.purple },
   _function = { fg = colors.blue },
   operator = { fg = colors.cyan },
   operator_keyword = { fg = colors.cyan, italic = true },
+  bracket = { fg = colors.white3 },
   delimiter = { fg = colors.cyan },
   boolean = { fg = colors.purple, italic = true },
-  character = { fg = colors.green },
   --- Nix paths and escape codes.
   special_char = { fg = colors.cyan, italic = true },
   number = { fg = colors.yellow },
-  -- TODO: Yellow strings.
-  _string = { fg = colors.green, italic = true },
+  -- TODO: Purple or green?
+  _string = { fg = colors.purple, italic = true },
+  character = { fg = colors.yellow },
   type = { fg = colors.purple },
-  -- TODO: Yellow constructors again after purple strings.
+  builtin_type = { fg = colors.purple },
   constructor = { fg = colors.white1, bold = true, italic = true },
   tag = { fg = colors.yellow },
   label = { fg = colors.yellow },
@@ -52,17 +52,17 @@ local base = {
   constant = { fg = colors.white1, bold = true },
   builtin = { fg = colors.yellow, italic = true },
   special = { fg = colors.cyan, italic = true },
-  comment = { fg = colors.white3, italic = true },
+  comment = { fg = colors.white4, italic = true },
   -- UI.
   normal = { fg = colors.white2, bg = colors.gray2 },
   popup = { fg = colors.white2 },
   border = { fg = colors.gray1 },
   hover = { fg = colors.white1, bold = true },
-  ghost = { fg = colors.white3, italic = true },
-  folded = { fg = colors.white3 },
-  folded_range = { fg = colors.white3 },
+  ghost = { fg = colors.white4, italic = true },
+  folded = { fg = colors.white4 },
+  folded_range = { fg = colors.white4 },
   cursor_line = {},
-  line_number = { fg = colors.white3 },
+  line_number = { fg = colors.white4 },
   current_line_number = { fg = colors.cyan, bold = true },
   accent = { fg = colors.cyan, bold = true },
   caret = { fg = colors.cyan },
@@ -81,7 +81,7 @@ local base = {
   spell_bad = { sp = colors.red, underline = true },
   spell_rare = { sp = colors.purple, underline = true },
   spell_casing = { sp = colors.blue, underline = true },
-  title_number = { fg = colors.white3 },
+  title_number = { fg = colors.white4 },
   title = {
     fg = colors.white1,
     bold = true,
@@ -96,18 +96,18 @@ local base = {
   },
   statusline_path = { fg = colors.white2 },
   statusline_branch = { fg = colors.purple },
-  statusline_diff = { fg = colors.white3 },
-  statusline_lines = { fg = colors.white3 },
+  statusline_diff = { fg = colors.white4 },
+  statusline_lines = { fg = colors.white4 },
   statusline_filetype = { fg = colors.white2, italic = true },
   tabline = {},
-  tab_inactive = { fg = colors.white3 },
+  tab_inactive = { fg = colors.white4 },
   tab = {
     fg = colors.cyan,
     bg = colors.gray1,
     bold = true,
     underline = true,
   },
-  buffer_inactive = { fg = colors.white3 },
+  buffer_inactive = { fg = colors.white4 },
   buffer = {
     fg = colors.white1,
     sp = colors.cyan,
@@ -124,8 +124,8 @@ local base = {
   diff_added = { fg = colors.green },
   diff_changed = { fg = colors.yellow },
   diff_removed = { fg = colors.red },
-  deprecated = { fg = colors.white3, strikethrough = true },
-  unnecessary = { sp = colors.white3, underline = true },
+  deprecated = { fg = colors.white4, strikethrough = true },
+  unnecessary = { sp = colors.white4, underline = true },
   -- Todo comments.
   todo = { fg = colors.cyan },
   assignee = { fg = colors.blue },
@@ -159,7 +159,7 @@ local highlights = {
     ['Folded'] = base.folded,
     ['MsgArea'] = base.popup,
     ['Title'] = base.title,
-    ['Pmenu'] = inherit(base.popup, { fg = colors.white3 }),
+    ['Pmenu'] = inherit(base.popup, { fg = colors.white4 }),
     ['PmenuSel'] = base.hover,
     ['Cursor'] = base.cursor,
     ['CursorLine'] = base.cursor_line,
@@ -201,6 +201,7 @@ local highlights = {
     ['Constant'] = base.constant,
     ['Operator'] = base.operator,
     ['Delimiter'] = base.delimiter,
+    ['Bracket'] = base.bracket,
     ['Type'] = base.type,
     ['Function'] = base._function,
     ['Tag'] = base.tag,
@@ -252,18 +253,18 @@ local treesitter_highlights = {
     ['keyword.function'] = base.function_keyword,
     ['keyword.conditional'] = { link = 'Conditional' },
     ['keyword.operator'] = base.operator_keyword,
-    ['punctuation.special'] = { link = 'Delimiter' },
+    ['punctuation.bracket'] = { link = 'Bracket' },
+    ['punctuation.special'] = { link = 'Operator' },
     ['tag.delimiter'] = { link = 'Delimiter' },
     ['character.special'] = { link = 'Operator' },
     ['constant.builtin'] = base.builtin,
     ['variable.builtin'] = { link = 'Constant' },
     ['function.builtin'] = { link = '@function' },
-    ['type.builtin'] = { link = 'Type' },
+    ['type.builtin'] = base.builtin_type,
     ['module'] = base.module,
     ['module.builtin'] = { link = '@module' },
     ['namespace'] = { link = '@module' },
-    ['constructor.lua'] = { link = 'Delimiter' },
-    -- TODO: Either this or change Rust monad implicit returns, e.g. `Ok(())`.
+    ['constructor.lua'] = { link = 'Bracket' },
     ['constant.typst'] = { link = 'Identifier' },
     ['variable.builtin.luadoc'] = { link = '@variable.parameter.builtin' },
     ['attribute.rust'] = { link = 'Label' },
@@ -275,6 +276,8 @@ local treesitter_highlights = {
     ['markup.raw'] = base.code,
     ['markup.raw.block'] = inherit(base.delimiter, { nocombine = true }),
     ['markup.list'] = inherit(base.comment, { italic = false }),
+    ['markup.list.unchecked'] = { link = 'Bracket' },
+    ['markup.list.checked'] = base.key,
     ['markup.link'] = base.url,
     ['markup.strong'] = { fg = colors.white1, bold = true },
     ['markup.link.label.typst'] = { link = 'Tag' },
@@ -316,7 +319,7 @@ local alpha_highlights = {
     ['Buttons'] = base.caret,
     ['HeaderLabel'] = { fg = colors.white2 },
     ['Shortcut'] = base.key,
-    ['Header'] = { fg = colors.white3 },
+    ['Header'] = { fg = colors.white4 },
     ['Footer'] = { link = 'Comment' },
   },
 }
@@ -419,15 +422,15 @@ local statusline_highlights = {
     ['Warn'] = inherit(base.warn, { bg = base.statusline.bg }),
     ['Info'] = inherit(base.info, { bg = base.statusline.bg }),
     ['Hint'] = inherit(base.hint, { bg = base.statusline.bg }),
-    ['Normal'] = { fg = colors.white3, bold = true },
+    ['Normal'] = { fg = colors.white4, bold = true },
     ['Visual'] = { fg = colors.green, bold = true },
     ['Select'] = { fg = colors.green, bold = true },
     ['Insert'] = { fg = colors.cyan, bold = true },
     ['Replace'] = { fg = colors.red, bold = true },
     ['Command'] = { fg = colors.purple, bold = true },
-    ['Prompt'] = { fg = colors.white3, bold = true },
+    ['Prompt'] = { fg = colors.white4, bold = true },
     ['Shell'] = { fg = colors.green, bold = true },
-    ['Limbo'] = { fg = colors.white3, bold = true },
+    ['Limbo'] = { fg = colors.white4, bold = true },
   },
 }
 
@@ -505,7 +508,7 @@ vim.g.terminal_color_4 = colors.blue
 vim.g.terminal_color_5 = colors.purple
 vim.g.terminal_color_6 = colors.cyan
 vim.g.terminal_color_7 = colors.white2
-vim.g.terminal_color_8 = colors.white3
+vim.g.terminal_color_8 = colors.white4
 vim.g.terminal_color_9 = colors.red
 vim.g.terminal_color_10 = colors.green
 vim.g.terminal_color_11 = colors.yellow
