@@ -13,7 +13,7 @@ return {
     ignore_install = { 'all' },
     highlight = { enable = true },
     incremental_selection = { enable = false },
-    indent = { enable = false },
+    indent = { enable = true },
   },
 
   post = function()
