@@ -233,7 +233,8 @@ return {
             local prev = {}
 
             for _, v in ipairs(items) do
-              local text = modifier(v.insertText:sub(1, 1)) .. v.insertText:sub(2)
+              local text = modifier(v.insertText:sub(1, 1))
+                .. v.insertText:sub(2)
               v.insertText = text
               v.label = text
 
