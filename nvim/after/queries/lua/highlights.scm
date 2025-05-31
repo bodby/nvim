@@ -6,8 +6,8 @@
 ((identifier) @module
   (#eq? @module "vim"))
 
-(field
-  name: (identifier) @variable
-  value: (table_constructor
-    (field)
-      (_)))
+; (field
+;   name: (identifier) @variable
+;   value: (table_constructor
+;     (field)
+;       (_)))

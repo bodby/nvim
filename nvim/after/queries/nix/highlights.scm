@@ -3,19 +3,19 @@
 ; ((identifier) @module.builtin
 ;   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
 
-(binding
-  attrpath: (attrpath
-    attr: (identifier) @variable .)
-  (attrset_expression
-    (binding_set
-      binding: [
-        (binding
-          attrpath: (attrpath
-            attr: (identifier)))
-        (inherit)
-        (inherit_from)
-      ]
-      (_))))
+; (binding
+;   attrpath: (attrpath
+;     attr: (identifier) @variable .)
+;   (attrset_expression
+;     (binding_set
+;       binding: [
+;         (binding
+;           attrpath: (attrpath
+;             attr: (identifier)))
+;         (inherit)
+;         (inherit_from)
+;       ]
+;       (_))))
 
 (let_expression
   (binding_set
@@ -40,36 +40,36 @@ function: (_
     attr: (identifier) @function)
   expression: (function_expression))
 
-(inherit_from
-  expression: (variable_expression
-    name: (identifier) @_name)
-  attrs: (inherited_attrs
-    attr: (identifier) @function)
-  (#any-of? @_name "builtins" "lib" "lib'"))
+; (inherit_from
+;   expression: (variable_expression
+;     name: (identifier) @_name)
+;   attrs: (inherited_attrs
+;     attr: (identifier) @function)
+;   (#any-of? @_name "builtins" "lib" "lib'"))
 
-(inherit_from
-  expression: (select_expression
-    expression: (variable_expression
-      name: (identifier) @_name))
-    attrs: (inherited_attrs
-      attr: (identifier) @function)
-    (#any-of? @_name "builtins" "lib" "lib'"))
+; (inherit_from
+;   expression: (select_expression
+;     expression: (variable_expression
+;       name: (identifier) @_name))
+;     attrs: (inherited_attrs
+;       attr: (identifier) @function)
+;     (#any-of? @_name "builtins" "lib" "lib'"))
 
-(apply_expression
-  (select_expression
-    expression: (variable_expression
-      name: (identifier) @_name)
-    attrpath: (attrpath
-      attr: (identifier) @function)
-    (#any-of? @_name "lib" "lib'")))
+; (apply_expression
+;   (select_expression
+;     expression: (variable_expression
+;       name: (identifier) @_name)
+;     attrpath: (attrpath
+;       attr: (identifier) @function)
+;     (#any-of? @_name "lib" "lib'")))
 
-(binding
-  (select_expression
-    expression: (variable_expression
-      name: (identifier) @_name)
-    attrpath: (attrpath
-      attr: (identifier) @function)
-    (#any-of? @_name "lib" "lib'")))
+; (binding
+;   (select_expression
+;     expression: (variable_expression
+;       name: (identifier) @_name)
+;     attrpath: (attrpath
+;       attr: (identifier) @function)
+;     (#any-of? @_name "lib" "lib'")))
 
 (variable_expression
   name: (identifier) @keyword.import
