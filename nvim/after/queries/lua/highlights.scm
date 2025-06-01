@@ -6,6 +6,10 @@
 ((identifier) @module
   (#eq? @module "vim"))
 
+(string
+  content: (string_content) @character
+  (#match? @character "^.$"))
+
 ; (field
 ;   name: (identifier) @variable
 ;   value: (table_constructor
