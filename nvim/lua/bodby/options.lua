@@ -13,7 +13,7 @@ local options = {
   laststatus = 3,
   showtabline = 2,
   pumheight = 16,
-  scrolloff = 6,
+  scrolloff = 12,
   sidescrolloff = 8,
   cmdheight = 0,
   -- https://github.com/neovim/neovim/pull/9496
@@ -31,6 +31,7 @@ local options = {
     ['i-ci-ve'] = 'ver25',
     ['o-r-cr'] = 'hor10',
   },
+
   linespace = 6,
   list = true,
   fillchars = {
@@ -38,12 +39,14 @@ local options = {
     fold = '·',
     msgsep = '─',
   },
+
   listchars = {
     tab = '> ',
     trail = '_',
     extends = '+',
     precedes = '-',
   },
+
   confirm = true,
   undofile = true,
   undolevels = 10000,
