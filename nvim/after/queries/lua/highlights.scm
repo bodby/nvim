@@ -6,9 +6,13 @@
 ((identifier) @module
   (#eq? @module "vim"))
 
-(string
-  content: (string_content) @character
-  (#match? @character "^.$"))
+((string
+  content: (string_content)) @character
+  (#match? @character "^'.'$"))
+
+((string
+  content: (string_content)) @character
+  (#match? @character "^\".\"$"))
 
 ; (field
 ;   name: (identifier) @variable
