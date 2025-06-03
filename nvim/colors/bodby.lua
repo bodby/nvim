@@ -302,7 +302,9 @@ local treesitter_highlights = {
 local lsp_highlights = {
   prefix = '@lsp.',
   highlights = {
-    -- TODO: Unresolved 50% opacity link colors for Markdown.
+    ['type.decorator.markdown'] = {},
+    -- TODO: This doesn't look good.
+    ['type.comment.markdown'] = { link = 'Comment' },
     ['type.comment'] = {},
     ['type.macro'] = {},
     ['mod.global'] = { link = '@module' },
