@@ -267,6 +267,7 @@ local treesitter_highlights = {
     ['constructor.lua'] = { link = 'Bracket' },
     ['constant.typst'] = { link = 'Identifier' },
     -- ['variable.member.haskell'] = { link = 'Function' },
+    ['variable.member.nix'] = inherit(base.field, { nocombine = true }),
     ['variable.builtin.luadoc'] = { link = '@variable.parameter.builtin' },
     ['attribute.rust'] = { link = 'Label' },
     ['tag.attribute.html'] = { link = '@property' },

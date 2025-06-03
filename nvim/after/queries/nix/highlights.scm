@@ -4,6 +4,10 @@
   . (identifier) @module.builtin
   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
 
+((binding
+  attrpath: (attrpath
+    attr: (identifier)) @variable.member))
+
 ; (binding
 ;   attrpath: (attrpath
 ;     attr: (identifier) @variable .)
