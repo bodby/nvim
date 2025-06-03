@@ -1,7 +1,8 @@
 ;; extends
 
-; ((identifier) @module.builtin
-;   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+(_
+  . (identifier) @module.builtin
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
 
 ; (binding
 ;   attrpath: (attrpath
