@@ -109,7 +109,8 @@ return {
   },
 
   post = function()
-    require('telescope').load_extension('zf-native')
+    -- require('telescope').load_extension('zf-native')
+    require('telescope').load_extension('fzf')
 
     -- local strategies = require('telescope.pickers.layout_strategies')
     -- Set `layout_strategy` to 'custom' if you want to use this.

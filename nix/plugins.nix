@@ -12,7 +12,7 @@ in
   plugins = attrValues {
     inherit (vimPlugins)
       telescope-nvim
-      telescope-zf-native-nvim
+      telescope-fzf-native-nvim
       blink-cmp
       # alpha-nvim
       gitsigns-nvim
