@@ -6,14 +6,14 @@
 --- @type table<string, string>
 local colors = {
   white1 = '#aec5f2',
-  white2 = '#91a4ca',
-  white3 = '#687899',
+  white2 = '#91a3cb',
+  white3 = '#6d7ca1',
   white4 = '#495674',
   gray1 = '#11141b',
   gray2 = '#050505',
   red = '#ff85c2',
   green = '#b0f19d',
-  yellow = '#ffd1bc',
+  yellow = '#ffd1dc',
   blue = '#809cff',
   purple = '#988fff',
   cyan = '#8cb9ff',
@@ -41,7 +41,7 @@ local base = {
   special_char = { fg = colors.cyan, italic = true },
   number = { fg = colors.yellow },
   -- TODO: Purple or green?
-  _string = { fg = colors.green, italic = true },
+  _string = { fg = colors.white3, italic = true },
   character = { fg = colors.yellow },
   type = { fg = colors.purple },
   builtin_type = { fg = colors.purple },

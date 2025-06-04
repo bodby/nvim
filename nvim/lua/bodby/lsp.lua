@@ -87,6 +87,7 @@ local servers = {
 
       local json = vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.json'))
       local jsonc = vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.jsonc'))
+
       if json or jsonc then
         return
       end
