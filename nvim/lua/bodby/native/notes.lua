@@ -5,7 +5,7 @@ local api = vim.api
 
 local M = {
   template_dir = vim.fs.joinpath(vim.env.HOME, 'vault/templates'),
-  default_dir = vim.fs.joinpath(vim.env.HOME, 'vault/notes/inbox'),
+  default_dir = vim.fs.joinpath(vim.env.HOME, 'vault/inbox'),
   date_format = '%Y-%m-%d',
 }
 
@@ -36,12 +36,13 @@ end
 --- @param filetype string
 --- @param root string
 local function open(content, name, filetype, root)
-  vim.cmd.enew()
+  vim.cmd.edit(vim.fs.joinpath(root, name))
 
   local buffer = api.nvim_get_current_buf()
   api.nvim_buf_set_text(buffer, 0, 0, 0, 0, content)
-  api.nvim_buf_set_name(buffer, vim.fs.joinpath(root, name))
   api.nvim_set_option_value('filetype', filetype, { buf = buffer })
+
+  -- vim.cmd('w ++p')
 end
 
 --- @param path string

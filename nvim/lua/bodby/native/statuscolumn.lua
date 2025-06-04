@@ -5,7 +5,6 @@ local M = {
   },
 }
 
---- Return a highlight string.
 --- @param suffix string
 --- @param cursor boolean
 --- @return string
@@ -25,17 +24,16 @@ function M.setup()
       local windows = vim.api.nvim_tabpage_list_wins(0)
 
       for _, window in pairs(windows) do
-        -- Don't apply to floating windows.
         if vim.api.nvim_win_get_config(window).relative ~= '' then
           return
         end
+
         vim.wo[window].statuscolumn = expr(window)
       end
     end,
   })
 end
 
---- Text used in the statuscolumn.
 --- @param window integer
 --- @return string
 function M.text(window)

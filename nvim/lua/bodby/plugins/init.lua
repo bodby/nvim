@@ -18,7 +18,7 @@ return {
   ['blink.cmp'] = 'blink-cmp',
   -- ['alpha'] = 'alpha',
   ['telescope'] = 'telescope',
-  ['gitsigns'] = 'gitsigns',
+  -- ['gitsigns'] = 'gitsigns',
   ['nvim-treesitter.configs'] = 'nvim-treesitter',
   -- ['mini.indentscope'] = 'indentscope',
   -- ['render-markdown'] = 'render-markdown',

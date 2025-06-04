@@ -98,6 +98,7 @@ return {
         initial_sort = nil,
         smart_case = true,
       },
+
       generic = {
         enable = true,
         highlight_results = false,
@@ -109,7 +110,8 @@ return {
   },
 
   post = function()
-    require('telescope').load_extension('zf-native')
+    -- require('telescope').load_extension('zf-native')
+    require('telescope').load_extension('fzf')
 
     -- local strategies = require('telescope.pickers.layout_strategies')
     -- Set `layout_strategy` to 'custom' if you want to use this.
