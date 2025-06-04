@@ -8,7 +8,7 @@ let
 in
 {
   packages = [ ripgrep ];
-  extraLuaPackages = _: [ ];
+  luaPackages = _: [ ];
   plugins = attrValues {
     inherit (vimPlugins)
       telescope-nvim

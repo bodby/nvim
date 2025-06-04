@@ -22,7 +22,6 @@
     in
     {
       packages = call ./nix/default.nix;
-      formatter = forall (pkgs: pkgs.nixfmt-tree);
       devShells = call ./nix/shell.nix;
     };
 }
