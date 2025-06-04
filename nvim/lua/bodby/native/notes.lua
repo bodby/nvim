@@ -1,6 +1,8 @@
 local lib = require('bodby.shared').lib
 local mappings = require('bodby.mappings')
 
+local api = vim.api
+
 local M = {
   template_dir = vim.fs.joinpath(vim.env.HOME, 'vault/templates'),
   default_dir = vim.fs.joinpath(vim.env.HOME, 'vault/notes/inbox'),
@@ -35,10 +37,11 @@ end
 --- @param root string
 local function open(content, name, filetype, root)
   vim.cmd.enew()
-  local buffer = vim.api.nvim_get_current_buf()
-  vim.api.nvim_buf_set_text(buffer, 0, 0, 0, 0, content)
-  vim.api.nvim_buf_set_name(buffer, vim.fs.joinpath(root, name))
-  vim.api.nvim_set_option_value('filetype', filetype, { buf = buffer })
+
+  local buffer = api.nvim_get_current_buf()
+  api.nvim_buf_set_text(buffer, 0, 0, 0, 0, content)
+  api.nvim_buf_set_name(buffer, vim.fs.joinpath(root, name))
+  api.nvim_set_option_value('filetype', filetype, { buf = buffer })
 end
 
 --- @param path string
