@@ -50,7 +50,7 @@ local base = {
   label = { fg = colors.yellow },
   module = { fg = colors.yellow, italic = true },
   constant = { fg = colors.white1, bold = true },
-  builtin = { fg = colors.yellow, italic = true },
+  builtin = { fg = colors.purple, italic = true },
   special = { fg = colors.cyan, italic = true },
   comment = { fg = colors.white4, italic = true },
   -- UI.
