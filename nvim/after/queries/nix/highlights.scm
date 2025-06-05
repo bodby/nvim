@@ -1,12 +1,36 @@
 ;; extends
 
-(_
+; (_
+;   . (identifier) @module.builtin
+;   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+
+(select_expression
+  (variable_expression
   . (identifier) @module.builtin
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'")))
+
+(formal
+  (identifier) @module.builtin
   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+
+(function_expression
+  universal: (identifier) @module.builtin
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+
+(inherit_from
+  expression: (variable_expression
+    name: (identifier) @module.builtin
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'")))
 
 ((binding
   attrpath: (attrpath
     attr: (identifier)) @variable.member))
+
+(has_attr_expression
+  expression: (variable_expression
+    name: (identifier))
+  attrpath: (attrpath
+    attr: (identifier) @variable.member))
 
 ; (binding
 ;   attrpath: (attrpath
