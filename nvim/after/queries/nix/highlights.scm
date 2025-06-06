@@ -1,5 +1,8 @@
 ;; extends
 
+((comment) @comment.documentation
+  (#match? @comment.documentation "^/\\*\\*"))
+
 ; (_
 ;   . (identifier) @module.builtin
 ;   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
