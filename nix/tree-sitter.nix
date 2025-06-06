@@ -6,8 +6,6 @@
   fetchFromGitHub,
 }:
 let
-  inherit (builtins) removeAttrs;
-
   markdownCommon = {
     version = "0.5.0";
 
