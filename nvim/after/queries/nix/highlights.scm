@@ -103,6 +103,28 @@ function: (_
 ;       attr: (identifier) @function)
 ;     (#any-of? @_name "lib" "lib'")))
 
+; TODO: Better type queries.
+(select_expression
+  expression: (variable_expression
+    name: (identifier) @_name @module)
+  attrpath: (attrpath
+    attr: (identifier) @type)
+  (#eq? @_name "types"))
+
+(select_expression
+  attrpath: (attrpath
+    . attr: (identifier) @_name
+    attr: (identifier) @type)
+  (#eq? @_name "types"))
+
+(apply_expression
+  (select_expression
+    expression: (variable_expression
+      name: (identifier) @_name))
+  argument: (variable_expression
+    name: (identifier) @type)
+  (#eq? @_name "types"))
+
 (variable_expression
   name: (identifier) @keyword.import
   (#eq? @keyword.import "import"))
