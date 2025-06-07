@@ -29,7 +29,7 @@ local base = {
   property = { fg = colors.white2 },
   keyword = { fg = colors.cyan, italic = true },
   preprocessor = { fg = colors.cyan, italic = true },
-  conditional = { fg = colors.cyan, italic = true },
+  conditional = { fg = colors.purple, italic = true },
   function_keyword = { fg = colors.purple },
   _function = { fg = colors.blue },
   operator = { fg = colors.cyan },
