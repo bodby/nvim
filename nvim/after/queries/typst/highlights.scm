@@ -20,6 +20,6 @@
 (linebreak) @punctuation
 
 ((label "<" ">") @markup.link.label
-  (#set! "priority" 105))
+  (#set! priority 105))
 
 (ref) @markup.link.label

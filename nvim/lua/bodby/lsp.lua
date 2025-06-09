@@ -4,7 +4,15 @@ local ui = require('bodby.shared').ui
 local servers = {
   c = {
     cmd = { 'clangd', '--background-index' },
-    filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+    filetypes = {
+      'c',
+      'cpp',
+      'objc',
+      'objcpp',
+      'cuda',
+      'proto',
+    },
+
     root_markers = {
       '.clangd',
       'compile_commands.json',
@@ -25,12 +33,27 @@ local servers = {
   haskell = {
     cmd = { 'haskell-language-server-wrapper', '--lsp' },
     filetypes = { 'haskell', 'lhaskell' },
-    root_markers = { '*.cabal' },
+
+    root_markers = {
+      '*.cabal',
+      'stack.yaml',
+      'cabal.project',
+      'package.yaml',
+      'hie.yaml'
+    },
+
+    settings = {
+      haskell = {
+        checkProject = false,
+        sessionLoading = 'multipleComponents',
+      },
+    },
   },
 
   rust = {
     cmd = { 'rust-analyzer' },
     filetypes = { 'rust' },
+
     root_markers = {
       'Cargo.toml',
       'clippy.toml',
@@ -42,6 +65,7 @@ local servers = {
   markdown = {
     cmd = { 'markdown-oxide' },
     filetypes = { 'markdown' },
+
     capabilities = {
       workspace = {
         didChangeWatchedFiles = {
@@ -54,6 +78,7 @@ local servers = {
   lua = {
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },
+
     root_markers = {
       '.luarc.json',
       'stylua.toml',
@@ -76,8 +101,8 @@ local servers = {
 
         format = { enable = false },
         hint = { enable = false },
-        telemetry = { enable = false },
         semantic = { variable = false },
+        telemetry = { enable = false },
       },
     },
 

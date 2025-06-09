@@ -6,9 +6,6 @@
   fetchFromGitHub,
 }:
 let
-  inherit (builtins) removeAttrs;
-  inherit (lib) fix;
-
   markdownCommon = {
     version = "0.5.0";
 
@@ -30,7 +27,7 @@ let
     };
   };
 in
-fix (self: {
+lib.fix (self: {
   buildGrammar =
     {
       language,
@@ -66,25 +63,29 @@ fix (self: {
 
         buildPhase = ''
           runHook preBuild
-          if [[ -e src/scanner.c ]]; then
+
+          if [ -e src/scanner.c ]; then
             $CC -fPIC -c src/scanner.c -o scanner.o $CFLAGS
-          elif [[ -e src/scanner.cc ]]; then
+          elif [ -e src/scanner.cc ]; then
             $CXX -fPIC -c src/scanner.cc -o scanner.o $CXXFLAGS
           fi
 
           $CC -fPIC -c src/parser.c -o parser.o $CFLAGS
           rm -rf parser
           $CXX -shared -o parser *.o
+
           runHook postBuild
         '';
 
         installPhase = ''
           runHook preInstall
-          mkdir $out
-          mv parser $out/
-          if [[ -d queries ]]; then
-            cp -r queries $out
+
+          mkdir "$out"
+          mv parser "$out"
+          if [ -d queries ]; then
+            cp -r queries "$out"
           fi
+
           runHook postInstall
         '';
 
@@ -96,7 +97,7 @@ fix (self: {
     );
 
   markdown = self.buildGrammar (
-    fix (
+    lib.fix (
       self':
       markdownCommon
       // {
@@ -107,7 +108,7 @@ fix (self: {
   );
 
   markdown-inline = self.buildGrammar (
-    fix (
+    lib.fix (
       self':
       markdownCommon
       // {
