@@ -42,31 +42,45 @@
   attrs: (inherited_attrs
     attr: (identifier) @variable))
 
-; (_
-;   . (identifier) @module.builtin
-;   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+(select_expression
+  (variable_expression
+  . (identifier) @module
+  (#any-of? @module "lib" "pkgs" "lib'" "pkgs'")))
 
 (select_expression
   (variable_expression
-  . (identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'")))
+  . (identifier) @variable.builtin
+  (#eq? @variable.builtin "builtins")))
 
 (formal
-  (identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+  (identifier) @module
+  (#any-of? @module "lib" "pkgs" "lib'" "pkgs'"))
+
+(formal
+  (identifier) @variable.builtin
+  (#eq? @variable.builtin "builtins"))
 
 (function_expression
-  universal: (identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+  universal: (identifier) @module
+  (#any-of? @module "lib" "pkgs" "lib'" "pkgs'"))
+
+(function_expression
+  universal: (identifier) @variable.builtin
+  (#eq? @variable.builtin "builtins"))
 
 (inherit_from
   expression: (variable_expression
-    name: (identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'")))
+    name: (identifier) @module
+  (#any-of? @module "lib" "pkgs" "lib'" "pkgs'")))
+
+(inherit_from
+  expression: (variable_expression
+    name: (identifier) @variable.builtin
+  (#eq? @variable.builtin "builtins")))
 
 (inherited_attrs
-  attr: (identifier) @module.builtin
-  (#any-of? @module.builtin "lib" "pkgs" "lib'" "pkgs'"))
+  attr: (identifier) @module
+  (#any-of? @module "lib" "pkgs" "lib'" "pkgs'"))
 
 function: (_
   name: (identifier) @function.call)
