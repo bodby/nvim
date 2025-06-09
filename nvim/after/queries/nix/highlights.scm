@@ -3,28 +3,6 @@
 ((comment) @comment.documentation
   (#match? @comment.documentation "^/\\*\\*"))
 
-; (_
-;   . (identifier) @module.builtin
-;   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
-
-(select_expression
-  (variable_expression
-  . (identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'")))
-
-(formal
-  (identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
-
-(function_expression
-  universal: (identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
-
-(inherit_from
-  expression: (variable_expression
-    name: (identifier) @module.builtin
-  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'")))
-
 ((binding
   attrpath: (attrpath
     attr: (identifier)) @variable.member))
@@ -63,6 +41,32 @@
 (inherit
   attrs: (inherited_attrs
     attr: (identifier) @variable))
+
+; (_
+;   . (identifier) @module.builtin
+;   (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+
+(select_expression
+  (variable_expression
+  . (identifier) @module.builtin
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'")))
+
+(formal
+  (identifier) @module.builtin
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+
+(function_expression
+  universal: (identifier) @module.builtin
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'"))
+
+(inherit_from
+  expression: (variable_expression
+    name: (identifier) @module.builtin
+  (#any-of? @module.builtin "builtins" "lib" "pkgs" "lib'" "pkgs'")))
+
+(inherited_attrs
+  attr: (identifier) @module.builtin
+  (#any-of? @module.builtin "lib" "pkgs" "lib'" "pkgs'"))
 
 function: (_
   name: (identifier) @function.call)
