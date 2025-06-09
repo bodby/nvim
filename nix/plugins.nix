@@ -32,8 +32,10 @@ in
           git_rebase
           jsonc
           json
+          # ini
           toml
           yaml
+          # xml
           bash
           c
           cpp
