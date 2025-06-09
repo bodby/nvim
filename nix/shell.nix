@@ -1,18 +1,23 @@
 {
-  mkShellNoCC,
-  luajit,
-  lua-language-server,
-  stylua,
-  nixd,
-  nixfmt-rfc-style,
+  pkgs ? import <nixpkgs> { },
 }:
-mkShellNoCC {
-  name = "nvim";
-  packages = [
-    luajit
-    lua-language-server
-    stylua
-    nixd
-    nixfmt-rfc-style
-  ];
-}
+pkgs.callPackage (
+  {
+    mkShellNoCC,
+    luajit,
+    lua-language-server,
+    stylua,
+    nixd,
+    nixfmt-rfc-style,
+  }:
+  mkShellNoCC {
+    name = "nvim";
+    packages = [
+      luajit
+      lua-language-server
+      stylua
+      nixd
+      nixfmt-rfc-style
+    ];
+  }
+) { }

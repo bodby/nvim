@@ -17,7 +17,7 @@
       call =
         file:
         forall (pkgs: {
-          default = pkgs.callPackage file { };
+          default = import file { inherit pkgs; };
         });
     in
     {
