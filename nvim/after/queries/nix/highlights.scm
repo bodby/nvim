@@ -3,10 +3,6 @@
 ((comment) @comment.documentation
   (#match? @comment.documentation "^/\\*\\*"))
 
-((binding
-  attrpath: (attrpath
-    attr: (identifier)) @variable.member))
-
 (has_attr_expression
   expression: (variable_expression
     name: (identifier))
