@@ -15,7 +15,7 @@ return {
     ['n'] = {
       ['<Leader>fr'] = with_args(builtin.oldfiles, no_titles),
       -- TODO: Symbols style (preferrably using the 'ui' table in shared.lua).
-      ['<Leader>fw'] = with_args(builtin.lsp_workspace_symbols, no_titles),
+      ['<Leader>fw'] = with_args(builtin.lsp_dynamic_workspace_symbols, no_titles),
 
       ['<Leader>ff'] = with_args(builtin.find_files, {
         hidden = true,
