@@ -2,7 +2,6 @@
 local options = {
   expandtab = true,
   shiftwidth = 2,
-  tabstop = 2,
   softtabstop = 2,
   textwidth = 80,
   number = true,
@@ -98,6 +97,7 @@ local globals = {
   loaded_2html_plugin = 0,
   loaded_fzf = 0,
   loaded_tutor_mode_plugin = 0,
+  qf_disable_statusline = 1,
   -- Per-filetype options. See `:h filetype`.
   markdown_recommended_style = 1,
   markdown_folding = 0,
