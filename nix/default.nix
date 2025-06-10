@@ -34,7 +34,8 @@ pkgs.callPackage (
       (wrapNeovimUnstable neovim-unwrapped (
         {
           plugins = neovimUtils.normalizePlugins plugins;
-          luaRcContent = # lua
+          luaRcContent =
+            # lua
             ''
               vim.loader.enable()
               vim.o.rtp = '${runtimepath},' .. vim.o.rtp .. ',${runtimepath}/after'
