@@ -49,24 +49,24 @@
 
 (select_expression
   (variable_expression
-  . (identifier) @variable.builtin
-  (#eq? @variable.builtin "builtins")))
+  . (identifier) @module.builtin
+  (#eq? @module.builtin "builtins")))
 
 (formal
   (identifier) @module
   (#any-of? @module "lib" "pkgs" "lib'" "pkgs'"))
 
 (formal
-  (identifier) @variable.builtin
-  (#eq? @variable.builtin "builtins"))
+  (identifier) @module.builtin
+  (#eq? @module.builtin "builtins"))
 
 (function_expression
   universal: (identifier) @module
   (#any-of? @module "lib" "pkgs" "lib'" "pkgs'"))
 
 (function_expression
-  universal: (identifier) @variable.builtin
-  (#eq? @variable.builtin "builtins"))
+  universal: (identifier) @module.builtin
+  (#eq? @module.builtin "builtins"))
 
 (inherit_from
   expression: (variable_expression
@@ -75,8 +75,8 @@
 
 (inherit_from
   expression: (variable_expression
-    name: (identifier) @variable.builtin
-  (#eq? @variable.builtin "builtins")))
+    name: (identifier) @module.builtin
+  (#eq? @module.builtin "builtins")))
 
 (inherited_attrs
   attr: (identifier) @module
