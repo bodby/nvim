@@ -4,7 +4,7 @@
 ;   (#any-of? @module "vim" "M"))
 
 ((identifier) @module
-  (#eq? @module "vim"))
+  (#any-of? @module "vim" "lib"))
 
 ; ((string
 ;   content: (string_content)) @character
