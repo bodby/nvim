@@ -174,8 +174,7 @@ local defaults = {
 
 vim.diagnostic.config(diag_config)
 for k, v in pairs(servers) do
-  local t = v
-  t.root_markers = lib.concat(defaults.root_markers, t.root_markers or { })
-  vim.lsp.config(k, t)
+  v.root_markers = lib.concat(defaults.root_markers, v.root_markers or { })
+  vim.lsp.config(k, v)
   vim.lsp.enable(k)
 end
