@@ -43,4 +43,20 @@ function M.lib.escape(str)
   return (str:gsub('[%^%$%(%)%%%.%[%]%*%+%-%?]', '%%%0'))
 end
 
+--- Concatenate two or more lists.
+--- @param ... any[]
+--- @return any[]
+function M.lib.concat(...)
+  local result = { }
+  local args = { ... }
+
+  for _, v1 in ipairs(args) do
+    for _, v2 in ipairs(v1) do
+      table.insert(result, v2)
+    end
+  end
+
+  return result
+end
+
 return M

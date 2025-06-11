@@ -1,3 +1,4 @@
+local lib = require('bodby.shared').lib
 local ui = require('bodby.shared').ui
 
 --- @type table<string, table>
@@ -164,7 +165,7 @@ local diag_config = {
   },
 }
 
-local default = {
+local defaults = {
   root_markers = {
     'flake.nix',
     '.git/',
@@ -173,6 +174,8 @@ local default = {
 
 vim.diagnostic.config(diag_config)
 for k, v in pairs(servers) do
-  vim.lsp.config(k, v or default)
+  local t = v
+  t.root_markers = lib.concat(defaults.root_markers, t.root_markers or { })
+  vim.lsp.config(k, t)
   vim.lsp.enable(k)
 end
