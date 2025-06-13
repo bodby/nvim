@@ -6,30 +6,10 @@ local M = {}
 --- @type table<string, table<string, string | fun()>>
 local mappings = {
   ['n'] = {
-    ['<Leader>p'] = '"+p',
-    ['<Leader>P'] = '"+P',
     ['<Esc>'] = vim.cmd.nohlsearch,
     ['gd'] = vim.lsp.buf.definition,
     -- TODO: Make this fallback to opening help buffers.
     ['K'] = with_args(vim.lsp.buf.hover, { border = ui.border.name }),
-  },
-
-  ['nv'] = {
-    ['<Leader>d'] = '"_d',
-    ['<Leader>D'] = '"_D',
-    ['<Leader>c'] = '"_c',
-    ['<Leader>C'] = '"_C',
-    ['<Leader>x'] = '"_x',
-    ['<Leader>X'] = '"_X',
-    ['<Leader>s'] = '"_s',
-    ['<Leader>S'] = '"_S',
-    ['<Leader>y'] = '"+y',
-    ['<Leader>Y'] = '"+Y',
-  },
-
-  ['v'] = {
-    ['<Leader>p'] = '"_dP',
-    ['<Leader>P'] = '"_dP',
   },
 
   ['nivs'] = {
@@ -44,9 +24,11 @@ local neovide_mappings = {
     ['<C-+>'] = function()
       vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.125
     end,
+
     ['<C-_>'] = function()
       vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.125
     end,
+
     ['<C-)>'] = function()
       vim.g.neovide_scale_factor = 1.0
     end,
