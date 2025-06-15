@@ -41,7 +41,7 @@ local function open(content, name, filetype, root)
 
   if not vim.uv.fs_stat(path) then
     local buffer = api.nvim_get_current_buf()
-    api.nvim_buf_set_text(buffer, 0, 0, 0, 0, content)
+    api.nvim_buf_set_lines(buffer, 0, 1, false, content)
     api.nvim_set_option_value('filetype', filetype, { buf = buffer })
   end
 end
@@ -56,7 +56,7 @@ local function read(path)
 
   local content = file:read('*a')
   file:close()
-  return vim.split(content, '\n')
+  return vim.split(content, '\n', { trimempty = true })
 end
 
 --- @param template string
