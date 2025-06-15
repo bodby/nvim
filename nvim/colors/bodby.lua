@@ -313,8 +313,7 @@ local lsp_highlights = {
   prefix = '@lsp.',
   highlights = {
     ['type.decorator.markdown'] = {},
-    -- TODO: This doesn't look good.
-    ['type.comment.markdown'] = { link = 'Comment' },
+    ['type.comment.markdown'] = { fg = colors.white3 },
     ['type.comment'] = {},
     ['type.macro'] = {},
     ['mod.global'] = { link = '@module' },
